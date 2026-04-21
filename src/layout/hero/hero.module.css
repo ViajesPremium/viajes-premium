@@ -15,13 +15,115 @@
     overflow: hidden;
 }
 
+.heroHeading {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.desktopHeroTitle {
+    position: absolute;
+    --title-pull: clamp(3rem, 6vw, 5.8rem);
+    top: clamp(4.4rem, 8.2vh, 6.1rem);
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(100vw, 1180px);
+    z-index: 2;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+}
+
+.titleLine {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) clamp(10rem, 24vw, 18rem) minmax(0, 1fr);
+    align-items: end;
+    width: 100%;
+    min-height: clamp(6.2rem, 9.4vw, 8.7rem);
+}
+
+.titleLineBottom {
+    align-items: start;
+    margin-top: clamp(-2rem, -1.8vw, -1.15rem);
+}
+
+.titleWord {
+    display: block;
+    height: clamp(5.7rem, 9.1vw, 8.4rem);
+}
+
+.titleWordViaja {
+    grid-column: 1;
+    justify-self: end;
+    width: clamp(18rem, 31vw, 31rem);
+    transform: translateX(var(--title-pull));
+}
+
+.titleWordJapon {
+    grid-column: 3;
+    justify-self: start;
+    width: clamp(17rem, 27vw, 28rem);
+    transform: translateX(calc(var(--title-pull) * -1));
+}
+
+.titleWordDesde {
+    grid-column: 1;
+    justify-self: end;
+    width: clamp(19rem, 33vw, 34rem);
+    transform: translateX(var(--title-pull));
+}
+
+.titleWordMexico {
+    grid-column: 3;
+    justify-self: start;
+    width: clamp(20rem, 33vw, 35rem);
+    transform: translateX(calc(var(--title-pull) * -1));
+}
+
+.mobileHeroText {
+    display: none;
+}
+
+.heroSubtitleDesktop {
+    position: absolute;
+    top: 70%;
+    left: max(clamp(1rem, 7vw, 8rem), calc((100vw - var(--site-max)) / 2 + 5rem));
+    z-index: 4;
+    margin: 0;
+    max-width: 21rem;
+    color: var(--black);
+    font-family: var(--font-nohemi);
+    font-weight: 300;
+    font-size: clamp(0.85rem, 1vw, 1rem);
+    line-height: 1.28;
+}
+
+.heroCircle {
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: clamp(18rem, 28vw, 26rem);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background-color: var(--primary-japon);
+    z-index: 1;
+    pointer-events: none;
+}
+
 .heroText {
     position: absolute;
     inset-block: 0;
     left: 50%;
     transform: translateX(-50%);
     width: min(100%, var(--site-max));
-    z-index: 1;
+    z-index: 2;
     pointer-events: none;
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(320px, 40vw) minmax(0, 1fr);
@@ -83,18 +185,32 @@
     left: 50%;
     transform: translateX(-50%);
     width: min(100%, var(--site-max));
-    z-index: 3;
+    z-index: 4;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
     justify-content: flex-end;
     gap: 0.65rem;
     padding-inline: clamp(1rem, 4vw, 5rem);
-    bottom: clamp(2rem, 5vh, 4rem);
+    top: 70%;
+    bottom: auto;
 }
 
 @media (max-width: 768px) {
-    .heroText {
+    .desktopHeroTitle,
+    .heroSubtitleDesktop {
+        display: none;
+    }
+
+    .mobileHeroText {
+        position: absolute;
+        inset-block: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: min(100%, var(--site-max));
+        z-index: 2;
+        pointer-events: none;
+        display: grid;
         grid-template-columns: 1fr;
         justify-items: center;
         align-content: start;
@@ -123,6 +239,11 @@
         justify-content: center;
         align-items: center;
         padding-inline: 1rem;
+        top: auto;
         bottom: clamp(1.25rem, 3vh, 2.25rem);
+    }
+
+    .heroCircle {
+        display: none;
     }
 }

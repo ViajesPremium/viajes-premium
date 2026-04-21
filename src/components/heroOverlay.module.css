@@ -1,11 +1,19 @@
 .heroOverlay {
   position: absolute;
   inset: 0;
-  z-index: 2;
+  z-index: 3;
   /* Al poner inset: 0, obligamos a que abarque todo el tamaÃ±o de la capa superior (.hero) */
   width: 100%;
   height: 100%;
   overflow: hidden;
+}
+
+.ghostPath {
+  position: absolute;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  pointer-events: none;
 }
 
 /* La imagen de la Geisha se mantiene igual y en su sitio */
