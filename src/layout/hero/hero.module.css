@@ -1,0 +1,128 @@
+.hero {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    height: 100dvh;
+    background-color: var(--bg);
+    background-image:
+        linear-gradient(rgba(243, 243, 240, 0.94), rgba(243, 243, 240, 0.94)),
+        url("/images/japon/hero/japanHero.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+}
+
+.heroText {
+    position: absolute;
+    inset-block: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(100%, var(--site-max));
+    z-index: 1;
+    pointer-events: none;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(320px, 40vw) minmax(0, 1fr);
+    align-items: center;
+    padding-inline: clamp(1rem, 4vw, 5rem);
+}
+
+.heroLeft {
+    grid-column: 1;
+    justify-self: start;
+    text-align: left;
+    position: relative;
+}
+
+.heroRight {
+    grid-column: 3;
+    justify-self: end;
+    text-align: right;
+}
+
+.heroTextBlock {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    color: var(--black);
+}
+
+.heroTextLabel {
+    font-family: var(--font-nohemi);
+    font-size: clamp(1rem, 2.5vw, 3rem);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.heroTextValue {
+    font-family: var(--font-nohemi);
+    font-size: clamp(4rem, 8vw, 7.5rem);
+    font-weight: 800;
+    line-height: 0.85;
+    text-transform: uppercase;
+}
+
+.heroSubtitle {
+    position: absolute;
+    top: calc(100% + clamp(0.8rem, 1.6vw, 1.6rem));
+    left: 0;
+    margin: 0;
+    max-width: 40rem;
+    color: var(--black);
+    font-family: var(--font-nohemi);
+    font-weight: 300;
+    font-size: clamp(0.95rem, 1.15vw, 1.15rem);
+    line-height: 1.2;
+}
+
+.heroActions {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(100%, var(--site-max));
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-end;
+    gap: 0.65rem;
+    padding-inline: clamp(1rem, 4vw, 5rem);
+    bottom: clamp(2rem, 5vh, 4rem);
+}
+
+@media (max-width: 768px) {
+    .heroText {
+        grid-template-columns: 1fr;
+        justify-items: center;
+        align-content: start;
+        gap: 0.35rem;
+        padding-top: clamp(2.5rem, 9vh, 5.5rem);
+        padding-inline: 1rem;
+    }
+
+    .heroLeft,
+    .heroRight {
+        grid-column: 1;
+        justify-self: center;
+        text-align: center;
+    }
+
+    .heroTextValue {
+        font-size: clamp(3.4rem, 17vw, 5.6rem);
+    }
+
+    .heroSubtitle {
+        display: none;
+    }
+
+    .heroActions {
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        padding-inline: 1rem;
+        bottom: clamp(1.25rem, 3vh, 2.25rem);
+    }
+}
