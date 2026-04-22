@@ -10,33 +10,33 @@ import styles from "./heroOverlay.module.css";
 // ====================================================================
 
 // Compartidos — afectan el shader y no pueden dividirse por breakpoint
-const TRAIL_LENGTH = 16;         // Cantidad de gotas de agua que forman la "cola" o estela al mover el ratón.
-const SPLASH_LENGTH = 16;        // Cantidad de gotitas sueltas (salpicaduras) cuando mueves el ratón muy rápido.
+const TRAIL_LENGTH = 16; // Cantidad de gotas de agua que forman la "cola" o estela al mover el ratón.
+const SPLASH_LENGTH = 16; // Cantidad de gotitas sueltas (salpicaduras) cuando mueves el ratón muy rápido.
 
 type GhostConfig = {
   idleThreshold: number;
   travelDuration: number;
   radiusLerp: number;
-  posLerp: number;           // Suavidad del seguimiento de posición durante el ghost (0.05 = lento, 0.3 = rápido).
+  posLerp: number; // Suavidad del seguimiento de posición durante el ghost (0.05 = lento, 0.3 = rápido).
   microJitterX: number;
   microJitterY: number;
 };
 
 type EffectConfig = {
-  MAX_PIXEL_RATIO: number;       // Límite de resolución. Evita sobrecalentar celulares de gama alta.
-  MAX_RADIUS: number;            // Tamaño máximo de la mancha principal (0.2 = 20% de la pantalla).
-  BLOB_COLOR: string;            // Color de la mancha.
-  BLOB_OPACITY: number;          // Transparencia de la mancha (0 a 1).
-  TRAIL_SHRINK_SPEED: number;    // Velocidad a la que desaparece la estela.
-  TRAIL_DROP_DISTANCE: number;   // Distancia mínima para soltar una nueva gota de estela.
-  VELOCITY_MULTIPLIER: number;   // Entre más rápido el cursor, más crece la mancha.
-  SPLASH_SHRINK_SPEED: number;   // Qué tan rápido se evaporan las salpicaduras.
+  MAX_PIXEL_RATIO: number; // Límite de resolución. Evita sobrecalentar celulares de gama alta.
+  MAX_RADIUS: number; // Tamaño máximo de la mancha principal (0.2 = 20% de la pantalla).
+  BLOB_COLOR: string; // Color de la mancha.
+  BLOB_OPACITY: number; // Transparencia de la mancha (0 a 1).
+  TRAIL_SHRINK_SPEED: number; // Velocidad a la que desaparece la estela.
+  TRAIL_DROP_DISTANCE: number; // Distancia mínima para soltar una nueva gota de estela.
+  VELOCITY_MULTIPLIER: number; // Entre más rápido el cursor, más crece la mancha.
+  SPLASH_SHRINK_SPEED: number; // Qué tan rápido se evaporan las salpicaduras.
   SPLASH_VELOCITY_DAMPING: number; // Fricción de las salpicaduras.
-  MOUSE_STIFFNESS: number;       // Rapidez con la que la mancha persigue al cursor.
-  MOUSE_DAMPING: number;         // Inercia/suavidad del movimiento.
-  RADIUS_STIFFNESS: number;      // Elasticidad al agrandarse/encojer la mancha.
-  BASE_RADIUS: number;           // Tamaño base del efecto ghost. En mobile es el tamaño fijo (no hay velocidad).
-  POINTER_ENABLED: boolean;      // Si false, ignora completamente el input del usuario.
+  MOUSE_STIFFNESS: number; // Rapidez con la que la mancha persigue al cursor.
+  MOUSE_DAMPING: number; // Inercia/suavidad del movimiento.
+  RADIUS_STIFFNESS: number; // Elasticidad al agrandarse/encojer la mancha.
+  BASE_RADIUS: number; // Tamaño base del efecto ghost. En mobile es el tamaño fijo (no hay velocidad).
+  POINTER_ENABLED: boolean; // Si false, ignora completamente el input del usuario.
   GHOST: GhostConfig;
 };
 
@@ -68,23 +68,23 @@ const DESKTOP_CONFIG: EffectConfig = {
 
 // ── Mobile ──────────────────────────────────────────────────────────
 const MOBILE_CONFIG: EffectConfig = {
-  MAX_PIXEL_RATIO: 10,
+  MAX_PIXEL_RATIO: 1.5, // DPR capped: phone at 3× renders as 1.5×, saving ~4× GPU work
   MAX_RADIUS: 10,
   BLOB_COLOR: "#000000",
   BLOB_OPACITY: 0.05,
   TRAIL_SHRINK_SPEED: 0.3,
-  TRAIL_DROP_DISTANCE: 0.005,
+  TRAIL_DROP_DISTANCE: 0.5,
   VELOCITY_MULTIPLIER: 9,
   SPLASH_SHRINK_SPEED: 0.6,
   SPLASH_VELOCITY_DAMPING: 0.94,
   MOUSE_STIFFNESS: 90,
-  MOUSE_DAMPING: 0.15,
-  RADIUS_STIFFNESS: 1,
+  MOUSE_DAMPING: 0.35,
+  RADIUS_STIFFNESS: 10,
   BASE_RADIUS: 0.17,
   POINTER_ENABLED: false,
   GHOST: {
-    idleThreshold: 300,
-    travelDuration: 20000,
+    idleThreshold: 700,
+    travelDuration: 8000,
     radiusLerp: 0.1,
     posLerp: 0.12,
     microJitterX: 0.0012,
@@ -100,6 +100,87 @@ const SAMURAI_IMG = "/images/japon/hero/samuraiHero.webp";
 // ====================================================================
 // SHADERS
 // ====================================================================
+
+// Mobile shader: mediump precision, 1 cheap value-noise warp,
+// no trail/splash loops (POINTER_ENABLED=false so they're always empty).
+// ~70% cheaper than the desktop shader on mobile GPUs.
+const fragmentShaderMobile = `
+  precision mediump float;
+
+  uniform sampler2D u_texture;
+  uniform vec2 u_mouse;
+  uniform vec2 u_resolution;
+  uniform float u_radius;
+  uniform float u_time;
+  uniform vec4 u_imageBounds;
+  uniform vec3 u_blobColor;
+  uniform float u_blobOpacity;
+  uniform float u_hoverState;
+
+  varying vec2 v_uv;
+
+  // Value noise — single hash, no lattice loop. Much cheaper than simplex.
+  float hash2(vec2 p) {
+    p = fract(p * vec2(127.1, 311.7));
+    p += dot(p.yx, p + 19.19);
+    return fract(p.x * p.y);
+  }
+  float valueNoise(vec2 p) {
+    vec2 i = floor(p);
+    vec2 f = fract(p);
+    f = f * f * (3.0 - 2.0 * f);
+    return mix(
+      mix(hash2(i), hash2(i + vec2(1.0, 0.0)), f.x),
+      mix(hash2(i + vec2(0.0, 1.0)), hash2(i + vec2(1.0, 1.0)), f.x),
+      f.y
+    );
+  }
+
+  void main() {
+    vec2 uv = v_uv;
+    float screenAspect = u_resolution.x / u_resolution.y;
+
+    vec2 correctedUV = uv;
+    correctedUV.x *= screenAspect;
+    vec2 correctedMouse = u_mouse;
+    correctedMouse.x *= screenAspect;
+
+    // Two noise taps (X and Y warp) from one cheap value-noise function
+    float n1 = valueNoise(correctedUV * 2.0 + u_time * 0.18);
+    float n2 = valueNoise(correctedUV.yx * 2.0 + u_time * 0.22 + 5.3);
+    vec2 warpOffset = vec2(n1 - 0.5, n2 - 0.5) * 0.14;
+
+    vec2 warpedUV = correctedUV + warpOffset;
+    float energy = 0.0;
+
+    if (u_radius > 0.001) {
+      float d = length(warpedUV - correctedMouse);
+      if (d < u_radius) {
+        float x = d / u_radius;
+        energy += (1.0 - x * x) * (1.0 - x * x);
+      }
+    }
+
+    float mask = smoothstep(0.28, 0.32, energy);
+
+    vec2 imgCoord = (uv - u_imageBounds.xy) / u_imageBounds.zw;
+    float insideImage = step(0.0, imgCoord.x) * step(imgCoord.x, 1.0) *
+                        step(0.0, imgCoord.y) * step(imgCoord.y, 1.0);
+
+    vec4 tex = vec4(0.0);
+    if (insideImage > 0.5) {
+      tex = texture2D(u_texture, imgCoord);
+    }
+
+    float showTexture = u_hoverState * insideImage;
+    vec3 finalColor = mix(u_blobColor, tex.rgb, showTexture * tex.a);
+    float finalAlpha = mix(u_blobOpacity, 1.0, showTexture * tex.a) * mask;
+
+    finalColor = pow(finalColor, vec3(1.0 / 2.2));
+    gl_FragColor = vec4(finalColor, finalAlpha);
+  }
+`;
+
 const vertexShader = `
   varying vec2 v_uv;
   void main() {
@@ -243,7 +324,7 @@ type ShaderUniforms = {
   u_resolution: { value: THREE.Vector2 };
   u_radius: { value: number };
   u_time: { value: number };
-  u_imageBounds: { value: THREE.Vector4 }; 
+  u_imageBounds: { value: THREE.Vector4 };
   u_blobColor: { value: THREE.Color };
   u_blobOpacity: { value: number };
   u_hoverState: { value: number };
@@ -263,7 +344,7 @@ export default function HeroOverlay() {
   const ghostPathRef = useRef<SVGPathElement | null>(null);
   const ghostPathLengthRef = useRef(0);
   const ghostTimeRef = useRef(0);
-  
+
   const sceneRef = useRef<THREE.Scene | null>(null);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
   const cameraRef = useRef<THREE.OrthographicCamera | null>(null);
@@ -274,13 +355,19 @@ export default function HeroOverlay() {
   const targetHoverStateRef = useRef(0);
   const currentHoverStateRef = useRef(0);
 
-  const trailPositionsRef = useRef(Array.from({ length: TRAIL_LENGTH }, () => new THREE.Vector2(-10, -10)));
+  const trailPositionsRef = useRef(
+    Array.from({ length: TRAIL_LENGTH }, () => new THREE.Vector2(-10, -10)),
+  );
   const trailSizesRef = useRef<number[]>(new Array(TRAIL_LENGTH).fill(0));
   const trailIndexRef = useRef(0);
   const lastDropPosRef = useRef(new THREE.Vector2(-10, -10));
 
-  const splashPositionsRef = useRef(Array.from({ length: SPLASH_LENGTH }, () => new THREE.Vector2(-10, -10)));
-  const splashVelocitiesRef = useRef(Array.from({ length: SPLASH_LENGTH }, () => new THREE.Vector2(0, 0)));
+  const splashPositionsRef = useRef(
+    Array.from({ length: SPLASH_LENGTH }, () => new THREE.Vector2(-10, -10)),
+  );
+  const splashVelocitiesRef = useRef(
+    Array.from({ length: SPLASH_LENGTH }, () => new THREE.Vector2(0, 0)),
+  );
   const splashSizesRef = useRef<number[]>(new Array(SPLASH_LENGTH).fill(0));
   const splashIndexRef = useRef(0);
 
@@ -298,21 +385,27 @@ export default function HeroOverlay() {
 
   const [shouldBootWebGL, setShouldBootWebGL] = useState(false);
 
-  const handlePointerMove = useCallback((event: React.PointerEvent<HTMLDivElement>) => {
-    if (!configRef.current.POINTER_ENABLED) return;
-    const container = rootRef.current;
-    if (!container) return;
-    const rect = container.getBoundingClientRect();
-    const rawX = (event.clientX - rect.left) / rect.width;
-    const rawY = 1 - (event.clientY - rect.top) / rect.height;
-    targetMouseRef.current.set(clamp01(rawX), clamp01(rawY));
-    targetHoverStateRef.current = 1;
-    lastInteractionTimeRef.current = Date.now();
-  }, []);
+  const handlePointerMove = useCallback(
+    (event: React.PointerEvent<HTMLDivElement>) => {
+      if (!configRef.current.POINTER_ENABLED) return;
+      const container = rootRef.current;
+      if (!container) return;
+      const rect = container.getBoundingClientRect();
+      const rawX = (event.clientX - rect.left) / rect.width;
+      const rawY = 1 - (event.clientY - rect.top) / rect.height;
+      targetMouseRef.current.set(clamp01(rawX), clamp01(rawY));
+      targetHoverStateRef.current = 1;
+      lastInteractionTimeRef.current = Date.now();
+    },
+    [],
+  );
 
-  const handlePointerEnter = useCallback((event: React.PointerEvent<HTMLDivElement>) => {
-    handlePointerMove(event);
-  }, [handlePointerMove]);
+  const handlePointerEnter = useCallback(
+    (event: React.PointerEvent<HTMLDivElement>) => {
+      handlePointerMove(event);
+    },
+    [handlePointerMove],
+  );
 
   const handlePointerLeave = useCallback(() => {
     if (!configRef.current.POINTER_ENABLED) return;
@@ -345,8 +438,13 @@ export default function HeroOverlay() {
     const fullContainer = canvasContainerRef.current;
     if (!fullContainer) return;
 
+    const isMobile = window.matchMedia("(max-width: 768px)").matches;
+
     let disposed = false;
     let resizeObserver: ResizeObserver | null = null;
+    let visibilityObserver: IntersectionObserver | null = null;
+    let isVisible = true;
+    let frameCount = 0;
     const loader = new THREE.TextureLoader();
 
     loader.load(SAMURAI_IMG, (texture: THREE.Texture) => {
@@ -375,24 +473,51 @@ export default function HeroOverlay() {
       };
 
       const geometry = new THREE.PlaneGeometry(2, 2);
+      // Mobile uses a simpler shader (no trail/splash loops, cheaper noise)
       const material = new THREE.ShaderMaterial({
-        uniforms, vertexShader, fragmentShader, transparent: true, depthTest: false, depthWrite: false,
+        uniforms,
+        vertexShader,
+        fragmentShader: isMobile ? fragmentShaderMobile : fragmentShader,
+        transparent: true,
+        depthTest: false,
+        depthWrite: false,
       });
 
       scene.add(new THREE.Mesh(geometry, material));
 
       const renderer = new THREE.WebGLRenderer({
-        antialias: false, alpha: true, powerPreference: "high-performance",
+        antialias: false,
+        alpha: true,
+        // Low-power on mobile saves battery and avoids thermal throttling
+        powerPreference: isMobile ? "low-power" : "high-performance",
       });
 
       renderer.outputColorSpace = THREE.SRGBColorSpace;
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, configRef.current.MAX_PIXEL_RATIO));
-      renderer.setSize(width, height);
+      renderer.setPixelRatio(
+        Math.min(
+          window.devicePixelRatio || 1,
+          configRef.current.MAX_PIXEL_RATIO,
+        ),
+      );
+
+      // Mobile: render at half resolution — the blob is soft so it's imperceptible,
+      // but GPU fillrate work drops by 75%.
+      const renderScale = isMobile ? 0.5 : 1.0;
+      // Pass updateStyle=false so THREE doesn't shrink the canvas element to the
+      // render-buffer size; we set CSS manually to always fill the container.
+      renderer.setSize(
+        Math.round(width * renderScale),
+        Math.round(height * renderScale),
+        false,
+      );
 
       texture.minFilter = THREE.LinearFilter;
       texture.magFilter = THREE.LinearFilter;
 
       fullContainer.innerHTML = "";
+      // Canvas fills the container visually even when the render buffer is smaller
+      renderer.domElement.style.width = "100%";
+      renderer.domElement.style.height = "100%";
       fullContainer.appendChild(renderer.domElement);
 
       sceneRef.current = scene;
@@ -405,11 +530,14 @@ export default function HeroOverlay() {
       timerRef.current.connect(document);
 
       const updateBounds = () => {
-        if (!uniformsRef.current || !rootRef.current || !samuraiPosRef.current) return;
+        if (!uniformsRef.current || !rootRef.current || !samuraiPosRef.current)
+          return;
         const containerRect = rootRef.current.getBoundingClientRect();
         const samuraiRect = samuraiPosRef.current.getBoundingClientRect();
-        const normX = (samuraiRect.left - containerRect.left) / containerRect.width;
-        const normY = (containerRect.bottom - samuraiRect.bottom) / containerRect.height;
+        const normX =
+          (samuraiRect.left - containerRect.left) / containerRect.width;
+        const normY =
+          (containerRect.bottom - samuraiRect.bottom) / containerRect.height;
         const normW = samuraiRect.width / containerRect.width;
         const normH = samuraiRect.height / containerRect.height;
         uniformsRef.current.u_imageBounds.value.set(normX, normY, normW, normH);
@@ -419,8 +547,20 @@ export default function HeroOverlay() {
         if (!rendererRef.current || !uniformsRef.current) return;
         const nextWidth = Math.max(fullContainer.clientWidth, 1);
         const nextHeight = Math.max(fullContainer.clientHeight, 1);
-        rendererRef.current.setPixelRatio(Math.min(window.devicePixelRatio || 1, configRef.current.MAX_PIXEL_RATIO));
-        rendererRef.current.setSize(nextWidth, nextHeight, false);
+        rendererRef.current.setPixelRatio(
+          Math.min(
+            window.devicePixelRatio || 1,
+            configRef.current.MAX_PIXEL_RATIO,
+          ),
+        );
+        // Keep render buffer at renderScale but keep CSS filling the container
+        rendererRef.current.setSize(
+          Math.round(nextWidth * renderScale),
+          Math.round(nextHeight * renderScale),
+          false,
+        );
+        // Resolution uniform tracks display size (not buffer size) so the shader
+        // aspect-ratio calculation stays correct.
         uniformsRef.current.u_resolution.value.set(nextWidth, nextHeight);
         updateBounds();
       });
@@ -429,8 +569,34 @@ export default function HeroOverlay() {
       if (samuraiPosRef.current) resizeObserver.observe(samuraiPosRef.current);
       updateBounds();
 
+      // Pause the RAF loop when the hero scrolls out of view (saves GPU on mobile
+      // and avoids unnecessary work on desktop once user scrolls past).
+      visibilityObserver = new IntersectionObserver(
+        ([entry]) => {
+          isVisible = !!entry?.isIntersecting;
+        },
+        { threshold: 0 },
+      );
+      if (rootRef.current) visibilityObserver.observe(rootRef.current);
+
       const render = () => {
-        if (!rendererRef.current || !sceneRef.current || !cameraRef.current || !uniformsRef.current || !timerRef.current) return;
+        animationRef.current = requestAnimationFrame(render);
+
+        // Skip work entirely when the hero is off-screen
+        if (!isVisible) return;
+
+        // Mobile: cap to ~30 fps by skipping every other frame
+        frameCount++;
+        if (isMobile && frameCount % 2 !== 0) return;
+
+        if (
+          !rendererRef.current ||
+          !sceneRef.current ||
+          !cameraRef.current ||
+          !uniformsRef.current ||
+          !timerRef.current
+        )
+          return;
 
         timerRef.current.update();
         const delta = Math.min(timerRef.current.getDelta(), 1 / 30);
@@ -442,20 +608,30 @@ export default function HeroOverlay() {
         // Ghost time always advances — no start/stop, seamless loop
         ghostTimeRef.current += delta * 1000;
 
-        const isIdle = !cfg.POINTER_ENABLED ||
-          (now - lastInteractionTimeRef.current > ghost.idleThreshold);
+        const isIdle =
+          !cfg.POINTER_ENABLED ||
+          now - lastInteractionTimeRef.current > ghost.idleThreshold;
 
         if (isIdle && ghostPathRef.current && ghostPathLengthRef.current > 0) {
           // Continuous cosine loop: 0→1→0→1… with no visible seam
-          const t = (ghostTimeRef.current % ghost.travelDuration) / ghost.travelDuration;
+          const t =
+            (ghostTimeRef.current % ghost.travelDuration) /
+            ghost.travelDuration;
           const pathEased = (1 - Math.cos(t * 2 * Math.PI)) / 2;
           const pathPoint = ghostPathRef.current.getPointAtLength(
             ghostPathLengthRef.current * pathEased,
           );
 
           targetMouseRef.current.set(
-            clamp01(pathPoint.x / 100 + Math.sin(ghostTimeRef.current * 0.0045) * ghost.microJitterX),
-            clamp01(1 - pathPoint.y / 100 + Math.cos(ghostTimeRef.current * 0.0065) * ghost.microJitterY),
+            clamp01(
+              pathPoint.x / 100 +
+                Math.sin(ghostTimeRef.current * 0.0045) * ghost.microJitterX,
+            ),
+            clamp01(
+              1 -
+                pathPoint.y / 100 +
+                Math.cos(ghostTimeRef.current * 0.0065) * ghost.microJitterY,
+            ),
           );
 
           mouseVelocityRef.current.set(0, 0);
@@ -471,11 +647,17 @@ export default function HeroOverlay() {
           targetHoverStateRef.current = 1;
         } else {
           // User interaction: spring physics
-          const mouseToTargetX = targetMouseRef.current.x - smoothMouseRef.current.x;
-          const mouseToTargetY = targetMouseRef.current.y - smoothMouseRef.current.y;
-          mouseVelocityRef.current.x += mouseToTargetX * cfg.MOUSE_STIFFNESS * delta;
-          mouseVelocityRef.current.y += mouseToTargetY * cfg.MOUSE_STIFFNESS * delta;
-          mouseVelocityRef.current.multiplyScalar(Math.pow(cfg.MOUSE_DAMPING, delta * 60));
+          const mouseToTargetX =
+            targetMouseRef.current.x - smoothMouseRef.current.x;
+          const mouseToTargetY =
+            targetMouseRef.current.y - smoothMouseRef.current.y;
+          mouseVelocityRef.current.x +=
+            mouseToTargetX * cfg.MOUSE_STIFFNESS * delta;
+          mouseVelocityRef.current.y +=
+            mouseToTargetY * cfg.MOUSE_STIFFNESS * delta;
+          mouseVelocityRef.current.multiplyScalar(
+            Math.pow(cfg.MOUSE_DAMPING, delta * 60),
+          );
           smoothMouseRef.current.x += mouseVelocityRef.current.x * delta * 60;
           smoothMouseRef.current.y += mouseVelocityRef.current.y * delta * 60;
         }
@@ -484,13 +666,22 @@ export default function HeroOverlay() {
         smoothVelocityRef.current.lerp(mouseVelocityRef.current, 0.2);
 
         const velocityMagnitude = smoothVelocityRef.current.length();
-        const targetRadius = Math.min(velocityMagnitude * cfg.VELOCITY_MULTIPLIER, cfg.MAX_RADIUS);
+        const targetRadius = Math.min(
+          velocityMagnitude * cfg.VELOCITY_MULTIPLIER,
+          cfg.MAX_RADIUS,
+        );
 
         if (!isIdle) {
-          uniformsRef.current.u_radius.value += (targetRadius - uniformsRef.current.u_radius.value) * cfg.RADIUS_STIFFNESS * delta;
+          uniformsRef.current.u_radius.value +=
+            (targetRadius - uniformsRef.current.u_radius.value) *
+            cfg.RADIUS_STIFFNESS *
+            delta;
         }
 
-        if (smoothMouseRef.current.distanceTo(lastDropPosRef.current) > cfg.TRAIL_DROP_DISTANCE) {
+        if (
+          smoothMouseRef.current.distanceTo(lastDropPosRef.current) >
+          cfg.TRAIL_DROP_DISTANCE
+        ) {
           const idx = trailIndexRef.current;
           trailPositionsRef.current[idx].copy(smoothMouseRef.current);
           trailSizesRef.current[idx] = uniformsRef.current.u_radius.value;
@@ -500,7 +691,10 @@ export default function HeroOverlay() {
 
         for (let i = 0; i < TRAIL_LENGTH; i++) {
           if (trailSizesRef.current[i] > 0) {
-            trailSizesRef.current[i] = Math.max(0, trailSizesRef.current[i] - delta * cfg.TRAIL_SHRINK_SPEED);
+            trailSizesRef.current[i] = Math.max(
+              0,
+              trailSizesRef.current[i] - delta * cfg.TRAIL_SHRINK_SPEED,
+            );
           }
         }
 
@@ -513,25 +707,37 @@ export default function HeroOverlay() {
             smoothVelocityRef.current.x * 0.2 + Math.cos(angle) * force,
             smoothVelocityRef.current.y * 0.2 + Math.sin(angle) * force,
           );
-          splashSizesRef.current[sIdx] = Math.max(0.015, uniformsRef.current.u_radius.value * (0.15 + Math.random() * 0.3));
+          splashSizesRef.current[sIdx] = Math.max(
+            0.015,
+            uniformsRef.current.u_radius.value * (0.15 + Math.random() * 0.3),
+          );
           splashIndexRef.current = (sIdx + 1) % SPLASH_LENGTH;
         }
 
         for (let i = 0; i < SPLASH_LENGTH; i++) {
           if (splashSizesRef.current[i] > 0) {
-            splashPositionsRef.current[i].x += splashVelocitiesRef.current[i].x * delta;
-            splashPositionsRef.current[i].y += splashVelocitiesRef.current[i].y * delta;
-            splashVelocitiesRef.current[i].multiplyScalar(Math.pow(cfg.SPLASH_VELOCITY_DAMPING, delta * 60));
-            splashSizesRef.current[i] = Math.max(0, splashSizesRef.current[i] - delta * cfg.SPLASH_SHRINK_SPEED);
+            splashPositionsRef.current[i].x +=
+              splashVelocitiesRef.current[i].x * delta;
+            splashPositionsRef.current[i].y +=
+              splashVelocitiesRef.current[i].y * delta;
+            splashVelocitiesRef.current[i].multiplyScalar(
+              Math.pow(cfg.SPLASH_VELOCITY_DAMPING, delta * 60),
+            );
+            splashSizesRef.current[i] = Math.max(
+              0,
+              splashSizesRef.current[i] - delta * cfg.SPLASH_SHRINK_SPEED,
+            );
           }
         }
 
-        currentHoverStateRef.current += (targetHoverStateRef.current - currentHoverStateRef.current) * delta * 8;
+        currentHoverStateRef.current +=
+          (targetHoverStateRef.current - currentHoverStateRef.current) *
+          delta *
+          8;
         uniformsRef.current.u_hoverState.value = currentHoverStateRef.current;
         uniformsRef.current.u_time.value += delta;
 
         rendererRef.current.render(sceneRef.current, cameraRef.current);
-        animationRef.current = requestAnimationFrame(render);
       };
 
       animationRef.current = requestAnimationFrame(render);
@@ -539,8 +745,10 @@ export default function HeroOverlay() {
 
     return () => {
       disposed = true;
-      if (animationRef.current !== null) cancelAnimationFrame(animationRef.current);
+      if (animationRef.current !== null)
+        cancelAnimationFrame(animationRef.current);
       resizeObserver?.disconnect();
+      visibilityObserver?.disconnect();
       timerRef.current?.dispose();
       rendererRef.current?.dispose();
       if (fullContainer) fullContainer.innerHTML = "";
@@ -548,7 +756,7 @@ export default function HeroOverlay() {
   }, [shouldBootWebGL]);
 
   return (
-    <div 
+    <div
       className={styles.heroOverlay}
       ref={rootRef}
       onPointerEnter={handlePointerEnter}
@@ -565,18 +773,26 @@ export default function HeroOverlay() {
         <path ref={ghostPathRef} d={GHOST_SVG_PATH} fill="none" stroke="none" />
       </svg>
 
-      <Image 
-        src="/images/japon/hero/geishaHero.webp" 
-        alt="Hero Base" 
-        width={5000} 
+      <Image
+        src="/images/japon/hero/geishaHero.webp"
+        alt="Hero Base"
+        width={5000}
         height={5000}
         sizes="(max-width: 768px) 210vw, 62vw"
         quality={60}
-        className={styles.geishaHero} 
+        className={styles.geishaHero}
       />
-      
-      <div ref={canvasContainerRef} className={styles.canvasContainer} aria-hidden="true" />
-      <div ref={samuraiPosRef} className={styles.samuraiHeroPlaceholder} aria-hidden="true" />
+
+      <div
+        ref={canvasContainerRef}
+        className={styles.canvasContainer}
+        aria-hidden="true"
+      />
+      <div
+        ref={samuraiPosRef}
+        className={styles.samuraiHeroPlaceholder}
+        aria-hidden="true"
+      />
     </div>
   );
 }

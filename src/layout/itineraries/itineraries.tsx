@@ -215,6 +215,10 @@ export default function Itinerary() {
             }
           },
           invalidateOnRefresh: true,
+          onRefresh: () => {
+            // Keep Lenis limit in sync after pin spacer is inserted/resized
+            window.__lenis?.resize();
+          },
         },
       });
 

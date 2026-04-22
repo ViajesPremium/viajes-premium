@@ -9,6 +9,7 @@ declare global {
         easing?: (value: number) => number;
       },
     ) => void;
+    resize: () => void;
   }
 
   interface Window {

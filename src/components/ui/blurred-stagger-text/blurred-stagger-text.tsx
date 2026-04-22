@@ -4,7 +4,6 @@ import { motion } from "motion/react";
 import GradientText from "@/components/ui/gradient-text/gradient-text";
 import styles from "./blurred-stagger-text.module.css";
 
-// Definimos el tipo para las palabras destacadas
 type HighlightWord = {
   word: string;
   className?: string;
@@ -24,7 +23,6 @@ export const BlurredStagger = ({
   className?: string;
   highlights?: HighlightWord[];
   style?: React.CSSProperties;
-  /** Cuando se pasa, controla la animación externamente (sin whileInView) */
   isActive?: boolean;
 }) => {
   const container = {
@@ -51,62 +49,63 @@ export const BlurredStagger = ({
   const controlled = isActive !== undefined;
 
   return (
-    <motion.h2
-      variants={container}
-      initial="hidden"
-      animate={controlled ? (isActive ? "show" : "hidden") : undefined}
-      whileInView={controlled ? undefined : "show"}
-      viewport={controlled ? undefined : { once: false, amount: 0.4 }}
-      className={className}
-      style={{ ...style, display: "flex", flexWrap: "wrap", columnGap: "0.3em" }}
-    >
-      {text.split(" ").map((word, wordIndex) => {
-        // Limpiamos la palabra de signos de puntuación solo para la comparación
-        const cleanWord = word.replace(/[.,!?;:]/g, "");
-        const highlighted = highlights.find((h) => h.word === cleanWord);
+    <div className={className} style={style}>
+      {/* 1. TEXTO LIMPIO PARA SEO: Google lee esto con espacios perfectos */}
+      <span className={styles.srOnly}>{text}</span>
 
-        // --- SOLUCIÓN PARA EL TEXTO CON GRADIENTE ---
-        if (highlighted?.useGradient) {
-          return (
-            <motion.span
-              key={wordIndex}
-              // Aplicamos la animación a la palabra completa como si fuera una sola letra.
-              // Esto evita el bug de CSS de los navegadores y mantiene intacto el gradiente.
-              variants={letterAnimation}
-              transition={{ duration: 0.35, ease: "easeOut" }}
-              style={{ display: "inline-flex" }}
-            >
-              <GradientText
-                colors={highlighted.gradientColors}
-                animationSpeed={highlighted.gradientSpeed}
-                // Añadimos inline-flex para asegurarnos de que no rompa la línea actual
-                className={styles.highlighted}
-              >
-                {word}
-              </GradientText>
-            </motion.span>
-          );
-        }
+      {/* 2. TEXTO ANIMADO PARA USUARIOS: Oculto para Google con aria-hidden */}
+      <motion.div
+        variants={container}
+        initial="hidden"
+        animate={controlled ? (isActive ? "show" : "hidden") : undefined}
+        whileInView={controlled ? undefined : "show"}
+        viewport={controlled ? undefined : { once: false, amount: 0.4 }}
+        style={{ display: "flex", flexWrap: "wrap", columnGap: "0.3em" }}
+        aria-hidden="true"
+      >
+        {text.split(" ").map((word, wordIndex) => {
+          const cleanWord = word.replace(/[.,!?;:]/g, "");
+          const highlighted = highlights.find((h) => h.word === cleanWord);
 
-        // --- TEXTO NORMAL LETRA POR LETRA ---
-        return (
-          <span
-            key={wordIndex}
-            className={highlighted ? (highlighted.className ?? "") : ""}
-            style={{ display: "inline-flex" }}
-          >
-            {word.split("").map((char, charIndex) => (
+          if (highlighted?.useGradient) {
+            return (
               <motion.span
-                key={charIndex}
+                key={wordIndex}
                 variants={letterAnimation}
                 transition={{ duration: 0.35, ease: "easeOut" }}
+                style={{ display: "inline-flex" }}
               >
-                {char}
+                <GradientText
+                  colors={highlighted.gradientColors}
+                  animationSpeed={highlighted.gradientSpeed}
+                  className={styles.highlighted}
+                >
+                  {word}
+                </GradientText>
               </motion.span>
-            ))}
-          </span>
-        );
-      })}
-    </motion.h2>
+            );
+          }
+
+          // --- TEXTO NORMAL LETRA POR LETRA ---
+          return (
+            <span
+              key={wordIndex}
+              className={highlighted ? (highlighted.className ?? "") : ""}
+              style={{ display: "inline-flex" }}
+            >
+              {word.split("").map((char, charIndex) => (
+                <motion.span
+                  key={charIndex}
+                  variants={letterAnimation}
+                  transition={{ duration: 0.35, ease: "easeOut" }}
+                >
+                  {char}
+                </motion.span>
+              ))}
+            </span>
+          );
+        })}
+      </motion.div>
+    </div>
   );
 };

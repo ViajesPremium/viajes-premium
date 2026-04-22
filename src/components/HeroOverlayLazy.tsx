@@ -41,9 +41,10 @@ export default function HeroOverlayLazy() {
     ).matches;
     const isDesktop = window.matchMedia("(min-width: 769px)").matches;
 
-    // Keep mobile and reduced-motion on the static overlay to avoid
-    // paying the WebGL + shader cost where it has the least UX benefit.
-    if (!isDesktop || prefersReducedMotion) {
+    // Reduced-motion: keep static overlay, no WebGL.
+    // Mobile now gets the full WebGL effect thanks to the mobile-optimised shader
+    // (mediump, value noise, half-res buffer, 30fps cap, low-power GPU mode).
+    if (prefersReducedMotion) {
       return;
     }
 
@@ -62,14 +63,17 @@ export default function HeroOverlayLazy() {
         : null;
 
     if (requestIdle && cancelIdle) {
-      const idleId = requestIdle(enable, { timeout: 1200 });
+      // Give mobile a bit more time (browser is busier at first paint)
+      const timeout = isDesktop ? 1200 : 2000;
+      const idleId = requestIdle(enable, { timeout });
       return () => {
         cancelled = true;
         cancelIdle(idleId);
       };
     }
 
-    const timeoutId = setTimeout(enable, 450);
+    // Fallback setTimeout: slightly longer on mobile to not compete with first paint
+    const timeoutId = setTimeout(enable, isDesktop ? 450 : 800);
     return () => {
       cancelled = true;
       clearTimeout(timeoutId);

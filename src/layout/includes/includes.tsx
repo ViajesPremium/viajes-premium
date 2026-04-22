@@ -20,46 +20,51 @@ type IncludeItem = {
 
 const INCLUDE_ITEMS: IncludeItem[] = [
   {
-    "id": "stays",
-    "label": "I",
-    "title": "Estancias con carácter",
-    "description": "Espacios cuidadosamente seleccionados por ubicación, servicio y la experiencia que aportan al viaje.",
-    "image": "/images/japon/stockImage.webp"
+    id: "stays",
+    label: "I",
+    title: "Estancias con carácter",
+    description:
+      "Espacios cuidadosamente seleccionados por ubicación, servicio y la experiencia que aportan al viaje.",
+    image: "/images/japon/stockImage.webp",
   },
   {
-    "id": "transport",
-    "label": "II",
-    "title": "Traslados mejor coordinados",
-    "description": "Shinkansen, traslados privados y tiempos pensados para que el viaje fluya con más orden y comodidad.",
-    "image": "/images/japon/stockImage.webp"
+    id: "transport",
+    label: "II",
+    title: "Traslados mejor coordinados",
+    description:
+      "Shinkansen, traslados privados y tiempos pensados para que el viaje fluya con más orden y comodidad.",
+    image: "/images/japon/stockImage.webp",
   },
   {
-    "id": "culture",
-    "label": "III",
-    "title": "Experiencias culturales curadas",
-    "description": "Templos, barrios históricos y actividades elegidas para conectar con el Japón más auténtico.",
-    "image": "/images/japon/stockImage.webp"
+    id: "culture",
+    label: "III",
+    title: "Experiencias culturales curadas",
+    description:
+      "Templos, barrios históricos y actividades elegidas para conectar con el Japón más auténtico.",
+    image: "/images/japon/stockImage.webp",
   },
   {
-    "id": "gastronomy",
-    "label": "IV",
-    "title": "Escenas gastronómicas seleccionadas",
-    "description": "Reservas y momentos en la mesa pensados para descubrir Japón con más detalle y autenticidad.",
-    "image": "/images/japon/stockImage.webp"
+    id: "gastronomy",
+    label: "IV",
+    title: "Escenas gastronómicas seleccionadas",
+    description:
+      "Reservas y momentos en la mesa pensados para descubrir Japón con más detalle y autenticidad.",
+    image: "/images/japon/stockImage.webp",
   },
   {
-    "id": "support",
-    "label": "V",
-    "title": "Acompañamiento en cada etapa",
-    "description": "Atención en español antes y durante el viaje para acompañarle con claridad y resolver cada detalle.",
-    "image": "/images/japon/stockImage.webp"
-  }
+    id: "support",
+    label: "V",
+    title: "Acompañamiento en cada etapa",
+    description:
+      "Atención en español antes y durante el viaje para acompañarle con claridad y resolver cada detalle.",
+    image: "/images/japon/stockImage.webp",
+  },
 ];
 
 // Ajuste de ritmo horizontal (solo codigo, no UI):
 // - horizontalFactor: mayor valor = cards avanzan mas lento
 const INCLUDES_SCROLL_TUNING = {
-  horizontalFactor: 1,
+  horizontalFactor: 3,
 } as const;
 
 export default function Includes() {
@@ -73,7 +78,8 @@ export default function Includes() {
     const track = trackRef.current;
     if (!viewport) return;
     const computedTrackStyles = track ? window.getComputedStyle(track) : null;
-    const rawGap = computedTrackStyles?.columnGap || computedTrackStyles?.gap || "0";
+    const rawGap =
+      computedTrackStyles?.columnGap || computedTrackStyles?.gap || "0";
     const gap = Number.parseFloat(rawGap) || 0;
     viewport.scrollBy({
       left: (viewport.clientWidth + gap) * direction,
@@ -129,6 +135,10 @@ export default function Includes() {
           scrub: 0.9,
           anticipatePin: 1,
           invalidateOnRefresh: true,
+          onRefresh: () => {
+            // Keep Lenis limit in sync after pin spacer is inserted/resized
+            window.__lenis?.resize();
+          },
         });
 
         return () => {

@@ -11,44 +11,59 @@ import { BlurredStagger } from "@/components/ui/blurred-stagger-text/blurred-sta
 
 const FAQS = [
   {
-    "id": "1",
-    "question": "¿Qué incluye un viaje organizado por Japón Premium?",
-    "answer": "Cada itinerario incluye vuelos internacionales, hospedaje en ryokanes y hoteles boutique cuidadosamente seleccionados, traslados privados, guía especializado en cultura japonesa, y acceso a experiencias exclusivas como cenas omakase, ceremonias de té privadas y visitas a templos en horario cerrado al público."
+    id: "1",
+    question: "¿Japón es un destino complicado para viajar?",
+    answer:
+      "No, Japón no es un destino complicado si está bien planificado. Aunque el idioma y la logística pueden parecer desafiantes al inicio, el país es seguro, ordenado y fácil de recorrer. Cuando el viaje está bien estructurado, todo fluye con mayor claridad. En Japón Premium cuidamos ese proceso para que la experiencia se viva sin fricción.",
   },
   {
-    "id": "2",
-    "question": "¿Con cuánta anticipación debo reservar mi viaje?",
-    "answer": "Recomendamos reservar con al menos 3 meses de anticipación para garantizar disponibilidad en los mejores ryokanes y restaurantes. Para viajes durante la temporada de flor de cerezo (marzo-abril) o momiji (noviembre), sugerimos reservar con 6 meses de antelación."
+    id: "2",
+    question: "¿Se puede viajar a Japón sin hablar japonés?",
+    answer:
+      "Sí, es posible viajar a Japón sin hablar japonés. En ciudades como Tokio o Kioto hay señalización clara y servicios pensados para viajeros internacionales. Aun así, saber cómo moverse y qué decisiones tomar marca la diferencia en la experiencia por eso nuestros guías hablan español para que no te preocupes por el idioma.",
   },
   {
-    "id": "3",
-    "question": "¿Los viajes están disponibles en grupo o solo de forma privada?",
-    "answer": "Todos nuestros viajes son de carácter privado. No compartirás itinerario con otros viajeros. Esto nos permite personalizar cada día según tu ritmo, intereses y preferencias gastronómicas, culturales o de descanso."
+    id: "3",
+    question: "¿Cuántos días se recomiendan para viajar a Japón?",
+    answer:
+      "Se recomienda viajar entre 10 y 15 días para conocer Japón con mayor profundidad. Este tiempo permite recorrer varias ciudades y equilibrar cultura, gastronomía y experiencias. La duración ideal depende del ritmo del viajero y del tipo de experiencia que quiera construir.",
   },
   {
-    "id": "4",
-    "question": "¿Necesito saber japonés para viajar con ustedes?",
-    "answer": "No. Tu guía acompañante habla español y japonés de forma fluida, y se encarga de toda la comunicación durante el viaje. Además, preparamos una guía de viaje personalizada con frases básicas, mapas y recomendaciones para que te sientas completamente cómodo."
+    id: "4",
+    question: "¿Cuál es la mejor temporada para viajar a Japón?",
+    answer:
+      "No hay una única mejor temporada, depende del tipo de experiencia que buscas. Primavera (Sakuras) y otoño (Momiji) son muy populares por sus paisajes, pero también hay épocas con menos afluencia que permiten disfrutar Japón con mayor tranquilidad.",
   },
   {
-    "id": "5",
-    "question": "¿Qué pasa si necesito cambiar o cancelar mi reservación?",
-    "answer": "Ofrecemos políticas flexibles dependiendo del tiempo de anticipación. Cambios de fecha sin costo hasta 60 días antes del viaje. Para cancelaciones, devolvemos el 80% del depósito si se realizan con más de 90 días de anticipación. Consulta nuestros términos completos al momento de contratar."
+    id: "5",
+    question: "¿Es seguro viajar a Japón?",
+    answer:
+      "Sí, Japón es uno de los países más seguros del mundo. Se puede viajar con tranquilidad tanto en grandes ciudades como en zonas más tradicionales. Esa seguridad se aprovecha mucho más cuando el viaje está bien organizado y cada detalle está pensado.",
   },
   {
-    "id": "6",
-    "question": "¿Puedo viajar con necesidades alimentarias especiales?",
-    "answer": "Por supuesto. Japón tiene una gastronomía vastísima y es posible adaptar cada comida a dietas vegetarianas, veganas, sin gluten o con alergias específicas. Solo indícanos tus necesidades al reservar y coordinamos con todos los restaurantes con anticipación."
+    id: "6",
+    question: "¿Qué tipo de experiencias se pueden vivir en Japón?",
+    answer:
+      "Japón ofrece una combinación única de cultura, gastronomía, tradición, tecnología y naturaleza. Se pueden recorrer ciudades modernas, templos históricos y paisajes muy distintos en un mismo viaje. En Japón Premium diseñamos cada proyecto para integrar estos contrastes de forma coherente.",
   },
   {
-    "id": "7",
-    "question": "¿En qué temporada es mejor visitar Japón?",
-    "answer": "Japón es un destino extraordinario durante todo el año. La primavera (marzo-mayo) ofrece el icónico sakura; el otoño (octubre-noviembre) regala los colores del momiji. El verano es vibrante con festivales, y el invierno perfecto para onsen y paisajes nevados. Te ayudamos a elegir la época ideal según lo que quieres vivir."
-  }
+    id: "7",
+    question: "¿Es fácil moverse dentro de Japón?",
+    answer:
+      "Sí, moverse dentro de Japón es fácil gracias a su sistema de transporte eficiente y puntual. Los trenes y conexiones permiten recorrer el país de forma organizada y cómoda.",
+  },
+  {
+    id: "8",
+    question:
+      "¿Japón es un destino recomendable para viajar en pareja o en familia?",
+    answer:
+      "Sí, Japón es un destino ideal tanto para viajar en pareja como en familia ya que hay diversos parques de diversiones y experiencias que se disfrutan en compañía. La clave está en diseñar el recorrido según el tipo de experiencia que se quiere vivir.",
+  },
 ];
 
 export default function Faqs() {
   const sectionRef = useRef<HTMLElement | null>(null);
+  const mobileFiguresRef = useRef<HTMLDivElement | null>(null);
   const [openFaqId, setOpenFaqId] = useState<string>(() => FAQS[0]?.id ?? "");
 
   useEffect(() => {
@@ -71,6 +86,8 @@ export default function Faqs() {
     const EXIT_START_BOTTOM_VH = 0.86;
 
     let rafId: number | null = null;
+
+    const mobileFigures = mobileFiguresRef.current;
 
     const updateMotionProgress = () => {
       const rect = section.getBoundingClientRect();
@@ -96,6 +113,33 @@ export default function Faqs() {
         "--faq-motion-progress",
         motionProgress.toFixed(4),
       );
+
+      // ── Progreso independiente para las figuras mobile ────────────────────
+      // Trackeamos el propio elemento (no la sección entera) porque en mobile
+      // el acordeón puede ser muy largo y las figuras están al fondo.
+      if (mobileFigures) {
+        const fig = mobileFigures.getBoundingClientRect();
+
+        // Entrada: figuras suben desde la parte inferior del viewport
+        // Empieza cuando el top toca el borde inferior, termina al 40% del viewport.
+        const figEntryRaw = clamp(
+          (viewportHeight - fig.top) / (viewportHeight * 0.6),
+        );
+        const figEntryProgress = easeOutCubic(figEntryRaw);
+
+        // Salida tardía: solo cuando el bottom empieza a subir hacia la mitad
+        const figExitRaw = clamp(
+          (viewportHeight * 0.65 - fig.bottom) / (viewportHeight * 0.65),
+        );
+        const figExitProgress = easeInCubic(figExitRaw);
+
+        const figuresProgress = clamp(figEntryProgress * (1 - figExitProgress));
+
+        mobileFigures.style.setProperty(
+          "--faq-figures-progress",
+          figuresProgress.toFixed(4),
+        );
+      }
     };
 
     const requestUpdate = () => {
@@ -233,7 +277,7 @@ export default function Faqs() {
         </div>
       </div>
 
-      <div className={styles.mobileFigures} aria-hidden="true">
+      <div ref={mobileFiguresRef} className={styles.mobileFigures} aria-hidden="true">
         <div className={styles.mobileFigureLeft} />
         <div className={styles.mobileFigureRight} />
       </div>
@@ -245,6 +289,3 @@ export default function Faqs() {
     </section>
   );
 }
-
-
-

@@ -96,6 +96,10 @@ export default function CTAForm() {
           pinSpacing: true,
           scrub: scrubStrength,
           invalidateOnRefresh: true,
+          onRefresh: () => {
+            // Keep Lenis limit in sync after pin spacer is inserted/resized
+            window.__lenis?.resize();
+          },
         },
       });
 

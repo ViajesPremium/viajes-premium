@@ -51,7 +51,7 @@
   font-size: clamp(0.92rem, 1.6vw, 1.85rem);
 }
 
-/* â”€â”€ Editorial grid â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* —— Editorial Grid (Desktop) —————— */
 .editorialGrid {
   margin-top: clamp(4.4rem, 10vh, 8.5rem);
   display: flex;
@@ -73,17 +73,19 @@
   color: var(--black);
   text-transform: uppercase;
   letter-spacing: 0.008em;
-  line-height: 0.95;
+  line-height: 1; /* Ajustado para mejor centrado vertical */
   white-space: nowrap;
   font-size: clamp(3.4rem, 6.4vw, 6.4rem);
+  display: inline-flex;
+  align-items: center;
 }
 
 .lineRow {
   display: inline-flex;
-  align-items: flex-start;
+  align-items: center; /* CRUCIAL: Centra verticalmente texto y brackets */
   justify-content: center;
   gap: clamp(0.65rem, 1.2vw, 1.2rem);
-  margin-bottom: 0.3rem;
+  width: 100%;
 }
 
 .lineRowWithBracket {
@@ -92,43 +94,11 @@
 
 .lineText {
   position: relative;
+  display: inline-flex;
+  align-items: center;
 }
 
-.japanWord {
-  color: var(--black);
-}
-
-.secondaryUnderline {
-  text-decoration-line: underline;
-  text-decoration-color: var(--secondary-japon);
-  text-decoration-thickness: 0.08em;
-  text-underline-offset: 0.11em;
-}
-
-.goldWord {
-  display: inline-flex !important;
-  align-items: baseline;
-  justify-content: flex-start;
-  margin: 0 !important;
-  font: inherit;
-  font-weight: inherit !important;
-  line-height: inherit !important;
-  letter-spacing: inherit !important;
-  text-transform: inherit !important;
-  backdrop-filter: none !important;
-  cursor: inherit !important;
-  vertical-align: baseline;
-}
-
-.goldWord :global(.text-content) {
-  font: inherit;
-  font-weight: inherit !important;
-  line-height: inherit !important;
-  letter-spacing: inherit !important;
-  text-transform: inherit !important;
-  padding-inline: 0;
-}
-
+/* —— Brackets & Hover Box —————— */
 .bracketBox {
   position: relative;
   display: inline-flex;
@@ -138,6 +108,7 @@
   height: clamp(66px, 5vw, 86px);
   overflow: visible;
 }
+
 .bracketBox::before,
 .bracketBox::after {
   content: "";
@@ -150,111 +121,53 @@
   pointer-events: none;
   transition: border-color 0.25s ease;
 }
+
 .bracketBox::before {
   top: -9px;
   left: -9px;
   border-width: 1px 0 0 1px;
 }
+
 .bracketBox::after {
   right: -9px;
   bottom: -9px;
   border-width: 0 1px 1px 0;
 }
 
-.hoverBracket {
-  cursor: pointer;
-  isolation: isolate;
-  transform: translateZ(0);
-}
-
-.hoverBracket:hover {
-  z-index: 8;
-}
-
-.hoverBracket:hover::before,
-.hoverBracket:hover::after {
-  border-color: rgba(191, 149, 63, 0.62);
-}
-
-.hoverBracket:hover .flipInner {
-  animation-play-state: paused;
-}
-
 .bracketContent {
   position: relative;
   z-index: 6;
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.hoverPreview {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: clamp(150px, 15vw, 220px);
-  aspect-ratio: 4 / 5;
-  overflow: hidden;
-  border-radius: var(--radius-sm);
-  box-shadow: 0 24px 30px rgba(0, 0, 0, 0.24);
-  background: #f2eee6;
-  pointer-events: none;
-  z-index: 2;
-}
-
-.hoverPreview::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.24) 0%, transparent 28%),
-    linear-gradient(0deg, rgba(6, 10, 16, 0.16) 0%, transparent 42%);
-  pointer-events: none;
-}
-
-.hoverPreviewFrame {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
-
-.hoverPreviewImage {
-  object-fit: cover;
-}
-
-.inlineBracket span {
-  display: inline-block;
-  background: var(--secondary-japon);
-  color: var(--white);
-  font-family: var(--font-bigcaslon), sans-serif;
-  font-size: clamp(0.62rem, 0.82vw, 0.8rem);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  padding: 2px 5px 2px 5px;
+  line-height: 1;
 }
 
 .flipInner {
   display: inline-block;
-
   transform-style: preserve-3d;
   animation: bracketFlip 5.6s ease-in-out infinite;
 }
 
-.epochal,
-.ot {
+.ot,
+.epochal {
   margin: 0;
   color: var(--secondary-japon);
   font-family: var(--font-bigcaslon), sans-serif;
   line-height: 1;
+  display: flex;
+  align-items: center;
 }
+
 .epochal {
   font-size: clamp(1.7rem, 2.5vw, 2.45rem);
   font-weight: 500;
   letter-spacing: -0.03em;
   color: var(--white);
   background-color: var(--secondary-japon);
-  padding: 10px 5px 2px 5px;
+  padding: 8px 5px 4px 5px; /* Ajuste fino de padding */
 }
+
 .ot {
   font-size: clamp(3rem, 3.5vw, 3.2rem);
   font-weight: 500;
@@ -281,349 +194,117 @@
   }
 }
 
+/* —— Elementos del Rail y Otros —————— */
 .skiperSection {
   width: 100%;
   margin-top: 8rem;
 }
 
-.footerCopy {
-  margin: clamp(2.2rem, 8vh, 6.2rem) 0 0;
-  text-align: center;
-  margin-top: 10rem;
-  color: var(--secondary);
-  font-family: var(--font-nohemi), sans-serif;
-  font-style: italic;
-  font-size: clamp(1.5rem, 2.25vw, 2.55rem);
-}
-
 .ctaRow {
-  margin-top: clamp(1rem, 2.4vw, 3rem);
+  margin-top: clamp(2rem, 4vw, 4rem);
   display: flex;
+  flex-wrap: wrap;
   gap: 1rem;
   justify-content: center;
 }
 
-.marqueeWrapper {
-  margin-top: clamp(2rem, 6vw, 8rem);
-  width: 100%;
-  overflow: hidden;
-  mask-image: linear-gradient(
-    to right,
-    transparent 0%,
-    black 8%,
-    black 92%,
-    transparent 100%
-  );
-  -webkit-mask-image: linear-gradient(
-    to right,
-    transparent 0%,
-    black 8%,
-    black 92%,
-    transparent 100%
-  );
+.japanWord {
+  color: var(--black);
 }
 
-.marqueeTrack {
-  display: flex;
-  gap: 8rem;
-  width: max-content;
-  will-change: transform;
+.secondaryUnderline {
+  text-decoration-line: underline;
+  text-decoration-color: var(--secondary-japon);
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.11em;
 }
 
-.marqueeCard {
-  position: relative;
-  width: clamp(180px, 16vw, 260px);
-  aspect-ratio: 3 / 4;
-  border-radius: 12px;
-  overflow: hidden;
-  flex-shrink: 0;
-  cursor: default;
-}
-
-.marqueeImage {
-  object-fit: cover;
-  transition: transform 0.5s ease;
-}
-
-.marqueeCard:hover .marqueeImage {
-  transform: scale(1.05);
-}
-
-.marqueeOverlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.55) 0%, transparent 55%);
-  pointer-events: none;
-}
-
-.marqueeLabel {
-  position: absolute;
-  bottom: 0.75rem;
-  left: 0.85rem;
-  right: 0.85rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.15rem;
-}
-
-.marqueeLabelTitle {
-  font-family: var(--font-nohemi), sans-serif;
-  font-size: clamp(0.78rem, 0.85vw, 0.9rem);
-  font-weight: 600;
-  color: #fff;
-  line-height: 1.2;
-}
-
-.marqueeLabelSub {
-  font-family: var(--font-nohemi), sans-serif;
-  font-size: clamp(0.65rem, 0.7vw, 0.74rem);
-  font-weight: 300;
-  color: rgba(255, 255, 255, 0.72);
-}
-
-/* Responsive  */
+/* —— Responsive (Tablet & Mobile) —————— */
 @media (max-width: 1200px) {
   .editorialGrid {
-    margin-top: clamp(2rem, 5vh, 3.5rem);
+    margin-top: 4rem;
     gap: 0.7rem;
   }
-  .hoverPreview {
-    display: none;
-  }
   .bracketBox {
-    width: clamp(136px, 26vw, 188px);
-    height: clamp(60px, 10vw, 82px);
-  }
-  .lineRow {
-    gap: clamp(0.5rem, 1.6vw, 0.95rem);
-  }
-  .megaText {
-    font-size: clamp(3rem, 11vw, 6rem);
+    width: clamp(136px, 15vw, 188px);
+    height: clamp(60px, 8vw, 82px);
   }
 }
 
 @media (max-width: 768px) {
   .highlights {
-    padding: 4rem 1rem 4rem;
+    padding: 4rem 1rem;
+  }
+  .container {
+    align-items: center;
   }
 
-  .container {
-    padding: 1.15rem var(--site-px) 1.25rem;
-    align-items: center;
-  }
   .badgeRow {
-    width: 100%;
     justify-content: center;
-    margin-bottom: 0.7rem;
   }
-  .kicker {
-    margin-top: 1.55rem;
-    gap: 0.25rem;
-    width: 100%;
-    align-items: center;
-  }
-  .kickerTop {
-    font-size: clamp(0.74rem, 4vw, 1rem);
-    justify-content: center;
-    text-align: center;
-    row-gap: 0.1rem;
-  }
+
   .editorialGrid {
     display: none;
   }
+
   .editorialGridMobile {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
-    max-width: min(94vw, 410px);
-    margin-top: clamp(2rem, 18vw, 6rem);
-    margin-bottom: clamp(1.8rem, 12vw, 5rem);
-    gap: 0.6rem;
+    margin-top: 3rem;
+    gap: 0.8rem;
   }
-  .megaText {
-    font-size: clamp(2.05rem, 11.2vw, 3.2rem);
-    line-height: 0.86;
-    letter-spacing: 0.006em;
-    white-space: nowrap;
-    justify-content: center;
-    text-align: center;
-  }
-  .mobileLine {
-    width: 100%;
-    justify-content: center !important;
-    text-align: center !important;
-    column-gap: 0.2em !important;
-    row-gap: 0 !important;
-  }
+
   .mobileLineWithBracket {
-    width: 100%;
     display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
+    align-items: center; /* Alineación central para móviles */
     justify-content: center;
-    gap: 0.22em 0.28em;
+    flex-wrap: wrap;
+    gap: 0.5rem;
   }
-  .mobileLineWithBracket .mobileLine {
-    width: auto;
-    flex: 0 0 auto;
-    min-width: auto;
-  }
+
   .mobileBracket {
-    flex: 0 0 auto;
-    align-self: baseline;
-    margin-bottom: 0;
-    margin-inline: 5px;
-    transform: translateY(-0.4em);
+    margin: 0.2rem 0.5rem;
+    transform: none; /* Eliminado el desplazamiento que lo sacaba de centro */
   }
-  .lineText {
-    flex-wrap: wrap !important;
-    max-width: 100%;
-    justify-content: center;
+
+  .megaText {
+    font-size: clamp(2rem, 9vw, 3.2rem);
     text-align: center;
-    white-space: normal;
-  }
-  .kickerBottom {
-    font-size: clamp(0.95rem, 5.4vw, 1.25rem);
-    text-align: center;
-  }
-  .footerCopy {
-    font-size: clamp(1.12rem, 6vw, 1.55rem);
-  }
-  .ctaRow {
-    margin-top: 4rem;
-    width: 100%;
-    flex-wrap: wrap;
     justify-content: center;
-    gap: 0.7rem;
   }
+
   .bracketBox {
-    width: clamp(72px, 22vw, 96px);
-    height: clamp(28px, 9vw, 42px);
+    width: clamp(90px, 25vw, 120px);
+    height: clamp(40px, 10vw, 50px);
   }
+
   .bracketBox::before,
   .bracketBox::after {
     width: 8px;
-    height: 18px;
+    height: 16px;
   }
-  .bracketBox::before {
-    top: -4px;
-    left: -4px;
-  }
-  .bracketBox::after {
-    right: -4px;
-    bottom: -4px;
-  }
-  .bracketContent {
-    transform: scale(0.9);
-    transform-origin: center;
-  }
-  .inlineBracket span {
-    font-size: clamp(2rem, 5vw, 2rem);
-    letter-spacing: 0.03em;
-    padding: 1px 4px;
-  }
-  .lineRow {
-    width: 100%;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: flex-start;
-    column-gap: 0.4rem;
-    row-gap: 0.25rem;
-    margin-bottom: 0;
-  }
-  .lineRowWithBracket {
-    padding-right: 0;
-    min-height: 0;
-  }
-  .lineRowWithBracket > .lineText:first-child {
-    max-width: 100%;
-  }
-  .lineRowWithBracket .inlineBracket {
-    display: none !important;
-  }
+
   .ot {
-    font-size: clamp(1.15rem, 5.5vw, 1.6rem);
+    font-size: clamp(1.4rem, 6vw, 1.8rem);
   }
   .epochal {
-    font-size: clamp(0.84rem, 4vw, 1.16rem);
-    padding: 4px 3px 1px;
+    font-size: clamp(1rem, 4vw, 1.2rem);
+    padding: 4px 6px;
   }
+
   .flipInner {
     animation: none;
-  }
+  } /* Desactivado en móvil por legibilidad */
+
   .skiperSection {
-    margin-top: 3.75rem;
-  }
-  .marqueeWrapper {
-    margin-top: 1.5rem;
-  }
-  .marqueeCard {
-    width: clamp(150px, 42vw, 200px);
-  }
-
-}
-
-@media (max-width: 480px) {
-  .megaText {
-    font-size: clamp(2rem, 10vw, 3rem);
-  }
-  .editorialGrid {
-    max-width: min(95vw, 360px);
-  }
-  .editorialGridMobile {
-    max-width: min(95vw, 360px);
-  }
-
-  .bracketBox {
-    width: clamp(64px, 21vw, 82px);
-    height: clamp(24px, 8vw, 34px);
-  }
-  .bracketBox::before,
-  .bracketBox::after {
-    width: 7px;
-    height: 15px;
-  }
-  .bracketBox::before {
-    top: -3px;
-    left: -3px;
-  }
-  .bracketBox::after {
-    right: -3px;
-    bottom: -3px;
-  }
-  .bracketContent {
-    transform: scale(0.82);
-  }
-  .inlineBracket span {
-    font-size: clamp(1rem, 5vw, 8rem);
-    letter-spacing: 0.02em;
-    padding: 1px 3px;
-  }
-
-  .ot {
-    font-size: clamp(1rem, 6vw, 5rem);
-  }
-
-  .epochal {
-    font-size: clamp(0.68rem, 6vw, 2rem);
-  }
-
-  .lineRow {
-    row-gap: 0.2rem;
-  }
-  .lineRowWithBracket {
-    min-height: 0;
+    margin-top: 4rem;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .marqueeTrack {
+  .flipInner {
     animation: none;
   }
-  .hoverBracket:hover .flipInner {
-    animation-play-state: running;
-  }
 }
-
-

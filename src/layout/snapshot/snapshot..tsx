@@ -44,7 +44,7 @@ export default function Snapshot() {
     <section ref={sectionRef} className={styles.snapshot}>
       <div className={styles.postersWrapper}></div>
       <div className={styles.snapshotContent}>
-        <Badge text="Nueva seccion" variant="dark" align="center" />
+        <Badge text="Snapshot" variant="dark" align="center" />
         <BlurredStagger
           text="Más de 21 años diseñando experiencias premium."
           className={styles.trustStrip}

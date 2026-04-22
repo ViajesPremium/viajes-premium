@@ -117,7 +117,11 @@ export default function Hero() {
   return (
     <div className={styles.hero}>
       <div className={styles.titleContainer}>
-        <h1 className={styles.h1}>
+        {/* EL H1 PARA GOOGLE: Limpio, perfecto y sin duplicados */}
+        <h1 className={styles.srOnly}>Viaja a Japón desde México</h1>
+
+        {/* EL CONTENEDOR VISUAL: Cambiado a <div> y oculto para rastreadores */}
+        <div className={styles.h1} aria-hidden="true">
           <span className={`${styles.line} ${styles.desktopLine}`}>
             <span className={styles.wordSlot}>
               <PressureWord
@@ -172,6 +176,7 @@ export default function Hero() {
             </span>
           </span>
 
+          {/* Tu versión móvil se mantiene intacta aquí adentro */}
           <span className={styles.mobileLine}>
             <span className={styles.mobileSmall}>Viaja a</span>
             <span className={styles.mobileBig}>{`Jap\u00f3n`}</span>
@@ -180,7 +185,7 @@ export default function Hero() {
             <span className={styles.mobileSmall}>Desde</span>
             <span className={styles.mobileBig}>{`M\u00e9xico`}</span>
           </span>
-        </h1>
+        </div>
       </div>
 
       <div className={styles.contentContainer}>
