@@ -29,7 +29,7 @@ interface CursorPosition {
   previous: { x: number; y: number }
 }
 
-const cursorEffect: FC<MagneticCursorProps> = ({
+const CursorEffect: FC<MagneticCursorProps> = ({
   children,
   lerpAmount = 0.1,
   cursorSize = 24,
@@ -58,6 +58,7 @@ const cursorEffect: FC<MagneticCursorProps> = ({
   const [isCoarsePointer, setIsCoarsePointer] = useState(false)
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setHasMounted(true)
   }, [])
 
@@ -213,4 +214,4 @@ const cursorEffect: FC<MagneticCursorProps> = ({
   )
 }
 
-export default cursorEffect
+export default CursorEffect

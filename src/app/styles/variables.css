@@ -13,5 +13,9 @@
     --black: #16181b;
     --radius: 0.2rem;
 
-    /* Fonts are provided globally by next/font/local in src/app/layout.tsx */
+    /* Fonts (from globals.css @font-face) */
+    --font-nohemi: "Nohemi", sans-serif;
+    --font-bigcaslon: "BigCaslon", serif;
+    --font-thunder: "Thunder", sans-serif;
+    --font-thunder-lc: "ThunderLC", sans-serif;
 }

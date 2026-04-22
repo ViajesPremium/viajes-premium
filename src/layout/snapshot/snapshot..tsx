@@ -5,9 +5,9 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import styles from "./trust-strip.module.css";
-import { BlurredStagger } from "@/components/ui/blurred-stagger-text";
+import { BlurredStagger } from "@/components/ui/blurred-stagger-text/blurred-stagger-text";
 import BentoGrid from "./BentoGrid";
-import Badge from "@/components/ui/badge";
+import Badge from "@/components/ui/badge/badge";
 
 export default function Snapshot() {
   const sectionRef = useRef<HTMLElement>(null);

@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx tsc *)",
+      "Bash(npm install *)",
+      "Bash(node -e \"const p = require\\('./node_modules/lenis/package.json'\\); console.log\\(p.version, p.main, p.module, p.exports ? 'has exports' : 'no exports'\\)\")",
+      "Bash(npx next *)",
+      "Bash(npx eslint *)"
+    ]
+  }
+}

@@ -1,0 +1,560 @@
+/* ─────────────────────────────────────────────────────────────
+   FOOTER — layout: samurai centrado, logo detrás, grid 3 cols
+   ───────────────────────────────────────────────────────────── */
+
+.footer {
+  position: relative;
+  width: 100%;
+  background: #000;
+  color: #fff;
+  font-family: var(--font-nohemi), sans-serif;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+/* ── Rounded cap que cubre la sección anterior ── */
+.topCap {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 56px;
+  background-color: var(--bg, #fff);
+  border-bottom-left-radius: 36px;
+  border-bottom-right-radius: 36px;
+  z-index: 10;
+}
+
+/* ── Wrapper principal: contiene visual + contentGrid ── */
+.wrapper {
+  position: relative;
+  width: 100%;
+  height: calc(100svh - 58px);
+  min-height: 640px;
+  max-height: 1050px;
+}
+
+/* ══════════════════════════════════════════════
+   VISUAL: logo detrás (z1) + samurai encima (z2)
+   Ambos absolutamente posicionados dentro de .wrapper
+   ══════════════════════════════════════════════ */
+.visual {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Logo: centrado vertical + horizontal */
+.logoLayer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(58vw, 760px);
+  z-index: 1;
+}
+
+.logoWrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 1;
+}
+
+.logoImg {
+  object-fit: contain;
+  object-position: center;
+  opacity: 0.88;
+}
+
+/* Samurai: anclado al fondo, centrado horizontalmente */
+.samuraiLayer {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(38vw, 560px);
+  height: 88%;
+  z-index: 2;
+}
+
+/* Wrapper de animación — NO toca transform del padre (.samuraiLayer) */
+.samuraiMotion {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  will-change: transform, opacity;
+}
+
+.samuraiWrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.samuraiImg {
+  object-fit: contain !important;
+  object-position: bottom center !important;
+}
+
+/* ══════════════════════════════════════════════
+   CONTENT GRID — 3 columnas sobre el visual
+   ══════════════════════════════════════════════ */
+.contentGrid {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: grid;
+  grid-template-columns: minmax(240px, 1fr) 1.4fr minmax(220px, 1fr);
+  align-items: stretch;
+  padding: clamp(5rem, 8vh, 7rem) clamp(1.5rem, 4vw, 3.5rem) 2rem;
+  gap: 0 1rem;
+}
+
+/* Spacer central: deja ver el visual */
+.centerGap {
+  /* vacío — el samurai/logo se ven a través */
+}
+
+/* ── Columna izquierda ── */
+.colLeft {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-bottom: 1rem;
+}
+
+/* ── Columna derecha ── */
+.colRight {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+  text-align: right;
+  padding-bottom: 1rem;
+}
+
+/* ── Bloques de navegación ── */
+.navSection {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.sectionLabel {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-weight: 700;
+  color: #db2f21;
+}
+
+.navLinks {
+  display: flex;
+  flex-direction: column;
+  gap: 0.32rem;
+}
+
+.navLink {
+  color: rgba(255, 255, 255, 0.82);
+  text-decoration: none;
+  font-size: clamp(1rem, 2.2vw, 1.52rem);
+  font-weight: 900;
+  text-transform: uppercase;
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+  transition:
+    color 0.22s ease,
+    opacity 0.22s ease;
+}
+
+.navLink:hover {
+  color: #db2f21;
+  opacity: 1;
+}
+
+/* ── Map card ── */
+.mapCard {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  padding: 0.6rem;
+  border-radius: var(--radius-sm);
+  max-width: 350px;
+}
+
+.mapAddress {
+  margin: 0;
+  font-size: 0.62rem;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+}
+
+.mapFrameWrap {
+  width: 100%;
+  height: clamp(90px, 9.5vw, 130px);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.mapFrameWrap iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  filter: grayscale(1) brightness(0.84) contrast(1.05);
+}
+
+.mapButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 32px;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition:
+    background 0.22s ease,
+    border-color 0.22s ease;
+}
+
+.mapButton:hover {
+  background: rgba(255, 255, 255, 0.13);
+  border-color: rgba(255, 255, 255, 0.42);
+}
+
+/* ── Contact card ── */
+.contactCard {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.3rem;
+  padding: 0.6rem 0.72rem;
+  border-radius: var(--radius-sm);
+  max-width: 300px;
+  width: 100%;
+}
+
+.contactLabel {
+  margin: 0;
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.contactLink {
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+  font-size: 0.88rem;
+  letter-spacing: 0.01em;
+  transition: color 0.22s ease;
+}
+
+.contactLink:hover {
+  color: #db2f21;
+}
+
+/* ══════════════════════════════════════════════
+   BOTTOM BAR
+   ══════════════════════════════════════════════ */
+.bottomBar {
+  position: relative;
+  z-index: 8;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.8rem clamp(1.5rem, 4vw, 3.5rem);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.copy {
+  margin: 0;
+  flex: 1;
+  font-size: 0.68rem;
+  color: rgba(255, 255, 255, 0.48);
+  white-space: nowrap;
+}
+
+.backToTopBtn {
+  flex-shrink: 0;
+  border: 1px solid rgba(255, 255, 255, 0.32);
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff;
+  font-family: var(--font-nohemi), sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.46rem 1rem;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition:
+    background 0.22s ease,
+    border-color 0.22s ease,
+    transform 0.22s ease;
+}
+
+.backToTopBtn:hover {
+  background: rgba(255, 255, 255, 0.13);
+  border-color: rgba(255, 255, 255, 0.54);
+  transform: translateY(-1px);
+}
+
+.legalLinks {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.legalLinks a {
+  color: rgba(255, 255, 255, 0.5);
+  text-decoration: none;
+  font-size: 0.66rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition: color 0.22s ease;
+}
+
+.legalLinks a:hover {
+  color: #fff;
+}
+
+/* ══════════════════════════════════════════════
+   RESPONSIVE — tablet 1024px
+   ══════════════════════════════════════════════ */
+@media (max-width: 1024px) {
+  .wrapper {
+    max-height: 980px;
+  }
+
+  .logoLayer {
+    width: min(68vw, 680px);
+  }
+
+  .samuraiLayer {
+    width: min(44vw, 480px);
+    height: 84%;
+  }
+
+  .contentGrid {
+    grid-template-columns: minmax(210px, 1fr) 1.2fr minmax(200px, 1fr);
+    padding-inline: clamp(1.2rem, 3vw, 2.5rem);
+  }
+
+  .navLink {
+    font-size: clamp(1rem, 2.6vw, 1.28rem);
+  }
+}
+
+/* ══════════════════════════════════════════════
+   RESPONSIVE — mobile 768px
+   Contenido ARRIBA → samurai/logo ABAJO (como el ejemplo)
+   ══════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  .topCap {
+    height: 42px;
+    border-bottom-left-radius: 24px;
+    border-bottom-right-radius: 24px;
+  }
+
+  /* Wrapper: columna flex, auto height */
+  .wrapper {
+    height: auto;
+    min-height: auto;
+    max-height: none;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── Grid de nav: PRIMERO (order 0) ── */
+  .contentGrid {
+    order: 0;
+    position: relative;
+    inset: auto;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    height: auto;
+    padding: clamp(4rem, 8vh, 5.5rem) 1.1rem 1.4rem;
+    gap: 1.2rem 1rem;
+    align-items: start;
+  }
+
+  .centerGap {
+    display: none;
+  }
+
+  /* display:contents hace que los hijos participen directo en el grid padre */
+  .colLeft,
+  .colRight {
+    display: contents;
+  }
+
+  /* Nav de páginas → columna 1, fila 1 */
+  .colLeft > .navSection {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  /* Nav de redes → columna 2, fila 1 */
+  .colRight > .navSection {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  /* Mapa: ancho completo, fila 2 */
+  .mapCard {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+
+  /* Contacto: ancho completo, fila 3 */
+  .contactCard {
+    grid-column: 1 / -1;
+    grid-row: 3;
+    align-items: flex-start;
+  }
+
+  .sectionLabel {
+    font-size: 0.6rem;
+  }
+
+  .navLink {
+    font-size: clamp(0.95rem, 4.4vw, 1.18rem);
+  }
+
+  .mapCard {
+    max-width: none;
+    width: 100%;
+    padding: 0.5rem;
+    gap: 0.4rem;
+  }
+
+  .mapAddress {
+    font-size: 0.56rem;
+  }
+
+  .mapFrameWrap {
+    height: 86px;
+  }
+
+  .mapButton {
+    font-size: 0.58rem;
+    min-height: 28px;
+  }
+
+  .contactCard {
+    max-width: none;
+    width: 100%;
+    margin-left: 0;
+    padding: 0.5rem;
+  }
+
+  .contactLabel {
+    font-size: 0.58rem;
+  }
+
+  .contactLink {
+    font-size: 0.78rem;
+  }
+
+  /* ── Visual hero: ÚLTIMO (order 1) — samurai grande al fondo ── */
+  .visual {
+    order: 1;
+    position: relative;
+    inset: auto;
+    height: 60svh;
+    min-height: 340px;
+    flex-shrink: 0;
+    /* overflow visible para que el samurai pueda sobresalir levemente */
+    overflow: visible;
+  }
+
+  /* Logo: centrado en el bloque visual, más grande */
+  .logoLayer {
+    position: absolute;
+    top: 42%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: min(90vw, 480px);
+  }
+
+  /* Samurai: grande, centrado, anclado al fondo */
+  .samuraiLayer {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(86vw, 400px);
+    height: 96%;
+  }
+
+  /* Bottom bar */
+  .bottomBar {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.9rem 1rem 1.1rem;
+  }
+
+  .copy {
+    order: 3;
+    text-align: center;
+    font-size: 0.6rem;
+    white-space: normal;
+  }
+
+  .backToTopBtn {
+    order: 1;
+    font-size: 0.64rem;
+    padding: 0.42rem 0.9rem;
+  }
+
+  .legalLinks {
+    order: 2;
+    flex: none;
+    justify-content: center;
+    gap: 0.9rem;
+  }
+}
+
+/* ══════════════════════════════════════════════
+   RESPONSIVE — small phones 430px
+   ══════════════════════════════════════════════ */
+@media (max-width: 430px) {
+  .visual {
+    height: 56svh;
+    min-height: 300px;
+  }
+
+  .logoLayer {
+    width: min(92vw, 360px);
+  }
+
+  .samuraiLayer {
+    width: min(90vw, 340px);
+    height: 94%;
+  }
+
+  .contentGrid {
+    padding-inline: 0.9rem;
+    gap: 1rem 0.7rem;
+  }
+
+  .navLink {
+    font-size: clamp(0.88rem, 4.1vw, 1rem);
+  }
+
+  .mapFrameWrap {
+    height: 76px;
+  }
+}

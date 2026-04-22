@@ -4,11 +4,10 @@
   background-color: var(--bg);
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   position: relative;
   overflow: hidden;
-  padding-top: 2.5rem;
-  padding-bottom: 2.5rem;
+  padding: 1rem;
 }
 
 .textContainer {
@@ -159,6 +158,10 @@
 }
 
 @media (max-width: 640px) {
+.snapshot {
+  padding: 4rem 1rem 4rem;
+}
+
   .bentoGrid {
     grid-template-columns: 1fr;
   }

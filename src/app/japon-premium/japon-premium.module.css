@@ -1,0 +1,45 @@
+.main {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+}
+
+.highlightsLayer {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  overflow: visible;
+  background: var(--bg);
+}
+
+.itinerariesLayer {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  overflow: hidden;
+  background: var(--black);
+  margin-top: -100vh;
+}
+
+.includesLayer {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  overflow: hidden;
+  background: var(--black);
+}
+
+.testimonialsLayer {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  overflow: visible;
+  background: var(--bg);
+  margin-top: 0;
+}
+
+@media (max-width: 768px) {
+  .testimonialsLayer {
+    margin-top: 0;
+  }
+}

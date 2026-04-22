@@ -8,37 +8,88 @@ import styles from "./heroOverlay.module.css";
 // ====================================================================
 // CONFIGURACIÓN DEL EFECTO (Parámetros ajustables)
 // ====================================================================
+
+// Compartidos — afectan el shader y no pueden dividirse por breakpoint
 const TRAIL_LENGTH = 16;         // Cantidad de gotas de agua que forman la "cola" o estela al mover el ratón.
 const SPLASH_LENGTH = 16;        // Cantidad de gotitas sueltas (salpicaduras) cuando mueves el ratón muy rápido.
-const MAX_PIXEL_RATIO = 2;       // Límite de resolución (2 es ideal). Evita sobrecalentar celulares de gama alta.
 
-const MAX_RADIUS = 0.2;          // Tamaño máximo de la mancha de agua principal bajo el cursor (0.2 = 20% de la pantalla).
-const BLOB_COLOR = "#000000";    // Color de la mancha (actualmente negro).
-const BLOB_OPACITY = 0.2;        // Nivel de transparencia de la mancha (0 a 1). 0.2 es sutil y elegante.
-const TRAIL_SHRINK_SPEED = 0.3;  // Velocidad a la que desaparece la estela. Mayor número = desaparece más rápido.
-const TRAIL_DROP_DISTANCE = 0.005; // Distancia que debes mover el cursor para que caiga una nueva gota de estela.
-const VELOCITY_MULTIPLIER = 6;   // Multiplicador de tamaño: entre más rápido muevas el cursor, más crece la mancha.
-const SPLASH_SHRINK_SPEED = 0.6; // Qué tan rápido se evaporan las salpicaduras pequeñas.
-const SPLASH_VELOCITY_DAMPING = 0.94; // Fricción de las salpicaduras (qué tan rápido se frenan tras salir disparadas).
-const MOUSE_STIFFNESS = 90;      // Rapidez con la que la mancha persigue al cursor (mayor = más pegado al ratón).
-const MOUSE_DAMPING = 0.15;      // Inercia/Suavidad del movimiento del ratón.
-const RADIUS_STIFFNESS = 8;      // Rapidez con la que la mancha se agranda/encoje (elasticidad).
+type GhostConfig = {
+  idleThreshold: number;
+  travelDuration: number;
+  radiusLerp: number;
+  posLerp: number;           // Suavidad del seguimiento de posición durante el ghost (0.05 = lento, 0.3 = rápido).
+  microJitterX: number;
+  microJitterY: number;
+};
 
-const GHOST_CONFIG = {
-  idleThreshold: 700,
-  introDuration: 3000,
-  travelDuration: 12000,
-  forcedRadius: 0.1,
-  pauseMin: 300,
-  pauseMax: 600,
-  smoothing: 2,
-  introSmoothing: 0.9,
-  fadeInDuration: 520,
-  fadeOutDuration: 620,
-  endHoldDuration: 180,
-  radiusLerp: 0.1,
-  microJitterX: 0.0012,
-  microJitterY: 0.0008,
+type EffectConfig = {
+  MAX_PIXEL_RATIO: number;       // Límite de resolución. Evita sobrecalentar celulares de gama alta.
+  MAX_RADIUS: number;            // Tamaño máximo de la mancha principal (0.2 = 20% de la pantalla).
+  BLOB_COLOR: string;            // Color de la mancha.
+  BLOB_OPACITY: number;          // Transparencia de la mancha (0 a 1).
+  TRAIL_SHRINK_SPEED: number;    // Velocidad a la que desaparece la estela.
+  TRAIL_DROP_DISTANCE: number;   // Distancia mínima para soltar una nueva gota de estela.
+  VELOCITY_MULTIPLIER: number;   // Entre más rápido el cursor, más crece la mancha.
+  SPLASH_SHRINK_SPEED: number;   // Qué tan rápido se evaporan las salpicaduras.
+  SPLASH_VELOCITY_DAMPING: number; // Fricción de las salpicaduras.
+  MOUSE_STIFFNESS: number;       // Rapidez con la que la mancha persigue al cursor.
+  MOUSE_DAMPING: number;         // Inercia/suavidad del movimiento.
+  RADIUS_STIFFNESS: number;      // Elasticidad al agrandarse/encojer la mancha.
+  BASE_RADIUS: number;           // Tamaño base del efecto ghost. En mobile es el tamaño fijo (no hay velocidad).
+  POINTER_ENABLED: boolean;      // Si false, ignora completamente el input del usuario.
+  GHOST: GhostConfig;
+};
+
+// ── Desktop ─────────────────────────────────────────────────────────
+const DESKTOP_CONFIG: EffectConfig = {
+  MAX_PIXEL_RATIO: 10,
+  MAX_RADIUS: 0.2,
+  BLOB_COLOR: "#000000",
+  BLOB_OPACITY: 0.05,
+  TRAIL_SHRINK_SPEED: 0.3,
+  TRAIL_DROP_DISTANCE: 0.005,
+  VELOCITY_MULTIPLIER: 9,
+  SPLASH_SHRINK_SPEED: 0.6,
+  SPLASH_VELOCITY_DAMPING: 0.94,
+  MOUSE_STIFFNESS: 90,
+  MOUSE_DAMPING: 0.5,
+  RADIUS_STIFFNESS: 8,
+  BASE_RADIUS: 0.1,
+  POINTER_ENABLED: true,
+  GHOST: {
+    idleThreshold: 700,
+    travelDuration: 12000,
+    radiusLerp: 0.1,
+    posLerp: 0.12,
+    microJitterX: 0.0012,
+    microJitterY: 0.0008,
+  },
+};
+
+// ── Mobile ──────────────────────────────────────────────────────────
+const MOBILE_CONFIG: EffectConfig = {
+  MAX_PIXEL_RATIO: 10,
+  MAX_RADIUS: 10,
+  BLOB_COLOR: "#000000",
+  BLOB_OPACITY: 0.05,
+  TRAIL_SHRINK_SPEED: 0.3,
+  TRAIL_DROP_DISTANCE: 0.005,
+  VELOCITY_MULTIPLIER: 9,
+  SPLASH_SHRINK_SPEED: 0.6,
+  SPLASH_VELOCITY_DAMPING: 0.94,
+  MOUSE_STIFFNESS: 90,
+  MOUSE_DAMPING: 0.15,
+  RADIUS_STIFFNESS: 1,
+  BASE_RADIUS: 0.17,
+  POINTER_ENABLED: false,
+  GHOST: {
+    idleThreshold: 300,
+    travelDuration: 20000,
+    radiusLerp: 0.1,
+    posLerp: 0.12,
+    microJitterX: 0.0012,
+    microJitterY: 0.0008,
+  },
 };
 
 const GHOST_SVG_PATH =
@@ -204,13 +255,6 @@ type ShaderUniforms = {
 
 const clamp01 = (value: number) => Math.min(Math.max(value, 0), 1);
 
-const easeInOutQuart = (value: number) =>
-  value < 0.5
-    ? 8 * value * value * value * value
-    : 1 - Math.pow(-2 * value + 2, 4) / 2;
-
-const easeOutCubic = (value: number) => 1 - Math.pow(1 - value, 3);
-
 export default function HeroOverlay() {
   const rootRef = useRef<HTMLDivElement | null>(null);
   const canvasContainerRef = useRef<HTMLDivElement | null>(null);
@@ -218,16 +262,7 @@ export default function HeroOverlay() {
 
   const ghostPathRef = useRef<SVGPathElement | null>(null);
   const ghostPathLengthRef = useRef(0);
-  const ghostVisualStrengthRef = useRef(0);
-  const ghostTargetVisualStrengthRef = useRef(0);
-  const ghostEndingRef = useRef(false);
-  const ghostEndHoldUntilRef = useRef(0);
-  const ghostIsActiveRef = useRef(false);
-  const ghostElapsedRef = useRef(0);
-  const ghostPauseUntilRef = useRef(0);
-  const ghostIntroStartRef = useRef(new THREE.Vector2(0.5, 0.5));
-  const ghostPathStartRef = useRef(new THREE.Vector2(0.5, 0.95));
-  const ghostTempTargetRef = useRef(new THREE.Vector2());
+  const ghostTimeRef = useRef(0);
   
   const sceneRef = useRef<THREE.Scene | null>(null);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
@@ -255,35 +290,17 @@ export default function HeroOverlay() {
   const smoothVelocityRef = useRef(new THREE.Vector2(0, 0));
   const lastInteractionTimeRef = useRef(0);
 
+  const configRef = useRef<EffectConfig>(
+    typeof window !== "undefined" && window.innerWidth <= 768
+      ? MOBILE_CONFIG
+      : DESKTOP_CONFIG,
+  );
+
   const [shouldBootWebGL, setShouldBootWebGL] = useState(false);
 
-  const resetGhostState = useCallback(() => {
-    ghostIsActiveRef.current = false;
-    ghostElapsedRef.current = 0;
-    ghostEndingRef.current = false;
-    ghostTargetVisualStrengthRef.current = 0;
-  }, []);
-
-  const startGhostCycle = useCallback(() => {
-    if (!ghostPathRef.current || ghostPathLengthRef.current <= 0) return;
-
-    const startPoint = ghostPathRef.current.getPointAtLength(0);
-
-    ghostPathStartRef.current.set(
-      clamp01(startPoint.x / 100),
-      clamp01(1 - startPoint.y / 100),
-    );
-    ghostIntroStartRef.current.copy(smoothMouseRef.current);
-    ghostElapsedRef.current = 0;
-    ghostIsActiveRef.current = true;
-    ghostEndingRef.current = false;
-    ghostVisualStrengthRef.current = 0;
-    ghostTargetVisualStrengthRef.current = 1;
-    targetHoverStateRef.current = 1;
-  }, []);
-
   const handlePointerMove = useCallback((event: React.PointerEvent<HTMLDivElement>) => {
-    const container = rootRef.current; 
+    if (!configRef.current.POINTER_ENABLED) return;
+    const container = rootRef.current;
     if (!container) return;
     const rect = container.getBoundingClientRect();
     const rawX = (event.clientX - rect.left) / rect.width;
@@ -291,20 +308,29 @@ export default function HeroOverlay() {
     targetMouseRef.current.set(clamp01(rawX), clamp01(rawY));
     targetHoverStateRef.current = 1;
     lastInteractionTimeRef.current = Date.now();
-    resetGhostState();
-  }, [resetGhostState]);
+  }, []);
 
   const handlePointerEnter = useCallback((event: React.PointerEvent<HTMLDivElement>) => {
     handlePointerMove(event);
   }, [handlePointerMove]);
 
   const handlePointerLeave = useCallback(() => {
+    if (!configRef.current.POINTER_ENABLED) return;
     targetHoverStateRef.current = 0;
   }, []);
 
   useEffect(() => {
     if (!ghostPathRef.current) return;
     ghostPathLengthRef.current = ghostPathRef.current.getTotalLength();
+  }, []);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 768px)");
+    const onBreakpoint = (e: MediaQueryListEvent) => {
+      configRef.current = e.matches ? MOBILE_CONFIG : DESKTOP_CONFIG;
+    };
+    mq.addEventListener("change", onBreakpoint);
+    return () => mq.removeEventListener("change", onBreakpoint);
   }, []);
 
   useEffect(() => {
@@ -338,9 +364,9 @@ export default function HeroOverlay() {
         u_resolution: { value: new THREE.Vector2(width, height) },
         u_radius: { value: 0 },
         u_time: { value: 0 },
-        u_imageBounds: { value: new THREE.Vector4(0, 0, 1, 1) }, 
-        u_blobColor: { value: new THREE.Color(BLOB_COLOR) },
-        u_blobOpacity: { value: BLOB_OPACITY },
+        u_imageBounds: { value: new THREE.Vector4(0, 0, 1, 1) },
+        u_blobColor: { value: new THREE.Color(configRef.current.BLOB_COLOR) },
+        u_blobOpacity: { value: configRef.current.BLOB_OPACITY },
         u_hoverState: { value: 0 },
         u_trailPositions: { value: trailPositionsRef.current },
         u_trailSizes: { value: trailSizesRef.current },
@@ -360,7 +386,7 @@ export default function HeroOverlay() {
       });
 
       renderer.outputColorSpace = THREE.SRGBColorSpace;
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, MAX_PIXEL_RATIO));
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, configRef.current.MAX_PIXEL_RATIO));
       renderer.setSize(width, height);
 
       texture.minFilter = THREE.LinearFilter;
@@ -393,7 +419,7 @@ export default function HeroOverlay() {
         if (!rendererRef.current || !uniformsRef.current) return;
         const nextWidth = Math.max(fullContainer.clientWidth, 1);
         const nextHeight = Math.max(fullContainer.clientHeight, 1);
-        rendererRef.current.setPixelRatio(Math.min(window.devicePixelRatio || 1, MAX_PIXEL_RATIO));
+        rendererRef.current.setPixelRatio(Math.min(window.devicePixelRatio || 1, configRef.current.MAX_PIXEL_RATIO));
         rendererRef.current.setSize(nextWidth, nextHeight, false);
         uniformsRef.current.u_resolution.value.set(nextWidth, nextHeight);
         updateBounds();
@@ -410,151 +436,61 @@ export default function HeroOverlay() {
         const delta = Math.min(timerRef.current.getDelta(), 1 / 30);
         const now = Date.now();
 
-        const visualFadeSpeed =
-          ghostTargetVisualStrengthRef.current > ghostVisualStrengthRef.current
-            ? delta * (1000 / GHOST_CONFIG.fadeInDuration) * 8
-            : delta * (1000 / GHOST_CONFIG.fadeOutDuration) * 8;
+        const cfg = configRef.current;
+        const ghost = cfg.GHOST;
 
-        ghostVisualStrengthRef.current = THREE.MathUtils.lerp(
-          ghostVisualStrengthRef.current,
-          ghostTargetVisualStrengthRef.current,
-          Math.min(visualFadeSpeed, 1),
-        );
+        // Ghost time always advances — no start/stop, seamless loop
+        ghostTimeRef.current += delta * 1000;
 
-        const isIdle =
-          now - lastInteractionTimeRef.current > GHOST_CONFIG.idleThreshold;
+        const isIdle = !cfg.POINTER_ENABLED ||
+          (now - lastInteractionTimeRef.current > ghost.idleThreshold);
 
-        if (isIdle) {
-          const totalCycleDuration =
-            GHOST_CONFIG.introDuration + GHOST_CONFIG.travelDuration;
+        if (isIdle && ghostPathRef.current && ghostPathLengthRef.current > 0) {
+          // Continuous cosine loop: 0→1→0→1… with no visible seam
+          const t = (ghostTimeRef.current % ghost.travelDuration) / ghost.travelDuration;
+          const pathEased = (1 - Math.cos(t * 2 * Math.PI)) / 2;
+          const pathPoint = ghostPathRef.current.getPointAtLength(
+            ghostPathLengthRef.current * pathEased,
+          );
 
-          if (!ghostIsActiveRef.current && now >= ghostPauseUntilRef.current) {
-            startGhostCycle();
-          }
+          targetMouseRef.current.set(
+            clamp01(pathPoint.x / 100 + Math.sin(ghostTimeRef.current * 0.0045) * ghost.microJitterX),
+            clamp01(1 - pathPoint.y / 100 + Math.cos(ghostTimeRef.current * 0.0065) * ghost.microJitterY),
+          );
 
-          if (
-            ghostIsActiveRef.current &&
-            ghostPathRef.current &&
-            ghostPathLengthRef.current > 0
-          ) {
-            ghostElapsedRef.current += delta * 1000;
+          mouseVelocityRef.current.set(0, 0);
+          const f = 1 - Math.pow(1 - ghost.posLerp, delta * 60);
+          smoothMouseRef.current.lerp(targetMouseRef.current, Math.min(f, 1));
 
-            const elapsed = ghostElapsedRef.current;
-            const introDone = elapsed >= GHOST_CONFIG.introDuration;
+          uniformsRef.current.u_radius.value = THREE.MathUtils.lerp(
+            uniformsRef.current.u_radius.value,
+            cfg.BASE_RADIUS,
+            ghost.radiusLerp,
+          );
 
-            if (!introDone) {
-              const introProgress = clamp01(
-                elapsed / GHOST_CONFIG.introDuration,
-              );
-              const introEased = easeOutCubic(introProgress);
-
-              ghostTempTargetRef.current
-                .copy(ghostIntroStartRef.current)
-                .lerp(ghostPathStartRef.current, introEased);
-              targetMouseRef.current.lerp(
-                ghostTempTargetRef.current,
-                GHOST_CONFIG.introSmoothing,
-              );
-
-              const introRadiusTarget =
-                GHOST_CONFIG.forcedRadius *
-                0.28 *
-                introProgress *
-                ghostVisualStrengthRef.current;
-
-              uniformsRef.current.u_radius.value = THREE.MathUtils.lerp(
-                uniformsRef.current.u_radius.value,
-                introRadiusTarget,
-                GHOST_CONFIG.radiusLerp * 0.8,
-              );
-            } else {
-              const travelElapsed = elapsed - GHOST_CONFIG.introDuration;
-              const travelProgress = clamp01(
-                travelElapsed / GHOST_CONFIG.travelDuration,
-              );
-              const pathProgress =
-                travelProgress <= 0.5
-                  ? travelProgress * 2
-                  : 1 - (travelProgress - 0.5) * 2;
-              const pathEased = easeInOutQuart(pathProgress);
-              const pathPoint = ghostPathRef.current.getPointAtLength(
-                ghostPathLengthRef.current * pathEased,
-              );
-
-              const x = clamp01(
-                pathPoint.x / 100 +
-                  Math.sin(now * 0.0045) * GHOST_CONFIG.microJitterX,
-              );
-              const y = clamp01(
-                1 -
-                  pathPoint.y / 100 +
-                  Math.cos(now * 0.0065) * GHOST_CONFIG.microJitterY,
-              );
-
-              ghostTempTargetRef.current.set(x, y);
-              targetMouseRef.current.lerp(
-                ghostTempTargetRef.current,
-                GHOST_CONFIG.smoothing,
-              );
-
-              const halfCycleProgress =
-                travelProgress <= 0.5
-                  ? travelProgress * 2
-                  : (travelProgress - 0.5) * 2;
-              const progressFadeIn = Math.min(halfCycleProgress * 4, 1);
-              const progressFadeOut = Math.min((1 - halfCycleProgress) * 4, 1);
-              const pathEnvelope = progressFadeIn * progressFadeOut;
-              const ghostRadiusTarget =
-                GHOST_CONFIG.forcedRadius *
-                pathEnvelope *
-                ghostVisualStrengthRef.current;
-
-              uniformsRef.current.u_radius.value = THREE.MathUtils.lerp(
-                uniformsRef.current.u_radius.value,
-                ghostRadiusTarget,
-                GHOST_CONFIG.radiusLerp,
-              );
-            }
-
-            if (elapsed >= totalCycleDuration) {
-              ghostIsActiveRef.current = false;
-              ghostEndingRef.current = true;
-              ghostTargetVisualStrengthRef.current = 0;
-              ghostEndHoldUntilRef.current =
-                now + GHOST_CONFIG.endHoldDuration;
-              ghostPauseUntilRef.current =
-                now +
-                GHOST_CONFIG.endHoldDuration +
-                GHOST_CONFIG.pauseMin +
-                Math.random() *
-                  (GHOST_CONFIG.pauseMax - GHOST_CONFIG.pauseMin);
-            }
-          }
+          targetHoverStateRef.current = 1;
         } else {
-          ghostIsActiveRef.current = false;
+          // User interaction: spring physics
+          const mouseToTargetX = targetMouseRef.current.x - smoothMouseRef.current.x;
+          const mouseToTargetY = targetMouseRef.current.y - smoothMouseRef.current.y;
+          mouseVelocityRef.current.x += mouseToTargetX * cfg.MOUSE_STIFFNESS * delta;
+          mouseVelocityRef.current.y += mouseToTargetY * cfg.MOUSE_STIFFNESS * delta;
+          mouseVelocityRef.current.multiplyScalar(Math.pow(cfg.MOUSE_DAMPING, delta * 60));
+          smoothMouseRef.current.x += mouseVelocityRef.current.x * delta * 60;
+          smoothMouseRef.current.y += mouseVelocityRef.current.y * delta * 60;
         }
-
-        const mouseToTargetX = targetMouseRef.current.x - smoothMouseRef.current.x;
-        const mouseToTargetY = targetMouseRef.current.y - smoothMouseRef.current.y;
-
-        mouseVelocityRef.current.x += mouseToTargetX * MOUSE_STIFFNESS * delta;
-        mouseVelocityRef.current.y += mouseToTargetY * MOUSE_STIFFNESS * delta;
-        mouseVelocityRef.current.multiplyScalar(Math.pow(MOUSE_DAMPING, delta * 60));
-
-        smoothMouseRef.current.x += mouseVelocityRef.current.x * delta * 60;
-        smoothMouseRef.current.y += mouseVelocityRef.current.y * delta * 60;
 
         uniformsRef.current.u_mouse.value.copy(smoothMouseRef.current);
         smoothVelocityRef.current.lerp(mouseVelocityRef.current, 0.2);
-        
-        const velocityMagnitude = smoothVelocityRef.current.length();
-        const targetRadius = Math.min(velocityMagnitude * VELOCITY_MULTIPLIER, MAX_RADIUS);
 
-        if (!ghostIsActiveRef.current && !ghostEndingRef.current) {
-          uniformsRef.current.u_radius.value += (targetRadius - uniformsRef.current.u_radius.value) * RADIUS_STIFFNESS * delta;
+        const velocityMagnitude = smoothVelocityRef.current.length();
+        const targetRadius = Math.min(velocityMagnitude * cfg.VELOCITY_MULTIPLIER, cfg.MAX_RADIUS);
+
+        if (!isIdle) {
+          uniformsRef.current.u_radius.value += (targetRadius - uniformsRef.current.u_radius.value) * cfg.RADIUS_STIFFNESS * delta;
         }
 
-        if (smoothMouseRef.current.distanceTo(lastDropPosRef.current) > TRAIL_DROP_DISTANCE) {
+        if (smoothMouseRef.current.distanceTo(lastDropPosRef.current) > cfg.TRAIL_DROP_DISTANCE) {
           const idx = trailIndexRef.current;
           trailPositionsRef.current[idx].copy(smoothMouseRef.current);
           trailSizesRef.current[idx] = uniformsRef.current.u_radius.value;
@@ -564,7 +500,7 @@ export default function HeroOverlay() {
 
         for (let i = 0; i < TRAIL_LENGTH; i++) {
           if (trailSizesRef.current[i] > 0) {
-            trailSizesRef.current[i] = Math.max(0, trailSizesRef.current[i] - delta * TRAIL_SHRINK_SPEED);
+            trailSizesRef.current[i] = Math.max(0, trailSizesRef.current[i] - delta * cfg.TRAIL_SHRINK_SPEED);
           }
         }
 
@@ -585,20 +521,9 @@ export default function HeroOverlay() {
           if (splashSizesRef.current[i] > 0) {
             splashPositionsRef.current[i].x += splashVelocitiesRef.current[i].x * delta;
             splashPositionsRef.current[i].y += splashVelocitiesRef.current[i].y * delta;
-            splashVelocitiesRef.current[i].multiplyScalar(Math.pow(SPLASH_VELOCITY_DAMPING, delta * 60));
-            splashSizesRef.current[i] = Math.max(0, splashSizesRef.current[i] - delta * SPLASH_SHRINK_SPEED);
+            splashVelocitiesRef.current[i].multiplyScalar(Math.pow(cfg.SPLASH_VELOCITY_DAMPING, delta * 60));
+            splashSizesRef.current[i] = Math.max(0, splashSizesRef.current[i] - delta * cfg.SPLASH_SHRINK_SPEED);
           }
-        }
-
-        if (ghostEndingRef.current && now < ghostEndHoldUntilRef.current) {
-          targetHoverStateRef.current =
-            ghostVisualStrengthRef.current > 0.02 ? 1 : 0;
-        } else if (
-          ghostEndingRef.current &&
-          now >= ghostEndHoldUntilRef.current
-        ) {
-          ghostEndingRef.current = false;
-          targetHoverStateRef.current = 0;
         }
 
         currentHoverStateRef.current += (targetHoverStateRef.current - currentHoverStateRef.current) * delta * 8;
@@ -620,7 +545,7 @@ export default function HeroOverlay() {
       rendererRef.current?.dispose();
       if (fullContainer) fullContainer.innerHTML = "";
     };
-  }, [shouldBootWebGL, startGhostCycle]);
+  }, [shouldBootWebGL]);
 
   return (
     <div 
@@ -643,8 +568,10 @@ export default function HeroOverlay() {
       <Image 
         src="/images/japon/hero/geishaHero.webp" 
         alt="Hero Base" 
-        width={700} 
-        height={700} 
+        width={5000} 
+        height={5000}
+        sizes="(max-width: 768px) 120vw, 60vw"
+        unoptimized
         loading="eager"
         fetchPriority="high"
         className={styles.geishaHero} 

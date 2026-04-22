@@ -4,18 +4,18 @@ import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Button } from "@/components/ui/button/button";
-import styles from "./trust-strip.module.css";
+import styles from "./snapshot.module.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const bentoCards = [
-  { image: "/images/kioto-japon.webp", text: "Kyoto & Nara", wide: false },
+  { image: "/images/japon/stockImage.webp", text: "Kyoto & Nara", wide: false },
   {
-    image: "/images/comida-japon.webp",
+    image: "/images/japon/stockImage.webp",
     text: "Gastronomía auténtica",
     wide: false,
   },
-  { image: "/images/hotel-japon.webp", text: "Hospedaje de lujo", wide: false },
+  { image: "/images/japon/stockImage.webp", text: "Hospedaje de lujo", wide: false },
 ];
 
 export default function BentoGrid() {
@@ -28,19 +28,19 @@ export default function BentoGrid() {
     const ctx = gsap.context(() => {
       gsap.fromTo(
         cards.slice(0, 3),
-        { y: 80, opacity: 0, scale: 0.93 },
+        { y: 34, opacity: 0, scale: 0.985 },
         {
           y: 0,
           opacity: 1,
           scale: 1,
-          duration: 0.9,
-          stagger: 0.15,
-          ease: "power3.out",
+          duration: 0.68,
+          stagger: 0.1,
+          ease: "power2.out",
           scrollTrigger: {
             trigger: cards[0],
-            start: "top 88%",
-            end: "bottom 5%",
-            toggleActions: "play reverse play reverse",
+            start: "top 90%",
+            toggleActions: "play none none none",
+            once: true,
           },
         },
       );
