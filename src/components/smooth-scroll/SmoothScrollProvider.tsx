@@ -1,9 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import Lenis from "lenis";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import type Lenis from "lenis";
 
 // Lower lerp => smoother and slightly slower response.
 const DESKTOP_LERP = 0.04;
@@ -14,43 +12,78 @@ const MOBILE_WHEEL_MULTIPLIER = 0.92;
 export default function SmoothScrollProvider({
   children,
 }: {
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }) {
   const lenisRef = useRef<Lenis | null>(null);
 
   useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
-
     const isMobile = window.matchMedia("(max-width: 768px)").matches;
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
 
-    const lenis = new Lenis({
-      lerp: isMobile ? MOBILE_LERP : DESKTOP_LERP,
-      smoothWheel: true,
-      wheelMultiplier: isMobile
-        ? MOBILE_WHEEL_MULTIPLIER
-        : DESKTOP_WHEEL_MULTIPLIER,
-      // Let GSAP ticker drive the RAF — keeps Lenis and ScrollTrigger in sync
-      autoRaf: false,
-    });
+    // Keep native scroll on mobile/reduced-motion to save main-thread work.
+    if (isMobile || prefersReducedMotion) {
+      return;
+    }
 
-    lenisRef.current = lenis;
+    let cancelled = false;
+    let tick: ((time: number) => void) | null = null;
+    let gsapApi: typeof import("gsap").gsap | null = null;
 
-    // Keep ScrollTrigger in sync with Lenis virtual scroll position
-    lenis.on("scroll", ScrollTrigger.update);
+    const initSmoothScroll = async () => {
+      const [{ default: LenisCtor }, { gsap }, { ScrollTrigger }] =
+        await Promise.all([
+          import("lenis"),
+          import("gsap"),
+          import("gsap/ScrollTrigger"),
+        ]);
 
-    // Drive Lenis from the same ticker GSAP animations use
-    const tick = (time: number) => { lenis.raf(time * 1000); };
-    gsap.ticker.add(tick);
+      if (cancelled) return;
 
-    // Prevent GSAP from accumulating lag (would cause stutters after tab switch)
-    gsap.ticker.lagSmoothing(0);
+      gsapApi = gsap;
+      gsapApi.registerPlugin(ScrollTrigger);
+
+      const lenis = new LenisCtor({
+        lerp: isMobile ? MOBILE_LERP : DESKTOP_LERP,
+        smoothWheel: true,
+        wheelMultiplier: isMobile
+          ? MOBILE_WHEEL_MULTIPLIER
+          : DESKTOP_WHEEL_MULTIPLIER,
+        // Let GSAP ticker drive the RAF to keep Lenis and ScrollTrigger in sync.
+        autoRaf: false,
+      });
+
+      lenisRef.current = lenis;
+      window.__lenis = lenis;
+
+      lenis.on("scroll", ScrollTrigger.update);
+
+      tick = (time: number) => {
+        lenis.raf(time * 1000);
+      };
+      gsapApi.ticker.add(tick);
+      gsapApi.ticker.lagSmoothing(0);
+    };
+
+    void initSmoothScroll();
 
     return () => {
-      gsap.ticker.remove(tick);
-      lenis.destroy();
+      cancelled = true;
+
+      if (tick && gsapApi) {
+        gsapApi.ticker.remove(tick);
+      }
+
+      const lenis = lenisRef.current;
+      lenis?.destroy();
       lenisRef.current = null;
+
+      if (window.__lenis === lenis) {
+        delete window.__lenis;
+      }
     };
   }, []);
 
-  return <>{children}</>;
+  return <>{children ?? null}</>;
 }

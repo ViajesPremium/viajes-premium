@@ -319,7 +319,6 @@ export default function Itinerary() {
               className={styles.image}
               fill
               sizes="(max-width: 768px) 100vw, 50vw"
-              priority={i === 0}
             />
           </div>
         ))}
@@ -341,7 +340,6 @@ export default function Itinerary() {
               className={styles.image}
               fill
               sizes="(max-width: 768px) 100vw, 50vw"
-              priority={i === 0}
             />
           </div>
         ))}

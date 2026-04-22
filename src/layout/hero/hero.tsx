@@ -1,147 +1,173 @@
-﻿"use client";
+"use client";
 
-import { useRef } from "react";
-import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useEffect, useState } from "react";
+import dynamic from "next/dynamic";
 import styles from "./hero.module.css";
-import HeroOverlay from "@/components/heroOverlay";
+import HeroOverlayLazy from "@/components/HeroOverlayLazy";
 import { Button } from "@/components/ui/button/button";
-import TextPressure from "@/components/ui/text-pressure/textPressure";
 
+const TextPressure = dynamic(
+  () => import("@/components/ui/text-pressure/textPressure"),
+  { ssr: false },
+);
 
 const pressureFont = "/fonts/nohemi-font-family/Nohemi-VF-BF6438cc58ad63d.ttf";
 
-export default function Hero() {
-  const sectionRef = useRef<HTMLDivElement>(null);
+type PressureWordProps = {
+  text: string;
+  pressureEnabled: boolean;
+  fontWeight: number;
+  italic?: boolean;
+  weightFrom: number;
+  weightTo: number;
+  scaleFrom: number;
+  scaleTo: number;
+};
 
-  useGSAP(
-    () => {
-      gsap.registerPlugin(ScrollTrigger);
+function PressureWord({
+  text,
+  pressureEnabled,
+  fontWeight,
+  italic = false,
+  weightFrom,
+  weightTo,
+  scaleFrom,
+  scaleTo,
+}: PressureWordProps) {
+  if (!pressureEnabled) {
+    return (
+      <span
+        className={styles.desktopWordFallback}
+        style={{ fontStyle: italic ? "italic" : "normal", fontWeight }}
+      >
+        {text}
+      </span>
+    );
+  }
 
-      const section = sectionRef.current;
-      if (!section) return;
-
-      const mm = gsap.matchMedia();
-      const createPinnedHero = () => {
-        const st = ScrollTrigger.create({
-          trigger: section,
-          start: "top top",
-          end: "bottom top",
-          pin: true,
-          pinSpacing: false,
-          anticipatePin: 1,
-          invalidateOnRefresh: true,
-        });
-
-        return () => st.kill();
-      };
-
-      mm.add("(min-width: 769px)", () => createPinnedHero());
-      mm.add("(max-width: 768px)", () => createPinnedHero());
-
-      return () => mm.revert();
-    },
-    { scope: sectionRef },
-  );
   return (
-    <div ref={sectionRef} className={styles.hero}>
+    <TextPressure
+      text={text}
+      fontFamily="Nohemi"
+      fontUrl={pressureFont}
+      fontWeight={fontWeight}
+      fontStyle="normal"
+      fontSize={190}
+      flex={false}
+      alpha={false}
+      stroke={false}
+      width
+      weight
+      italic={italic}
+      weightFrom={weightFrom}
+      weightTo={weightTo}
+      scaleFrom={scaleFrom}
+      scaleTo={scaleTo}
+      textColor="#000000"
+      strokeColor="#DB2F21"
+      minFontSize={50}
+    />
+  );
+}
+
+export default function Hero() {
+  const [enablePressureTitle, setEnablePressureTitle] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const isDesktop = window.matchMedia("(min-width: 769px)").matches;
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
+    if (!isDesktop || prefersReducedMotion) {
+      return;
+    }
+
+    const enable = () => {
+      if (cancelled) return;
+      setEnablePressureTitle(true);
+    };
+
+    const requestIdle =
+      typeof window.requestIdleCallback === "function"
+        ? window.requestIdleCallback.bind(window)
+        : null;
+    const cancelIdle =
+      typeof window.cancelIdleCallback === "function"
+        ? window.cancelIdleCallback.bind(window)
+        : null;
+
+    if (requestIdle && cancelIdle) {
+      const idleId = requestIdle(enable, { timeout: 1200 });
+      return () => {
+        cancelled = true;
+        cancelIdle(idleId);
+      };
+    }
+
+    const timeoutId = setTimeout(enable, 350);
+    return () => {
+      cancelled = true;
+      clearTimeout(timeoutId);
+    };
+  }, []);
+
+  return (
+    <div className={styles.hero}>
       <div className={styles.titleContainer}>
         <h1 className={styles.h1}>
           <span className={`${styles.line} ${styles.desktopLine}`}>
             <span className={styles.wordSlot}>
-              <TextPressure
+              <PressureWord
+                pressureEnabled={enablePressureTitle}
                 text="Viaja a"
-                fontFamily="Nohemi"
-                fontUrl={pressureFont}
                 fontWeight={100}
-                fontStyle="normal"
-                fontSize={190}
-                flex={false}
-                alpha={false}
-                stroke={false}
-                width
-                weight
                 italic
                 weightFrom={100}
                 weightTo={400}
                 scaleFrom={1}
                 scaleTo={1}
-                textColor="#000000"
-                strokeColor="#DB2F21"
-                minFontSize={50}
               />
             </span>
             <span className={styles.wordSlot}>
-              <TextPressure
+              <PressureWord
+                pressureEnabled={enablePressureTitle}
                 text={`Jap\u00f3n`}
-                fontFamily="Nohemi"
-                fontUrl={pressureFont}
                 fontWeight={100}
-                fontStyle="normal"
-                fontSize={190}
-                flex={false}
-                alpha={false}
-                stroke={false}
-                width
-                weight
                 italic={false}
                 weightFrom={100}
                 weightTo={400}
                 scaleFrom={1}
                 scaleTo={1}
-                textColor="#000000"
-                strokeColor="#DB2F21"
-                minFontSize={50}
               />
             </span>
           </span>
 
           <span className={`${styles.line} ${styles.desktopLine}`}>
             <span className={styles.wordSlot}>
-              <TextPressure
+              <PressureWord
+                pressureEnabled={enablePressureTitle}
                 text="desde"
-                fontFamily="Nohemi"
-                fontUrl={pressureFont}
                 fontWeight={900}
-                fontStyle="normal"
-                fontSize={190}
-                flex={false}
-                alpha={false}
-                stroke={false}
-                width
-                weight
                 italic={false}
                 weightFrom={500}
                 weightTo={100}
                 scaleFrom={1.09}
                 scaleTo={1}
-                textColor="#000000"
-                strokeColor="#DB2F21"
-                minFontSize={50}
               />
             </span>
             <span className={styles.wordSlot}>
-              <TextPressure
+              <PressureWord
+                pressureEnabled={enablePressureTitle}
                 text={`M\u00e9xico`}
-                fontFamily="Nohemi"
-                fontUrl={pressureFont}
                 fontWeight={900}
-                fontStyle="normal"
-                fontSize={190}
-                flex={false}
-                alpha={false}
-                stroke={false}
-                width
-                weight
                 italic={false}
                 weightFrom={500}
                 weightTo={100}
                 scaleFrom={1.09}
                 scaleTo={1}
-                textColor="#000000"
-                strokeColor="#DB2F21"
-                minFontSize={50}
               />
             </span>
           </span>
@@ -177,8 +203,7 @@ export default function Hero() {
 
       <div className={styles.circle} aria-hidden="true" />
 
-      <HeroOverlay />
+      <HeroOverlayLazy />
     </div>
   );
 }
-

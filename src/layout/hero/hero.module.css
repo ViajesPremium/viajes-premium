@@ -58,6 +58,17 @@
     margin-top: clamp(10px, -4vw, -50px);
 }
 
+.desktopWordFallback {
+    display: block;
+    width: 100%;
+    font-family: var(--font-nohemi);
+    font-size: clamp(3rem, 9.8vw, 11.8rem);
+    line-height: 0.92;
+    letter-spacing: -0.015em;
+    text-align: center;
+    white-space: nowrap;
+}
+
 .contentContainer {
     display: flex;
     flex-wrap: wrap;

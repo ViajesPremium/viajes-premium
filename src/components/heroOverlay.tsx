@@ -570,10 +570,8 @@ export default function HeroOverlay() {
         alt="Hero Base" 
         width={5000} 
         height={5000}
-        sizes="(max-width: 768px) 120vw, 60vw"
-        unoptimized
-        loading="eager"
-        fetchPriority="high"
+        sizes="(max-width: 768px) 210vw, 62vw"
+        quality={60}
         className={styles.geishaHero} 
       />
       

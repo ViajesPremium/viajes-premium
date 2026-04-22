@@ -1,9 +1,6 @@
 "use client";
 
-import { useRef } from "react";
-import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useEffect, useRef } from "react";
 import styles from "./snapshot.module.css";
 import { BlurredStagger } from "@/components/ui/blurred-stagger-text/blurred-stagger-text";
 import BentoGrid from "./BentoGrid";
@@ -12,12 +9,22 @@ import Badge from "@/components/ui/badge/badge";
 export default function Snapshot() {
   const sectionRef = useRef<HTMLElement>(null);
 
-  useGSAP(
-    () => {
-      gsap.registerPlugin(ScrollTrigger);
+  useEffect(() => {
+    let cancelled = false;
+    let cleanup: (() => void) | undefined;
 
+    const setupPinnedSnapshot = async () => {
       const section = sectionRef.current;
       if (!section) return;
+
+      const [{ gsap }, { ScrollTrigger }] = await Promise.all([
+        import("gsap"),
+        import("gsap/ScrollTrigger"),
+      ]);
+
+      if (cancelled) return;
+
+      gsap.registerPlugin(ScrollTrigger);
 
       const mm = gsap.matchMedia();
       const createPinnedSnapshot = (start: string) => {
@@ -40,14 +47,20 @@ export default function Snapshot() {
       });
 
       mm.add("(max-width: 768px)", () => {
-        // En mobile el pin inicia hasta que se alcanzó el final visual de Snapshot.
+        // Mobile starts pinning only after reaching the visual end of Snapshot.
         return createPinnedSnapshot("bottom bottom");
       });
 
-      return () => mm.revert();
-    },
-    { scope: sectionRef },
-  );
+      cleanup = () => mm.revert();
+    };
+
+    void setupPinnedSnapshot();
+
+    return () => {
+      cancelled = true;
+      cleanup?.();
+    };
+  }, []);
 
   return (
     <section ref={sectionRef} className={styles.snapshot}>

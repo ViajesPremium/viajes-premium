@@ -6,6 +6,18 @@
   --foreground: #171717;
 }
 
+html {
+  height: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
 @font-face {
   font-family: 'Nohemi';
   src: url('/fonts/nohemi-font-family/Nohemi-VF-BF6438cc58ad63d.ttf') format('truetype');

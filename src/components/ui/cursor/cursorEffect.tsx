@@ -1,7 +1,8 @@
 'use client'
 
 import React, { FC, ReactNode, useEffect, useRef, useState } from 'react'
-import { gsap } from 'gsap'
+
+type GsapApi = typeof import('gsap').gsap
 
 interface MagneticCursorProps {
   children: ReactNode
@@ -29,6 +30,18 @@ interface CursorPosition {
   previous: { x: number; y: number }
 }
 
+const detectTouchDevice = () =>
+  typeof window !== 'undefined' &&
+  ('ontouchstart' in window || navigator.maxTouchPoints > 0)
+
+const detectMobileViewport = (breakpoint: number) =>
+  typeof window !== 'undefined' &&
+  window.matchMedia(`(max-width: ${breakpoint}px)`).matches
+
+const detectCoarsePointer = () =>
+  typeof window !== 'undefined' &&
+  window.matchMedia('(hover: none), (pointer: coarse)').matches
+
 const CursorEffect: FC<MagneticCursorProps> = ({
   children,
   lerpAmount = 0.1,
@@ -52,20 +65,51 @@ const CursorEffect: FC<MagneticCursorProps> = ({
     previous: { x: -100, y: -100 },
   })
   const hasInitializedRef = useRef(false)
+  const gsapRef = useRef<GsapApi | null>(null)
   const [hasMounted, setHasMounted] = useState(false)
-  const [isTouchDevice, setIsTouchDevice] = useState(false)
-  const [isMobileViewport, setIsMobileViewport] = useState(false)
-  const [isCoarsePointer, setIsCoarsePointer] = useState(false)
+  const [isGsapReady, setIsGsapReady] = useState(false)
+  const [isTouchDevice, setIsTouchDevice] = useState(() => detectTouchDevice())
+  const [isMobileViewport, setIsMobileViewport] = useState(() =>
+    detectMobileViewport(mobileBreakpoint),
+  )
+  const [isCoarsePointer, setIsCoarsePointer] = useState(() => detectCoarsePointer())
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setHasMounted(true)
   }, [])
 
-  const shouldDisableCursor =
-    !hasMounted ||
+  const shouldDisableByDevice =
     (disableOnTouch && (isTouchDevice || isCoarsePointer)) ||
     (disableOnMobile && isMobileViewport)
+  const shouldLoadGsap = hasMounted && !shouldDisableByDevice
+
+  useEffect(() => {
+    if (!shouldLoadGsap || isGsapReady || gsapRef.current) return
+
+    let cancelled = false
+
+    const loadGsap = async () => {
+      const { gsap } = await import('gsap')
+      if (cancelled) return
+      gsapRef.current = gsap
+      setIsGsapReady(true)
+    }
+
+    void loadGsap()
+
+    return () => {
+      cancelled = true
+    }
+  }, [isGsapReady, shouldLoadGsap])
+
+  useEffect(() => {
+    return () => {
+      gsapRef.current = null
+    }
+  }, [])
+
+  const shouldDisableCursor = !hasMounted || !isGsapReady || shouldDisableByDevice
 
   useEffect(() => {
     if (!hasMounted) return
@@ -74,7 +118,7 @@ const CursorEffect: FC<MagneticCursorProps> = ({
     const coarseQuery = window.matchMedia('(hover: none), (pointer: coarse)')
 
     const syncFlags = () => {
-      setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0)
+      setIsTouchDevice(detectTouchDevice())
       setIsMobileViewport(mobileQuery.matches)
       setIsCoarsePointer(coarseQuery.matches)
     }
@@ -114,6 +158,8 @@ const CursorEffect: FC<MagneticCursorProps> = ({
     if (shouldDisableCursor) return
     const cursorEl = cursorRef.current
     if (!cursorEl) return
+    const gsap = gsapRef.current
+    if (!gsap) return
 
     gsap.set(cursorEl, { xPercent: -50, yPercent: -50, opacity: 0 })
 
