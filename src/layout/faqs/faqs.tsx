@@ -90,6 +90,7 @@ export default function Faqs() {
   const mobileFiguresRef = useRef<HTMLDivElement | null>(null);
   const [openFaqId, setOpenFaqId] = useState<string>(() => FAQS[0]?.id ?? "");
   const [isMobileViewport, setIsMobileViewport] = useState(false);
+  const [shouldMountGlobe, setShouldMountGlobe] = useState(false);
 
   // Igual que Snapshot: pin al final sin spacer extra para que la siguiente
   // seccion la cubra naturalmente desde abajo hacia arriba.
@@ -250,6 +251,26 @@ export default function Faqs() {
     return () => mq.removeEventListener("change", sync);
   }, []);
 
+  useEffect(() => {
+    const figures = mobileFiguresRef.current;
+    if (!figures) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry?.isIntersecting) return;
+        setShouldMountGlobe(true);
+        observer.disconnect();
+      },
+      {
+        rootMargin: "300px 0px",
+        threshold: 0.01,
+      },
+    );
+
+    observer.observe(figures);
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <section ref={sectionRef} className={styles.section}>
       <h2 className="srOnly">Preguntas frecuentes sobre Japón Premium</h2>
@@ -362,7 +383,7 @@ export default function Faqs() {
       <div ref={mobileFiguresRef} className={styles.mobileFigures} aria-hidden="true">
         <div className={styles.mobileFigureLeft} />
         <div className={styles.mobileFigureRight} />
-        {isMobileViewport && (
+        {isMobileViewport && shouldMountGlobe && (
           <div className={styles.mobileGlobeWrap}>
             <MobileFaqGlobe
               className={styles.mobileGlobe}
@@ -376,7 +397,6 @@ export default function Faqs() {
               mapBrightness={10}
               markerSize={0.025}
               markerElevation={0.01}
-              interactive
             />
           </div>
         )}

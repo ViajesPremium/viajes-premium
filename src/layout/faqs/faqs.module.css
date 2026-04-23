@@ -448,7 +448,7 @@
     padding: 0;
     box-sizing: border-box;
     overflow: hidden;
-    pointer-events: auto;
+    pointer-events: none;
     /* Variable actualizada por JS en cada frame de scroll */
     --faq-figures-progress: 0;
   }
@@ -463,8 +463,7 @@
     transform: translate(-50%, -50%);
     border-radius: 9999px;
     z-index: 4;
-    pointer-events: auto;
-    touch-action: pan-y;
+    pointer-events: none;
   }
 
   .mobileFigureLeft,

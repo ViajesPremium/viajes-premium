@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import createGlobe from "cobe";
 
 type Marker = {
@@ -32,7 +32,6 @@ type GlobeProps = {
   theta?: number;
   diffuse?: number;
   mapSamples?: number;
-  interactive?: boolean;
 };
 
 export default function Globe({
@@ -53,16 +52,16 @@ export default function Globe({
   theta = 0.18,
   diffuse = 1.45,
   mapSamples = 8000,
-  interactive = false,
 }: GlobeProps) {
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const pointerInteracting = useRef<{ x: number; y: number } | null>(null);
-  const lastPointer = useRef<{ x: number; y: number; t: number } | null>(null);
-  const dragOffset = useRef({ phi: 0, theta: 0 });
-  const velocity = useRef({ phi: 0, theta: 0 });
-  const phiOffsetRef = useRef(0);
-  const thetaOffsetRef = useRef(0);
-  const isPausedRef = useRef(false);
+  const globeRef = useRef<ReturnType<typeof createGlobe> | null>(null);
+  const animationIdRef = useRef<number | null>(null);
+  const animateRef = useRef<(() => void) | null>(null);
+  const phiRef = useRef(0);
+  const isVisibleRef = useRef(false);
+  const [shouldInit, setShouldInit] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
 
   const markersData = useMemo(
     () =>
@@ -84,89 +83,74 @@ export default function Globe({
     [arcs],
   );
 
-  const handlePointerDown = useCallback(
-    (event: React.PointerEvent<HTMLCanvasElement>) => {
-      if (!interactive) return;
-      pointerInteracting.current = { x: event.clientX, y: event.clientY };
-      if (canvasRef.current) canvasRef.current.style.cursor = "grabbing";
-      isPausedRef.current = true;
-    },
-    [interactive],
-  );
-
-  const handlePointerMove = useCallback(
-    (event: PointerEvent) => {
-      if (!interactive || pointerInteracting.current === null) return;
-
-      const deltaX = event.clientX - pointerInteracting.current.x;
-      const deltaY = event.clientY - pointerInteracting.current.y;
-      dragOffset.current = { phi: deltaX / 320, theta: deltaY / 1050 };
-
-      const now = Date.now();
-      if (lastPointer.current) {
-        const dt = Math.max(now - lastPointer.current.t, 1);
-        const maxVelocity = 0.15;
-        velocity.current = {
-          phi: Math.max(
-            -maxVelocity,
-            Math.min(maxVelocity, ((event.clientX - lastPointer.current.x) / dt) * 0.28),
-          ),
-          theta: Math.max(
-            -maxVelocity,
-            Math.min(maxVelocity, ((event.clientY - lastPointer.current.y) / dt) * 0.08),
-          ),
-        };
-      }
-      lastPointer.current = { x: event.clientX, y: event.clientY, t: now };
-    },
-    [interactive],
-  );
-
-  const handlePointerUp = useCallback(() => {
-    if (!interactive) return;
-
-    if (pointerInteracting.current !== null) {
-      phiOffsetRef.current += dragOffset.current.phi;
-      thetaOffsetRef.current += dragOffset.current.theta;
-      dragOffset.current = { phi: 0, theta: 0 };
-      lastPointer.current = null;
-    }
-    pointerInteracting.current = null;
-    if (canvasRef.current) canvasRef.current.style.cursor = "grab";
-    isPausedRef.current = false;
-  }, [interactive]);
-
   useEffect(() => {
-    if (!interactive) return;
+    const wrapper = wrapperRef.current;
+    if (!wrapper) return;
 
-    window.addEventListener("pointermove", handlePointerMove, { passive: true });
-    window.addEventListener("pointerup", handlePointerUp, { passive: true });
+    const lazyObserver = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry?.isIntersecting) return;
+        setShouldInit(true);
+        lazyObserver.disconnect();
+      },
+      {
+        rootMargin: "280px 0px",
+        threshold: 0.01,
+      },
+    );
+
+    const visibilityObserver = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible((entry?.isIntersecting ?? false) && (entry?.intersectionRatio ?? 0) > 0.01);
+      },
+      {
+        threshold: [0, 0.01, 0.1],
+      },
+    );
+
+    lazyObserver.observe(wrapper);
+    visibilityObserver.observe(wrapper);
 
     return () => {
-      window.removeEventListener("pointermove", handlePointerMove);
-      window.removeEventListener("pointerup", handlePointerUp);
+      lazyObserver.disconnect();
+      visibilityObserver.disconnect();
     };
-  }, [handlePointerMove, handlePointerUp, interactive]);
+  }, []);
 
   useEffect(() => {
+    isVisibleRef.current = isVisible;
+
+    if (!isVisible && animationIdRef.current !== null) {
+      window.cancelAnimationFrame(animationIdRef.current);
+      animationIdRef.current = null;
+      return;
+    }
+
+    if (
+      isVisible &&
+      animationIdRef.current === null &&
+      animateRef.current
+    ) {
+      animationIdRef.current = window.requestAnimationFrame(animateRef.current);
+    }
+  }, [isVisible]);
+
+  useEffect(() => {
+    if (!shouldInit) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    let globe: ReturnType<typeof createGlobe> | null = null;
-    let animationId = 0;
-    let mountRafId = 0;
-    let phi = 0;
     let ro: ResizeObserver | null = null;
-    let initialized = false;
+    let mountRafId: number | null = null;
+    let disposed = false;
 
     const initGlobe = () => {
-      if (initialized) return;
+      if (disposed || globeRef.current) return;
       const width = canvas.offsetWidth;
       if (!width) return;
 
-      initialized = true;
-      const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
-      globe = createGlobe(canvas, {
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.2);
+      globeRef.current = createGlobe(canvas, {
         devicePixelRatio: dpr,
         width,
         height: width,
@@ -188,33 +172,22 @@ export default function Globe({
         opacity: 0.88,
       });
 
-      const animate = () => {
-        if (!globe) return;
-
-        if (!isPausedRef.current) {
-          phi += speed;
-          if (
-            Math.abs(velocity.current.phi) > 0.0001 ||
-            Math.abs(velocity.current.theta) > 0.0001
-          ) {
-            phiOffsetRef.current += velocity.current.phi;
-            thetaOffsetRef.current += velocity.current.theta;
-            velocity.current.phi *= 0.95;
-            velocity.current.theta *= 0.95;
-          }
-
-          const thetaMin = -0.38;
-          const thetaMax = 0.38;
-          if (thetaOffsetRef.current < thetaMin) {
-            thetaOffsetRef.current += (thetaMin - thetaOffsetRef.current) * 0.1;
-          } else if (thetaOffsetRef.current > thetaMax) {
-            thetaOffsetRef.current += (thetaMax - thetaOffsetRef.current) * 0.1;
-          }
+      phiRef.current = 0;
+      animateRef.current = () => {
+        const globe = globeRef.current;
+        if (!globe) {
+          animationIdRef.current = null;
+          return;
+        }
+        if (!isVisibleRef.current) {
+          animationIdRef.current = null;
+          return;
         }
 
+        phiRef.current += speed;
         globe.update({
-          phi: phi + phiOffsetRef.current + dragOffset.current.phi,
-          theta: theta + thetaOffsetRef.current + dragOffset.current.theta,
+          phi: phiRef.current,
+          theta,
           dark,
           mapBrightness,
           markerColor,
@@ -225,13 +198,16 @@ export default function Globe({
           arcs: arcsData,
         });
 
-        animationId = window.requestAnimationFrame(animate);
+        animationIdRef.current = window.requestAnimationFrame(animateRef.current!);
       };
 
-      animate();
       mountRafId = window.requestAnimationFrame(() => {
         canvas.style.opacity = "1";
       });
+
+      if (isVisibleRef.current && animateRef.current && animationIdRef.current === null) {
+        animationIdRef.current = window.requestAnimationFrame(animateRef.current);
+      }
     };
 
     if (canvas.offsetWidth > 0) {
@@ -246,12 +222,22 @@ export default function Globe({
     }
 
     return () => {
+      disposed = true;
       if (ro) ro.disconnect();
-      if (mountRafId) window.cancelAnimationFrame(mountRafId);
-      if (animationId) window.cancelAnimationFrame(animationId);
-      if (globe) globe.destroy();
+      if (mountRafId !== null) {
+        window.cancelAnimationFrame(mountRafId);
+      }
+      if (animationIdRef.current !== null) {
+        window.cancelAnimationFrame(animationIdRef.current);
+        animationIdRef.current = null;
+      }
+      animateRef.current = null;
+      globeRef.current?.destroy();
+      globeRef.current = null;
+      canvas.style.opacity = "0";
     };
   }, [
+    shouldInit,
     arcColor,
     arcHeight,
     arcWidth,
@@ -270,18 +256,16 @@ export default function Globe({
   ]);
 
   return (
-    <div className={className}>
+    <div ref={wrapperRef} className={className}>
       <canvas
         ref={canvasRef}
-        onPointerDown={handlePointerDown}
         style={{
           width: "100%",
           height: "100%",
           opacity: 0,
-          cursor: interactive ? "grab" : "default",
           transition: "opacity 0.7s ease",
           borderRadius: "9999px",
-          touchAction: interactive ? "pan-y" : "auto",
+          pointerEvents: "none",
         }}
       />
     </div>
