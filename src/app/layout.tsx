@@ -22,8 +22,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="es-mx" className="h-full antialiased">
-      <body className="min-h-full flex flex-col">
+    // 🚨 QUITAR h-full DE AQUÍ
+    <html lang="es-mx" className="antialiased">
+      {/* 🚨 CAMBIAR min-h-full por min-h-screen */}
+      <body className="min-h-screen flex flex-col">
         <SmoothScrollProvider>
           <CursorEffect>
             <Navbar
