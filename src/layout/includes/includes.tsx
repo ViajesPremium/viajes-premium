@@ -1,12 +1,13 @@
 ﻿"use client";
 
-import { useRef } from "react";
+import { useCallback, useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 import Badge from "@/components/ui/badge/badge";
 import { Button } from "@/components/ui/button/button";
+import { scrollToSection } from "@/lib/scroll-to-section";
 import styles from "./includes.module.css";
 import { BlurredStagger } from "@/components/ui/blurred-stagger-text/blurred-stagger-text";
 
@@ -73,6 +74,10 @@ export default function Includes() {
   const viewportRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const progressRef = useRef<HTMLSpanElement>(null);
+  const handleGoToForm = useCallback(() => {
+    scrollToSection("#form", { duration: 1.15 });
+  }, []);
+
   const scrollCards = (direction: number) => {
     const viewport = viewportRef.current;
     const track = trackRef.current;
@@ -189,6 +194,7 @@ export default function Includes() {
             variant="primary"
             className={styles.headerButton}
             type="button"
+            onClick={handleGoToForm}
           >
             Solicita tu propuesta
           </Button>

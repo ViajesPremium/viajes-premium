@@ -66,6 +66,39 @@ export default function Faqs() {
   const mobileFiguresRef = useRef<HTMLDivElement | null>(null);
   const [openFaqId, setOpenFaqId] = useState<string>(() => FAQS[0]?.id ?? "");
 
+  // ── GSAP pin: sección queda fija al llegar al final ──────────────────────
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
+    let pinTrigger: { kill: () => void } | null = null;
+    let cancelled = false;
+
+    Promise.all([
+      import("gsap"),
+      import("gsap/ScrollTrigger"),
+    ]).then(([{ default: gsap }, { ScrollTrigger }]) => {
+      if (cancelled) return;
+      gsap.registerPlugin(ScrollTrigger);
+
+      pinTrigger = ScrollTrigger.create({
+        trigger: section,
+        start: "bottom bottom",
+        end: "+=80vh",
+        pin: true,
+        pinSpacing: true,
+        invalidateOnRefresh: true,
+        onRefresh: () => window.__lenis?.resize(),
+      });
+    });
+
+    return () => {
+      cancelled = true;
+      pinTrigger?.kill();
+    };
+  }, []);
+
+  // ── Scroll animation: progreso de los laterales ──────────────────────────
   useEffect(() => {
     const section = sectionRef.current;
     if (!section) return;

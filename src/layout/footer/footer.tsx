@@ -23,7 +23,7 @@ const PAGE_LINKS = [
   { label: "INICIO", href: "#inicio" },
   { label: "HIGHLIGHTS", href: "#highlights" },
   { label: "ITINERARIOS", href: "#itinerarios" },
-  { label: "CONTACTO", href: "#contacto" },
+  { label: "CONTACTO", href: "#form" },
 ] as const;
 
 const SOCIAL_LINKS = [

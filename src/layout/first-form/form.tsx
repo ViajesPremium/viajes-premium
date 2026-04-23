@@ -1,10 +1,6 @@
 "use client";
 
-import {
-  AnimatePresence,
-  motion,
-  type Variants,
-} from "motion/react";
+import { AnimatePresence, motion, type Variants } from "motion/react";
 import { isValidPhoneNumber } from "react-phone-number-input";
 import React, {
   Children,
@@ -184,8 +180,7 @@ function validateField(field: StepFieldKey, value: string): string | undefined {
     }
     case "email": {
       if (!trimmedValue) return "Ingresa tu correo electronico.";
-      const emailPattern =
-        /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+      const emailPattern = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
       if (!emailPattern.test(trimmedValue)) {
         return "Ingresa un correo valido.";
       }
@@ -273,7 +268,10 @@ export default function ImageSectionForm({
   const touchField = useCallback(
     (field: StepFieldKey) => {
       setTouched((prev) => ({ ...prev, [field]: true }));
-      setErrors((prev) => ({ ...prev, [field]: validateField(field, values[field]) }));
+      setErrors((prev) => ({
+        ...prev,
+        [field]: validateField(field, values[field]),
+      }));
     },
     [values],
   );
@@ -338,9 +336,15 @@ export default function ImageSectionForm({
     >
       {(config.eyebrow || config.title || config.subtitle) && (
         <div className={styles.formHead}>
-          {config.eyebrow ? <p className={styles.formEyebrow}>{config.eyebrow}</p> : null}
-          {config.title ? <h3 className={styles.formTitle}>{config.title}</h3> : null}
-          {config.subtitle ? <p className={styles.formSub}>{config.subtitle}</p> : null}
+          {config.eyebrow ? (
+            <p className={styles.formEyebrow}>{config.eyebrow}</p>
+          ) : null}
+          {config.title ? (
+            <h3 className={styles.formTitle}>{config.title}</h3>
+          ) : null}
+          {config.subtitle ? (
+            <p className={styles.formSub}>{config.subtitle}</p>
+          ) : null}
         </div>
       )}
 
@@ -378,7 +382,12 @@ export default function ImageSectionForm({
             </div>
           )
         }
-        renderStepIndicator={({ step, currentStep, isClickable, onStepClick }) => (
+        renderStepIndicator={({
+          step,
+          currentStep,
+          isClickable,
+          onStepClick,
+        }) => (
           <StepIndicator
             step={step}
             currentStep={currentStep}
@@ -461,7 +470,9 @@ export default function ImageSectionForm({
               min={currentMonthMin}
               className={styles.formInput}
               value={values.travelDate}
-              onChange={(event) => setFieldValue("travelDate", event.target.value)}
+              onChange={(event) =>
+                setFieldValue("travelDate", event.target.value)
+              }
               onBlur={() => touchField("travelDate")}
             />
           </StepFieldShell>
@@ -483,7 +494,9 @@ export default function ImageSectionForm({
               placeholder="Ejemplo: 2"
               className={styles.formInput}
               value={values.travelers}
-              onChange={(event) => setFieldValue("travelers", event.target.value)}
+              onChange={(event) =>
+                setFieldValue("travelers", event.target.value)
+              }
               onBlur={() => touchField("travelers")}
             />
           </StepFieldShell>
@@ -501,7 +514,9 @@ export default function ImageSectionForm({
               className={`${styles.formInput} ${styles.formTextarea}`}
               placeholder="Templos, gastronomia, arte, tradiciones, wellness..."
               value={values.japanWishes}
-              onChange={(event) => setFieldValue("japanWishes", event.target.value)}
+              onChange={(event) =>
+                setFieldValue("japanWishes", event.target.value)
+              }
               onBlur={() => touchField("japanWishes")}
             />
           </StepFieldShell>
@@ -590,7 +605,9 @@ function Stepper({
   const updateStep = useCallback(
     (newStep: number) => {
       setCurrentStep(newStep);
-      setHighestVisitedStep((prev) => Math.max(prev, Math.min(newStep, totalSteps)));
+      setHighestVisitedStep((prev) =>
+        Math.max(prev, Math.min(newStep, totalSteps)),
+      );
       if (newStep > totalSteps) {
         onFinalStepCompleted();
       } else {
@@ -623,7 +640,10 @@ function Stepper({
     if (clickedStep === currentStep) return;
     if (clickedStep < 1 || clickedStep > totalSteps) return;
 
-    if (clickedStep > currentStep && !onBeforeStepChange(clickedStep, currentStep)) {
+    if (
+      clickedStep > currentStep &&
+      !onBeforeStepChange(clickedStep, currentStep)
+    ) {
       return;
     }
 
@@ -707,10 +727,20 @@ function Stepper({
             </button>
           </div>
           <div className={styles.contactQuickActions}>
-            <a href={`mailto:${CONTACT_EMAIL}`} className={styles.contactActionLink}>
+            <span className={styles.contactActionLabel}>
+              Contáctanos ahora:
+            </span>
+            <a
+              href={`mailto:${CONTACT_EMAIL}`}
+              className={styles.contactActionLink}
+            >
               {CONTACT_EMAIL}
             </a>
-            <a href={`tel:${CONTACT_PHONE_LINK}`} className={styles.contactActionLink}>
+
+            <a
+              href={`tel:${CONTACT_PHONE_LINK}`}
+              className={styles.contactActionLink}
+            >
               {CONTACT_PHONE_DISPLAY}
             </a>
           </div>
@@ -818,7 +848,11 @@ function StepIndicator({
   theme,
 }: StepIndicatorProps) {
   const status =
-    currentStep === step ? "active" : currentStep < step ? "inactive" : "complete";
+    currentStep === step
+      ? "active"
+      : currentStep < step
+        ? "inactive"
+        : "complete";
   const isLightTheme = theme === "light";
 
   return (
@@ -829,7 +863,9 @@ function StepIndicator({
         onClickStep(step);
       }}
       className={styles.stepIndicator}
-      style={!isClickable ? { pointerEvents: "none", opacity: 0.45 } : undefined}
+      style={
+        !isClickable ? { pointerEvents: "none", opacity: 0.45 } : undefined
+      }
       animate={status}
       initial={false}
       aria-label={`Ir al paso ${step}`}
@@ -838,9 +874,13 @@ function StepIndicator({
         variants={{
           inactive: {
             scale: 1,
-            backgroundColor: isLightTheme ? "rgba(109, 72, 28, 0.12)" : "var(--black)",
+            backgroundColor: isLightTheme
+              ? "rgba(109, 72, 28, 0.12)"
+              : "var(--black)",
             color: isLightTheme ? "#2a1a10" : "var(--bg)",
-            borderColor: isLightTheme ? "rgba(109, 72, 28, 0.24)" : "rgba(243, 243, 240, 0.15)",
+            borderColor: isLightTheme
+              ? "rgba(109, 72, 28, 0.24)"
+              : "rgba(243, 243, 240, 0.15)",
           },
           active: {
             scale: 1,
@@ -895,11 +935,22 @@ type CheckIconProps = React.SVGProps<SVGSVGElement>;
 
 function CheckIcon(props: CheckIconProps) {
   return (
-    <svg {...props} fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+    <svg
+      {...props}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      viewBox="0 0 24 24"
+    >
       <motion.path
         initial={{ pathLength: 0 }}
         animate={{ pathLength: 1 }}
-        transition={{ delay: 0.08, type: "tween", ease: "easeOut", duration: 0.3 }}
+        transition={{
+          delay: 0.08,
+          type: "tween",
+          ease: "easeOut",
+          duration: 0.3,
+        }}
         strokeLinecap="round"
         strokeLinejoin="round"
         d="M5 13l4 4L19 7"

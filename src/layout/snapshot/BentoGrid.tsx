@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Button } from "@/components/ui/button/button";
+import { scrollToSection } from "@/lib/scroll-to-section";
 import styles from "./snapshot.module.css";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -20,6 +21,9 @@ const bentoCards = [
 
 export default function BentoGrid() {
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const handleGoToForm = useCallback(() => {
+    scrollToSection("#form", { duration: 1.15 });
+  }, []);
 
   useEffect(() => {
     const cards = cardRefs.current.filter(Boolean) as HTMLElement[];
@@ -63,7 +67,9 @@ export default function BentoGrid() {
           <div className={styles.bentoCardOverlay} />
           <div className={styles.bentoCardContent}>
             <p className={styles.bentoCardText}>{card.text}</p>
-            <Button variant="secondary">Descubrir</Button>
+            <Button variant="secondary" onClick={handleGoToForm}>
+              Descubrir
+            </Button>
           </div>
         </div>
       ))}

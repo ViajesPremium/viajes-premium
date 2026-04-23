@@ -168,13 +168,12 @@
 .formInput {
   width: 100%;
   background: rgba(243, 243, 240, 0.08);
-  border: 1px solid rgba(243, 243, 240, 0.24);
   color: var(--bg);
   padding: 0.72rem 0.8rem;
   font-size: 0.98rem;
   line-height: 1.35;
   outline: none;
-  border-radius: 10px;
+  border-radius: var(--radius);
   transition:
     border-color 0.25s ease,
     background-color 0.25s ease,
@@ -247,19 +246,33 @@
 }
 
 .contactQuickActions {
-  margin-top: 0.72rem;
+  margin-top: 1.2rem;
+  border-top: 1px solid rgba(243, 243, 240, 0.12);
+  padding-top: 1.2rem;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: center;
-  gap: 0.45rem 0.9rem;
+  justify-content: space-between;
+}
+
+.contactActionLabel {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-family: var(--font-nohemi), sans-serif;
+  opacity: 0.95;
+  color: rgba(243, 243, 240, 0.78);
+}
+
+.themeLight .contactActionLabel {
+  color: rgba(29, 19, 12, 0.78);
 }
 
 .contactActionLink {
   font-family: var(--font-nohemi), sans-serif;
-  font-size: 0.78rem;
+  font-size: 0.9rem;
   line-height: 1.2;
-  color: rgba(243, 243, 240, 0.78);
+  color: var(--white);
   text-decoration: none;
   transition:
     color 0.2s ease,
@@ -399,6 +412,17 @@
     margin-inline: auto;
     padding: 1.25rem 1rem 1rem;
     border-radius: 12px;
+  }
+
+  .contactQuickActions {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 0.8rem;
+  }
+
+  .contactActionLink {
+    text-decoration: underline;
+    font-size: 0.9rem !important;
   }
 
   .formTitle {

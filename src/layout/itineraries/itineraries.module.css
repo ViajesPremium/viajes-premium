@@ -17,6 +17,8 @@
   position: relative;
   overflow: hidden;
   flex-shrink: 0;
+  background: #080808 url("/images/japon/stockImage.webp") center / cover
+    no-repeat;
   /* Fuerza capa de composición propia: garantiza que overflow:hidden
      clipee correctamente los transforms de GSAP en iOS Safari */
   transform: translateZ(0);
@@ -45,7 +47,7 @@
   transform: translate(-50%, -50%);
   width: 90%;
   max-width: 700px;
-  height: 460px;
+  height: max-content;
   z-index: 10;
   background-color: var(--black);
   border-radius: var(--radius-sm);

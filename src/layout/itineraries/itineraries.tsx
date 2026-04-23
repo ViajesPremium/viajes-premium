@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -9,6 +9,7 @@ import styles from "./itineraries.module.css";
 import GradientText from "@/components/ui/gradient-text/gradient-text";
 import { BlurredStagger } from "@/components/ui/blurred-stagger-text/blurred-stagger-text";
 import { Button } from "@/components/ui/button/button";
+import { scrollToSection } from "@/lib/scroll-to-section";
 
 const toRoman = (value: number) => {
   const numerals: Array<[number, string]> = [
@@ -76,7 +77,15 @@ const items = [
   },
 ];
 
-type LenisLike = { scrollTo: (target: number, opts: object) => void };
+type LenisLike = {
+  scrollTo: (
+    target: number,
+    opts?: { duration?: number; easing?: (t: number) => number; immediate?: boolean },
+  ) => void;
+  stop: () => void;
+  start: () => void;
+  resize: () => void;
+};
 
 export default function Itinerary() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -86,6 +95,9 @@ export default function Itinerary() {
 
   const [activeStep, setActiveStep] = useState(0);
   const currentStepRef = useRef(0);
+  const handleGoToForm = useCallback(() => {
+    scrollToSection("#form", { duration: 1.15 });
+  }, []);
 
   useGSAP(
     () => {
@@ -97,9 +109,6 @@ export default function Itinerary() {
       const c2 = c2Refs.current;
       const info = infoRefs.current;
       if (!container) return;
-
-      const getLenis = () =>
-        (window as unknown as Record<string, LenisLike>).__lenis;
 
       const setStepState = (step: number) => {
         const clamped = Math.max(0, Math.min(total - 1, step));
@@ -130,6 +139,7 @@ export default function Itinerary() {
       };
 
       const isMobileViewport = window.matchMedia("(max-width: 768px)").matches;
+      const PIN_CATCH_OFFSET_PX = 6;
 
       if (isMobileViewport) {
         setStepState(0);
@@ -139,172 +149,253 @@ export default function Itinerary() {
         let touchStartY = 0;
         let touchStartX = 0;
         let touchPrimed = false;
-        let touchLocked = false;
-        const MOBILE_STEP_DURATION = 0.56;
-        const MOBILE_INFO_ACTIVE_DURATION = 0.44;
-        const MOBILE_INFO_INACTIVE_DURATION = 0.36;
-        const MOBILE_PIN_VH = 1.4 + (total - 1) * 0.9;
-        const INTERACTION_UNLOCK_PROGRESS = 0.12;
+        // Two-phase state machine:
+        //   WAITING     → section being uncovered by Highlights scrolling away
+        //   INTERACTIVE → Highlights gone, user swipes to change cards
+        //   EXITING     → user triggered exit, Lenis takes over scroll
+        let isInteractive = false;
+        let isExiting = false;
+        // True when the user scrolled back up into this section from below (Includes).
+        // Enables backward exit from step 0 so they can return to Highlights.
+        let enteredFromBelow = false;
+        // True once the user advanced at least one card in the current mobile session.
+        // Allows exiting upward from step 0 after interacting (prevents hard lock).
+        let hasMovedForwardInSession = false;
 
-        const pinTrigger = ScrollTrigger.create({
-          trigger: container,
-          start: "top top",
-          end: () => `+=${window.innerHeight * MOBILE_PIN_VH}`,
-          pin: true,
-          pinSpacing: true,
-          anticipatePin: 1,
-          invalidateOnRefresh: true,
-          onRefresh: () => {
-            window.__lenis?.resize();
-          },
-        });
+        const MOBILE_STEP_DURATION = 0.52;
+        const MOBILE_INFO_ACTIVE_DURATION = 0.4;
+        const MOBILE_INFO_INACTIVE_DURATION = 0.32;
+        // Pin only needs to cover: (A) unlock scroll ≈1 vh + (B) exit scroll ≈0.3 vh.
+        // We never reach the natural end — exit is always triggered programmatically.
+        const MOBILE_PIN_VH = 1.42;
 
-        const canInteract = () =>
-          pinTrigger.isActive &&
-          pinTrigger.progress >= INTERACTION_UNLOCK_PROGRESS;
+        const getLenis = () =>
+          (window as unknown as Record<string, LenisLike>).__lenis;
 
+        // ── Unlock detection ──────────────────────────────────────────────────
+        // True once the Highlights section (z-index layer above Itineraries) has
+        // completely scrolled off the top of the viewport.
+        // The #highlights DeferredSection will be in DOM long before the user
+        // reaches Itineraries, so getElementById is safe here.
+        const isFullyUncovered = (): boolean => {
+          const hl = document.getElementById("highlights");
+          if (!hl) return true; // fallback: assume uncovered
+          // Allow a small threshold for rounding / sub-pixel rendering
+          return hl.getBoundingClientRect().bottom <= 4;
+        };
+
+        // ── Interactive mode ──────────────────────────────────────────────────
+        // Stop Lenis so it can't scroll the page while the user is swiping cards.
+        // On mobile Lenis is not initialised (SmoothScrollProvider returns early),
+        // so these calls are no-ops — the real scroll prevention is preventDefault
+        // in onTouchMove.
+        const enterInteractive = () => {
+          if (isInteractive) return;
+          isInteractive = true;
+          getLenis()?.stop();
+        };
+
+        const exitInteractive = () => {
+          if (!isInteractive) return;
+          isInteractive = false;
+          getLenis()?.start();
+        };
+
+        // ── Step animation ────────────────────────────────────────────────────
         const animateToStep = (targetStep: number) => {
-          const target = Math.max(0, Math.min(total - 1, targetStep));
           const from = currentStepRef.current;
-          if (target === from) return;
-          if (activeTransition) return;
+          if (targetStep === from || activeTransition) return;
+          if (targetStep > from) hasMovedForwardInSession = true;
 
-          setStepState(target);
+          setStepState(targetStep);
           activeTransition = gsap.timeline({
             defaults: { ease: "power2.out", duration: MOBILE_STEP_DURATION },
-            onComplete: () => {
-              activeTransition = null;
-              touchLocked = false;
-            },
+            onComplete: () => { activeTransition = null; },
           });
 
           for (let i = 0; i < total; i++) {
-            const isVisibleLayer = i <= target;
-            const infoY = i === target ? 0 : i < target ? -20 : 20;
-            const infoOpacity = i === target ? 1 : 0;
-            activeTransition.to(c1[i], { yPercent: isVisibleLayer ? 0 : 100 }, 0);
-            activeTransition.to(c2[i], { yPercent: isVisibleLayer ? 0 : -100 }, 0);
+            const visible = i <= targetStep;
+            const infoY = i === targetStep ? 0 : i < targetStep ? -20 : 20;
+            const infoOpacity = i === targetStep ? 1 : 0;
+            activeTransition.to(c1[i], { yPercent: visible ? 0 : 100 }, 0);
+            activeTransition.to(c2[i], { yPercent: visible ? 0 : -100 }, 0);
             activeTransition.to(
               info[i],
               {
                 yPercent: infoY,
                 opacity: infoOpacity,
                 duration:
-                  i === target
+                  i === targetStep
                     ? MOBILE_INFO_ACTIVE_DURATION
                     : MOBILE_INFO_INACTIVE_DURATION,
               },
-              i === target ? 0.12 : 0,
+              i === targetStep ? 0.1 : 0,
             );
           }
         };
 
-        const goByDirection = (dir: number) => {
-          if (activeTransition || touchLocked) return;
-          const st = pinTrigger;
-          if (!st || !st.isActive) return;
+        // ── Section exit ──────────────────────────────────────────────────────
+        // Re-enable Lenis / native scroll and programmatically scroll past the
+        // pin boundary so the section unpins cleanly.
+        const doExit = (dir: 1 | -1) => {
+          if (isExiting) return;
+          isExiting = true;
+          exitInteractive(); // re-enable Lenis first
 
-          const from = currentStepRef.current;
-          const to = Math.max(0, Math.min(total - 1, from + dir));
-          if (to === from) {
-            const edgeOffset = Math.round(window.innerHeight * 0.24);
-            const edgeTarget = dir > 0 ? st.end + edgeOffset : st.start - edgeOffset;
-            const lenis = getLenis();
-            if (lenis) {
-              lenis.scrollTo(edgeTarget, { duration: 0.28 });
-            } else {
-              window.scrollTo({ top: edgeTarget, behavior: "smooth" });
-            }
-            return;
+          const lenis = getLenis();
+          // Scroll just past the pin end (forward) or start (backward)
+          const target =
+            dir > 0
+              ? pinTrigger.end + 2
+              : Math.max(0, pinTrigger.start - 2);
+
+          if (lenis) {
+            lenis.scrollTo(target, {
+              duration: 0.38,
+              easing: (t) => t * (2 - t),
+            });
+          } else {
+            window.scrollTo({ top: target, behavior: "smooth" });
           }
-
-          touchLocked = true;
-          animateToStep(to);
         };
 
+        // ── ScrollTrigger pin ─────────────────────────────────────────────────
+        const pinTrigger = ScrollTrigger.create({
+          trigger: container,
+          start: () => `top top+=${PIN_CATCH_OFFSET_PX}`,
+          end: () => `+=${window.innerHeight * MOBILE_PIN_VH}`,
+          pin: true,
+          pinSpacing: true,
+          anticipatePin: 1.35,
+          invalidateOnRefresh: true,
+          onEnter: () => {
+            // Fresh forward entry (from top). Reset everything to card 0.
+            activeTransition?.kill();
+            activeTransition = null;
+            enteredFromBelow = false;
+            hasMovedForwardInSession = false;
+            isExiting = false;
+            isInteractive = false;
+            setStepState(0);
+            setVisualState(0);
+          },
+          onUpdate: () => {
+            // Continuously poll until Highlights is gone, then lock in.
+            if (!isInteractive && !isExiting && isFullyUncovered()) {
+              enterInteractive();
+            }
+          },
+          onLeave: () => {
+            // Pin naturally ended (edge case — normally exit is via doExit).
+            exitInteractive();
+            isExiting = false;
+          },
+          onLeaveBack: () => {
+            // User scrolled back above the pin start (past Highlights into top).
+            exitInteractive();
+            isExiting = false;
+            enteredFromBelow = false;
+            hasMovedForwardInSession = false;
+          },
+          onEnterBack: () => {
+            // User scrolled back UP into the pin from below (from Includes).
+            // Kill any lingering animation, reset all flags, land on last card.
+            activeTransition?.kill();
+            activeTransition = null;
+            enteredFromBelow = true;
+            hasMovedForwardInSession = true;
+            isExiting = false;
+            isInteractive = false; // reset so enterInteractive() fires cleanly
+            setStepState(total - 1);
+            setVisualState(total - 1);
+            // Highlights is definitely gone if we're coming from below.
+            enterInteractive();
+          },
+          onRefresh: () => {
+            window.__lenis?.resize();
+          },
+        });
+
+        // ── Touch handlers ────────────────────────────────────────────────────
         const onTouchStart = (event: TouchEvent) => {
-          if (!canInteract() || activeTransition || touchLocked) {
+          if (!isInteractive || activeTransition || isExiting) {
             touchPrimed = false;
             return;
           }
-          const touch = event.touches[0];
-          if (!touch) {
-            touchPrimed = false;
-            return;
-          }
-          touchStartY = touch.clientY;
-          touchStartX = touch.clientX;
+          const t = event.touches[0];
+          if (!t) { touchPrimed = false; return; }
+          touchStartY = t.clientY;
+          touchStartX = t.clientX;
           touchPrimed = true;
         };
 
         const onTouchMove = (event: TouchEvent) => {
-          if (!canInteract()) return;
-          const touch = event.touches[0];
-          if (!touch) return;
-
-          const deltaY = touch.clientY - touchStartY;
-          const currentStep = currentStepRef.current;
-          const isLast = currentStep === total - 1;
-
-          // Bloquear scroll vertical hasta llegar a la ultima card.
-          if (!isLast) {
-            event.preventDefault();
-            return;
-          }
-
-          // En la ultima card: bloquear swipe hacia abajo (para volver cards),
-          // permitir swipe hacia arriba para salir de la seccion.
-          if (deltaY > 0) {
-            event.preventDefault();
-          }
+          // Before unlock: let native scroll / Lenis advance pin progress.
+          if (!isInteractive) return;
+          // After unlock: we own all scroll. Prevent browser default AND stop
+          // propagation so any window-level Lenis listener can't interfere.
+          event.preventDefault();
+          event.stopPropagation();
         };
 
         const onTouchEnd = (event: TouchEvent) => {
-          if (!touchPrimed || !canInteract()) return;
-          if (activeTransition || touchLocked) return;
+          if (!touchPrimed) return;
           touchPrimed = false;
+          if (!isInteractive || activeTransition || isExiting) return;
 
-          const touch = event.changedTouches[0];
-          if (!touch) return;
-          const deltaY = touch.clientY - touchStartY;
-          const deltaX = touch.clientX - touchStartX;
+          const t = event.changedTouches[0];
+          if (!t) return;
 
-          if (Math.abs(deltaY) < 28) return;
-          if (Math.abs(deltaY) <= Math.abs(deltaX) * 1.15) return;
+          const deltaY = t.clientY - touchStartY;
+          const deltaX = t.clientX - touchStartX;
 
-          goByDirection(deltaY < 0 ? 1 : -1);
+          // Ignore weak or horizontal swipes
+          if (Math.abs(deltaY) < 24) return;
+          if (Math.abs(deltaY) <= Math.abs(deltaX) * 1.1) return;
+
+          // Finger moved UP (negative deltaY) → forward/down in content → next card
+          const goingForward = deltaY < 0;
+          const step = currentStepRef.current;
+
+          if (goingForward) {
+            if (step < total - 1) {
+              animateToStep(step + 1);
+            } else {
+              doExit(1); // last card → exit forward
+            }
+          } else {
+            if (step > 0) {
+              animateToStep(step - 1);
+            } else if (enteredFromBelow || hasMovedForwardInSession) {
+              doExit(-1); // first card + came from below → exit backward to Highlights
+            }
+            // First card + came from top → do nothing (must see all cards first)
+          }
         };
 
+        const onTouchCancel = () => { touchPrimed = false; };
+
+        // Wheel (useful in browser DevTools mobile emulation / foldable w/ mouse)
         const onWheel = (event: WheelEvent) => {
-          if (!canInteract()) return;
-          const deltaY = event.deltaY;
-          if (Math.abs(deltaY) < 4) return;
-          if (activeTransition || touchLocked) {
-            event.preventDefault();
-            return;
+          if (!isInteractive || isExiting) return;
+          if (Math.abs(event.deltaY) < 4) return;
+
+          event.preventDefault();
+          event.stopPropagation();
+
+          if (activeTransition) return; // one step at a time
+
+          const dir = event.deltaY > 0 ? 1 : -1;
+          const step = currentStepRef.current;
+
+          if (dir > 0) {
+            if (step < total - 1) animateToStep(step + 1);
+            else doExit(1);
+          } else {
+            if (step > 0) animateToStep(step - 1);
+            else if (enteredFromBelow || hasMovedForwardInSession) doExit(-1);
+            // First card + came from top → no backward exit
           }
-
-          const dir = deltaY > 0 ? 1 : -1;
-          const currentStep = currentStepRef.current;
-          const isLast = currentStep === total - 1;
-
-          if (!isLast) {
-            event.preventDefault();
-            goByDirection(dir);
-            return;
-          }
-
-          // Ultima card: permitir solo salida hacia abajo.
-          if (dir < 0) {
-            event.preventDefault();
-            goByDirection(-1);
-          }
-        };
-
-        const onTouchCancel = () => {
-          touchPrimed = false;
-          touchStartY = 0;
-          touchStartX = 0;
         };
 
         container.addEventListener("touchstart", onTouchStart, { passive: true });
@@ -320,6 +411,7 @@ export default function Itinerary() {
           container.removeEventListener("touchcancel", onTouchCancel);
           container.removeEventListener("wheel", onWheel);
           activeTransition?.kill();
+          exitInteractive(); // always re-enable Lenis on unmount
           pinTrigger.kill();
         };
       }
@@ -355,10 +447,11 @@ export default function Itinerary() {
       const masterTl = gsap.timeline({
         scrollTrigger: {
           trigger: container,
-          start: "top top",
+          start: () => `top top+=${PIN_CATCH_OFFSET_PX}`,
           end: () => `+=${getTotalPinDistance()}`,
           pin: true,
           pinSpacing: true,
+          anticipatePin: 1.35,
           scrub: 0.12,
           snap: {
             snapTo: (value: number) => closestStop(value),
@@ -421,6 +514,9 @@ export default function Itinerary() {
               className={styles.image}
               fill
               sizes="(max-width: 768px) 100vw, 50vw"
+              loading={i === 0 ? "eager" : "lazy"}
+              priority={i === 0}
+              fetchPriority={i === 0 ? "high" : "auto"}
             />
           </div>
         ))}
@@ -441,6 +537,9 @@ export default function Itinerary() {
               className={styles.image}
               fill
               sizes="(max-width: 768px) 100vw, 50vw"
+              loading={i === 0 ? "eager" : "lazy"}
+              priority={i === 0}
+              fetchPriority={i === 0 ? "high" : "auto"}
             />
           </div>
         ))}
@@ -478,6 +577,7 @@ export default function Itinerary() {
                     text={item.description}
                     className={styles.descriptionBlur}
                     isActive={activeStep === i}
+                    staticOnMobile
                   />
                   <p className={styles.idealText}>{item.ideal}</p>
                 </div>
@@ -490,7 +590,11 @@ export default function Itinerary() {
               <Button variant="secondary" className={styles.ctaButton2}>
                 Descargar PDF
               </Button>
-              <Button variant="primary" className={styles.ctaButton}>
+              <Button
+                variant="primary"
+                className={styles.ctaButton}
+                onClick={handleGoToForm}
+              >
                 Quiero esta experiencia
               </Button>
             </div>

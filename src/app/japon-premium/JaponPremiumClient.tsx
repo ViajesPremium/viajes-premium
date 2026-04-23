@@ -23,6 +23,9 @@ const Includes = dynamic(() => import("@/layout/includes/includes"), {
 const CTAForm = dynamic(() => import("@/layout/form/ctaForm"), {
   loading: () => <PinPlaceholder height="100svh" bg="var(--bg)" />,
 });
+const Faqs = dynamic(() => import("@/layout/faqs/faqs"), {
+  loading: () => <PinPlaceholder height="100vh" bg="var(--bg)" />,
+});
 
 // ── Dynamic CON defer: sin pinning, se activan al acercarse al viewport ───────
 const Highlights = dynamic(() => import("@/layout/highlights/highlights"));
@@ -30,7 +33,6 @@ const Testimonials = dynamic(
   () => import("@/layout/testimonials/testimonials"),
 );
 const Interlude = dynamic(() => import("@/layout/interlude/interlude"));
-const Faqs = dynamic(() => import("@/layout/faqs/faqs"));
 const MarqueeSection = dynamic(
   () => import("@/layout/marquee/marquee-section"),
 );
@@ -144,7 +146,9 @@ export default function JaponPremiumClient() {
   return (
     <main className={styles.main}>
       {/* ── Above the fold ─────────────────────────────────────────── */}
-      <Hero />
+      <section id="inicio">
+        <Hero />
+      </section>
       <Snapshot />
       <FirstForm />
 
@@ -181,12 +185,13 @@ export default function JaponPremiumClient() {
         <Interlude />
       </DeferredSection>
 
-      <DeferredSection id="faqs" minHeight="100vh" bg="var(--bg)">
-        <Faqs />
-      </DeferredSection>
-
       {/* ── Con pin: chunk separado, render inmediato ───────────────── */}
-      <section id="form">
+      <section id="faqs" className={styles.faqsLayer}>
+        <Faqs />
+      </section>
+
+      {/* Cubre la sección de FAQs al hacer pin — z-index mayor ──────── */}
+      <section id="form" className={styles.formWrapper}>
         <CTAForm />
       </section>
 

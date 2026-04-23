@@ -1,9 +1,11 @@
 "use client";
 
+import { useCallback } from "react";
 import Badge from "@/components/ui/badge/badge";
 import { Button } from "@/components/ui/button/button";
 import { BlurredStagger } from "@/components/ui/blurred-stagger-text/blurred-stagger-text";
 import { FocusRail, type FocusRailItem } from "@/components/ui/focus-rail/focus-rail";
+import { scrollToSection } from "@/lib/scroll-to-section";
 import BracketHoverBox from "./bracket-hover-box";
 import styles from "./highlights.module.css";
 
@@ -15,7 +17,7 @@ const FOCUS_RAIL_ITEMS: FocusRailItem[] = [
       "Cada itinerario se estructura para dar más sentido, ritmo y calidad al viaje.",
     meta: "Cultura",
     imageSrc: "/images/japon/stockImage.webp",
-    href: "#contacto",
+    href: "#form",
   },
   {
     id: "tokyo-nocturno",
@@ -24,7 +26,7 @@ const FOCUS_RAIL_ITEMS: FocusRailItem[] = [
       "Atención cercana antes, durante y después de su experiencia en Japón.",
     meta: "Urbano",
     imageSrc: "/images/japon/stockImage.webp",
-    href: "#contacto",
+    href: "#form",
   },
   {
     id: "sabores-omakase",
@@ -33,7 +35,7 @@ const FOCUS_RAIL_ITEMS: FocusRailItem[] = [
       "Soporte continuo para viajar con tranquilidad de principio a fin.",
     meta: "Gastronomia",
     imageSrc: "/images/japon/stockImage.webp",
-    href: "#contacto",
+    href: "#form",
   },
   {
     id: "onsen-premium",
@@ -42,7 +44,7 @@ const FOCUS_RAIL_ITEMS: FocusRailItem[] = [
       "Seleccionadas por su carácter, ubicación y nivel de servicio.",
     meta: "Bienestar",
     imageSrc: "/images/japon/stockImage.webp",
-    href: "#contacto",
+    href: "#form",
   },
   {
     id: "paisajes-iconicos",
@@ -51,7 +53,7 @@ const FOCUS_RAIL_ITEMS: FocusRailItem[] = [
       "Guías en español para vivir Japón con más claridad y profundidad.",
     meta: "Naturaleza",
     imageSrc: "/images/japon/stockImage.webp",
-    href: "#contacto",
+    href: "#form",
   },
   {
     id: "experiencia-ryokan",
@@ -60,11 +62,18 @@ const FOCUS_RAIL_ITEMS: FocusRailItem[] = [
       "Cada detalle se cuida para que usted viaje con más confianza y respaldo.",
     meta: "Tradicion",
     imageSrc: "/images/japon/stockImage.webp",
-    href: "#contacto",
+    href: "#form",
   },
 ];
 
 export default function Highlights() {
+  const handleGoToForm = useCallback(() => {
+    scrollToSection("#form", { duration: 1.15 });
+  }, []);
+  const handleGoToItineraries = useCallback(() => {
+    scrollToSection("#itinerarios", { duration: 1.15 });
+  }, []);
+
   return (
     <section className={styles.highlights}>
       <div className={styles.container}>
@@ -201,8 +210,12 @@ export default function Highlights() {
       </div>
 
       <div className={styles.ctaRow}>
-        <Button variant="primary">Solicita tu propuesta</Button>
-        <Button variant="secondary">Ver itinerarios</Button>
+        <Button variant="primary" onClick={handleGoToForm}>
+          Solicita tu propuesta
+        </Button>
+        <Button variant="secondary" onClick={handleGoToItineraries}>
+          Ver itinerarios
+        </Button>
       </div>
     </section>
   );

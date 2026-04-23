@@ -14,6 +14,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { BlurredStagger } from "@/components/ui/blurred-stagger-text/blurred-stagger-text";
 import type { GoogleRatingData } from "@/lib/google-reviews";
 import { GOOGLE_RATING_FALLBACK } from "@/lib/google-reviews";
+import { scrollToSection } from "@/lib/scroll-to-section";
 import Badge from "@/components/ui/badge/badge";
 import styles from "./testimonials.module.css";
 import { Button } from "@/components/ui/button/button";
@@ -213,6 +214,9 @@ export default function Testimonials({ googleRating }: TestimonialsProps) {
   const [current, setCurrent] = useState(0);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const sectionRef = useRef<HTMLElement>(null);
+  const handleGoToForm = useCallback(() => {
+    scrollToSection("#form", { duration: 1.15 });
+  }, []);
 
   const [sectionHeight, setSectionHeight] = useState(0);
 
@@ -434,6 +438,7 @@ export default function Testimonials({ googleRating }: TestimonialsProps) {
                 text={t.quote}
                 isActive={true}
                 className={styles.text}
+                staticOnMobile
               />
             </div>
 
@@ -470,7 +475,9 @@ export default function Testimonials({ googleRating }: TestimonialsProps) {
       </div>
 
       <div className={styles.bottomRow}>
-        <Button variant="primary">Solicita tu propuesta</Button>
+        <Button variant="primary" onClick={handleGoToForm}>
+          Solicita tu propuesta
+        </Button>
       </div>
     </section>
   );

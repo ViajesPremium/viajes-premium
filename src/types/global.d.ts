@@ -7,9 +7,12 @@ declare global {
       options?: {
         duration?: number;
         easing?: (value: number) => number;
+        immediate?: boolean;
       },
     ) => void;
     resize: () => void;
+    stop: () => void;
+    start: () => void;
   }
 
   interface Window {

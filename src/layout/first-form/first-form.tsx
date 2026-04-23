@@ -2,6 +2,7 @@
 
 import { useRef } from "react";
 import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
+import Image from "next/image";
 import styles from "./first-form.module.css";
 import ImageSectionForm, { type ImageSectionFormConfig } from "./form";
 import { BlurredStagger } from "@/components/ui/blurred-stagger-text/blurred-stagger-text";
@@ -81,6 +82,19 @@ export default function ImgSection() {
             </p>
           </div>
           <ImageSectionForm config={firstFormConfig} idPrefix="first-form" />
+
+          <div className={styles.mobileGallery} aria-hidden="true">
+            <div className={styles.mobileGalleryItem}>
+              <Image
+                src="/images/japon/geishaFormSola.webp"
+                alt="Geisha en Japón"
+                width={900}
+                height={1400}
+                sizes="(max-width: 768px) 100vw, 0px"
+                className={styles.mobileGalleryImage}
+              />
+            </div>
+          </div>
         </div>
 
         {/* Derecha: Vacio para dejar ver la imagen de la geisha */}

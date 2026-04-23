@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { motion } from "motion/react";
 import GradientText from "@/components/ui/gradient-text/gradient-text";
 import styles from "./blurred-stagger-text.module.css";
@@ -18,13 +19,36 @@ export const BlurredStagger = ({
   highlights = [],
   style = {},
   isActive,
+  staticOnMobile = false,
 }: {
   text: string;
   className?: string;
   highlights?: HighlightWord[];
   style?: React.CSSProperties;
   isActive?: boolean;
+  /** En mobile (≤768px) renderiza texto plano en lugar de la animación. */
+  staticOnMobile?: boolean;
 }) => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    if (!staticOnMobile) return;
+    const mq = window.matchMedia("(max-width: 768px)");
+    setIsMobile(mq.matches);
+    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, [staticOnMobile]);
+
+  // Texto plano cuando la sección lo pide y estamos en mobile
+  if (staticOnMobile && isMobile) {
+    return (
+      <div className={className} style={style}>
+        {text}
+      </div>
+    );
+  }
+
   const container = {
     hidden: { opacity: 0 },
     show: {

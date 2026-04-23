@@ -38,6 +38,21 @@
   margin-top: 0;
 }
 
+/* FAQs: render inmediato (tiene pin GSAP) */
+.faqsLayer {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  background: var(--bg);
+}
+
+/* CTAForm: debe cubrir las FAQs pineadas cuando sube por encima */
+.formWrapper {
+  position: relative;
+  z-index: 10;
+  background: var(--bg);
+}
+
 @media (max-width: 768px) {
   .testimonialsLayer {
     margin-top: 0;

@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import styles from "./hero.module.css";
 import HeroOverlayLazy from "@/components/HeroOverlayLazy";
 import { Button } from "@/components/ui/button/button";
+import { scrollToSection } from "@/lib/scroll-to-section";
 
 const TextPressure = dynamic(
   () => import("@/components/ui/text-pressure/textPressure"),
@@ -72,6 +73,12 @@ function PressureWord({
 
 export default function Hero() {
   const [enablePressureTitle, setEnablePressureTitle] = useState(false);
+  const handleGoToForm = useCallback(() => {
+    scrollToSection("#form", { duration: 1.15 });
+  }, []);
+  const handleGoToItineraries = useCallback(() => {
+    scrollToSection("#itinerarios", { duration: 1.15 });
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
@@ -195,11 +202,15 @@ export default function Hero() {
         </div>
 
         <div className={styles.ctaRow}>
-          <Button type="button" variant="primary">
+          <Button type="button" variant="primary" onClick={handleGoToForm}>
             Solicita tu propuesta
           </Button>
           <div className={styles.cta2}>
-            <Button type="button" variant="secondary">
+            <Button
+              type="button"
+              variant="secondary"
+              onClick={handleGoToItineraries}
+            >
               Ver itinerarios
             </Button>
           </div>

@@ -2,20 +2,9 @@
 import React, { useCallback, useLayoutEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
+import { scrollToSection } from "@/lib/scroll-to-section";
 import "./navbar.css";
-
-const clamp = (value: number, min: number, max: number) =>
-  Math.min(Math.max(value, min), max);
-
-const easeOutQuint = (t: number) => 1 - Math.pow(1 - t, 5);
-
-const REVEAL_SCROLL_OFFSETS: Record<
-  string,
-  { viewportHeightMultiplier: number; desktopOnly?: boolean }
-> = {
-  "#itinerarios": { viewportHeightMultiplier: 1 },
-  "#testimonios": { viewportHeightMultiplier: 1, desktopOnly: true },
-};
 
 export interface StaggeredMenuItem {
   label: string;
@@ -47,17 +36,29 @@ export interface StaggeredMenuProps {
   isFixed?: boolean;
 }
 
+const DEFAULT_MENU_ITEMS: StaggeredMenuItem[] = [
+  { label: "Inicio", ariaLabel: "Ir a inicio", link: "/" },
+  {
+    label: "Japón Premium",
+    ariaLabel: "Ir a Japón Premium",
+    link: "/japon-premium",
+  },
+];
+
+const JAPAN_SECTION_MENU_ITEMS: StaggeredMenuItem[] = [
+  { label: "Inicio", ariaLabel: "Ir al inicio", link: "#inicio" },
+  { label: "Highlights", ariaLabel: "Ir a highlights", link: "#highlights" },
+  { label: "Itinerarios", ariaLabel: "Ir a itinerarios", link: "#itinerarios" },
+  { label: "Incluye", ariaLabel: "Ir a lo que incluye", link: "#includes" },
+  { label: "Testimonios", ariaLabel: "Ir a testimonios", link: "#testimonials" },
+  { label: "FAQs", ariaLabel: "Ir a preguntas frecuentes", link: "#faqs" },
+  { label: "Contacto", ariaLabel: "Ir al formulario", link: "#form" },
+];
+
 export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
   position = "right",
   colors = ["var(--primary)", "var(--secondary)"],
-  items = [
-    { label: "Inicio", ariaLabel: "Ir a inicio", link: "/" },
-    {
-      label: "Japón Premium",
-      ariaLabel: "Ir a Japón Premium",
-      link: "/japon-premium",
-    },
-  ],
+  items: providedItems,
   socialItems = [],
   displaySocials = true,
   displayItemNumbering = true,
@@ -72,6 +73,19 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
   onMenuOpen,
   onMenuClose,
 }: StaggeredMenuProps) => {
+  const pathname = usePathname();
+  const items = React.useMemo<StaggeredMenuItem[]>(() => {
+    if (providedItems && providedItems.length > 0) {
+      return providedItems;
+    }
+
+    if (pathname?.startsWith("/japon-premium")) {
+      return JAPAN_SECTION_MENU_ITEMS;
+    }
+
+    return DEFAULT_MENU_ITEMS;
+  }, [providedItems, pathname]);
+
   const [open, setOpen] = useState(false);
   const openRef = useRef(false);
   const panelRef = useRef<HTMLDivElement | null>(null);
@@ -444,41 +458,7 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
       }
 
       event.preventDefault();
-
-      const target = document.querySelector(link) as HTMLElement | null;
-      if (!target) {
-        return;
-      }
-
-      const offsetConfig = REVEAL_SCROLL_OFFSETS[link];
-      const isDesktop = window.matchMedia("(min-width: 768px)").matches;
-      const shouldApplyOffset =
-        !!offsetConfig && (!offsetConfig.desktopOnly || isDesktop);
-      const offsetPx = shouldApplyOffset
-        ? window.innerHeight * offsetConfig.viewportHeightMultiplier
-        : 0;
-
-      const rawY =
-        target.getBoundingClientRect().top + window.scrollY + offsetPx;
-      const maxY = Math.max(
-        document.documentElement.scrollHeight - window.innerHeight,
-        0,
-      );
-      const targetY = clamp(rawY, 0, maxY);
-
-      const performScroll = () => {
-        const lenis = window.__lenis;
-        if (lenis) {
-          lenis.scrollTo(targetY, { duration: 1.1, easing: easeOutQuint });
-        } else {
-          window.scrollTo({ top: targetY, behavior: "smooth" });
-        }
-        window.history.replaceState(null, "", link);
-      };
-
-      requestAnimationFrame(() => {
-        requestAnimationFrame(performScroll);
-      });
+      scrollToSection(link, { duration: 1.15, updateHash: true, defer: true });
     },
     [closeMenu],
   );
@@ -635,3 +615,6 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
 };
 
 export default StaggeredMenu;
+
+
+

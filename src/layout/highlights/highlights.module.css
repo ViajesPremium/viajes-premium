@@ -253,12 +253,12 @@
     align-items: center;
     width: 100%;
     margin-top: 3rem;
-    gap: 0.8rem;
+    gap: 0.4rem;
   }
 
   .mobileLineWithBracket {
     display: flex;
-    align-items: center; /* Alineación central para móviles */
+    align-items: center;
     justify-content: center;
     flex-wrap: wrap;
     gap: 0.5rem;
@@ -277,7 +277,7 @@
 
   .bracketBox {
     width: clamp(90px, 25vw, 120px);
-    height: clamp(40px, 10vw, 50px);
+    height: clamp(40px, 10vw, 40px);
   }
 
   .bracketBox::before,
