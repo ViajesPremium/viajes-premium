@@ -45,7 +45,7 @@ const DESKTOP_CONFIG: EffectConfig = {
   MAX_PIXEL_RATIO: 10,
   MAX_RADIUS: 0.2,
   BLOB_COLOR: "#ff0000",
-  BLOB_OPACITY: 0.7,
+  BLOB_OPACITY: 0.8,
   TRAIL_SHRINK_SPEED: 0.3,
   TRAIL_DROP_DISTANCE: 0.005,
   VELOCITY_MULTIPLIER: 9,
@@ -68,7 +68,7 @@ const DESKTOP_CONFIG: EffectConfig = {
 
 // ── Mobile ──────────────────────────────────────────────────────────
 const MOBILE_CONFIG: EffectConfig = {
-  MAX_PIXEL_RATIO: 1.5, // DPR capped: phone at 3× renders as 1.5×, saving ~4× GPU work
+  MAX_PIXEL_RATIO: 2, // DPR capped: phone at 3x renders at 1.25x for lower GPU cost
   MAX_RADIUS: 10,
   BLOB_COLOR: "#000000",
   BLOB_OPACITY: 0.05,
@@ -335,6 +335,8 @@ type ShaderUniforms = {
 };
 
 const clamp01 = (value: number) => Math.min(Math.max(value, 0), 1);
+const MOBILE_RENDER_SCALE = 0.42;
+const MOBILE_TARGET_FPS = 24;
 
 export default function HeroOverlay() {
   const rootRef = useRef<HTMLDivElement | null>(null);
@@ -428,7 +430,12 @@ export default function HeroOverlay() {
 
   useEffect(() => {
     lastInteractionTimeRef.current = Date.now();
-    const timer = setTimeout(() => setShouldBootWebGL(true), 100);
+    const isMobile = window.matchMedia("(max-width: 768px)").matches;
+    // Delay mobile boot a bit so first paint/CTA become interactive sooner.
+    const timer = setTimeout(
+      () => setShouldBootWebGL(true),
+      isMobile ? 380 : 120,
+    );
     return () => clearTimeout(timer);
   }, []);
 
@@ -444,7 +451,7 @@ export default function HeroOverlay() {
     let resizeObserver: ResizeObserver | null = null;
     let visibilityObserver: IntersectionObserver | null = null;
     let isVisible = true;
-    let frameCount = 0;
+    let lastRenderTimestamp = 0;
     const loader = new THREE.TextureLoader();
 
     loader.load(SAMURAI_IMG, (texture: THREE.Texture) => {
@@ -500,9 +507,9 @@ export default function HeroOverlay() {
         ),
       );
 
-      // Mobile: render at half resolution — the blob is soft so it's imperceptible,
-      // but GPU fillrate work drops by 75%.
-      const renderScale = isMobile ? 0.5 : 1.0;
+      // Mobile: render below native resolution — the blob is soft so quality impact
+      // is minimal while fillrate cost drops substantially.
+      const renderScale = isMobile ? MOBILE_RENDER_SCALE : 1.0;
       // Pass updateStyle=false so THREE doesn't shrink the canvas element to the
       // render-buffer size; we set CSS manually to always fill the container.
       renderer.setSize(
@@ -511,8 +518,10 @@ export default function HeroOverlay() {
         false,
       );
 
+      texture.generateMipmaps = false;
       texture.minFilter = THREE.LinearFilter;
       texture.magFilter = THREE.LinearFilter;
+      texture.anisotropy = 1;
 
       fullContainer.innerHTML = "";
       // Canvas fills the container visually even when the render buffer is smaller
@@ -525,7 +534,6 @@ export default function HeroOverlay() {
       rendererRef.current = renderer;
       uniformsRef.current = uniforms;
 
-      renderer.compile(scene, camera);
       timerRef.current = new THREE.Timer();
       timerRef.current.connect(document);
 
@@ -585,9 +593,13 @@ export default function HeroOverlay() {
         // Skip work entirely when the hero is off-screen
         if (!isVisible) return;
 
-        // Mobile: cap to ~30 fps by skipping every other frame
-        frameCount++;
-        if (isMobile && frameCount % 2 !== 0) return;
+        // Mobile: cap fps to reduce startup jank and thermal throttling.
+        if (isMobile) {
+          const nowTs = performance.now();
+          const frameBudget = 1000 / MOBILE_TARGET_FPS;
+          if (nowTs - lastRenderTimestamp < frameBudget) return;
+          lastRenderTimestamp = nowTs;
+        }
 
         if (
           !rendererRef.current ||

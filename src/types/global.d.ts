@@ -8,6 +8,9 @@ declare global {
         duration?: number;
         easing?: (value: number) => number;
         immediate?: boolean;
+        force?: boolean;
+        lock?: boolean;
+        onComplete?: () => void;
       },
     ) => void;
     resize: () => void;

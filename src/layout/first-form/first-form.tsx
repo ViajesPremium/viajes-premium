@@ -51,6 +51,7 @@ export default function ImgSection() {
 
   return (
     <section ref={sectionRef} className={styles.section}>
+      <h2 className="srOnly">Cuéntanos cómo imaginas tu viaje a Japón</h2>
       {/* Fondo con movimiento */}
       <motion.div
         className={styles.img}

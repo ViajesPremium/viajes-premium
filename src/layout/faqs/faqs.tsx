@@ -212,6 +212,7 @@ export default function Faqs() {
 
   return (
     <section ref={sectionRef} className={styles.section}>
+      <h2 className="srOnly">Preguntas frecuentes sobre Japón Premium</h2>
       {/* Lateral izquierdo â€” samurai de perfil */}
       <div className={styles.sideLeft}>
         <div className={styles.sideImgFadeLeft} />

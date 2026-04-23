@@ -27,9 +27,22 @@ const clamp = (value: number, min: number, max: number) =>
 
 const easeOutQuint = (t: number) => 1 - Math.pow(1 - t, 5);
 
+let scrollToken = 0;
+
 function normalizeSectionHash(hash: string): string {
   return SECTION_ALIAS_MAP[hash] ?? hash;
 }
+
+const refreshScrollSystems = () => {
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      window.__lenis?.resize();
+      void import("gsap/ScrollTrigger")
+        .then(({ ScrollTrigger }) => ScrollTrigger.refresh())
+        .catch(() => {});
+    });
+  });
+};
 
 export function scrollToSection(
   hash: string,
@@ -62,13 +75,33 @@ export function scrollToSection(
   const duration = options.duration ?? 1.1;
   const updateHash = options.updateHash ?? true;
   const defer = options.defer ?? true;
+  const currentToken = ++scrollToken;
 
   const performScroll = () => {
+    // Drop stale scroll jobs if user clicked another CTA quickly.
+    if (currentToken !== scrollToken) {
+      return;
+    }
+
     const lenis = window.__lenis;
     if (lenis) {
-      lenis.scrollTo(targetY, { duration, easing: easeOutQuint });
+      // A few sections pause Lenis during interactive pins.
+      // Force/start ensures CTA navigation always works.
+      lenis.start();
+      lenis.scrollTo(targetY, {
+        duration,
+        easing: easeOutQuint,
+        force: true,
+        lock: true,
+        onComplete: () => {
+          // Keep pin spacers + scroll limits in sync after long jumps.
+          refreshScrollSystems();
+        },
+      });
     } else {
-      window.scrollTo({ top: targetY, behavior: "smooth" });
+      // Avoid native smooth scrolling here; it can fight GSAP pinning.
+      window.scrollTo({ top: targetY, behavior: "auto" });
+      refreshScrollSystems();
     }
 
     if (updateHash) {
@@ -86,4 +119,3 @@ export function scrollToSection(
 
   return true;
 }
-

@@ -5,9 +5,9 @@
   height: 100svh; /* Small viewport height for mobile stability */
   overflow: hidden;
   isolation: isolate;
-  background-color: rgba(255, 255, 255, 0.91);
+  background-color: rgb(247, 203, 203);
   background-image:
-    linear-gradient(rgba(243, 243, 240, 0.846), rgba(243, 243, 240, 0.988)),
+    linear-gradient(rgb(243, 243, 240), rgba(243, 243, 240, 0.862)),
     url("/images/japon/hero/japanHero.jpg");
   background-size: cover;
   background-position: center;
@@ -52,6 +52,12 @@
   width: min(96vw, 1700px);
   color: var(--black);
   margin: 0 auto;
+}
+
+.highlightedText {
+  color: var(--primary-japon);
+  font-style: italic;
+  text-decoration: underline;
 }
 
 .line {
@@ -103,10 +109,10 @@
   gap: 1rem;
   top: 70%;
   left: clamp(5%, 10vw, 10%);
-  width: clamp(350px, 22vw, 450px);
+  width: clamp(250px, 22vw, 350px);
   color: var(--black);
   font-size: 1.1rem;
-  font-weight: 300;
+  font-weight: 400;
   letter-spacing: 1px;
   font-family: var(--font-nohemi);
   line-height: 1.7;

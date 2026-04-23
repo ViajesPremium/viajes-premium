@@ -325,7 +325,8 @@ export default function Testimonials({ googleRating }: TestimonialsProps) {
 
   return (
     <section ref={sectionRef} className={styles.testimonials}>
-              <Badge
+      <h2 className="srOnly">Testimonios de viajeros</h2>
+      <Badge
           text="La voz del viajero premium"
           variant="dark"
           align="center"

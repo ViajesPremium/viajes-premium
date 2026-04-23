@@ -166,6 +166,7 @@ export default function CTAForm() {
 
   return (
     <section ref={sectionRef} className={styles.section}>
+      <h2 className="srOnly">Formulario de contacto Japón Premium</h2>
       <div className={styles.stage}>
         <div ref={roomGlowRef} className={styles.roomGlow} aria-hidden="true" />
 

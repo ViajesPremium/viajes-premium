@@ -21,8 +21,12 @@
   flex-direction: column;
   justify-content: center;
   gap: clamp(0.25rem, 1.1vh, 0.6rem);
-  gap: clamp(0.25rem, 1.1svh, 0.6rem); /* Small viewport height for mobile stability */
-  opacity: 0.05;
+  gap: clamp(
+    0.25rem,
+    1.1svh,
+    0.6rem
+  ); /* Small viewport height for mobile stability */
+  opacity: 0.08;
 }
 
 .row {
@@ -40,6 +44,7 @@
   will-change: transform;
   font-family: var(--font-thunder-light), sans-serif;
   text-transform: uppercase;
+  font-weight: 500;
   font-size: 20rem;
   line-height: 1.1;
 }
@@ -61,6 +66,7 @@
   background: var(--white);
   padding: 10px;
   overflow: hidden;
+  transform: skewY(-2deg);
 }
 
 .imageWrap {

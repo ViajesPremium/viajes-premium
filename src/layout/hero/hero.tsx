@@ -92,7 +92,15 @@ export default function Hero() {
       return;
     }
 
-    const enable = () => {
+    const enable = async () => {
+      if ("fonts" in document) {
+        try {
+          await document.fonts.load("400 1em Nohemi");
+          await document.fonts.ready;
+        } catch {
+          // Keep non-blocking behavior if the Font Loading API fails.
+        }
+      }
       if (cancelled) return;
       setEnablePressureTitle(true);
     };
@@ -107,14 +115,21 @@ export default function Hero() {
         : null;
 
     if (requestIdle && cancelIdle) {
-      const idleId = requestIdle(enable, { timeout: 1200 });
+      const idleId = requestIdle(
+        () => {
+          void enable();
+        },
+        { timeout: 1200 },
+      );
       return () => {
         cancelled = true;
         cancelIdle(idleId);
       };
     }
 
-    const timeoutId = setTimeout(enable, 350);
+    const timeoutId = setTimeout(() => {
+      void enable();
+    }, 350);
     return () => {
       cancelled = true;
       clearTimeout(timeoutId);
@@ -197,8 +212,17 @@ export default function Hero() {
 
       <div className={styles.contentContainer}>
         <div className={styles.description}>
-          <p>{`Eleva tu vida con una forma m\u00e1s cuidada de vivir Jap\u00f3n.`}</p>
-          <p>{`Dise\u00f1amos experiencias para quienes valoran atenci\u00f3n personal, criterio y una forma m\u00e1s cuidada de vivir Jap\u00f3n.`}</p>
+          <p>
+            <span className={styles.highlightedText}>Eleva tu vida</span> con
+            una forma más cuidada de vivir Japón.
+          </p>
+          <p>
+            <span className={styles.highlightedText}>
+              Diseñamos experiencias
+            </span>{" "}
+            para quienes valoran atención personal, criterio y una forma más
+            cuidada de vivir Japón.
+          </p>
         </div>
 
         <div className={styles.ctaRow}>

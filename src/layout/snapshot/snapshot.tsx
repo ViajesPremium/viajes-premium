@@ -64,6 +64,7 @@ export default function Snapshot() {
 
   return (
     <section ref={sectionRef} className={styles.snapshot}>
+      <h2 className="srOnly">Snapshot de Japón Premium</h2>
       <div className={styles.postersWrapper} />
       <div className={styles.snapshotContent}>
         <Badge text={`Snapshot`} variant="dark" align="center" />

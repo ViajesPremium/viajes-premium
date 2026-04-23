@@ -3,6 +3,7 @@
 import {
   useCallback,
   useEffect,
+  useLayoutEffect,
   useMemo,
   useRef,
   useState,
@@ -86,7 +87,9 @@ export default function TextPressure({
   const mouseRef = useRef<Point>({ x: 0, y: 0 });
   const cursorRef = useRef<Point>({ x: 0, y: 0 });
 
-  const [fontSize, setFontSize] = useState(minFontSize);
+  const [fontSize, setFontSize] = useState(
+    fixedFontSize ? Math.max(fixedFontSize, minFontSize) : minFontSize,
+  );
   const [scaleY, setScaleY] = useState(1);
   const [lineHeight, setLineHeight] = useState(1);
 
@@ -156,12 +159,14 @@ export default function TextPressure({
     });
   }, [chars.length, fixedFontSize, minFontSize, scale]);
 
+  useLayoutEffect(() => {
+    // Initial sizing must happen before paint to avoid first-frame rescale.
+    setSize();
+  }, [setSize]);
+
   useEffect(() => {
     const debouncedSetSize = debounce(setSize, 100);
-
-    debouncedSetSize();
     window.addEventListener("resize", debouncedSetSize);
-
     return () => window.removeEventListener("resize", debouncedSetSize);
   }, [setSize]);
 

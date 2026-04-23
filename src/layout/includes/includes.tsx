@@ -1,6 +1,6 @@
 ﻿"use client";
 
-import { useCallback, useRef } from "react";
+import { useCallback, useRef, type TouchEvent } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -76,23 +76,102 @@ export default function Includes() {
   const viewportRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const progressRef = useRef<HTMLSpanElement>(null);
-  const handleGoToForm = useCallback(() => {
-    scrollToSection("#form", { duration: 1.15 });
-  }, []);
+  const touchStartXRef = useRef(0);
+  const touchStartYRef = useRef(0);
+  const touchStartIndexRef = useRef(0);
+  const isHorizontalGestureRef = useRef(false);
 
-  const scrollCards = (direction: number) => {
+  const getCardStep = useCallback(() => {
     const viewport = viewportRef.current;
     const track = trackRef.current;
-    if (!viewport) return;
+    if (!viewport) return 0;
     const computedTrackStyles = track ? window.getComputedStyle(track) : null;
     const rawGap =
       computedTrackStyles?.columnGap || computedTrackStyles?.gap || "0";
     const gap = Number.parseFloat(rawGap) || 0;
-    viewport.scrollBy({
-      left: (viewport.clientWidth + gap) * direction,
-      behavior: "smooth",
-    });
-  };
+    return viewport.clientWidth + gap;
+  }, []);
+
+  const getCurrentCardIndex = useCallback(() => {
+    const viewport = viewportRef.current;
+    const step = getCardStep();
+    if (!viewport || step <= 0) return 0;
+    return Math.round(viewport.scrollLeft / step);
+  }, [getCardStep]);
+
+  const scrollToCard = useCallback(
+    (index: number, behavior: ScrollBehavior = "smooth") => {
+      const viewport = viewportRef.current;
+      const step = getCardStep();
+      if (!viewport || step <= 0) return;
+      const maxIndex = Math.max(INCLUDE_ITEMS.length - 1, 0);
+      const clampedIndex = Math.max(0, Math.min(index, maxIndex));
+      viewport.scrollTo({
+        left: clampedIndex * step,
+        behavior,
+      });
+    },
+    [getCardStep],
+  );
+  const handleGoToForm = useCallback(() => {
+    scrollToSection("#form", { duration: 1.15 });
+  }, []);
+
+  const scrollCards = useCallback(
+    (direction: number) => {
+      const currentIndex = getCurrentCardIndex();
+      scrollToCard(currentIndex + direction, "smooth");
+    },
+    [getCurrentCardIndex, scrollToCard],
+  );
+
+  const handleTouchStart = useCallback(
+    (event: TouchEvent<HTMLDivElement>) => {
+      const touch = event.touches[0];
+      if (!touch) return;
+      touchStartXRef.current = touch.clientX;
+      touchStartYRef.current = touch.clientY;
+      touchStartIndexRef.current = getCurrentCardIndex();
+      isHorizontalGestureRef.current = false;
+    },
+    [getCurrentCardIndex],
+  );
+
+  const handleTouchMove = useCallback((event: TouchEvent<HTMLDivElement>) => {
+    const touch = event.touches[0];
+    if (!touch) return;
+    const deltaX = Math.abs(touch.clientX - touchStartXRef.current);
+    const deltaY = Math.abs(touch.clientY - touchStartYRef.current);
+    if (deltaX > 10 && deltaX > deltaY) {
+      isHorizontalGestureRef.current = true;
+    }
+  }, []);
+
+  const handleTouchEnd = useCallback(
+    (event: TouchEvent<HTMLDivElement>) => {
+      const touch = event.changedTouches[0];
+      if (!touch) return;
+
+      const deltaX = touch.clientX - touchStartXRef.current;
+      const absDeltaX = Math.abs(deltaX);
+      const didHorizontalSwipe =
+        isHorizontalGestureRef.current && absDeltaX > 36;
+
+      if (didHorizontalSwipe) {
+        const direction = deltaX < 0 ? 1 : -1;
+        scrollToCard(touchStartIndexRef.current + direction, "smooth");
+      } else {
+        scrollToCard(getCurrentCardIndex(), "smooth");
+      }
+
+      isHorizontalGestureRef.current = false;
+    },
+    [getCurrentCardIndex, scrollToCard],
+  );
+
+  const handleTouchCancel = useCallback(() => {
+    isHorizontalGestureRef.current = false;
+  }, []);
 
   useGSAP(
     () => {
@@ -163,6 +242,7 @@ export default function Includes() {
 
   return (
     <section ref={sectionRef} className={styles.includes}>
+      <h2 className="srOnly">Lo esencial de la experiencia premium</h2>
       <div ref={pinRef} className={styles.pinLayer}>
         <Badge text="LO ESCENCIAL" align="center" />
 
@@ -212,7 +292,15 @@ export default function Includes() {
             <span aria-hidden="true">‹</span>
           </button>
 
-          <div ref={viewportRef} className={styles.viewport}>
+          <div
+            ref={viewportRef}
+            className={styles.viewport}
+            data-lenis-prevent-touch
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+            onTouchCancel={handleTouchCancel}
+          >
             <div ref={trackRef} className={styles.track}>
               {INCLUDE_ITEMS.map((item) => (
                 <article key={item.id} className={styles.card}>

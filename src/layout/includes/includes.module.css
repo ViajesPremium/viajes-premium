@@ -259,8 +259,9 @@
     scrollbar-width: none;
     position: relative;
     z-index: 1;
-    touch-action: manipulation;
+    touch-action: pan-x pan-y;
     overscroll-behavior-x: contain;
+    overscroll-behavior-y: auto;
   }
 
   .viewport::-webkit-scrollbar {
@@ -302,9 +303,11 @@
 
   .track {
     height: 100%;
-    width: auto;
+    width: 100%;
     min-width: 100%;
-    flex-direction: row;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 100%;
     gap: 0.55rem;
     padding-right: 0;
     padding-left: 0;
@@ -312,9 +315,9 @@
   }
 
   .card {
-    width: 100%;
-    min-width: 100%;
-    flex: 0 0 100%;
+    width: auto;
+    min-width: 0;
+    flex: none;
     max-width: 100%;
     height: auto;
     margin-top: 0;

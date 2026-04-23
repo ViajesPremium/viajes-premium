@@ -510,6 +510,7 @@ export default function Itinerary() {
 
   return (
     <div className={styles.container} ref={containerRef}>
+      <h2 className="srOnly">Itinerarios de Japón Premium</h2>
       <div className={styles.content1}>
         {items.map((item, i) => (
           <div

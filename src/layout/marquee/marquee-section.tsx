@@ -36,6 +36,7 @@ const MARQUEE_LOGOS: LogoItem[] = [
 export default function MarqueeSection() {
   return (
     <section className={styles.section} aria-label="Marquee de logos">
+      <h2 className="srOnly">Alianzas de Japón Premium</h2>
       <div className={styles.container}>
         <div className={styles.header}>
           <Badge text="Nuestras alianzas" variant="dark" align="center" />

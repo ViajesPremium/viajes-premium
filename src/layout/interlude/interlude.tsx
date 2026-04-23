@@ -46,6 +46,7 @@ export default function InterludeSection() {
 
   return (
     <section className={styles.interlude} ref={sectionRef}>
+      <h2 className="srOnly">Mensaje del equipo Japón Premium</h2>
       {/* ── Texto de fondo — estático, solo se mueve con scroll ── */}
       <div className={styles.textLayer} aria-hidden="true">
         <ScrollRow
@@ -87,13 +88,13 @@ export default function InterludeSection() {
           <p className={styles.role}>Directora Comercial</p>
           <h3 className={styles.name}>Karina Sánchez</h3>
           <p className={styles.subtitle}>
-            " Nuestra misión es diseñar experiencias personalizadas para que
-            conectes emocionalmente con tu viaje. Creemos que{" "}
+            &quot; Nuestra misión es diseñar experiencias personalizadas para
+            que conectes emocionalmente con tu viaje. Creemos que{" "}
             <span className={styles.textHighlight}>
               viajar va más allá de acumular destinos; se trata de crear
               vínculos reales con cada lugar.
             </span>
-            "
+            &quot;
           </p>
         </div>
       </article>

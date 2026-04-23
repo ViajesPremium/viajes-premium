@@ -24,6 +24,15 @@ export default function RootLayout({
   return (
     // 🚨 QUITAR h-full DE AQUÍ
     <html lang="es-mx" className="antialiased">
+      <head>
+        <link
+          rel="preload"
+          href="/fonts/nohemi-font-family/Nohemi-VF-BF6438cc58ad63d.ttf"
+          as="font"
+          type="font/ttf"
+          crossOrigin="anonymous"
+        />
+      </head>
       {/* 🚨 CAMBIAR min-h-full por min-h-screen */}
       <body className="min-h-screen flex flex-col">
         <SmoothScrollProvider>

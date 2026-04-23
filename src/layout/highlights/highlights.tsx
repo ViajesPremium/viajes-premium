@@ -76,6 +76,7 @@ export default function Highlights() {
 
   return (
     <section className={styles.highlights}>
+      <h2 className="srOnly">Highlights de Japón Premium</h2>
       <div className={styles.container}>
         <div className={styles.badgeRow}>
           <Badge text="¿Por qué Japón Premium?" variant="dark" align="center" />

@@ -3,6 +3,7 @@
 import { useCallback } from "react";
 import Image from "next/image";
 import { motion } from "motion/react";
+import { scrollToSection } from "@/lib/scroll-to-section";
 import styles from "./footer.module.css";
 
 const samuraiMain = "/images/japon/hero/samuraiHero.webp";
@@ -23,6 +24,9 @@ const PAGE_LINKS = [
   { label: "INICIO", href: "#inicio" },
   { label: "HIGHLIGHTS", href: "#highlights" },
   { label: "ITINERARIOS", href: "#itinerarios" },
+  { label: "INCLUYE", href: "#includes" },
+  { label: "TESTIMONIOS", href: "#testimonials" },
+  { label: "FAQS", href: "#faqs" },
   { label: "CONTACTO", href: "#form" },
 ] as const;
 
@@ -33,6 +37,15 @@ const SOCIAL_LINKS = [
 ] as const;
 
 export default function Footer() {
+  const handleSectionNav = useCallback(
+    (event: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+      if (!href.startsWith("#")) return;
+      event.preventDefault();
+      scrollToSection(href, { duration: 1.15, updateHash: true, defer: true });
+    },
+    [],
+  );
+
   const handleBackToTop = useCallback(() => {
     const lenis = window.__lenis;
     if (lenis) {
@@ -44,6 +57,7 @@ export default function Footer() {
 
   return (
     <footer className={styles.footer}>
+      <h2 className="srOnly">Footer Japón Premium</h2>
       {/* Rounded cap that covers the section above */}
       <div className={styles.topCap} />
 
@@ -98,6 +112,7 @@ export default function Footer() {
                     key={item.label}
                     href={item.href}
                     className={styles.navLink}
+                    onClick={(event) => handleSectionNav(event, item.href)}
                   >
                     {item.label}
                   </a>

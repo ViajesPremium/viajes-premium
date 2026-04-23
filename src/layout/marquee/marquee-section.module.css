@@ -4,7 +4,7 @@
   justify-content: center;
   background-color: #f1f2f3;
   width: 100%;
-  padding-top: 2.5rem;
+  padding-top: 4rem;
 }
 
 .container {
@@ -89,7 +89,8 @@
   }
 
   .logoIntroImage {
-    width: min(100%, 220px);
+    width: min(100%, 170px);
+
     height: auto;
     object-fit: contain;
   }
