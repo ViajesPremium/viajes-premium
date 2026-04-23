@@ -64,8 +64,6 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* samuraiLayer posiciona (left 50% / translateX -50%) */}
-          {/* motion.div anima solo Y sin pisar el translateX del padre */}
           <div className={styles.samuraiLayer}>
             <motion.div
               className={styles.samuraiMotion}

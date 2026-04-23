@@ -32,6 +32,7 @@
   width: 100%;
   height: calc(100svh - 58px);
   min-height: 640px;
+
   max-height: 1050px;
 }
 
@@ -143,10 +144,9 @@
 }
 
 .sectionLabel {
-  font-size: 0.68rem;
+  font-size: 2rem;
   text-transform: uppercase;
-  letter-spacing: 0.18em;
-  font-weight: 700;
+  font-weight: 300;
   color: #db2f21;
 }
 
@@ -157,13 +157,12 @@
 }
 
 .navLink {
-  color: rgba(255, 255, 255, 0.82);
+  color: var(--white);
   text-decoration: none;
-  font-size: clamp(1rem, 2.2vw, 1.52rem);
+  font-size: clamp(1rem, 2.2vw, 2.5rem);
   font-weight: 900;
   text-transform: uppercase;
   line-height: 1.08;
-  letter-spacing: -0.01em;
   transition:
     color 0.22s ease,
     opacity 0.22s ease;
