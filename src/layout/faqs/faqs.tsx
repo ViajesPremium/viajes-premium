@@ -3,11 +3,35 @@
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { ChevronDownIcon } from "@radix-ui/react-icons";
+import dynamic from "next/dynamic";
 import styles from "./faqs.module.css";
 import accordionStyles from "@/components/ui/accordion/accordion.module.css";
 import Badge from "@/components/ui/badge/badge";
 import GradientText from "@/components/ui/gradient-text/gradient-text";
 import { BlurredStagger } from "@/components/ui/blurred-stagger-text/blurred-stagger-text";
+
+const MobileFaqGlobe = dynamic(() => import("@/components/ui/globe/globe"), {
+  ssr: false,
+});
+
+const FAQ_GLOBE_MARKERS = [
+  {
+    id: "mx",
+    location: [23.6345, -102.5528] as [number, number],
+  },
+  {
+    id: "jp",
+    location: [36.2048, 138.2529] as [number, number],
+  },
+];
+
+const FAQ_GLOBE_ARCS = [
+  {
+    id: "mx-jp",
+    from: [23.6345, -102.5528] as [number, number],
+    to: [36.2048, 138.2529] as [number, number],
+  },
+];
 
 const FAQS = [
   {
@@ -65,6 +89,7 @@ export default function Faqs() {
   const sectionRef = useRef<HTMLElement | null>(null);
   const mobileFiguresRef = useRef<HTMLDivElement | null>(null);
   const [openFaqId, setOpenFaqId] = useState<string>(() => FAQS[0]?.id ?? "");
+  const [isMobileViewport, setIsMobileViewport] = useState(false);
 
   // Igual que Snapshot: pin al final sin spacer extra para que la siguiente
   // seccion la cubra naturalmente desde abajo hacia arriba.
@@ -217,6 +242,14 @@ export default function Faqs() {
     setOpenFaqId(faqId);
   };
 
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 768px)");
+    const sync = () => setIsMobileViewport(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
+
   return (
     <section ref={sectionRef} className={styles.section}>
       <h2 className="srOnly">Preguntas frecuentes sobre Japón Premium</h2>
@@ -329,6 +362,24 @@ export default function Faqs() {
       <div ref={mobileFiguresRef} className={styles.mobileFigures} aria-hidden="true">
         <div className={styles.mobileFigureLeft} />
         <div className={styles.mobileFigureRight} />
+        {isMobileViewport && (
+          <div className={styles.mobileGlobeWrap}>
+            <MobileFaqGlobe
+              className={styles.mobileGlobe}
+              markers={FAQ_GLOBE_MARKERS}
+              arcs={FAQ_GLOBE_ARCS}
+              markerColor={[0.3, 0.45, 0.85]}
+              baseColor={[1, 1, 1]}
+              arcColor={[0.3, 0.45, 0.85]}
+              glowColor={[0.94, 0.93, 0.91]}
+              dark={0}
+              mapBrightness={10}
+              markerSize={0.025}
+              markerElevation={0.01}
+              interactive
+            />
+          </div>
+        )}
       </div>
 
       {/* Lateral derecho â€” geisha de perfil */}

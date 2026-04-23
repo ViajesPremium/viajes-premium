@@ -221,29 +221,47 @@ const clamp = (value: number, min: number, max: number) =>
 
 export default function Testimonials({ googleRating }: TestimonialsProps) {
   const [current, setCurrent] = useState(0);
-  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const sectionRef = useRef<HTMLElement>(null);
-  const [isMobileViewport, setIsMobileViewport] = useState(false);
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const [isMobileViewport, setIsMobileViewport] = useState(() =>
+    typeof window !== "undefined"
+      ? window.matchMedia("(max-width: 768px)").matches
+      : false,
+  );
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(() =>
+    typeof window !== "undefined"
+      ? window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      : false,
+  );
+  const [isInView, setIsInView] = useState(false);
   const handleGoToForm = useCallback(() => {
     scrollToSection("#form", { duration: 1.15 });
   }, []);
 
   const [sectionHeight, setSectionHeight] = useState(0);
 
-  const resetTimer = useCallback(() => {
-    if (timerRef.current) clearInterval(timerRef.current);
-    timerRef.current = setInterval(() => {
-      setCurrent((c) => (c + 1) % TESTIMONIALS.length);
-    }, AUTOPLAY_DELAY);
+  const clearTimer = useCallback(() => {
+    if (!timerRef.current) return;
+    clearTimeout(timerRef.current);
+    timerRef.current = null;
   }, []);
 
   useEffect(() => {
-    resetTimer();
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsInView(entry?.isIntersecting ?? false);
+      },
+      { threshold: 0.35 },
+    );
+
+    observer.observe(section);
     return () => {
-      if (timerRef.current) clearInterval(timerRef.current);
+      observer.disconnect();
     };
-  }, [resetTimer]);
+  }, []);
 
   useEffect(() => {
     const mobileMq = window.matchMedia("(max-width: 768px)");
@@ -260,6 +278,19 @@ export default function Testimonials({ googleRating }: TestimonialsProps) {
       motionMq.removeEventListener("change", syncFlags);
     };
   }, []);
+
+  useEffect(() => {
+    const autoplayEnabled =
+      !prefersReducedMotion && !isMobileViewport && isInView;
+    clearTimer();
+    if (!autoplayEnabled) return;
+
+    timerRef.current = setTimeout(() => {
+      setCurrent((c) => (c + 1) % TESTIMONIALS.length);
+    }, AUTOPLAY_DELAY);
+
+    return clearTimer;
+  }, [clearTimer, current, isInView, isMobileViewport, prefersReducedMotion]);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -308,15 +339,14 @@ export default function Testimonials({ googleRating }: TestimonialsProps) {
 
   const prev = () => {
     setCurrent((c) => (c - 1 + TESTIMONIALS.length) % TESTIMONIALS.length);
-    resetTimer();
   };
 
   const next = () => {
     setCurrent((c) => (c + 1) % TESTIMONIALS.length);
-    resetTimer();
   };
 
   const t = TESTIMONIALS[current];
+  const shouldAnimateCarousel = !isMobileViewport && !prefersReducedMotion;
   const pad = (n: number) => String(n).padStart(2, "0");
   const ratingData = googleRating ?? GOOGLE_RATING_FALLBACK;
 
@@ -421,24 +451,35 @@ export default function Testimonials({ googleRating }: TestimonialsProps) {
       <div className={styles.inner}>
         <div className={styles.photo}>
           <div className={styles.photoSquare}>
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={current}
-                style={{ position: "absolute", inset: 0 }}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.5, ease: "easeInOut" }}
-              >
-                <Image
-                  src={t.avatar}
-                  alt={t.name}
-                  fill
-                  className={styles.photoImg}
-                  sizes="(max-width: 768px) 90px, (max-width: 1024px) 32vw, 25vw"
-                />
-              </motion.div>
-            </AnimatePresence>
+            {shouldAnimateCarousel ? (
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={current}
+                  style={{ position: "absolute", inset: 0 }}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.45, ease: "easeInOut" }}
+                >
+                  <Image
+                    src={t.avatar}
+                    alt={t.name}
+                    fill
+                    className={styles.photoImg}
+                    sizes="(max-width: 768px) 90px, (max-width: 1024px) 32vw, 25vw"
+                  />
+                </motion.div>
+              </AnimatePresence>
+            ) : (
+              <Image
+                key={`photo-${current}`}
+                src={t.avatar}
+                alt={t.name}
+                fill
+                className={styles.photoImg}
+                sizes="(max-width: 768px) 90px, (max-width: 1024px) 32vw, 25vw"
+              />
+            )}
           </div>
         </div>
 
@@ -496,25 +537,46 @@ export default function Testimonials({ googleRating }: TestimonialsProps) {
                 />
               </svg>
 
-              <BlurredStagger
-                key={current}
-                text={t.quote}
-                isActive={true}
-                className={styles.text}
-                staticOnMobile
-              />
+              {shouldAnimateCarousel ? (
+                <BlurredStagger
+                  key={current}
+                  text={t.quote}
+                  isActive={true}
+                  className={styles.text}
+                />
+              ) : (
+                <p className={styles.text}>{t.quote}</p>
+              )}
             </div>
 
             <div className={styles.testimonialFooter}>
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={`author-${current}`}
-                  className={styles.author}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.35, ease: "easeOut" }}
-                >
+              {shouldAnimateCarousel ? (
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={`author-${current}`}
+                    className={styles.author}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.3, ease: "easeOut" }}
+                  >
+                    <div className={styles.authorThumb}>
+                      <Image
+                        src={t.avatar}
+                        alt={t.name}
+                        fill
+                        className={styles.authorThumbImg}
+                        sizes="64px"
+                      />
+                    </div>
+                    <div className={styles.authorCopy}>
+                      <p className={styles.name}>{t.name}</p>
+                      <p className={styles.location}>{t.location}</p>
+                    </div>
+                  </motion.div>
+                </AnimatePresence>
+              ) : (
+                <div key={`author-static-${current}`} className={styles.author}>
                   <div className={styles.authorThumb}>
                     <Image
                       src={t.avatar}
@@ -528,8 +590,8 @@ export default function Testimonials({ googleRating }: TestimonialsProps) {
                     <p className={styles.name}>{t.name}</p>
                     <p className={styles.location}>{t.location}</p>
                   </div>
-                </motion.div>
-              </AnimatePresence>
+                </div>
+              )}
 
               <GoogleBadge data={ratingData} />
             </div>
