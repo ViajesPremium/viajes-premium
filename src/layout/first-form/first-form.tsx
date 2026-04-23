@@ -4,13 +4,14 @@ import { useRef } from "react";
 import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
 import styles from "./first-form.module.css";
 import ImageSectionForm, { type ImageSectionFormConfig } from "./form";
+import { BlurredStagger } from "@/components/ui/blurred-stagger-text/blurred-stagger-text";
 
 const STRENGTH = 18;
 
 const firstFormConfig: ImageSectionFormConfig = {
   eyebrow: "Asesoria Privada",
-  title: "Disena tu viaje a Japon",
-  subtitle: "Un itinerario curado a tu ritmo, con acompanamiento experto.",
+  title: "",
+  subtitle: "",
   submitLabel: "Solicita tu propuesta",
   fields: [
     {
@@ -50,13 +51,35 @@ export default function ImgSection() {
   return (
     <section ref={sectionRef} className={styles.section}>
       {/* Fondo con movimiento */}
-      <motion.div className={styles.img} aria-hidden="true" style={{ x: imgX, y: imgY }} />
+      <motion.div
+        className={styles.img}
+        aria-hidden="true"
+        style={{ x: imgX, y: imgY }}
+      />
       <div className={styles.imgOverlay} aria-hidden="true" />
 
       {/* Contenedor del contenido */}
       <div className={styles.inner}>
         {/* Izquierda: Formulario */}
         <div className={styles.left}>
+          <div className={styles.sectionCopy}>
+            <BlurredStagger
+              text="Propuesta personalizada"
+              className={styles.sectionTitle}
+              highlights={[
+                {
+                  word: "personalizada",
+                  useGradient: true,
+                  gradientColors: ["#BF953F", "#FCF6BA", "#B38728"],
+                },
+              ]}
+            />
+            <p className={styles.sectionSubtitle}>
+              Cuéntanos cómo imaginas tu viaje a Japón, compártenos tus
+              intereses y te ayudaremos a identificar cuál de nuestros 3
+              itinerarios se adapta mejor a tu estilo de viaje.
+            </p>
+          </div>
           <ImageSectionForm config={firstFormConfig} idPrefix="first-form" />
         </div>
 

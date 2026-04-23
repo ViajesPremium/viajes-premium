@@ -5,8 +5,9 @@ import Image from "next/image";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Badge from "@/components/ui/badge/badge";
-import { Button } from "@/components/ui/button/button";
+import ImageSectionForm, {
+  type ImageSectionFormConfig,
+} from "@/layout/first-form/form";
 import styles from "./ctaForm.module.css";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -14,6 +15,14 @@ gsap.registerPlugin(ScrollTrigger);
 const SHOJI_BASE = "/images/japon/basePuertas.webp";
 const SHOJI_LEFT = "/images/japon/puertaIzquierda.webp";
 const SHOJI_RIGHT = "/images/japon/puertaDerecha.webp";
+
+const ctaFormConfig: ImageSectionFormConfig = {
+  eyebrow: "Disena tu viaje",
+  title: "Bienvenido al salon privado",
+  subtitle:
+    "Cuentanos como imaginas tu viaje a Japon y te enviamos una propuesta personalizada.",
+  submitLabel: "Comenzar mi viaje",
+};
 
 export default function CTAForm() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -186,57 +195,11 @@ export default function CTAForm() {
 
         <div ref={formRef} className={styles.formLayer}>
           <div className={styles.formShell}>
-            <div className={styles.formHeader}>
-              <Badge text="Disena tu viaje" variant="dark" align="center" />
-              <h2 className={styles.title}>Bienvenido al salon privado</h2>
-              <p className={styles.subtitle}>
-                Cuentanos como imaginas tu viaje a Japon y te enviamos una
-                propuesta personalizada.
-              </p>
-            </div>
-            <form
-              className={styles.formGrid}
-              onSubmit={(event) => event.preventDefault()}
-            >
-              <label className={styles.field}>
-                <span>Nombre completo</span>
-                <input type="text" name="name" placeholder="Ej. Ana Garcia" />
-              </label>
-
-              <label className={styles.field}>
-                <span>Email</span>
-                <input type="email" name="email" placeholder="ana@email.com" />
-              </label>
-
-              <label className={styles.field}>
-                <span>Fecha aproximada</span>
-                <input type="text" name="date" placeholder="Octubre 2026" />
-              </label>
-
-              <label className={styles.field}>
-                <span>Presupuesto estimado (USD)</span>
-                <input type="text" name="budget" placeholder="8000 - 12000" />
-              </label>
-
-              <label className={`${styles.field} ${styles.fieldWide}`}>
-                <span>Que tipo de experiencia buscas</span>
-                <textarea
-                  name="details"
-                  rows={4}
-                  placeholder="Ej. Ryokans, onsen, gastronomia, templos, fotografia..."
-                />
-              </label>
-
-              <div className={styles.actions}>
-                <Button
-                  type="submit"
-                  variant="primary"
-                  className={styles.ctaButton}
-                >
-                  Comenzar mi viaje
-                </Button>
-              </div>
-            </form>
+            <ImageSectionForm
+              config={ctaFormConfig}
+              idPrefix="cta-form"
+              theme="light"
+            />
           </div>
         </div>
       </div>
