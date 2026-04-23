@@ -52,7 +52,15 @@ export default function SmoothScrollProvider({
 
       gsapApi = gsap;
       ScrollTriggerApi = ScrollTrigger;
+
+      // 1. Registras el plugin
       gsapApi.registerPlugin(ScrollTrigger);
+
+      // 🚨 EL FIX DE GSAP PARA CHROME MOBILE 🚨
+      // Esto evita que ScrollTrigger haga refresh cuando la barra se oculta/muestra
+      ScrollTrigger.config({
+        ignoreMobileResize: true,
+      });
 
       // Usamos isMobile para aplicar las constantes específicas de mobile
       const lenis = new LenisCtor({
@@ -61,7 +69,6 @@ export default function SmoothScrollProvider({
         wheelMultiplier: isMobile
           ? MOBILE_WHEEL_MULTIPLIER
           : DESKTOP_WHEEL_MULTIPLIER,
-        // Let GSAP ticker drive the RAF to keep Lenis and ScrollTrigger in sync.
         autoRaf: false,
       });
 
