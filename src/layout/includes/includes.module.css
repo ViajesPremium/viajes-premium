@@ -255,7 +255,7 @@
     scrollbar-width: none;
     position: relative;
     z-index: 1;
-    touch-action: pan-x;
+    touch-action: manipulation;
     overscroll-behavior-x: contain;
   }
 

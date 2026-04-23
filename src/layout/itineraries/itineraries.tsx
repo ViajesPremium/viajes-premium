@@ -139,7 +139,6 @@ export default function Itinerary() {
       };
 
       const isMobileViewport = window.matchMedia("(max-width: 768px)").matches;
-      const PIN_CATCH_OFFSET_PX = 6;
 
       if (isMobileViewport) {
         setStepState(0);
@@ -262,7 +261,7 @@ export default function Itinerary() {
         // ── ScrollTrigger pin ─────────────────────────────────────────────────
         const pinTrigger = ScrollTrigger.create({
           trigger: container,
-          start: () => `top top+=${PIN_CATCH_OFFSET_PX}`,
+          start: "top top",
           end: () => `+=${window.innerHeight * MOBILE_PIN_VH}`,
           pin: true,
           pinSpacing: true,
@@ -447,7 +446,7 @@ export default function Itinerary() {
       const masterTl = gsap.timeline({
         scrollTrigger: {
           trigger: container,
-          start: () => `top top+=${PIN_CATCH_OFFSET_PX}`,
+          start: "top top",
           end: () => `+=${getTotalPinDistance()}`,
           pin: true,
           pinSpacing: true,

@@ -5,7 +5,6 @@
   display: flex;
   flex-direction: row;
   position: relative;
-  background-color: #080808;
   overflow: hidden;
 }
 
@@ -19,8 +18,6 @@
   flex-shrink: 0;
   background: #080808 url("/images/japon/stockImage.webp") center / cover
     no-repeat;
-  /* Fuerza capa de composición propia: garantiza que overflow:hidden
-     clipee correctamente los transforms de GSAP en iOS Safari */
   transform: translateZ(0);
   -webkit-transform: translateZ(0);
 }
