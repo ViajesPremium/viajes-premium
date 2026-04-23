@@ -1,7 +1,8 @@
 .interlude {
   position: relative;
   width: 100%;
-  height: 100dvh;
+  height: 100vh;
+  height: 100dvh; /* Dynamic viewport height for mobile stability */
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -20,6 +21,7 @@
   flex-direction: column;
   justify-content: center;
   gap: clamp(0.25rem, 1.1vh, 0.6rem);
+  gap: clamp(0.25rem, 1.1dvh, 0.6rem); /* Dynamic viewport height for mobile stability */
   opacity: 0.05;
 }
 

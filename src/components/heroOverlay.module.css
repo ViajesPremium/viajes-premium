@@ -7,7 +7,9 @@
   overflow: hidden;
   /* ── Desktop ── */
   --desktop-geisha-height: min(94vh, 1040px);
+  --desktop-geisha-height: min(94dvh, 1040px); /* Dynamic viewport height for mobile stability */
   --desktop-samurai-height: min(88vh, 980px);
+  --desktop-samurai-height: min(88dvh, 980px); /* Dynamic viewport height for mobile stability */
   --desktop-overlay-scale: 1.13333;
 
   /* ── Mobile ── */
