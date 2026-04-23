@@ -54,11 +54,11 @@
 /* —— Editorial Grid (Desktop) —————— */
 .editorialGrid {
   margin-top: clamp(4.4rem, 10vh, 8.5rem);
-  margin-top: clamp(4.4rem, 10dvh, 8.5rem); /* Dynamic viewport height for mobile stability */
+  margin-top: clamp(4.4rem, 10svh, 8.5rem); /* Small viewport height for mobile stability */
   display: flex;
   flex-direction: column;
   gap: clamp(0.4rem, 1.1vh, 0.95rem);
-  gap: clamp(0.4rem, 1.1dvh, 0.95rem); /* Dynamic viewport height for mobile stability */
+  gap: clamp(0.4rem, 1.1svh, 0.95rem); /* Small viewport height for mobile stability */
   align-items: center;
   width: fit-content;
   margin-inline: auto;

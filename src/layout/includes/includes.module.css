@@ -2,7 +2,7 @@
   position: relative;
   width: 100%;
   min-height: 100vh;
-  min-height: 100dvh; /* Dynamic viewport height for mobile stability */
+  min-height: 100svh; /* Small viewport height for mobile stability */
   height: auto;
   background: var(--black);
 }
@@ -12,7 +12,7 @@
   max-width: var(--site-max);
   margin-inline: auto;
   height: 100vh;
-  height: 100dvh; /* Dynamic viewport height for mobile stability */
+  height: 100svh; /* Small viewport height for mobile stability */
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -97,9 +97,9 @@
   min-width: clamp(280px, 33vw, 460px);
   height: 100%;
   margin-top: 5vh;
-  margin-top: 5dvh; /* Dynamic viewport height for mobile stability */
+  margin-top: 5svh; /* Small viewport height for mobile stability */
   max-height: 50vh;
-  max-height: 50dvh; /* Dynamic viewport height for mobile stability */
+  max-height: 50svh; /* Small viewport height for mobile stability */
   border-radius: var(--radius-sm);
   overflow: hidden;
   background: var(--white);

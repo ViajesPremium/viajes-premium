@@ -1,7 +1,8 @@
 .hero {
   position: relative;
   width: 100%;
-  height: 100dvh;
+  height: 100vh;
+  height: 100svh; /* Small viewport height for mobile stability */
   overflow: hidden;
   isolation: isolate;
   background-color: rgba(255, 255, 255, 0.91);

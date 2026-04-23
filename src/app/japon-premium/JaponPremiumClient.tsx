@@ -20,16 +20,16 @@ import FirstForm from "@/layout/first-form/first-form";
 // Poner estas secciones detrás de un IntersectionObserver causa que el pin
 // se calcule con un DOM más corto (el placeholder) → scroll atascado.
 const Itineraries = dynamic(() => import("@/layout/itineraries/itineraries"), {
-  loading: () => <PinPlaceholder height="110dvh" bg="var(--black)" />,
+  loading: () => <PinPlaceholder height="110svh" bg="var(--black)" />,
 });
 const Includes = dynamic(() => import("@/layout/includes/includes"), {
-  loading: () => <PinPlaceholder height="100dvh" bg="var(--black)" />,
+  loading: () => <PinPlaceholder height="100svh" bg="var(--black)" />,
 });
 const CTAForm = dynamic(() => import("@/layout/form/ctaForm"), {
-  loading: () => <PinPlaceholder height="100dvh" bg="var(--bg)" />,
+  loading: () => <PinPlaceholder height="100svh" bg="var(--bg)" />,
 });
 const Faqs = dynamic(() => import("@/layout/faqs/faqs"), {
-  loading: () => <PinPlaceholder height="100dvh" bg="var(--bg)" />,
+  loading: () => <PinPlaceholder height="100svh" bg="var(--bg)" />,
 });
 
 // ── Dynamic CON defer: sin pinning, se activan al acercarse al viewport ───────
@@ -161,7 +161,7 @@ export default function JaponPremiumClient() {
       <DeferredSection
         id="highlights"
         className={styles.highlightsLayer}
-        minHeight="100dvh"
+        minHeight="100svh"
         bg="var(--bg)"
       >
         <Highlights />
@@ -180,13 +180,13 @@ export default function JaponPremiumClient() {
       <DeferredSection
         id="testimonials"
         className={styles.testimonialsLayer}
-        minHeight="100dvh"
+        minHeight="100svh"
         bg="var(--bg)"
       >
         <Testimonials />
       </DeferredSection>
 
-      <DeferredSection id="interlude" minHeight="80dvh" bg="var(--bg)">
+      <DeferredSection id="interlude" minHeight="80svh" bg="var(--bg)">
         <Interlude />
       </DeferredSection>
 
@@ -205,7 +205,7 @@ export default function JaponPremiumClient() {
         <MarqueeSection />
       </DeferredSection>
 
-      <DeferredSection id="footer" minHeight="60dvh" bg="#000000">
+      <DeferredSection id="footer" minHeight="60svh" bg="#000000">
         <Footer />
       </DeferredSection>
     </main>

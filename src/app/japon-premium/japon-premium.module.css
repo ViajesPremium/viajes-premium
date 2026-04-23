@@ -19,7 +19,7 @@
   overflow: hidden;
   background: var(--black);
   margin-top: -100vh;
-  margin-top: -100dvh; /* Dynamic viewport height for mobile stability */
+  margin-top: -100svh; /* Small viewport height for mobile stability */
 }
 
 .includesLayer {

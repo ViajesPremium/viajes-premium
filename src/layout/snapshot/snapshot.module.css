@@ -1,6 +1,7 @@
 .snapshot {
   width: 100%;
-  min-height: 100dvh;
+  min-height: 100vh;
+  min-height: 100svh; /* Small viewport height for mobile stability */
   background-color: var(--bg);
   display: flex;
   justify-content: center;
