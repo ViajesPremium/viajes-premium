@@ -6,7 +6,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--secondary);
+  background-color: var(--yellow-japon);
   isolation: isolate;
 }
 
@@ -20,7 +20,7 @@
   flex-direction: column;
   justify-content: center;
   gap: clamp(0.25rem, 1.1vh, 0.6rem);
-  opacity: 0.36;
+  opacity: 0.07;
 }
 
 .row {
@@ -36,12 +36,10 @@
   width: max-content;
   white-space: nowrap;
   will-change: transform;
-  font-family: var(--font-nohemi), sans-serif;
+  font-family: var(--font-thunder-light), sans-serif;
   text-transform: uppercase;
-  font-weight: 100;
-  font-size: 11rem;
-  line-height: 0.95;
-  color: #000;
+  font-size: 20rem;
+  line-height: 1.1;
 }
 
 .chunk {
@@ -55,19 +53,18 @@
 .card {
   position: relative;
   z-index: 3;
-  width: min(92vw, 400px);
-  height: min(78%, 520px);
-  border-radius: var(--radius-sm);
+  width: min(92vw, 560px);
+  height: min(78%, 620px);
+  border-radius: var(--radius);
   background: var(--white);
   padding: 10px;
   overflow: hidden;
 }
 
-/* Imagen: rellena el área interior (dentro del padding) */
 .imageWrap {
   position: absolute;
-  inset: 5px;
-  border-radius: var(--radius-sm);
+  inset: 10px;
+  border-radius: var(--radius);
   overflow: hidden;
 }
 
@@ -104,41 +101,56 @@
 .role {
   margin: 0;
   font-family: var(--font-nohemi), sans-serif;
-  font-size: clamp(0.65rem, 0.9vw, 0.78rem);
-  color: var(--primary);
+  font-size: clamp(0.5rem, 0.9vw, 0.78rem);
+  color: var(--yellow-japon);
+  border: 1px solid var(--yellow-japon);
+  padding: 3px 5px;
+  padding-top: 5px;
+  width: fit-content;
   text-transform: uppercase;
   letter-spacing: 0.12em;
+  margin-bottom: 8px;
   font-weight: 400;
   font-style: italic;
 }
 
-.title {
+.name {
   margin: 0;
   font-family: var(--font-bigcaslon), sans-serif;
   font-weight: 500;
-  text-transform: uppercase;
   color: var(--white);
   line-height: 1;
   letter-spacing: 0.02em;
-  font-size: clamp(1.4rem, 2vw, 2rem);
+  font-size: clamp(2rem, 4vw, 3.4rem);
+  border-bottom: 1px solid var(--yellow-japon);
+  margin-bottom: 10px;
+  width: fit-content;
 }
 
 .subtitle {
   margin: 0;
   font-family: var(--font-nohemi), sans-serif;
   color: var(--white);
-  font-weight: 300;
+  font-weight: 200;
+  letter-spacing: 1px;
   line-height: 1.4;
-  font-size: clamp(0.7rem, 1.1vw, 0.9rem);
+  font-size: clamp(0.7rem, 1.1vw, 1.1rem);
+}
+
+.textHighlight {
+  font-family: var(--font-bigcaslon), sans-serif;
+  font-style: italic;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
 }
 
 /* ══════════════════════════════════════════════
    RESPONSIVE
    ══════════════════════════════════════════════ */
 @media (max-width: 768px) {
-
   .track {
-    font-size: 9rem;
+    font-size: 18rem;
   }
 
   .card {
@@ -158,7 +170,7 @@
 
 @media (max-width: 430px) {
   .track {
-    font-size: 5rem;
+    font-size: 15rem;
   }
 
   .card {

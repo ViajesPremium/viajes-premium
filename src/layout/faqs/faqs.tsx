@@ -66,35 +66,43 @@ export default function Faqs() {
   const mobileFiguresRef = useRef<HTMLDivElement | null>(null);
   const [openFaqId, setOpenFaqId] = useState<string>(() => FAQS[0]?.id ?? "");
 
-  // ── GSAP pin: sección queda fija al llegar al final ──────────────────────
+  // Igual que Snapshot: pin al final sin spacer extra para que la siguiente
+  // seccion la cubra naturalmente desde abajo hacia arriba.
   useEffect(() => {
-    const section = sectionRef.current;
-    if (!section) return;
-
-    let pinTrigger: { kill: () => void } | null = null;
     let cancelled = false;
+    let cleanup: (() => void) | undefined;
 
-    Promise.all([
-      import("gsap"),
-      import("gsap/ScrollTrigger"),
-    ]).then(([{ default: gsap }, { ScrollTrigger }]) => {
+    const setupPinnedFaqs = async () => {
+      const section = sectionRef.current;
+      if (!section) return;
+
+      const [{ gsap }, { ScrollTrigger }] = await Promise.all([
+        import("gsap"),
+        import("gsap/ScrollTrigger"),
+      ]);
+
       if (cancelled) return;
+
       gsap.registerPlugin(ScrollTrigger);
 
-      pinTrigger = ScrollTrigger.create({
+      const st = ScrollTrigger.create({
         trigger: section,
         start: "bottom bottom",
-        end: "+=80vh",
+        end: "bottom top",
         pin: true,
-        pinSpacing: true,
+        pinSpacing: false,
+        anticipatePin: 1,
         invalidateOnRefresh: true,
-        onRefresh: () => window.__lenis?.resize(),
       });
-    });
+
+      cleanup = () => st.kill();
+    };
+
+    void setupPinnedFaqs();
 
     return () => {
       cancelled = true;
-      pinTrigger?.kill();
+      cleanup?.();
     };
   }, []);
 

@@ -85,12 +85,15 @@ export default function InterludeSection() {
         {/* Texto superpuesto */}
         <div className={styles.copy}>
           <p className={styles.role}>Directora Comercial</p>
-          <h3 className={styles.title}>Karina Sánchez</h3>
+          <h3 className={styles.name}>Karina Sánchez</h3>
           <p className={styles.subtitle}>
-            Nuestra misión es diseñar experiencias personalizadas para que
-            conectes emocionalmente con tu viaje. Creemos que viajar va más allá
-            de acumular destinos; se trata de crear vínculos reales con cada
-            lugar.
+            " Nuestra misión es diseñar experiencias personalizadas para que
+            conectes emocionalmente con tu viaje. Creemos que{" "}
+            <span className={styles.textHighlight}>
+              viajar va más allá de acumular destinos; se trata de crear
+              vínculos reales con cada lugar.
+            </span>
+            "
           </p>
         </div>
       </article>

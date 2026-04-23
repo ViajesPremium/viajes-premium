@@ -273,7 +273,7 @@
   font-size: 0.9rem;
   line-height: 1.2;
   color: var(--white);
-  text-decoration: none;
+  text-decoration: underline;
   transition:
     color 0.2s ease,
     opacity 0.2s ease;

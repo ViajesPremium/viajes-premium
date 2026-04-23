@@ -31,6 +31,7 @@ export default function SmoothScrollProvider({
     let tick: ((time: number) => void) | null = null;
     let gsapApi: typeof import("gsap").gsap | null = null;
     let ro: ResizeObserver | null = null;
+    let resizeRaf: number | null = null;
     // Stored at outer scope so the cleanup function can reference them
     // without needing a second async import.
     let stRefreshCb: (() => void) | null = null;
@@ -65,6 +66,14 @@ export default function SmoothScrollProvider({
 
       lenis.on("scroll", ScrollTrigger.update);
 
+      const scheduleLenisResize = () => {
+        if (resizeRaf !== null) return;
+        resizeRaf = window.requestAnimationFrame(() => {
+          resizeRaf = null;
+          lenis.resize();
+        });
+      };
+
       tick = (time: number) => {
         lenis.raf(time * 1000);
       };
@@ -81,12 +90,12 @@ export default function SmoothScrollProvider({
 
       // A — Immediate resize: measure real page height right now, capturing any
       //     pin spacers already added by whichever chunk loaded first.
-      lenis.resize();
+      scheduleLenisResize();
 
       // B — Global ScrollTrigger "refresh" listener: GSAP fires this every time
       //     it recalculates triggers (new pin, window resize, manual refresh).
       //     This covers spacers added AFTER Lenis initialises.
-      stRefreshCb = () => lenis.resize();
+      stRefreshCb = () => scheduleLenisResize();
       ScrollTrigger.addEventListener("refresh", stRefreshCb);
 
       // C — ResizeObserver on document.body as a final safety net.
@@ -94,7 +103,7 @@ export default function SmoothScrollProvider({
       //     html { height: 100% } means documentElement.clientHeight never changes.
       //     body grows with content, so its ResizeObserver fires on height changes.
       ro = new ResizeObserver(() => {
-        lenis.resize();
+        scheduleLenisResize();
       });
       ro.observe(document.body);
     };
@@ -104,6 +113,10 @@ export default function SmoothScrollProvider({
     return () => {
       cancelled = true;
       ro?.disconnect();
+      if (resizeRaf !== null) {
+        window.cancelAnimationFrame(resizeRaf);
+        resizeRaf = null;
+      }
 
       if (tick && gsapApi) {
         gsapApi.ticker.remove(tick);
