@@ -68,7 +68,7 @@ const DESKTOP_CONFIG: EffectConfig = {
 
 // ── Mobile ──────────────────────────────────────────────────────────
 const MOBILE_CONFIG: EffectConfig = {
-  MAX_PIXEL_RATIO: 2, // DPR capped: phone at 3x renders at 1.25x for lower GPU cost
+  MAX_PIXEL_RATIO: 1.2,
   MAX_RADIUS: 10,
   BLOB_COLOR: "#000000",
   BLOB_OPACITY: 0.05,

@@ -85,17 +85,24 @@ export default function Faqs() {
 
       gsap.registerPlugin(ScrollTrigger);
 
-      const st = ScrollTrigger.create({
-        trigger: section,
-        start: "bottom bottom",
-        end: "bottom top",
-        pin: true,
-        pinSpacing: false,
-        anticipatePin: 0.72,
-        invalidateOnRefresh: true,
+      const mm = gsap.matchMedia();
+
+      // Desktop only: CTAForm covers FAQs from bottom to top.
+      mm.add("(min-width: 769px)", () => {
+        const st = ScrollTrigger.create({
+          trigger: section,
+          start: "bottom bottom",
+          end: "bottom top",
+          pin: true,
+          pinSpacing: false,
+          anticipatePin: 0.72,
+          invalidateOnRefresh: true,
+        });
+
+        return () => st.kill();
       });
 
-      cleanup = () => st.kill();
+      cleanup = () => mm.revert();
     };
 
     void setupPinnedFaqs();

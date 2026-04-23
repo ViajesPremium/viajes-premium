@@ -6,6 +6,7 @@ import Image from "next/image";
 import styles from "./heroOverlay.module.css";
 
 const HERO_GEISHA_IMAGE = "/images/japon/hero/geishaHero.webp";
+const HERO_SAMURAI_IMAGE = "/images/japon/hero/samuraiHero.webp";
 
 function HeroOverlayStatic() {
   return (
@@ -26,6 +27,37 @@ function HeroOverlayStatic() {
   );
 }
 
+function HeroOverlayMobileLite() {
+  return (
+    <div className={styles.heroOverlay} aria-hidden="true">
+      <Image
+        src={HERO_GEISHA_IMAGE}
+        alt="Hero Base"
+        width={5000}
+        height={5000}
+        sizes="(max-width: 768px) 210vw, 62vw"
+        quality={75}
+        fetchPriority="high"
+        decoding="async"
+        className={styles.geishaHero}
+      />
+
+      <div className={styles.mobileLiteSamuraiMask}>
+        <Image
+          src={HERO_SAMURAI_IMAGE}
+          alt=""
+          fill
+          sizes="(max-width: 768px) 199vw, 0px"
+          quality={58}
+          className={styles.mobileLiteSamuraiImage}
+        />
+      </div>
+
+      <div className={styles.mobileLiteGlow} />
+    </div>
+  );
+}
+
 const HeroOverlayEnhanced = dynamic(() => import("./heroOverlay"), {
   ssr: false,
   loading: HeroOverlayStatic,
@@ -33,15 +65,33 @@ const HeroOverlayEnhanced = dynamic(() => import("./heroOverlay"), {
 
 export default function HeroOverlayLazy() {
   const [enableEnhancedOverlay, setEnableEnhancedOverlay] = useState(false);
+  const [isMobileViewport, setIsMobileViewport] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+
+  useEffect(() => {
+    const mobileMq = window.matchMedia("(max-width: 768px)");
+    const motionMq = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    const syncFlags = () => {
+      setIsMobileViewport(mobileMq.matches);
+      setPrefersReducedMotion(motionMq.matches);
+    };
+
+    syncFlags();
+    mobileMq.addEventListener("change", syncFlags);
+    motionMq.addEventListener("change", syncFlags);
+
+    return () => {
+      mobileMq.removeEventListener("change", syncFlags);
+      motionMq.removeEventListener("change", syncFlags);
+    };
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
     let releaseScheduled: (() => void) | null = null;
 
-    const prefersReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
-    const isDesktop = window.matchMedia("(min-width: 769px)").matches;
+    const isDesktop = !isMobileViewport;
     const connection = (
       navigator as Navigator & {
         connection?: { saveData?: boolean; effectiveType?: string };
@@ -50,10 +100,8 @@ export default function HeroOverlayLazy() {
     const isConstrainedNetwork =
       !!connection?.saveData || /2g/.test(connection?.effectiveType ?? "");
 
-    // Reduced-motion: keep static overlay, no WebGL.
-    // Mobile now gets the full WebGL effect thanks to the mobile-optimised shader
-    // (mediump, value noise, half-res buffer, 30fps cap, low-power GPU mode).
-    if (prefersReducedMotion) {
+    // Mobile uses CSS pre-animated effect instead of runtime WebGL.
+    if (!isDesktop || prefersReducedMotion) {
       return;
     }
 
@@ -63,12 +111,8 @@ export default function HeroOverlayLazy() {
     };
 
     const scheduleEnable = () => {
-      const idleTimeout = isDesktop ? 1200 : isConstrainedNetwork ? 5600 : 3800;
-      const fallbackTimeout = isDesktop
-        ? 450
-        : isConstrainedNetwork
-          ? 3200
-          : 2200;
+      const idleTimeout = isConstrainedNetwork ? 2200 : 1200;
+      const fallbackTimeout = isConstrainedNetwork ? 1200 : 450;
 
       const requestIdle =
         typeof window.requestIdleCallback === "function"
@@ -94,34 +138,17 @@ export default function HeroOverlayLazy() {
       };
     };
 
-    if (isDesktop || document.readyState === "complete") {
-      releaseScheduled = scheduleEnable();
-      return () => {
-        cancelled = true;
-        releaseScheduled?.();
-      };
-    }
-
-    const onLoad = () => {
-      window.removeEventListener("load", onLoad);
-      if (cancelled) return;
-      // Extra frame so initial paint and CTA layout settle first.
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          if (cancelled) return;
-          releaseScheduled = scheduleEnable();
-        });
-      });
-    };
-
-    window.addEventListener("load", onLoad, { once: true });
+    releaseScheduled = scheduleEnable();
 
     return () => {
       cancelled = true;
       releaseScheduled?.();
-      window.removeEventListener("load", onLoad);
     };
-  }, []);
+  }, [isMobileViewport, prefersReducedMotion]);
+
+  if (isMobileViewport) {
+    return prefersReducedMotion ? <HeroOverlayStatic /> : <HeroOverlayMobileLite />;
+  }
 
   return enableEnhancedOverlay ? (
     <HeroOverlayEnhanced />
