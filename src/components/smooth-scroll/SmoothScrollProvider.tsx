@@ -5,7 +5,9 @@ import type Lenis from "lenis";
 
 // Lower lerp => smoother and slightly slower response.
 const DESKTOP_LERP = 0.03;
+const MOBILE_LERP = 0.09;
 const DESKTOP_WHEEL_MULTIPLIER = 0.52;
+const MOBILE_WHEEL_MULTIPLIER = 0.92;
 
 export default function SmoothScrollProvider({
   children,
@@ -15,140 +17,132 @@ export default function SmoothScrollProvider({
   const lenisRef = useRef<Lenis | null>(null);
 
   useEffect(() => {
-    const reducedMotionMq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const isMobile = window.matchMedia("(max-width: 768px)").matches;
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
 
-    const setupLenis = () => {
-      let cancelled = false;
-      let tick: ((time: number) => void) | null = null;
-      let gsapApi: typeof import("gsap").gsap | null = null;
-      let ro: ResizeObserver | null = null;
-      let resizeRaf: number | null = null;
-      let stRefreshCb: (() => void) | null = null;
-      let ScrollTriggerApi:
-        | typeof import("gsap/ScrollTrigger").ScrollTrigger
-        | null = null;
-      let localLenis: Lenis | null = null;
+    // 🚨 CAMBIO 1: Se eliminó el bloqueo para móviles (isMobile).
+    // Ahora solo detenemos la ejecución si el usuario prefiere movimiento reducido.
+    if (prefersReducedMotion) {
+      return;
+    }
 
-      const initSmoothScroll = async () => {
-        const [{ default: LenisCtor }, { gsap }, { ScrollTrigger }] =
-          await Promise.all([
-            import("lenis"),
-            import("gsap"),
-            import("gsap/ScrollTrigger"),
-          ]);
+    let cancelled = false;
+    let tick: ((time: number) => void) | null = null;
+    let gsapApi: typeof import("gsap").gsap | null = null;
+    let ro: ResizeObserver | null = null;
+    let resizeRaf: number | null = null;
+    // Stored at outer scope so the cleanup function can reference them
+    // without needing a second async import.
+    let stRefreshCb: (() => void) | null = null;
+    let ScrollTriggerApi:
+      | typeof import("gsap/ScrollTrigger").ScrollTrigger
+      | null = null;
 
-        if (cancelled) return;
+    const initSmoothScroll = async () => {
+      const [{ default: LenisCtor }, { gsap }, { ScrollTrigger }] =
+        await Promise.all([
+          import("lenis"),
+          import("gsap"),
+          import("gsap/ScrollTrigger"),
+        ]);
 
-        gsapApi = gsap;
-        ScrollTriggerApi = ScrollTrigger;
+      if (cancelled) return;
 
-        gsapApi.registerPlugin(ScrollTrigger);
-        ScrollTrigger.config({
-          ignoreMobileResize: true,
-        });
+      gsapApi = gsap;
+      ScrollTriggerApi = ScrollTrigger;
 
-        const lenis = new LenisCtor({
-          lerp: DESKTOP_LERP,
-          smoothWheel: true,
-          wheelMultiplier: DESKTOP_WHEEL_MULTIPLIER,
-          autoRaf: false,
-          syncTouch: false,
-        });
+      // 1. Registras el plugin
+      gsapApi.registerPlugin(ScrollTrigger);
 
-        localLenis = lenis;
-        lenisRef.current = lenis;
-        window.__lenis = lenis;
+      // 🚨 EL FIX DE GSAP PARA CHROME MOBILE 🚨
+      // Esto evita que ScrollTrigger haga refresh cuando la barra se oculta/muestra
+      ScrollTrigger.config({
+        ignoreMobileResize: true,
+      });
 
-        lenis.on("scroll", ScrollTrigger.update);
+      // Usamos isMobile para aplicar las constantes específicas de mobile
+      const lenis = new LenisCtor({
+        lerp: isMobile ? MOBILE_LERP : DESKTOP_LERP,
+        smoothWheel: true,
+        wheelMultiplier: isMobile
+          ? MOBILE_WHEEL_MULTIPLIER
+          : DESKTOP_WHEEL_MULTIPLIER,
+        autoRaf: false,
+        syncTouch: isMobile, // Sync with native touch on mobile
+      });
 
-        const scheduleLenisResize = () => {
-          if (resizeRaf !== null) return;
-          resizeRaf = window.requestAnimationFrame(() => {
-            resizeRaf = null;
-            lenis.resize();
-          });
-        };
+      lenisRef.current = lenis;
+      window.__lenis = lenis;
 
-        tick = (time: number) => {
-          lenis.raf(time * 1000);
-        };
-        gsapApi.ticker.add(tick);
-        gsapApi.ticker.lagSmoothing(0);
+      lenis.on("scroll", ScrollTrigger.update);
 
-        scheduleLenisResize();
-
-        stRefreshCb = () => scheduleLenisResize();
-        ScrollTrigger.addEventListener("refresh", stRefreshCb);
-
-        let lastHeight = document.body.clientHeight;
-        ro = new ResizeObserver((entries) => {
-          for (const entry of entries) {
-            const currentHeight = entry.contentRect.height;
-            if (Math.abs(currentHeight - lastHeight) > 2) {
-              scheduleLenisResize();
-              lastHeight = currentHeight;
-            }
-          }
-        });
-        ro.observe(document.body);
-      };
-
-      void initSmoothScroll();
-
-      return () => {
-        cancelled = true;
-        ro?.disconnect();
-        if (resizeRaf !== null) {
-          window.cancelAnimationFrame(resizeRaf);
+      const scheduleLenisResize = () => {
+        if (resizeRaf !== null) return;
+        resizeRaf = window.requestAnimationFrame(() => {
           resizeRaf = null;
-        }
-
-        if (tick && gsapApi) {
-          gsapApi.ticker.remove(tick);
-        }
-
-        if (stRefreshCb && ScrollTriggerApi) {
-          ScrollTriggerApi.removeEventListener("refresh", stRefreshCb);
-        }
-
-        localLenis?.destroy();
-        if (lenisRef.current === localLenis) {
-          lenisRef.current = null;
-        }
-
-        if (window.__lenis === localLenis) {
-          delete window.__lenis;
-        }
+          lenis.resize();
+        });
       };
+
+      tick = (time: number) => {
+        lenis.raf(time * 1000);
+      };
+      gsapApi.ticker.add(tick);
+      gsapApi.ticker.lagSmoothing(0);
+
+      // ── Keep Lenis scroll limit in sync with GSAP pin spacers ───────────────
+
+      // A — Immediate resize: measure real page height right now
+      scheduleLenisResize();
+
+      // B — Global ScrollTrigger "refresh" listener
+      stRefreshCb = () => scheduleLenisResize();
+      ScrollTrigger.addEventListener("refresh", stRefreshCb);
+
+      // C — ResizeObserver on document.body as a final safety net.
+      // 🚨 CAMBIO 2: Lógica de tolerancia añadida. Ignora cambios de altura
+      // menores a 100px (como la barra de navegación de Chrome en Android/iOS)
+      let lastHeight = document.body.clientHeight;
+
+      ro = new ResizeObserver((entries) => {
+        for (const entry of entries) {
+          const currentHeight = entry.contentRect.height;
+          if (Math.abs(currentHeight - lastHeight) > 2) {
+            scheduleLenisResize();
+            lastHeight = currentHeight;
+          }
+        }
+      });
+      ro.observe(document.body);
     };
 
-    let disposeLenis: (() => void) | null = null;
-    let isActive = false;
-
-    const syncLenisMode = () => {
-      const shouldEnableLenis = !reducedMotionMq.matches;
-
-      if (shouldEnableLenis && !isActive) {
-        isActive = true;
-        disposeLenis = setupLenis();
-        return;
-      }
-
-      if (!shouldEnableLenis && isActive) {
-        isActive = false;
-        disposeLenis?.();
-        disposeLenis = null;
-      }
-    };
-
-    syncLenisMode();
-    reducedMotionMq.addEventListener("change", syncLenisMode);
+    void initSmoothScroll();
 
     return () => {
-      reducedMotionMq.removeEventListener("change", syncLenisMode);
-      isActive = false;
-      disposeLenis?.();
-      disposeLenis = null;
+      cancelled = true;
+      ro?.disconnect();
+      if (resizeRaf !== null) {
+        window.cancelAnimationFrame(resizeRaf);
+        resizeRaf = null;
+      }
+
+      if (tick && gsapApi) {
+        gsapApi.ticker.remove(tick);
+      }
+
+      if (stRefreshCb && ScrollTriggerApi) {
+        ScrollTriggerApi.removeEventListener("refresh", stRefreshCb);
+      }
+
+      const lenis = lenisRef.current;
+      lenis?.destroy();
+      lenisRef.current = null;
+
+      if (window.__lenis === lenis) {
+        delete window.__lenis;
+      }
     };
   }, []);
 
