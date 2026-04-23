@@ -38,7 +38,7 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  padding-top: clamp(80px, 10vw, 150px);
+  padding-top: clamp(80px, 10vw, 100px);
   padding-inline: clamp(16px, 3vw, 56px);
   pointer-events: none;
   --hero-title-column-width: clamp(280px, 33vw, 620px);

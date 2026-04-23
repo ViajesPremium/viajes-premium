@@ -77,6 +77,15 @@ const items = [
   },
 ];
 
+const ITINERARIES_SCROLL_TUNING = {
+  mobilePinAnticipation: 0.82,
+  desktopPinAnticipation: 0.82,
+  desktopScrub: 0.18,
+  desktopSnapDelay: 0.2,
+  desktopSnapMin: 0.05,
+  desktopSnapMax: 0.14,
+} as const;
+
 type LenisLike = {
   scrollTo: (
     target: number,
@@ -265,7 +274,7 @@ export default function Itinerary() {
           end: () => `+=${window.innerHeight * MOBILE_PIN_VH}`,
           pin: true,
           pinSpacing: true,
-          anticipatePin: 1.35,
+          anticipatePin: ITINERARIES_SCROLL_TUNING.mobilePinAnticipation,
           invalidateOnRefresh: true,
           onEnter: () => {
             // Fresh forward entry (from top). Reset everything to card 0.
@@ -450,12 +459,15 @@ export default function Itinerary() {
           end: () => `+=${getTotalPinDistance()}`,
           pin: true,
           pinSpacing: true,
-          anticipatePin: 1.35,
-          scrub: 0.12,
+          anticipatePin: ITINERARIES_SCROLL_TUNING.desktopPinAnticipation,
+          scrub: ITINERARIES_SCROLL_TUNING.desktopScrub,
           snap: {
             snapTo: (value: number) => closestStop(value),
-            duration: { min: 0.03, max: 0.09 },
-            delay: 0.25,
+            duration: {
+              min: ITINERARIES_SCROLL_TUNING.desktopSnapMin,
+              max: ITINERARIES_SCROLL_TUNING.desktopSnapMax,
+            },
+            delay: ITINERARIES_SCROLL_TUNING.desktopSnapDelay,
             ease: "power2.out",
             inertia: false,
           },

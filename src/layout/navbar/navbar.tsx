@@ -50,7 +50,11 @@ const JAPAN_SECTION_MENU_ITEMS: StaggeredMenuItem[] = [
   { label: "Highlights", ariaLabel: "Ir a highlights", link: "#highlights" },
   { label: "Itinerarios", ariaLabel: "Ir a itinerarios", link: "#itinerarios" },
   { label: "Incluye", ariaLabel: "Ir a lo que incluye", link: "#includes" },
-  { label: "Testimonios", ariaLabel: "Ir a testimonios", link: "#testimonials" },
+  {
+    label: "Testimonios",
+    ariaLabel: "Ir a testimonios",
+    link: "#testimonials",
+  },
   { label: "FAQs", ariaLabel: "Ir a preguntas frecuentes", link: "#faqs" },
   { label: "Contacto", ariaLabel: "Ir al formulario", link: "#form" },
 ];
@@ -490,7 +494,11 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
         "staggered-menu-wrapper" +
         (isFixed ? " fixed-wrapper" : "")
       }
-      style={accentColor ? ({ "--sm-accent": accentColor } as React.CSSProperties) : undefined}
+      style={
+        accentColor
+          ? ({ "--sm-accent": accentColor } as React.CSSProperties)
+          : undefined
+      }
       data-position={position}
       data-open={open || undefined}
     >
@@ -615,6 +623,3 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
 };
 
 export default StaggeredMenu;
-
-
-

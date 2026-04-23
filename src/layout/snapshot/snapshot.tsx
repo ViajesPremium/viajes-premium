@@ -34,7 +34,7 @@ export default function Snapshot() {
           end: "bottom top",
           pin: true,
           pinSpacing: false,
-          anticipatePin: 1,
+          anticipatePin: 0.72,
           invalidateOnRefresh: true,
         });
 
@@ -42,7 +42,7 @@ export default function Snapshot() {
       };
 
       mm.add("(min-width: 769px)", () => {
-        const pinDelay = Math.round(window.innerHeight * 0.12);
+        const pinDelay = Math.round(window.innerHeight * 0.14);
         return createPinnedSnapshot(`top+=${pinDelay} top`);
       });
 

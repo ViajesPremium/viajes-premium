@@ -91,7 +91,7 @@ export default function Faqs() {
         end: "bottom top",
         pin: true,
         pinSpacing: false,
-        anticipatePin: 1,
+        anticipatePin: 0.72,
         invalidateOnRefresh: true,
       });
 

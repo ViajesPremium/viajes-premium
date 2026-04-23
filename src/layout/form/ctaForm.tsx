@@ -12,16 +12,21 @@ import styles from "./ctaForm.module.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const SHOJI_BASE = "/images/japon/basePuertas.webp";
+const SHOJI_BASE = "/images/japon/basePuertas2.webp";
 const SHOJI_LEFT = "/images/japon/puertaIzquierda.webp";
 const SHOJI_RIGHT = "/images/japon/puertaDerecha.webp";
 
+const CTA_FORM_SCROLL_TUNING = {
+  desktopScrub: 0.82,
+  mobileScrub: 0.42,
+  pinAnticipation: 0.72,
+} as const;
+
 const ctaFormConfig: ImageSectionFormConfig = {
-  eyebrow: "Disena tu viaje",
-  title: "Bienvenido al salon privado",
-  subtitle:
-    "Cuentanos como imaginas tu viaje a Japon y te enviamos una propuesta personalizada.",
-  submitLabel: "Comenzar mi viaje",
+  eyebrow: "",
+  title: "",
+  subtitle: "",
+  submitLabel: "",
 };
 
 export default function CTAForm() {
@@ -67,7 +72,9 @@ export default function CTAForm() {
       const getHoldDuration = () => (isMobile() ? 0.45 : 1.15);
       const getFinalScale = () => (isMobile() ? 1.34 : 1.55);
       const getFinalBlur = () => (isMobile() ? "5px" : "8px");
-      const scrubStrength = isMobile() ? 0.55 : 1;
+      const scrubStrength = isMobile()
+        ? CTA_FORM_SCROLL_TUNING.mobileScrub
+        : CTA_FORM_SCROLL_TUNING.desktopScrub;
 
       if (prefersReducedMotion) {
         gsap.set(shoji, { autoAlpha: 0 });
@@ -103,6 +110,7 @@ export default function CTAForm() {
           end: () => `+=${getPinDistance()}`,
           pin: true,
           pinSpacing: true,
+          anticipatePin: CTA_FORM_SCROLL_TUNING.pinAnticipation,
           scrub: scrubStrength,
           invalidateOnRefresh: true,
           onRefresh: () => {

@@ -4,6 +4,7 @@ import styles from "./marquee-section.module.css";
 import Image from "next/image";
 
 const JAPAN_ENDLESS_DISCOVERY_SRC = "/logos/japon/japanEndlessDiscovery.svg";
+const JP = "/logos/japon/jp-negro.svg";
 
 const MARQUEE_LOGOS: LogoItem[] = [
   {
@@ -41,6 +42,14 @@ export default function MarqueeSection() {
         </div>
 
         <div className={styles.logoIntro}>
+          <Image
+            src={JP}
+            alt="Japan Endless Discovery"
+            width={460}
+            height={96}
+            className={styles.logoIntroImage}
+          />
+          <span>x</span>
           <Image
             src={JAPAN_ENDLESS_DISCOVERY_SRC}
             alt="Japan Endless Discovery"

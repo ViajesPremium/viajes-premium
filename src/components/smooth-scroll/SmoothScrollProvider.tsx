@@ -4,9 +4,9 @@ import { useEffect, useRef } from "react";
 import type Lenis from "lenis";
 
 // Lower lerp => smoother and slightly slower response.
-const DESKTOP_LERP = 0.04;
+const DESKTOP_LERP = 0.03;
 const MOBILE_LERP = 0.09;
-const DESKTOP_WHEEL_MULTIPLIER = 0.9;
+const DESKTOP_WHEEL_MULTIPLIER = 0.52;
 const MOBILE_WHEEL_MULTIPLIER = 0.92;
 
 export default function SmoothScrollProvider({
@@ -35,7 +35,9 @@ export default function SmoothScrollProvider({
     // Stored at outer scope so the cleanup function can reference them
     // without needing a second async import.
     let stRefreshCb: (() => void) | null = null;
-    let ScrollTriggerApi: typeof import("gsap/ScrollTrigger").ScrollTrigger | null = null;
+    let ScrollTriggerApi:
+      | typeof import("gsap/ScrollTrigger").ScrollTrigger
+      | null = null;
 
     const initSmoothScroll = async () => {
       const [{ default: LenisCtor }, { gsap }, { ScrollTrigger }] =

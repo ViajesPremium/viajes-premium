@@ -23,8 +23,16 @@
   z-index: 3;
   pointer-events: none;
   background:
-    radial-gradient(circle at 50% 52%, rgba(255, 225, 167, 0.5), rgba(255, 225, 167, 0) 42%),
-    radial-gradient(circle at 50% 54%, rgba(255, 245, 214, 0.25), rgba(255, 245, 214, 0) 58%);
+    radial-gradient(
+      circle at 50% 52%,
+      rgba(255, 225, 167, 0.5),
+      rgba(255, 225, 167, 0) 42%
+    ),
+    radial-gradient(
+      circle at 50% 54%,
+      rgba(255, 245, 214, 0.25),
+      rgba(255, 245, 214, 0) 58%
+    );
   transform: scale(0.9);
 }
 
@@ -134,7 +142,9 @@
   line-height: 1.25;
   padding: 0.56rem 0.72rem;
   outline: none;
-  transition: border-color 160ms ease, box-shadow 160ms ease;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease;
 }
 
 .field textarea {
@@ -176,7 +186,6 @@
   }
 
   .formLayer {
-    align-items: end;
     padding: 0.75rem;
     padding-bottom: calc(0.75rem + env(safe-area-inset-bottom));
   }

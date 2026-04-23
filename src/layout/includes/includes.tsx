@@ -66,6 +66,8 @@ const INCLUDE_ITEMS: IncludeItem[] = [
 // - horizontalFactor: mayor valor = cards avanzan mas lento
 const INCLUDES_SCROLL_TUNING = {
   horizontalFactor: 3,
+  pinAnticipation: 0.72,
+  pinScrub: 0.68,
 } as const;
 
 export default function Includes() {
@@ -137,8 +139,8 @@ export default function Includes() {
           end: () => `+=${getEndDistance()}`,
           pin: section,
           pinSpacing: true,
-          scrub: 0.9,
-          anticipatePin: 1,
+          scrub: INCLUDES_SCROLL_TUNING.pinScrub,
+          anticipatePin: INCLUDES_SCROLL_TUNING.pinAnticipation,
           invalidateOnRefresh: true,
           onRefresh: () => {
             // Keep Lenis limit in sync after pin spacer is inserted/resized
