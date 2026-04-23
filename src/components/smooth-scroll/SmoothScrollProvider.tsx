@@ -22,8 +22,9 @@ export default function SmoothScrollProvider({
       "(prefers-reduced-motion: reduce)",
     ).matches;
 
-    // Keep native scroll on mobile/reduced-motion to save main-thread work.
-    if (isMobile || prefersReducedMotion) {
+    // 🚨 CAMBIO 1: Se eliminó el bloqueo para móviles (isMobile).
+    // Ahora solo detenemos la ejecución si el usuario prefiere movimiento reducido.
+    if (prefersReducedMotion) {
       return;
     }
 
@@ -53,6 +54,7 @@ export default function SmoothScrollProvider({
       ScrollTriggerApi = ScrollTrigger;
       gsapApi.registerPlugin(ScrollTrigger);
 
+      // Usamos isMobile para aplicar las constantes específicas de mobile
       const lenis = new LenisCtor({
         lerp: isMobile ? MOBILE_LERP : DESKTOP_LERP,
         smoothWheel: true,
@@ -83,29 +85,27 @@ export default function SmoothScrollProvider({
       gsapApi.ticker.lagSmoothing(0);
 
       // ── Keep Lenis scroll limit in sync with GSAP pin spacers ───────────────
-      //
-      // Root problem: Lenis caches limit = scrollHeight − viewportHeight at init.
-      // GSAP pin animations insert spacer divs that make the page taller AFTER
-      // Lenis is created. Dynamic chunk imports and the Lenis import race with no
-      // guaranteed order, so pin spacers may already exist when Lenis starts, or
-      // appear later. Three layers of defence:
 
-      // A — Immediate resize: measure real page height right now, capturing any
-      //     pin spacers already added by whichever chunk loaded first.
+      // A — Immediate resize: measure real page height right now
       scheduleLenisResize();
 
-      // B — Global ScrollTrigger "refresh" listener: GSAP fires this every time
-      //     it recalculates triggers (new pin, window resize, manual refresh).
-      //     This covers spacers added AFTER Lenis initialises.
+      // B — Global ScrollTrigger "refresh" listener
       stRefreshCb = () => scheduleLenisResize();
       ScrollTrigger.addEventListener("refresh", stRefreshCb);
 
       // C — ResizeObserver on document.body as a final safety net.
-      //     Must observe document.body, NOT document.documentElement:
-      //     html { height: 100% } means documentElement.clientHeight never changes.
-      //     body grows with content, so its ResizeObserver fires on height changes.
-      ro = new ResizeObserver(() => {
-        scheduleLenisResize();
+      // 🚨 CAMBIO 2: Lógica de tolerancia añadida. Ignora cambios de altura
+      // menores a 100px (como la barra de navegación de Chrome en Android/iOS)
+      let lastHeight = document.body.clientHeight;
+
+      ro = new ResizeObserver((entries) => {
+        for (let entry of entries) {
+          const currentHeight = entry.contentRect.height;
+          if (Math.abs(currentHeight - lastHeight) > 100) {
+            scheduleLenisResize();
+            lastHeight = currentHeight;
+          }
+        }
       });
       ro.observe(document.body);
     };
