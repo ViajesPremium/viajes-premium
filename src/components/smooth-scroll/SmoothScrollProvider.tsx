@@ -70,6 +70,7 @@ export default function SmoothScrollProvider({
           ? MOBILE_WHEEL_MULTIPLIER
           : DESKTOP_WHEEL_MULTIPLIER,
         autoRaf: false,
+        syncTouch: isMobile, // Sync with native touch on mobile
       });
 
       lenisRef.current = lenis;
@@ -108,7 +109,7 @@ export default function SmoothScrollProvider({
       ro = new ResizeObserver((entries) => {
         for (let entry of entries) {
           const currentHeight = entry.contentRect.height;
-          if (Math.abs(currentHeight - lastHeight) > 100) {
+          if (Math.abs(currentHeight - lastHeight) > 2) {
             scheduleLenisResize();
             lastHeight = currentHeight;
           }
