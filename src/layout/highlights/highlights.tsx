@@ -4,7 +4,10 @@ import { useCallback } from "react";
 import Badge from "@/components/ui/badge/badge";
 import { Button } from "@/components/ui/button/button";
 import { BlurredStagger } from "@/components/ui/blurred-stagger-text/blurred-stagger-text";
-import { FocusRail, type FocusRailItem } from "@/components/ui/focus-rail/focus-rail";
+import {
+  FocusRail,
+  type FocusRailItem,
+} from "@/components/ui/focus-rail/focus-rail";
 import { scrollToSection } from "@/lib/scroll-to-section";
 import BracketHoverBox from "./bracket-hover-box";
 import styles from "./highlights.module.css";
@@ -16,7 +19,7 @@ const FOCUS_RAIL_ITEMS: FocusRailItem[] = [
     description:
       "Cada itinerario se estructura para dar más sentido, ritmo y calidad al viaje.",
     meta: "Cultura",
-    imageSrc: "/images/japon/stockImage.webp",
+    imageSrc: "/images/japon/2-recorridos-diseñados-con-mas-criterio.webp",
     href: "#form",
   },
   {
@@ -25,7 +28,7 @@ const FOCUS_RAIL_ITEMS: FocusRailItem[] = [
     description:
       "Atención cercana antes, durante y después de su experiencia en Japón.",
     meta: "Urbano",
-    imageSrc: "/images/japon/stockImage.webp",
+    imageSrc: "/images/japon/2-acompañamiento-personalizado.webp",
     href: "#form",
   },
   {
@@ -34,7 +37,7 @@ const FOCUS_RAIL_ITEMS: FocusRailItem[] = [
     description:
       "Soporte continuo para viajar con tranquilidad de principio a fin.",
     meta: "Gastronomia",
-    imageSrc: "/images/japon/stockImage.webp",
+    imageSrc: "/images/japon/2-respaldo-24-7.webp",
     href: "#form",
   },
   {
@@ -43,7 +46,7 @@ const FOCUS_RAIL_ITEMS: FocusRailItem[] = [
     description:
       "Seleccionadas por su carácter, ubicación y nivel de servicio.",
     meta: "Bienestar",
-    imageSrc: "/images/japon/stockImage.webp",
+    imageSrc: "/images/japon/2-estancia-a-la-altura-del-viaje.webp",
     href: "#form",
   },
   {
@@ -52,7 +55,7 @@ const FOCUS_RAIL_ITEMS: FocusRailItem[] = [
     description:
       "Guías en español para vivir Japón con más claridad y profundidad.",
     meta: "Naturaleza",
-    imageSrc: "/images/japon/stockImage.webp",
+    imageSrc: "/images/japon/2-expertos-que-hablan-su-idioma.webp",
     href: "#form",
   },
   {
@@ -61,7 +64,7 @@ const FOCUS_RAIL_ITEMS: FocusRailItem[] = [
     description:
       "Cada detalle se cuida para que usted viaje con más confianza y respaldo.",
     meta: "Tradicion",
-    imageSrc: "/images/japon/stockImage.webp",
+    imageSrc: "/images/japon/2-tranquilidad-de-principio-a-fin.webp",
     href: "#form",
   },
 ];
@@ -83,13 +86,18 @@ export default function Highlights() {
         </div>
 
         <header className={styles.kicker}>
-          <BlurredStagger text="Trabajamos con marcas" className={styles.kickerTop} />
+          <BlurredStagger
+            text="Trabajamos con marcas"
+            className={styles.kickerTop}
+          />
           <p className={styles.kickerBottom}>Cuidadosamente seleccionadas.</p>
         </header>
 
         <div className={styles.editorialGrid}>
           <div className={`${styles.lineRow} ${styles.lineRowWithBracket}`}>
-            <p className={`${styles.megaText} ${styles.lineText}`}>TE LLEVAMOS</p>
+            <p className={`${styles.megaText} ${styles.lineText}`}>
+              TE LLEVAMOS
+            </p>
             <BracketHoverBox
               className={styles.inlineBracket}
               imageSrc="/images/gallery-2.webp"
@@ -122,7 +130,9 @@ export default function Highlights() {
           </div>
 
           <div className={`${styles.lineRow} ${styles.lineRowWithBracket}`}>
-            <p className={`${styles.megaText} ${styles.lineText}`}>EL RESPALDO</p>
+            <p className={`${styles.megaText} ${styles.lineText}`}>
+              EL RESPALDO
+            </p>
             <BracketHoverBox
               className={styles.inlineBracket}
               imageSrc="/images/gallery-1.webp"
@@ -137,7 +147,9 @@ export default function Highlights() {
             <BlurredStagger
               text="ATENCIÓN QUE MERECES"
               className={`${styles.megaText} ${styles.lineText}`}
-              highlights={[{ word: "MERECES", className: styles.secondaryUnderline }]}
+              highlights={[
+                { word: "MERECES", className: styles.secondaryUnderline },
+              ]}
             />
           </div>
         </div>
@@ -174,7 +186,10 @@ export default function Highlights() {
           />
 
           <div className={styles.mobileLineWithBracket}>
-            <BlurredStagger text="Y LA" className={`${styles.megaText} ${styles.mobileLine}`} />
+            <BlurredStagger
+              text="Y LA"
+              className={`${styles.megaText} ${styles.mobileLine}`}
+            />
             <BracketHoverBox
               className={`${styles.inlineBracket} ${styles.mobileBracket}`}
               imageSrc="/images/kioto-japon.webp"
@@ -193,7 +208,9 @@ export default function Highlights() {
             <BlurredStagger
               text="MERECES"
               className={`${styles.megaText} ${styles.mobileLine}`}
-              highlights={[{ word: "MERECES", className: styles.secondaryUnderline }]}
+              highlights={[
+                { word: "MERECES", className: styles.secondaryUnderline },
+              ]}
             />
             <BracketHoverBox
               className={`${styles.inlineBracket} ${styles.mobileBracket}`}

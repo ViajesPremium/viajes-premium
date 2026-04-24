@@ -5,7 +5,7 @@
   overflow: hidden;
   background-image:
     linear-gradient(180deg, rgba(9, 6, 4, 0.217), rgba(9, 6, 4, 0.295)),
-    url("/images/paisaje-japon.webp");
+    url("/images/japon/7-formulario.webp");
   background-size: cover;
   background-position: center;
 }

@@ -1,9 +1,6 @@
-import Link from "next/link";
+import "@/vision/vision.css";
+import VisionLandingPage from "@/vision/VisionLandingPage";
 
 export default function Home() {
-  return (
-    <div>
-    <Link href="/japon-premium">Japon Premium</Link>
-    </div>
-  );
+  return <VisionLandingPage />;
 }

@@ -10,13 +10,21 @@ import styles from "./snapshot.module.css";
 gsap.registerPlugin(ScrollTrigger);
 
 const bentoCards = [
-  { image: "/images/japon/stockImage.webp", text: "Kyoto & Nara", wide: false },
   {
-    image: "/images/japon/stockImage.webp",
+    image: "/images/japon/1-kyoto-nara.webp",
+    text: "Kyoto & Nara",
+    wide: false,
+  },
+  {
+    image: "/images/japon/1-gastronomia-autentica.webp",
     text: "Gastronomía auténtica",
     wide: false,
   },
-  { image: "/images/japon/stockImage.webp", text: "Hospedaje de lujo", wide: false },
+  {
+    image: "/images/japon/1-alojamiento-de-lujo.webp",
+    text: "Hospedaje de lujo",
+    wide: false,
+  },
 ];
 
 export default function BentoGrid() {

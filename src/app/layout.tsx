@@ -1,7 +1,4 @@
 import type { Metadata } from "next";
-import CursorEffect from "@/components/ui/cursor/cursorEffect";
-import Navbar from "@/layout/navbar/navbar";
-import SmoothScrollProvider from "@/components/smooth-scroll/SmoothScrollProvider";
 import "./globals.css";
 
 const baseUrl =
@@ -10,7 +7,7 @@ const baseUrl =
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   title: "Viajes Premium",
-  description: "Diseñamos experiencias para quienes valoran atención personal.",
+  description: "Disenamos experiencias para quienes valoran atencion personal.",
   alternates: {
     canonical: "/",
   },
@@ -22,7 +19,6 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    // 🚨 QUITAR h-full DE AQUÍ
     <html lang="es-mx" className="antialiased">
       <head>
         <link
@@ -33,20 +29,8 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
       </head>
-      {/* 🚨 CAMBIAR min-h-full por min-h-screen */}
-      <body className="min-h-screen flex flex-col">
-        <SmoothScrollProvider>
-          <CursorEffect>
-            <Navbar
-              logoUrl="/logos/jp-negro.svg"
-              colors={["var(--primary-japon)", "var(--secondary-japon)"]}
-              accentColor="var(--primary-japon)"
-              menuButtonColor="#ffffff"
-              openMenuButtonColor="#16181b"
-            />
-            {children}
-          </CursorEffect>
-        </SmoothScrollProvider>
+      <body className="flex min-h-screen flex-col">
+        {children}
       </body>
     </html>
   );

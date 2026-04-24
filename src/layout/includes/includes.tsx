@@ -26,7 +26,7 @@ const INCLUDE_ITEMS: IncludeItem[] = [
     title: "Estancias con carácter",
     description:
       "Espacios cuidadosamente seleccionados por ubicación, servicio y la experiencia que aportan al viaje.",
-    image: "/images/japon/stockImage.webp",
+    image: "/images/japon/6-estancias-con-caracter.webp",
   },
   {
     id: "transport",
@@ -34,7 +34,7 @@ const INCLUDE_ITEMS: IncludeItem[] = [
     title: "Traslados mejor coordinados",
     description:
       "Shinkansen, traslados privados y tiempos pensados para que el viaje fluya con más orden y comodidad.",
-    image: "/images/japon/stockImage.webp",
+    image: "/images/japon/6-traslados-mejor-coordinados.webp",
   },
   {
     id: "culture",
@@ -42,7 +42,7 @@ const INCLUDE_ITEMS: IncludeItem[] = [
     title: "Experiencias culturales curadas",
     description:
       "Templos, barrios históricos y actividades elegidas para conectar con el Japón más auténtico.",
-    image: "/images/japon/stockImage.webp",
+    image: "/images/japon/6-experiencias-culturales-curadas.webp",
   },
   {
     id: "gastronomy",
@@ -50,7 +50,7 @@ const INCLUDE_ITEMS: IncludeItem[] = [
     title: "Escenas gastronómicas seleccionadas",
     description:
       "Reservas y momentos en la mesa pensados para descubrir Japón con más detalle y autenticidad.",
-    image: "/images/japon/stockImage.webp",
+    image: "/images/japon/6-escenas-gastronomicas-seleccionadas.webp",
   },
   {
     id: "support",
@@ -58,7 +58,7 @@ const INCLUDE_ITEMS: IncludeItem[] = [
     title: "Acompañamiento en cada etapa",
     description:
       "Atención en español antes y durante el viaje para acompañarle con claridad y resolver cada detalle.",
-    image: "/images/japon/stockImage.webp",
+    image: "/images/japon/6-acompañamiento-en-cada-etapa.webp",
   },
 ];
 

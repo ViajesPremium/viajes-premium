@@ -177,15 +177,6 @@
   display: none;
 }
 
-.mobileGlobeWrap {
-  display: none;
-}
-
-.mobileGlobe {
-  width: 100%;
-  height: 100%;
-}
-
 .mobileFigureLeft,
 .mobileFigureRight {
   display: none;
@@ -451,19 +442,6 @@
     pointer-events: none;
     /* Variable actualizada por JS en cada frame de scroll */
     --faq-figures-progress: 0;
-  }
-
-  .mobileGlobeWrap {
-    position: absolute;
-    left: 50%;
-    top: 45%;
-    display: block;
-    width: clamp(136px, 50vw, 320px);
-    aspect-ratio: 1 / 1;
-    transform: translate(-50%, -50%);
-    border-radius: 9999px;
-    z-index: 4;
-    pointer-events: none;
   }
 
   .mobileFigureLeft,

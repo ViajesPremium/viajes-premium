@@ -50,8 +50,8 @@ const items = [
       "Un recorrido por el Japón más espiritual y profundo: templos milenarios, rutas sagradas, ryokans, onsen y experiencias que transforman el viaje.",
     ideal:
       "Ideal para parejas, familias, lunas de miel y viajeros que buscan desconexión profunda.",
-    image1: "/images/japon/stockImage.webp",
-    image2: "/images/japon/stockImage.webp",
+    image1: "/images/japon/3-alma-de-japon-izq.webp",
+    image2: "/images/japon/3-alma-de-japon-der.webp",
   },
   {
     id: 2,
@@ -61,8 +61,8 @@ const items = [
       "Un recorrido por el Japón más vibrante y fantástico: anime, parques temáticos, tecnología, neón, tradición y experiencias que transforman el viaje.",
     ideal:
       "Ideal para familias, amigos, parejas jóvenes, fans del anime, manga y la tecnología.",
-    image1: "/images/japon/stockImage.webp",
-    image2: "/images/japon/stockImage.webp",
+    image1: "/images/japon/4-japon-pop-izq.webp",
+    image2: "/images/japon/4-japon-pop-der.webp",
   },
   {
     id: 3,
@@ -72,8 +72,8 @@ const items = [
       "Un recorrido por el Japón más auténtico y menos transitado: alpes japoneses, templos zen, ryokans y santuarios sagrados que transforman el viaje.",
     ideal:
       "Ideal para parejas aventureras, viajeros con mirada cultural y quienes prefieren el Japón que pocos conocen.",
-    image1: "/images/japon/stockImage.webp",
-    image2: "/images/japon/stockImage.webp",
+    image1: "/images/japon/5-el-camino-del-shogun-izq.webp",
+    image2: "/images/japon/5-el-camino-del-shogun-der.webp",
   },
 ];
 
@@ -89,7 +89,11 @@ const ITINERARIES_SCROLL_TUNING = {
 type LenisLike = {
   scrollTo: (
     target: number,
-    opts?: { duration?: number; easing?: (t: number) => number; immediate?: boolean },
+    opts?: {
+      duration?: number;
+      easing?: (t: number) => number;
+      immediate?: boolean;
+    },
   ) => void;
   stop: () => void;
   start: () => void;
@@ -143,7 +147,11 @@ export default function Itinerary() {
             zIndex: i + 1,
             force3D: true,
           });
-          gsap.set(info[i], { yPercent: infoY, opacity: infoOpacity, force3D: true });
+          gsap.set(info[i], {
+            yPercent: infoY,
+            opacity: infoOpacity,
+            force3D: true,
+          });
         }
       };
 
@@ -218,7 +226,9 @@ export default function Itinerary() {
           setStepState(targetStep);
           activeTransition = gsap.timeline({
             defaults: { ease: "power2.out", duration: MOBILE_STEP_DURATION },
-            onComplete: () => { activeTransition = null; },
+            onComplete: () => {
+              activeTransition = null;
+            },
           });
 
           for (let i = 0; i < total; i++) {
@@ -253,9 +263,7 @@ export default function Itinerary() {
           const lenis = getLenis();
           // Scroll just past the pin end (forward) or start (backward)
           const target =
-            dir > 0
-              ? pinTrigger.end + 2
-              : Math.max(0, pinTrigger.start - 2);
+            dir > 0 ? pinTrigger.end + 2 : Math.max(0, pinTrigger.start - 2);
 
           if (lenis) {
             lenis.scrollTo(target, {
@@ -331,7 +339,10 @@ export default function Itinerary() {
             return;
           }
           const t = event.touches[0];
-          if (!t) { touchPrimed = false; return; }
+          if (!t) {
+            touchPrimed = false;
+            return;
+          }
           touchStartY = t.clientY;
           touchStartX = t.clientX;
           touchPrimed = true;
@@ -381,7 +392,9 @@ export default function Itinerary() {
           }
         };
 
-        const onTouchCancel = () => { touchPrimed = false; };
+        const onTouchCancel = () => {
+          touchPrimed = false;
+        };
 
         // Wheel (useful in browser DevTools mobile emulation / foldable w/ mouse)
         const onWheel = (event: WheelEvent) => {
@@ -406,10 +419,16 @@ export default function Itinerary() {
           }
         };
 
-        container.addEventListener("touchstart", onTouchStart, { passive: true });
-        container.addEventListener("touchmove", onTouchMove, { passive: false });
+        container.addEventListener("touchstart", onTouchStart, {
+          passive: true,
+        });
+        container.addEventListener("touchmove", onTouchMove, {
+          passive: false,
+        });
         container.addEventListener("touchend", onTouchEnd, { passive: true });
-        container.addEventListener("touchcancel", onTouchCancel, { passive: true });
+        container.addEventListener("touchcancel", onTouchCancel, {
+          passive: true,
+        });
         container.addEventListener("wheel", onWheel, { passive: false });
 
         return () => {
@@ -431,7 +450,8 @@ export default function Itinerary() {
       const TOTAL_UNITS = ENTRY_HOLD_VH + TRANSITION_UNITS + REVEAL_PIN_VH;
       const getTotalPinDistance = () => window.innerHeight * TOTAL_UNITS;
       const transitionStartProg = ENTRY_HOLD_VH / TOTAL_UNITS;
-      const transitionEndProg = (ENTRY_HOLD_VH + TRANSITION_UNITS) / TOTAL_UNITS;
+      const transitionEndProg =
+        (ENTRY_HOLD_VH + TRANSITION_UNITS) / TOTAL_UNITS;
       const transitionRange = transitionEndProg - transitionStartProg;
       const interiorStops = Array.from(
         { length: total },
@@ -498,7 +518,11 @@ export default function Itinerary() {
       }
 
       masterTl.to({}, { duration: ENTRY_HOLD_VH }, 0);
-      masterTl.to({}, { duration: REVEAL_PIN_VH }, ENTRY_HOLD_VH + TRANSITION_UNITS);
+      masterTl.to(
+        {},
+        { duration: REVEAL_PIN_VH },
+        ENTRY_HOLD_VH + TRANSITION_UNITS,
+      );
 
       return () => {
         masterTl.scrollTrigger?.kill();
@@ -613,7 +637,9 @@ export default function Itinerary() {
 
             <div className={styles.controls}>
               <div className={styles.counterGroup}>
-                <span className={styles.current}>{toRoman(activeStep + 1)}</span>
+                <span className={styles.current}>
+                  {toRoman(activeStep + 1)}
+                </span>
               </div>
             </div>
           </div>
