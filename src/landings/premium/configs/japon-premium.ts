@@ -178,6 +178,11 @@ export const japonPremiumLandingConfig: PremiumLandingConfig = {
         contactEmail: "hola@japonpremium.com",
         contactPhoneDisplay: "+52 55 1234 5678",
         contactPhoneLink: "+525512345678",
+        experienceOptions: [
+          { label: "Alma de Japón — espiritual y de bienestar", value: "alma-de-japon" },
+          { label: "Japón Pop — anime, tecnología y cultura pop", value: "japon-pop" },
+          { label: "El Camino del Shōgun — auténtico y cultural", value: "camino-del-shogun" },
+        ],
       },
     },
     highlights: {
@@ -477,6 +482,11 @@ export const japonPremiumLandingConfig: PremiumLandingConfig = {
         contactEmail: "hola@japonpremium.com",
         contactPhoneDisplay: "+52 55 1234 5678",
         contactPhoneLink: "+525512345678",
+        experienceOptions: [
+          { label: "Alma de Japón — espiritual y de bienestar", value: "alma-de-japon" },
+          { label: "Japón Pop — anime, tecnología y cultura pop", value: "japon-pop" },
+          { label: "El Camino del Shōgun — auténtico y cultural", value: "camino-del-shogun" },
+        ],
       },
     },
     marquee: {

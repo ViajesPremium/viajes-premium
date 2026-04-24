@@ -1,6 +1,6 @@
 "use client";
 
-import { type CSSProperties, useCallback, useEffect, useState } from "react";
+import { type CSSProperties, useCallback } from "react";
 import dynamic from "next/dynamic";
 import styles from "./hero.module.css";
 import HeroOverlayLazy from "@/components/HeroOverlayLazy";
@@ -17,7 +17,6 @@ const pressureFont = "/fonts/nohemi-font-family/Nohemi-VF-BF6438cc58ad63d.ttf";
 
 type PressureWordProps = {
   text: string;
-  pressureEnabled: boolean;
   fontWeight: number;
   italic?: boolean;
   weightFrom: number;
@@ -28,7 +27,6 @@ type PressureWordProps = {
 
 function PressureWord({
   text,
-  pressureEnabled,
   fontWeight,
   italic = false,
   weightFrom,
@@ -36,17 +34,6 @@ function PressureWord({
   scaleFrom,
   scaleTo,
 }: PressureWordProps) {
-  if (!pressureEnabled) {
-    return (
-      <span
-        className={styles.desktopWordFallback}
-        style={{ fontStyle: italic ? "italic" : "normal", fontWeight }}
-      >
-        {text}
-      </span>
-    );
-  }
-
   return (
     <TextPressure
       text={text}
@@ -84,8 +71,6 @@ export default function Hero() {
     line2Focus: hero.title.line2Focus,
   };
 
-  const [enablePressureTitle, setEnablePressureTitle] = useState(false);
-
   const goToTarget = useCallback((target: string) => {
     if (target.startsWith("#")) {
       scrollToSection(target, { duration: 1.15 });
@@ -102,62 +87,6 @@ export default function Hero() {
     goToTarget(hero.ctaSecondary.target);
   }, [goToTarget, hero.ctaSecondary.target]);
 
-  useEffect(() => {
-    let cancelled = false;
-
-    const isDesktop = window.matchMedia("(min-width: 769px)").matches;
-    const prefersReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
-
-    if (!isDesktop || prefersReducedMotion) {
-      return;
-    }
-
-    const enable = async () => {
-      if ("fonts" in document) {
-        try {
-          await document.fonts.load("400 1em Nohemi");
-          await document.fonts.ready;
-        } catch {
-          // Keep non-blocking behavior if the Font Loading API fails.
-        }
-      }
-      if (cancelled) return;
-      setEnablePressureTitle(true);
-    };
-
-    const requestIdle =
-      typeof window.requestIdleCallback === "function"
-        ? window.requestIdleCallback.bind(window)
-        : null;
-    const cancelIdle =
-      typeof window.cancelIdleCallback === "function"
-        ? window.cancelIdleCallback.bind(window)
-        : null;
-
-    if (requestIdle && cancelIdle) {
-      const idleId = requestIdle(
-        () => {
-          void enable();
-        },
-        { timeout: 1200 },
-      );
-      return () => {
-        cancelled = true;
-        cancelIdle(idleId);
-      };
-    }
-
-    const timeoutId = setTimeout(() => {
-      void enable();
-    }, 350);
-    return () => {
-      cancelled = true;
-      clearTimeout(timeoutId);
-    };
-  }, []);
-
   const heroStyle = {
     "--hero-bg-image": `url("${hero.backgroundImage}")`,
   } as CSSProperties;
@@ -171,7 +100,6 @@ export default function Hero() {
           <span className={`${styles.line} ${styles.desktopLine}`}>
             <span className={styles.wordSlot}>
               <PressureWord
-                pressureEnabled={enablePressureTitle}
                 text={hero.title.line1Lead}
                 fontWeight={100}
                 italic
@@ -183,7 +111,6 @@ export default function Hero() {
             </span>
             <span className={styles.wordSlot}>
               <PressureWord
-                pressureEnabled={enablePressureTitle}
                 text={hero.title.line1Focus}
                 fontWeight={100}
                 italic={false}
@@ -198,7 +125,6 @@ export default function Hero() {
           <span className={`${styles.line} ${styles.desktopLine}`}>
             <span className={styles.wordSlot}>
               <PressureWord
-                pressureEnabled={enablePressureTitle}
                 text={hero.title.line2Lead}
                 fontWeight={900}
                 italic={false}
@@ -210,7 +136,6 @@ export default function Hero() {
             </span>
             <span className={styles.wordSlot}>
               <PressureWord
-                pressureEnabled={enablePressureTitle}
                 text={hero.title.line2Focus}
                 fontWeight={900}
                 italic={false}

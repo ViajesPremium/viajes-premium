@@ -14,8 +14,8 @@ import { usePremiumLandingConfig } from "@/landings/premium/context";
 
 const INCLUDES_SCROLL_TUNING = {
   horizontalFactor: 3,
-  pinAnticipation: 0.72,
-  pinScrub: 0.68,
+  pinAnticipation: 1,
+  pinScrub: true,
 } as const;
 
 export default function Includes() {

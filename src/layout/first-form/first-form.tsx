@@ -63,6 +63,7 @@ export default function ImgSection() {
           <ImageSectionForm
             config={firstForm.formConfig}
             idPrefix="first-form"
+            theme="light"
           />
 
           <div className={styles.mobileGallery} aria-hidden="true">

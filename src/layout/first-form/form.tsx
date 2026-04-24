@@ -57,6 +57,11 @@ type TravelFormValues = Record<StepFieldKey, string>;
 type TravelFormErrors = Partial<Record<StepFieldKey, string>>;
 type TravelFormTouched = Partial<Record<StepFieldKey, boolean>>;
 
+export type ExperienceOption = {
+  label: string;
+  value: string;
+};
+
 export type ImageSectionFormConfig = {
   eyebrow: string;
   title: string;
@@ -68,6 +73,8 @@ export type ImageSectionFormConfig = {
   contactEmail?: string;
   contactPhoneDisplay?: string;
   contactPhoneLink?: string;
+  /** Exactamente 3 opciones para el paso "¿Con qué tipo de experiencia conectas más?". */
+  experienceOptions?: readonly [ExperienceOption, ExperienceOption, ExperienceOption];
   onSubmit?: (values: TravelFormValues) => void | Promise<void>;
 };
 
@@ -151,34 +158,25 @@ const STEP_VARIANTS: Variants = {
   }),
 };
 
-function parseMonthToCalendarDate(value: string): CalendarDate | null {
-  if (!/^\d{4}-\d{2}$/.test(value)) {
-    return null;
-  }
-
-  const [yearString, monthString] = value.split("-");
+function parseDateToCalendarDate(value: string): CalendarDate | null {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return null;
+  const [yearString, monthString, dayString] = value.split("-");
   const year = Number(yearString);
   const month = Number(monthString);
-
-  if (!Number.isInteger(year) || !Number.isInteger(month)) {
-    return null;
-  }
-
-  if (month < 1 || month > 12) {
-    return null;
-  }
-
-  return new CalendarDate(year, month, 1);
+  const day = Number(dayString);
+  if (!Number.isInteger(year) || !Number.isInteger(month) || !Number.isInteger(day)) return null;
+  if (month < 1 || month > 12 || day < 1 || day > 31) return null;
+  return new CalendarDate(year, month, day);
 }
 
-function formatMonthValue(date: DateValue): string {
-  return `${date.year}-${`${date.month}`.padStart(2, "0")}`;
+function formatDateValue(date: DateValue): string {
+  return `${date.year}-${String(date.month).padStart(2, "0")}-${String(date.day).padStart(2, "0")}`;
 }
 
-function parseMonthToDate(value: string): Date | null {
-  const parsedMonth = parseMonthToCalendarDate(value);
-  if (!parsedMonth) return null;
-  return new Date(parsedMonth.year, parsedMonth.month - 1, 1);
+function parseDateToDate(value: string): Date | null {
+  const parsed = parseDateToCalendarDate(value);
+  if (!parsed) return null;
+  return new Date(parsed.year, parsed.month - 1, parsed.day);
 }
 
 function validateField(field: StepFieldKey, value: string): string | undefined {
@@ -210,13 +208,13 @@ function validateField(field: StepFieldKey, value: string): string | undefined {
     }
     case "travelDate": {
       if (!trimmedValue) return "Selecciona una fecha aproximada.";
-      const selectedDate = parseMonthToDate(trimmedValue);
+      const selectedDate = parseDateToDate(trimmedValue);
       if (!selectedDate) return "Selecciona una fecha valida.";
 
       const now = new Date();
-      const currentMonthStart = new Date(now.getFullYear(), now.getMonth(), 1);
-      if (selectedDate < currentMonthStart) {
-        return "Selecciona el mes actual o una fecha futura.";
+      const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+      if (selectedDate < todayStart) {
+        return "Selecciona el dia de hoy o una fecha futura.";
       }
       return undefined;
     }
@@ -269,9 +267,9 @@ export default function ImageSectionForm({
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const currentMonthMin = useMemo(() => {
+  const todayMin = useMemo(() => {
     const now = new Date();
-    return new CalendarDate(now.getFullYear(), now.getMonth() + 1, 1);
+    return new CalendarDate(now.getFullYear(), now.getMonth() + 1, now.getDate());
   }, []);
 
   const fieldLabels = useMemo(
@@ -505,7 +503,7 @@ export default function ImageSectionForm({
             <TravelMonthPicker
               id={`${idPrefix}-travelDate`}
               theme={theme}
-              min={currentMonthMin}
+              min={todayMin}
               invalid={Boolean(touched.travelDate && errors.travelDate)}
               value={values.travelDate}
               onChange={(nextValue) => setFieldValue("travelDate", nextValue)}
@@ -564,20 +562,64 @@ export default function ImageSectionForm({
             htmlFor={`${idPrefix}-experienceType`}
             error={touched.experienceType ? errors.experienceType : undefined}
           >
-            <textarea
-              id={`${idPrefix}-experienceType`}
-              rows={4}
-              className={`${styles.formInput} ${styles.formTextarea}`}
-              placeholder="Ej. lujo relajado, aventura curada, cultural profundo..."
-              value={values.experienceType}
-              onChange={(event) =>
-                setFieldValue("experienceType", event.target.value)
-              }
-              onBlur={() => touchField("experienceType")}
-            />
+            {config.experienceOptions && config.experienceOptions.length > 0 ? (
+              <ExperienceChips
+                options={config.experienceOptions}
+                value={values.experienceType}
+                theme={theme}
+                onChange={(val) => setFieldValue("experienceType", val)}
+              />
+            ) : (
+              <textarea
+                id={`${idPrefix}-experienceType`}
+                rows={4}
+                className={`${styles.formInput} ${styles.formTextarea}`}
+                placeholder="Ej. lujo relajado, aventura curada, cultural profundo..."
+                value={values.experienceType}
+                onChange={(event) =>
+                  setFieldValue("experienceType", event.target.value)
+                }
+                onBlur={() => touchField("experienceType")}
+              />
+            )}
           </StepFieldShell>
         </Step>
       </Stepper>
+    </div>
+  );
+}
+
+type ExperienceChipsProps = {
+  options: readonly ExperienceOption[];
+  value: string;
+  onChange: (value: string) => void;
+  theme: ImageSectionFormTheme;
+};
+
+function ExperienceChips({ options, value, onChange, theme }: ExperienceChipsProps) {
+  const isLightTheme = theme === "light";
+  return (
+    <div className={styles.experienceChips} role="group" aria-label="Tipo de experiencia">
+      {options.map((option) => {
+        const isSelected = value === option.value;
+        return (
+          <button
+            key={option.value}
+            type="button"
+            aria-pressed={isSelected}
+            onClick={() => onChange(isSelected ? "" : option.value)}
+            className={[
+              styles.experienceChip,
+              isLightTheme ? styles.experienceChipLight : styles.experienceChipDark,
+              isSelected ? styles.experienceChipSelected : "",
+            ]
+              .filter(Boolean)
+              .join(" ")}
+          >
+            {option.label}
+          </button>
+        );
+      })}
     </div>
   );
 }
@@ -635,8 +677,8 @@ function TravelMonthPicker({
 }: TravelMonthPickerProps) {
   const isLightTheme = theme === "light";
   const selectedValue = useMemo(() => {
-    const parsedMonth = parseMonthToCalendarDate(value);
-    return parsedMonth ? [parsedMonth] : [];
+    const parsed = parseDateToCalendarDate(value);
+    return parsed ? [parsed] : [];
   }, [value]);
 
   const controlClassName = [
@@ -732,7 +774,7 @@ function TravelMonthPicker({
       positioning={{ placement: "bottom-start" }}
       onValueChange={(details) => {
         const nextDate = details.value[0];
-        onChange(nextDate ? formatMonthValue(nextDate) : "");
+        onChange(nextDate ? formatDateValue(nextDate) : "");
       }}
     >
       <DatePicker.Control className={controlClassName}>
