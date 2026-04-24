@@ -134,16 +134,22 @@ export const yucatanPremiumLandingConfig: PremiumLandingConfig = {
         {
           image: "/images/peru/1-machu-pichu.webp",
           text: "Machu Picchu",
+                    experiences: "14 DIAS · ANIME · PARQUES TEMATICOS · TECNOLOGIA · CULTURA POP",
+
           wide: false,
         },
         {
           image: "/images/peru/1-gastronomia-autentica.webp",
           text: "Gastronomia autentica",
+                    experiences: "14 DIAS · ANIME · PARQUES TEMATICOS · TECNOLOGIA · CULTURA POP",
+
           wide: false,
         },
         {
           image: "/images/japon/1-alojamiento-de-lujo.webp",
           text: "Hospedaje de lujo",
+                    experiences: "14 DIAS · ANIME · PARQUES TEMATICOS · TECNOLOGIA · CULTURA POP",
+
           wide: false,
         },
       ],
