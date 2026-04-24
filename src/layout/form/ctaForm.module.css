@@ -1,6 +1,6 @@
-.section {
+﻿.section {
   width: 100%;
-  height: 100svh;
+  height: 100dvh;
   position: relative;
   overflow: hidden;
   background-image:
@@ -182,7 +182,7 @@
 
 @media (max-width: 900px) {
   .section {
-    height: 100svh;
+    height: 100dvh;
   }
 
   .formLayer {
@@ -192,7 +192,7 @@
 
   .formShell {
     width: min(620px, 100%);
-    max-height: calc(100svh - 1.5rem - env(safe-area-inset-bottom));
+    max-height: calc(100dvh - 1.5rem - env(safe-area-inset-bottom));
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
   }

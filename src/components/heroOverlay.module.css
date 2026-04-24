@@ -1,4 +1,4 @@
-.heroOverlay {
+﻿.heroOverlay {
   position: absolute;
   inset: 0;
   z-index: 3;
@@ -8,12 +8,12 @@
   /* ── Desktop ── */
   --desktop-geisha-height: min(94vh, 1040px);
   --desktop-geisha-height: min(
-    94svh,
+    94dvh,
     1040px
   ); /* Small viewport height for mobile stability */
   --desktop-samurai-height: min(88vh, 980px);
   --desktop-samurai-height: min(
-    88svh,
+    88dvh,
     980px
   ); /* Small viewport height for mobile stability */
   --desktop-overlay-scale: 1.13333;

@@ -1,8 +1,8 @@
-/* ── Layout principal ─────────────────────────────────────────────────── */
+﻿/* ── Layout principal ─────────────────────────────────────────────────── */
 .container {
   width: 100%;
   height: 100vh;
-  height: 100svh; /* Small viewport height for mobile stability */
+  height: 100dvh; /* Small viewport height for mobile stability */
   display: flex;
   flex-direction: row;
   position: relative;
@@ -324,7 +324,7 @@
   .premiumCard {
     width: 92%;
     max-width: 460px;
-    height: fit-content !important;
+    height: 350px !important;
   }
 
   .contentWrapper {
@@ -390,7 +390,7 @@
 @media (max-width: 430px) {
   .premiumCard {
     width: 94%;
-    height: clamp(320px, 62svh, 420px);
+    height: clamp(320px, 62dvh, 420px);
   }
 
   .contentWrapper {

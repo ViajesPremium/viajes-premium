@@ -1,8 +1,8 @@
-.interlude {
+﻿.interlude {
   position: relative;
   width: 100%;
   height: 100vh;
-  height: 100svh; /* Small viewport height for mobile stability */
+  height: 100dvh; /* Small viewport height for mobile stability */
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -23,7 +23,7 @@
   gap: clamp(0.25rem, 1.1vh, 0.6rem);
   gap: clamp(
     0.25rem,
-    1.1svh,
+    1.1dvh,
     0.6rem
   ); /* Small viewport height for mobile stability */
   opacity: 0.08;

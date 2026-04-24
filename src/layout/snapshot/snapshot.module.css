@@ -1,7 +1,7 @@
-.snapshot {
+﻿.snapshot {
   width: 100%;
   min-height: 100vh;
-  min-height: 100svh; /* Small viewport height for mobile stability */
+  min-height: 100dvh; /* Small viewport height for mobile stability */
   background-color: var(--bg);
   display: flex;
   justify-content: center;
@@ -148,7 +148,7 @@
 
 .bentoCardExperiences {
   font-family: var(--font-nohemi);
-  font-size: clamp(0.8rem, 1.5vw, 1rem);
+  font-size: clamp(1rem, 1.5vw, 1rem);
   font-weight: 300;
   color: var(--white);
   text-align: end;

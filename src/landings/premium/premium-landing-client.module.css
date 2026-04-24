@@ -1,4 +1,4 @@
-.main {
+﻿.main {
   position: relative;
   isolation: isolate;
   width: 100%;
@@ -19,7 +19,7 @@
   overflow: hidden;
   background: var(--black);
   margin-top: -100vh;
-  margin-top: -100svh;
+  margin-top: -100dvh;
 }
 
 .includesLayer {

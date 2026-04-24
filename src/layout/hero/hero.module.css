@@ -1,8 +1,8 @@
-.hero {
+﻿.hero {
   position: relative;
   width: 100%;
   height: 100vh;
-  height: 100svh; /* Small viewport height for mobile stability */
+  height: 100dvh; /* Small viewport height for mobile stability */
   overflow: hidden;
   isolation: isolate;
   background-color: rgb(247, 203, 203);
@@ -225,7 +225,7 @@
 @media (max-width: 768px) {
   .titleContainer {
     position: absolute;
-    top: 7svh;
+    top: 7dvh;
     left: 50%;
     transform: translateX(-50%);
     width: 94vw;
@@ -276,7 +276,7 @@
   .contentContainer {
     position: absolute;
     top: auto;
-    bottom: 5svh;
+    bottom: 5dvh;
     left: 50%;
     transform: translateX(-50%);
     width: 90vw;
@@ -311,7 +311,7 @@
 
 @media (max-width: 480px) {
   .titleContainer {
-    top: 10svh;
+    top: 10dvh;
   }
 
   .ctaRow {

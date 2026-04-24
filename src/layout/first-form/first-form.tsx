@@ -56,9 +56,14 @@ export default function ImgSection() {
               className={styles.sectionTitle}
               highlights={titleHighlights}
             />
-            <p className={styles.sectionSubtitle}>{firstForm.sectionSubtitle}</p>
+            <p className={styles.sectionSubtitle}>
+              {firstForm.sectionSubtitle}
+            </p>
           </div>
-          <ImageSectionForm config={firstForm.formConfig} idPrefix="first-form" />
+          <ImageSectionForm
+            config={firstForm.formConfig}
+            idPrefix="first-form"
+          />
 
           <div className={styles.mobileGallery} aria-hidden="true">
             <div className={styles.mobileGalleryItem}>
