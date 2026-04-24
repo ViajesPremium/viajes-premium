@@ -441,18 +441,18 @@ export const japonPremiumLandingConfig: PremiumLandingConfig = {
     interlude: {
       srHeading: "Mensaje del equipo Japon Premium",
       rows: [
-        "japon premium experience",
-        "curaduria atencion precision",
-        "momentos que si importan",
+        "japon premium",
+        "momentos inolvidables",
+        "reales conexiones",
       ],
-      role: "Directora Comercial",
-      name: "Karina Sanchez",
+      role: "Directora Comercial - Japón PREMIUM",
+      name: "Karina Sánchez",
       quote:
-        "Nuestra mision es disenar experiencias personalizadas para que conectes emocionalmente con tu viaje. Creemos que viajar va mas alla de acumular destinos; se trata de crear vinculos reales con cada lugar.",
+        "Nuestra misión es diseñar experiencias personalizadas para que conectes emocionalmente con tu viaje. Creemos que viajar va más allá de acumular destinos; se trata de crear vínculos reales con cada lugar.",
       quoteHighlight:
-        "viajar va mas alla de acumular destinos; se trata de crear vinculos reales con cada lugar.",
+        "viajar va más allá de acumular destinos; se trata de crear vínculos reales con cada lugar.",
       image: {
-        src: "/images/japon/karinaSanchezJapon.webp",
+        src: "/images/japon/karina.webp",
         alt: "Asesora de viaje Japon Premium",
       },
     },
@@ -506,25 +506,26 @@ export const japonPremiumLandingConfig: PremiumLandingConfig = {
       },
       logos: [
         {
-          src: "/logos/japon-grande-logo.png",
+          src: "/images/japon/marquee-logos/22.png",
           alt: "Japon Premium",
           width: 420,
           height: 90,
         },
         {
-          src: "/logos/japon-grande-logo.png",
+          src: "/images/japon/marquee-logos/23.png",
           alt: "JP Logo",
           width: 280,
           height: 90,
         },
         {
-          src: "/logos/japon-grande-logo.png",
+          src: "/images/japon/marquee-logos/24.png",
+
           alt: "Japon Grande",
           width: 540,
           height: 120,
         },
         {
-          src: "/logos/japon-grande-logo.png",
+          src: "/images/japon/marquee-logos/25.png",
           alt: "Logo Japon",
           width: 380,
           height: 110,
@@ -542,21 +543,21 @@ export const japonPremiumLandingConfig: PremiumLandingConfig = {
       contactPhoneDisplay: "+52 55 1234 5678",
       contactPhoneLink: "+525512345678",
       pageLinks: [
-        { label: "INICIO", href: "#inicio" },
-        { label: "HIGHLIGHTS", href: "#highlights" },
-        { label: "ITINERARIOS", href: "#itinerarios" },
-        { label: "INCLUYE", href: "#includes" },
-        { label: "TESTIMONIOS", href: "#testimonials" },
+        { label: "Inicio", href: "#inicio" },
+        { label: "Highlights", href: "#highlights" },
+        { label: "Itinerarios", href: "#itinerarios" },
+        { label: "Incluye", href: "#includes" },
+        { label: "Testimonios", href: "#testimonials" },
         { label: "FAQS", href: "#faqs" },
-        { label: "CONTACTO", href: "#form" },
+        { label: "Contacto", href: "#form" },
       ],
       socialLinks: [
-        { label: "TIKTOK", href: "#" },
-        { label: "INSTAGRAM", href: "#" },
-        { label: "YOUTUBE", href: "#" },
+        { label: "TikTok", href: "#" },
+        { label: "Instagram", href: "#" },
+        { label: "Youtube", href: "#" },
       ],
       copyrightText:
-        "© 2026 Viaja a Japon Premium. Todos los derechos reservados.",
+        "Todas las marcas y servicios que se ofrecen son propiedad de Japón PREMIUM® Consulte Términos y Condiciones en el Contrato de Adhesión ante PROFECO con número 7735-2015 & 7180-2015",
       backToTopLabel: "Volver al inicio",
       legalLinks: [
         { label: "PRIVACIDAD", href: "#" },

@@ -1,8 +1,7 @@
 ﻿.interlude {
   position: relative;
   width: 100%;
-  height: 100vh;
-  height: 100dvh; /* Small viewport height for mobile stability */
+  height: 100dvh;
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -44,9 +43,9 @@
   will-change: transform;
   font-family: var(--font-thunder-light), sans-serif;
   text-transform: uppercase;
-  font-weight: 500;
-  font-size: 20rem;
-  line-height: 1.1;
+  font-weight: 400;
+  font-size: 15rem;
+  line-height: 1.2;
 }
 
 .chunk {
@@ -110,14 +109,11 @@
   font-family: var(--font-nohemi), sans-serif;
   font-size: clamp(0.5rem, 0.9vw, 0.78rem);
   color: var(--yellow-japon);
-  border-bottom: 1px solid var(--yellow-japon);
-  border-right: 1px solid var(--yellow-japon);
   padding: 3px 5px;
   padding-top: 5px;
   width: fit-content;
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  margin-bottom: 8px;
   font-weight: 400;
   font-style: italic;
 }
@@ -136,20 +132,13 @@
 
 .subtitle {
   margin: 0;
-  font-family: var(--font-nohemi), sans-serif;
+  font-family: var(--font-bigcaslon), sans-serif;
   color: var(--white);
   font-weight: 200;
   letter-spacing: 1px;
   line-height: 1.4;
   font-size: clamp(0.7rem, 1.1vw, 1.1rem);
-}
-
-.textHighlight {
-  font-family: var(--font-bigcaslon), sans-serif;
   font-style: italic;
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 4px;
 }
 
 /* ══════════════════════════════════════════════

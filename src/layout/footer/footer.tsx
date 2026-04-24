@@ -7,8 +7,6 @@ import { scrollToSection } from "@/lib/scroll-to-section";
 import styles from "./footer.module.css";
 import { usePremiumLandingConfig } from "@/landings/premium/context";
 
-const easeOutQuint = (t: number) => 1 - Math.pow(1 - t, 5);
-
 export default function Footer() {
   const {
     sections: { footer },
@@ -31,13 +29,14 @@ export default function Footer() {
   );
 
   const handleBackToTop = useCallback(() => {
-    const lenis = window.__lenis;
+    const lenis = (window as unknown as { __lenis?: { scrollTo: (target: number, opts: object) => void } }).__lenis;
     if (lenis) {
-      lenis.scrollTo(0, { duration: 1.5, easing: easeOutQuint });
+      lenis.scrollTo(0, { duration: 1.5 });
       return;
     }
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
+
 
   return (
     <footer className={styles.footer}>
@@ -138,36 +137,40 @@ export default function Footer() {
               </nav>
             </div>
 
-            <div className={styles.contactCard}>
-              <p className={styles.contactLabel}>CONTACTO DIRECTO</p>
-              <a
-                href={`mailto:${footer.contactEmail}`}
-                className={styles.contactLink}
-              >
-                {footer.contactEmail}
-              </a>
-              <a
-                href={`tel:${footer.contactPhoneLink}`}
-                className={styles.contactLink}
-              >
-                {footer.contactPhoneDisplay}
-              </a>
+            <div className={styles.navSection}>
+              <span className={styles.sectionLabel}>CONTACTO</span>
+              <nav className={styles.navLinks}>
+                <a
+                  href={`mailto:${footer.contactEmail}`}
+                  className={styles.navLink}
+                >
+                  {footer.contactEmail}
+                </a>
+                <a
+                  href={`tel:${footer.contactPhoneLink}`}
+                  className={styles.navLink}
+                >
+                  {footer.contactPhoneDisplay}
+                </a>
+              </nav>
             </div>
+
+            <button
+              type="button"
+              onClick={handleBackToTop}
+              className={styles.backToTopIcon}
+              aria-label="Volver al inicio"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M12 19V5M5 12l7-7 7 7" />
+              </svg>
+            </button>
           </div>
         </div>
       </div>
 
       <div className={styles.bottomBar}>
         <p className={styles.copy}>{footer.copyrightText}</p>
-
-        <button
-          type="button"
-          onClick={handleBackToTop}
-          className={styles.backToTopBtn}
-          aria-label={footer.backToTopLabel}
-        >
-          {footer.backToTopLabel}
-        </button>
 
         <div className={styles.legalLinks}>
           {footer.legalLinks.map((legalLink) => (

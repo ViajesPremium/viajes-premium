@@ -47,10 +47,10 @@
   pointer-events: none;
 }
 
-/* Logo: centrado vertical + horizontal */
+/* Logo: centrado horizontal, levemente por encima del centro */
 .logoLayer {
   position: absolute;
-  top: 50%;
+  top: 32%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: min(58vw, 760px);
@@ -75,8 +75,8 @@
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: min(38vw, 560px);
-  height: 88%;
+  width: min(50vw, 720px);
+  height: 110%;
   z-index: 2;
 }
 
@@ -161,8 +161,8 @@
   color: var(--white);
   text-decoration: none;
   font-size: clamp(1rem, 2.2vw, 2.5rem);
-  font-weight: 900;
-  text-transform: uppercase;
+  font-weight: 400;
+  font-family: var(--font-nohemi);
   line-height: 1.08;
   transition:
     color 0.22s ease,
@@ -181,19 +181,20 @@
   gap: 0.45rem;
   padding: 0.6rem;
   border-radius: var(--radius-sm);
-  max-width: 350px;
+  max-width: 480px;
 }
 
 .mapAddress {
   margin: 0;
-  font-size: 0.62rem;
+  font-size: 0.82rem;
+  text-align: center;
   line-height: 1.5;
   letter-spacing: 0.02em;
 }
 
 .mapFrameWrap {
   width: 100%;
-  height: clamp(90px, 9.5vw, 130px);
+  height: clamp(160px, 16vw, 240px);
   border-radius: var(--radius-sm);
   overflow: hidden;
 }
@@ -229,37 +230,33 @@
   border-color: rgba(255, 255, 255, 0.42);
 }
 
-/* ── Contact card ── */
-.contactCard {
+/* ── Back to top icon button ── */
+.backToTopIcon {
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 0.3rem;
-  padding: 0.6rem 0.72rem;
-  border-radius: var(--radius-sm);
-  max-width: 300px;
-  width: 100%;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.28);
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+  cursor: pointer;
+  transition:
+    background 0.22s ease,
+    border-color 0.22s ease,
+    transform 0.22s ease;
 }
 
-.contactLabel {
-  margin: 0;
-  font-size: 0.64rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.6);
+.backToTopIcon svg {
+  width: 20px;
+  height: 20px;
 }
 
-.contactLink {
-  color: rgba(255, 255, 255, 0.9);
-  text-decoration: none;
-  font-size: 0.88rem;
-  letter-spacing: 0.01em;
-  transition: color 0.22s ease;
-}
-
-.contactLink:hover {
-  color: #db2f21;
+.backToTopIcon:hover {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-2px);
 }
 
 /* ══════════════════════════════════════════════
@@ -279,34 +276,9 @@
 .copy {
   margin: 0;
   flex: 1;
-  font-size: 0.68rem;
+  font-size: 0.9rem;
   color: rgba(255, 255, 255, 0.48);
   white-space: nowrap;
-}
-
-.backToTopBtn {
-  flex-shrink: 0;
-  border: 1px solid rgba(255, 255, 255, 0.32);
-  background: rgba(255, 255, 255, 0.05);
-  color: #fff;
-  font-family: var(--font-nohemi), sans-serif;
-  font-size: 0.7rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  padding: 0.46rem 1rem;
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  transition:
-    background 0.22s ease,
-    border-color 0.22s ease,
-    transform 0.22s ease;
-}
-
-.backToTopBtn:hover {
-  background: rgba(255, 255, 255, 0.13);
-  border-color: rgba(255, 255, 255, 0.54);
-  transform: translateY(-1px);
 }
 
 .legalLinks {
@@ -342,8 +314,8 @@
   }
 
   .samuraiLayer {
-    width: min(44vw, 480px);
-    height: 84%;
+    width: min(52vw, 600px);
+    height: 104%;
   }
 
   .contentGrid {
@@ -407,7 +379,7 @@
   }
 
   /* Nav de redes → columna 2, fila 1 */
-  .colRight > .navSection {
+  .colRight > .navSection:first-child {
     grid-column: 2;
     grid-row: 1;
   }
@@ -418,11 +390,10 @@
     grid-row: 2;
   }
 
-  /* Contacto: ancho completo, fila 3 */
-  .contactCard {
+  /* Contacto nav: ancho completo, fila 3 */
+  .colRight > .navSection:last-child {
     grid-column: 1 / -1;
     grid-row: 3;
-    align-items: flex-start;
   }
 
   .sectionLabel {
@@ -445,27 +416,12 @@
   }
 
   .mapFrameWrap {
-    height: 86px;
+    height: 160px;
   }
 
   .mapButton {
     font-size: 0.58rem;
     min-height: 28px;
-  }
-
-  .contactCard {
-    max-width: none;
-    width: 100%;
-    margin-left: 0;
-    padding: 0.5rem;
-  }
-
-  .contactLabel {
-    font-size: 0.58rem;
-  }
-
-  .contactLink {
-    font-size: 0.78rem;
   }
 
   /* ── Visual hero: ÚLTIMO (order 1) — samurai grande al fondo ── */
@@ -508,20 +464,12 @@
   }
 
   .copy {
-    order: 3;
     text-align: center;
     font-size: 0.6rem;
     white-space: normal;
   }
 
-  .backToTopBtn {
-    order: 1;
-    font-size: 0.64rem;
-    padding: 0.42rem 0.9rem;
-  }
-
   .legalLinks {
-    order: 2;
     flex: none;
     justify-content: center;
     gap: 0.9rem;
@@ -556,6 +504,6 @@
   }
 
   .mapFrameWrap {
-    height: 76px;
+    height: 140px;
   }
 }

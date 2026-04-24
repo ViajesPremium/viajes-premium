@@ -3,8 +3,8 @@
   overflow: hidden;
   display: flex;
   align-items: center;
-  --logoloop-gap: 32px;
-  --logoloop-logoHeight: 28px;
+  --logoloop-gap: 6rem;
+  --logoloop-logoHeight: 39px;
   --logoloop-fadeColorAuto: #ffffff;
 }
 

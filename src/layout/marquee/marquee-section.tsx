@@ -29,7 +29,7 @@ export default function MarqueeSection() {
             height={marquee.introLeftLogo.height}
             className={styles.logoIntroImage}
           />
-          <span>x</span>
+          <span style={{ fontSize: "30px" }}>x</span>
           <Image
             src={marquee.introRightLogo.src}
             alt={marquee.introRightLogo.alt}
@@ -45,8 +45,8 @@ export default function MarqueeSection() {
             logos={logoItems}
             speed={58}
             direction="left"
-            logoHeight={72}
-            gap={42}
+            logoHeight={60}
+            gap={90}
             fadeOutColor="var(--bg)"
             fadeOut
             pauseOnHover
