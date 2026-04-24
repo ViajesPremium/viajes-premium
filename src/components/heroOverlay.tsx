@@ -95,7 +95,9 @@ const MOBILE_CONFIG: EffectConfig = {
 const GHOST_SVG_PATH =
   "M 50 5 C 22 10, 22 16, 50 21 C 78 26, 78 32, 50 37 C 22 42, 22 48, 50 53 C 78 58, 78 64, 50 69 C 22 74, 22 80, 50 85 C 78 90, 78 95, 50 99";
 
-const SAMURAI_IMG = "/images/japon/hero/samuraiHero.webp";
+const DEFAULT_BASE_IMAGE = "/images/japon/hero/geishaHero.webp";
+const DEFAULT_SAMURAI_IMAGE = "/images/japon/hero/samuraiHero.webp";
+const DEFAULT_BASE_ALT = "Hero Base";
 
 // ====================================================================
 // SHADERS
@@ -338,7 +340,18 @@ const clamp01 = (value: number) => Math.min(Math.max(value, 0), 1);
 const MOBILE_RENDER_SCALE = 0.42;
 const MOBILE_TARGET_FPS = 24;
 
-export default function HeroOverlay() {
+type HeroOverlayProps = {
+  baseImage?: string;
+  samuraiImage?: string;
+  baseAlt?: string;
+  samuraiAlt?: string;
+};
+
+export default function HeroOverlay({
+  baseImage = DEFAULT_BASE_IMAGE,
+  samuraiImage = DEFAULT_SAMURAI_IMAGE,
+  baseAlt = DEFAULT_BASE_ALT,
+}: HeroOverlayProps) {
   const rootRef = useRef<HTMLDivElement | null>(null);
   const canvasContainerRef = useRef<HTMLDivElement | null>(null);
   const samuraiPosRef = useRef<HTMLDivElement | null>(null);
@@ -454,7 +467,7 @@ export default function HeroOverlay() {
     let lastRenderTimestamp = 0;
     const loader = new THREE.TextureLoader();
 
-    loader.load(SAMURAI_IMG, (texture: THREE.Texture) => {
+    loader.load(samuraiImage, (texture: THREE.Texture) => {
       if (disposed) return;
 
       texture.colorSpace = THREE.SRGBColorSpace;
@@ -765,7 +778,7 @@ export default function HeroOverlay() {
       rendererRef.current?.dispose();
       if (fullContainer) fullContainer.innerHTML = "";
     };
-  }, [shouldBootWebGL]);
+  }, [samuraiImage, shouldBootWebGL]);
 
   return (
     <div
@@ -786,11 +799,12 @@ export default function HeroOverlay() {
       </svg>
 
       <Image
-        src="/images/japon/hero/geishaHero.webp"
-        alt="Hero Base"
+        src={baseImage}
+        alt={baseAlt}
         width={5000}
         height={5000}
         sizes="(max-width: 768px) 210vw, 62vw"
+        loading="eager"
         quality={60}
         className={styles.geishaHero}
       />

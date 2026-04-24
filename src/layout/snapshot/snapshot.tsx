@@ -5,8 +5,13 @@ import styles from "./snapshot.module.css";
 import { BlurredStagger } from "@/components/ui/blurred-stagger-text/blurred-stagger-text";
 import BentoGrid from "./BentoGrid";
 import Badge from "@/components/ui/badge/badge";
+import { usePremiumLandingConfig } from "@/landings/premium/context";
 
 export default function Snapshot() {
+  const {
+    sections: { snapshot },
+  } = usePremiumLandingConfig();
+
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -46,10 +51,7 @@ export default function Snapshot() {
         return createPinnedSnapshot(`top+=${pinDelay} top`);
       });
 
-      mm.add("(max-width: 768px)", () => {
-        // Mobile starts pinning only after reaching the visual end of Snapshot.
-        return createPinnedSnapshot("bottom bottom");
-      });
+      mm.add("(max-width: 768px)", () => createPinnedSnapshot("bottom bottom"));
 
       cleanup = () => mm.revert();
     };
@@ -62,22 +64,27 @@ export default function Snapshot() {
     };
   }, []);
 
+  const titleHighlights = snapshot.titleHighlightWords.map((word) => ({
+    word,
+    useGradient: true,
+  }));
+
   return (
     <section ref={sectionRef} className={styles.snapshot}>
-      <h2 className="srOnly">Snapshot de Japón Premium</h2>
+      <h2 className="srOnly">{snapshot.srHeading}</h2>
       <div className={styles.postersWrapper} />
       <div className={styles.snapshotContent}>
-        <Badge text={`Snapshot`} variant="dark" align="center" />
+        <Badge text={snapshot.badgeText} variant="dark" align="center" />
         <BlurredStagger
-          text={`Más de 21 años diseñando experiencias premium.`}
+          text={snapshot.titleText}
           className={styles.trustStrip}
-          highlights={[
-            { word: "21", useGradient: true },
-            { word: `años`, useGradient: true },
-            { word: "premium", useGradient: true },
-          ]}
+          highlights={titleHighlights}
         />
-        <BentoGrid />
+        <BentoGrid
+          cards={snapshot.cards}
+          buttonLabel={snapshot.cardButtonLabel}
+          buttonTarget={snapshot.cardButtonTarget}
+        />
       </div>
     </section>
   );

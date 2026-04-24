@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import SiteShell from "@/app/SiteShell";
 import "./globals.css";
 
 const baseUrl =
@@ -30,7 +31,7 @@ export default function RootLayout({
         />
       </head>
       <body className="flex min-h-screen flex-col">
-        {children}
+        <SiteShell>{children}</SiteShell>
       </body>
     </html>
   );

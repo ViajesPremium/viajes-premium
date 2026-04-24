@@ -1,11 +1,12 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { type CSSProperties, useCallback, useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import styles from "./hero.module.css";
 import HeroOverlayLazy from "@/components/HeroOverlayLazy";
 import { Button } from "@/components/ui/button/button";
 import { scrollToSection } from "@/lib/scroll-to-section";
+import { usePremiumLandingConfig } from "@/landings/premium/context";
 
 const TextPressure = dynamic(
   () => import("@/components/ui/text-pressure/textPressure"),
@@ -72,13 +73,34 @@ function PressureWord({
 }
 
 export default function Hero() {
+  const {
+    sections: { hero },
+  } = usePremiumLandingConfig();
+
+  const mobileTitle = hero.mobileTitle ?? {
+    line1Lead: hero.title.line1Lead,
+    line1Focus: hero.title.line1Focus,
+    line2Lead: hero.title.line2Lead,
+    line2Focus: hero.title.line2Focus,
+  };
+
   const [enablePressureTitle, setEnablePressureTitle] = useState(false);
-  const handleGoToForm = useCallback(() => {
-    scrollToSection("#form", { duration: 1.15 });
+
+  const goToTarget = useCallback((target: string) => {
+    if (target.startsWith("#")) {
+      scrollToSection(target, { duration: 1.15 });
+      return;
+    }
+    window.location.href = target;
   }, []);
-  const handleGoToItineraries = useCallback(() => {
-    scrollToSection("#itinerarios", { duration: 1.15 });
-  }, []);
+
+  const handleGoToPrimary = useCallback(() => {
+    goToTarget(hero.ctaPrimary.target);
+  }, [goToTarget, hero.ctaPrimary.target]);
+
+  const handleGoToSecondary = useCallback(() => {
+    goToTarget(hero.ctaSecondary.target);
+  }, [goToTarget, hero.ctaSecondary.target]);
 
   useEffect(() => {
     let cancelled = false;
@@ -136,19 +158,21 @@ export default function Hero() {
     };
   }, []);
 
-  return (
-    <div className={styles.hero}>
-      <div className={styles.titleContainer}>
-        {/* EL H1 PARA GOOGLE: Limpio, perfecto y sin duplicados */}
-        <h1 className={styles.srOnly}>Viaja a Japón desde México</h1>
+  const heroStyle = {
+    "--hero-bg-image": `url("${hero.backgroundImage}")`,
+  } as CSSProperties;
 
-        {/* EL CONTENEDOR VISUAL: Cambiado a <div> y oculto para rastreadores */}
+  return (
+    <div className={styles.hero} style={heroStyle}>
+      <div className={styles.titleContainer}>
+        <h1 className={styles.srOnly}>{hero.seoHeading}</h1>
+
         <div className={styles.h1} aria-hidden="true">
           <span className={`${styles.line} ${styles.desktopLine}`}>
             <span className={styles.wordSlot}>
               <PressureWord
                 pressureEnabled={enablePressureTitle}
-                text="Viaja a"
+                text={hero.title.line1Lead}
                 fontWeight={100}
                 italic
                 weightFrom={100}
@@ -160,7 +184,7 @@ export default function Hero() {
             <span className={styles.wordSlot}>
               <PressureWord
                 pressureEnabled={enablePressureTitle}
-                text={`Jap\u00f3n`}
+                text={hero.title.line1Focus}
                 fontWeight={100}
                 italic={false}
                 weightFrom={100}
@@ -175,7 +199,7 @@ export default function Hero() {
             <span className={styles.wordSlot}>
               <PressureWord
                 pressureEnabled={enablePressureTitle}
-                text="desde"
+                text={hero.title.line2Lead}
                 fontWeight={900}
                 italic={false}
                 weightFrom={500}
@@ -187,7 +211,7 @@ export default function Hero() {
             <span className={styles.wordSlot}>
               <PressureWord
                 pressureEnabled={enablePressureTitle}
-                text={`M\u00e9xico`}
+                text={hero.title.line2Focus}
                 fontWeight={900}
                 italic={false}
                 weightFrom={500}
@@ -198,44 +222,38 @@ export default function Hero() {
             </span>
           </span>
 
-          {/* Tu versión móvil se mantiene intacta aquí adentro */}
           <span className={styles.mobileLine}>
-            <span className={styles.mobileSmall}>Viaja a</span>
-            <span className={styles.mobileBig}>{`Jap\u00f3n`}</span>
+            <span className={styles.mobileSmall}>{mobileTitle.line1Lead}</span>
+            <span className={styles.mobileBig}>{mobileTitle.line1Focus}</span>
           </span>
           <span className={styles.mobileLine}>
-            <span className={styles.mobileSmall}>Desde</span>
-            <span className={styles.mobileBig}>{`M\u00e9xico`}</span>
+            <span className={styles.mobileSmall}>{mobileTitle.line2Lead}</span>
+            <span className={styles.mobileBig}>{mobileTitle.line2Focus}</span>
           </span>
         </div>
       </div>
 
       <div className={styles.contentContainer}>
         <div className={styles.description}>
-          <p>
-            <span className={styles.highlightedText}>Eleva tu vida</span> con
-            una forma más cuidada de vivir Japón.
-          </p>
-          <p>
-            <span className={styles.highlightedText}>
-              Diseñamos experiencias
-            </span>{" "}
-            para quienes valoran atención personal, criterio y una forma más
-            cuidada de vivir Japón.
-          </p>
+          {hero.descriptionLines.map((line, index) => (
+            <p key={`${line.highlight}-${index}`}>
+              <span className={styles.highlightedText}>{line.highlight}</span>{" "}
+              {line.text}
+            </p>
+          ))}
         </div>
 
         <div className={styles.ctaRow}>
-          <Button type="button" variant="primary" onClick={handleGoToForm}>
-            Solicita tu propuesta
+          <Button type="button" variant="primary" onClick={handleGoToPrimary}>
+            {hero.ctaPrimary.label}
           </Button>
           <div className={styles.cta2}>
             <Button
               type="button"
               variant="secondary"
-              onClick={handleGoToItineraries}
+              onClick={handleGoToSecondary}
             >
-              Ver itinerarios
+              {hero.ctaSecondary.label}
             </Button>
           </div>
         </div>
@@ -243,7 +261,7 @@ export default function Hero() {
 
       <div className={styles.circle} aria-hidden="true" />
 
-      <HeroOverlayLazy />
+      <HeroOverlayLazy overlayImages={hero.heroOverlay} />
     </div>
   );
 }

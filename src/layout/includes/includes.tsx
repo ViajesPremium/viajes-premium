@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useCallback, useRef, type TouchEvent } from "react";
 import { useGSAP } from "@gsap/react";
@@ -10,60 +10,8 @@ import { Button } from "@/components/ui/button/button";
 import { scrollToSection } from "@/lib/scroll-to-section";
 import styles from "./includes.module.css";
 import { BlurredStagger } from "@/components/ui/blurred-stagger-text/blurred-stagger-text";
+import { usePremiumLandingConfig } from "@/landings/premium/context";
 
-type IncludeItem = {
-  id: string;
-  label: string;
-  title: string;
-  description: string;
-  image: string;
-};
-
-const INCLUDE_ITEMS: IncludeItem[] = [
-  {
-    id: "stays",
-    label: "I",
-    title: "Estancias con carácter",
-    description:
-      "Espacios cuidadosamente seleccionados por ubicación, servicio y la experiencia que aportan al viaje.",
-    image: "/images/japon/6-estancias-con-caracter.webp",
-  },
-  {
-    id: "transport",
-    label: "II",
-    title: "Traslados mejor coordinados",
-    description:
-      "Shinkansen, traslados privados y tiempos pensados para que el viaje fluya con más orden y comodidad.",
-    image: "/images/japon/6-traslados-mejor-coordinados.webp",
-  },
-  {
-    id: "culture",
-    label: "III",
-    title: "Experiencias culturales curadas",
-    description:
-      "Templos, barrios históricos y actividades elegidas para conectar con el Japón más auténtico.",
-    image: "/images/japon/6-experiencias-culturales-curadas.webp",
-  },
-  {
-    id: "gastronomy",
-    label: "IV",
-    title: "Escenas gastronómicas seleccionadas",
-    description:
-      "Reservas y momentos en la mesa pensados para descubrir Japón con más detalle y autenticidad.",
-    image: "/images/japon/6-escenas-gastronomicas-seleccionadas.webp",
-  },
-  {
-    id: "support",
-    label: "V",
-    title: "Acompañamiento en cada etapa",
-    description:
-      "Atención en español antes y durante el viaje para acompañarle con claridad y resolver cada detalle.",
-    image: "/images/japon/6-acompañamiento-en-cada-etapa.webp",
-  },
-];
-
-// Ajuste de ritmo horizontal (solo codigo, no UI):
-// - horizontalFactor: mayor valor = cards avanzan mas lento
 const INCLUDES_SCROLL_TUNING = {
   horizontalFactor: 3,
   pinAnticipation: 0.72,
@@ -71,6 +19,11 @@ const INCLUDES_SCROLL_TUNING = {
 } as const;
 
 export default function Includes() {
+  const {
+    sections: { includes },
+  } = usePremiumLandingConfig();
+
+  const includeItems = includes.items;
   const sectionRef = useRef<HTMLElement>(null);
   const pinRef = useRef<HTMLDivElement>(null);
   const viewportRef = useRef<HTMLDivElement>(null);
@@ -104,18 +57,23 @@ export default function Includes() {
       const viewport = viewportRef.current;
       const step = getCardStep();
       if (!viewport || step <= 0) return;
-      const maxIndex = Math.max(INCLUDE_ITEMS.length - 1, 0);
+      const maxIndex = Math.max(includeItems.length - 1, 0);
       const clampedIndex = Math.max(0, Math.min(index, maxIndex));
       viewport.scrollTo({
         left: clampedIndex * step,
         behavior,
       });
     },
-    [getCardStep],
+    [getCardStep, includeItems.length],
   );
-  const handleGoToForm = useCallback(() => {
-    scrollToSection("#form", { duration: 1.15 });
-  }, []);
+
+  const handleGoToTarget = useCallback(() => {
+    if (includes.cta.target.startsWith("#")) {
+      scrollToSection(includes.cta.target, { duration: 1.15 });
+      return;
+    }
+    window.location.href = includes.cta.target;
+  }, [includes.cta.target]);
 
   const scrollCards = useCallback(
     (direction: number) => {
@@ -190,7 +148,6 @@ export default function Includes() {
       const mm = gsap.matchMedia();
 
       mm.add("(max-width: 768px)", () => {
-        // Mobile: sin pin ni desplazamiento horizontal.
         gsap.set(track, { clearProps: "transform" });
         gsap.set(progressFill, { clearProps: "transform" });
       });
@@ -198,15 +155,11 @@ export default function Includes() {
       mm.add("(min-width: 769px)", () => {
         gsap.set(progressFill, { scaleX: 0, transformOrigin: "left center" });
 
-        // Debe calcularse con el ancho visible del carrusel (viewport),
-        // no con pinLayer, para que la ultima card llegue completa.
         const getShift = () =>
           Math.max(track.scrollWidth - viewport.clientWidth, 0);
         const getEndDistance = () =>
           getShift() * INCLUDES_SCROLL_TUNING.horizontalFactor;
 
-        // Timeline de una sola fase: solo desplazamiento horizontal.
-        // Se elimina la pausa final para liberar el pin en cuanto termina.
         const tl = gsap.timeline();
         tl.to(track, { x: () => -getShift(), ease: "none", duration: 1 }, 0);
         tl.to(progressFill, { scaleX: 1, ease: "none", duration: 1 }, 0);
@@ -222,7 +175,6 @@ export default function Includes() {
           anticipatePin: INCLUDES_SCROLL_TUNING.pinAnticipation,
           invalidateOnRefresh: true,
           onRefresh: () => {
-            // Keep Lenis limit in sync after pin spacer is inserted/resized
             window.__lenis?.resize();
           },
         });
@@ -242,33 +194,20 @@ export default function Includes() {
 
   return (
     <section ref={sectionRef} className={styles.includes}>
-      <h2 className="srOnly">Lo esencial de la experiencia premium</h2>
+      <h2 className="srOnly">{includes.srHeading}</h2>
       <div ref={pinRef} className={styles.pinLayer}>
-        <Badge text="LO ESCENCIAL" align="center" />
+        <Badge text={includes.badgeText} align="center" />
 
         <header className={styles.header}>
           <div className={styles.headerLeft}>
             <BlurredStagger
-              text="Lo que da forma a tu experiencia premium"
+              text={includes.titleText}
               className={styles.title}
-              highlights={[
-                {
-                  word: "premium",
-                  useGradient: true,
-                  gradientColors: ["#BF953F", "#FCF6BA", "#B38728"],
-                },
-                {
-                  word: "forma",
-                  useGradient: true,
-                  gradientColors: ["#BF953F", "#FCF6BA", "#B38728"],
-                },
-
-                {
-                  word: "da",
-                  useGradient: true,
-                  gradientColors: ["#BF953F", "#FCF6BA", "#B38728"],
-                },
-              ]}
+              highlights={includes.titleHighlightWords.map((word) => ({
+                word,
+                useGradient: true,
+                gradientColors: ["#BF953F", "#FCF6BA", "#B38728"],
+              }))}
             />
           </div>
 
@@ -276,9 +215,9 @@ export default function Includes() {
             variant="primary"
             className={styles.headerButton}
             type="button"
-            onClick={handleGoToForm}
+            onClick={handleGoToTarget}
           >
-            Solicita tu propuesta
+            {includes.cta.label}
           </Button>
         </header>
 
@@ -286,7 +225,7 @@ export default function Includes() {
           <button
             type="button"
             className={`${styles.carouselArrow} ${styles.carouselArrowLeft}`}
-            aria-label="Anterior"
+            aria-label={includes.previousButtonAriaLabel}
             onClick={() => scrollCards(-1)}
           >
             <span aria-hidden="true">‹</span>
@@ -302,7 +241,7 @@ export default function Includes() {
             onTouchCancel={handleTouchCancel}
           >
             <div ref={trackRef} className={styles.track}>
-              {INCLUDE_ITEMS.map((item) => (
+              {includeItems.map((item) => (
                 <article key={item.id} className={styles.card}>
                   <div className={styles.cardMedia}>
                     <Image
@@ -317,7 +256,9 @@ export default function Includes() {
                   <div className={styles.cardBody}>
                     <div className={styles.cardMeta}>
                       <span className={styles.cardIndex}>{item.label}</span>
-                      <span className={styles.cardChip}>Integramos</span>
+                      <span className={styles.cardChip}>
+                        {includes.cardChipLabel}
+                      </span>
                     </div>
                     <h3 className={styles.cardTitle}>{item.title}</h3>
                     <p className={styles.cardDescription}>{item.description}</p>
@@ -330,12 +271,14 @@ export default function Includes() {
           <button
             type="button"
             className={`${styles.carouselArrow} ${styles.carouselArrowRight}`}
-            aria-label="Siguiente"
+            aria-label={includes.nextButtonAriaLabel}
             onClick={() => scrollCards(1)}
           >
             <span aria-hidden="true">›</span>
           </button>
         </div>
+
+        <span className={styles.desliza}>Desliza para más →</span>
 
         <div className={styles.progressWrap} aria-hidden="true">
           <span className={styles.progressTrack}>

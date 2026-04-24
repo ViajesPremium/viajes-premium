@@ -57,6 +57,23 @@
   color: transparent;
 }
 
+.animated-gradient-text.allow-wrap {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.animated-gradient-text.allow-wrap .text-content {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
 /* ==========================================================================
    NUEVAS ANIMACIONES NATIVAS OPTIMIZADAS
    ========================================================================== */

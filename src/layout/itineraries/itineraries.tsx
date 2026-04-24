@@ -10,6 +10,7 @@ import GradientText from "@/components/ui/gradient-text/gradient-text";
 import { BlurredStagger } from "@/components/ui/blurred-stagger-text/blurred-stagger-text";
 import { Button } from "@/components/ui/button/button";
 import { scrollToSection } from "@/lib/scroll-to-section";
+import { usePremiumLandingConfig } from "@/landings/premium/context";
 
 const toRoman = (value: number) => {
   const numerals: Array<[number, string]> = [
@@ -41,42 +42,6 @@ const toRoman = (value: number) => {
   return output;
 };
 
-const items = [
-  {
-    id: 1,
-    day: "14 DÍAS · ESPIRITUALIDAD · TRADICIÓN · BIENESTAR · CULTURA",
-    title: "Alma de Japón",
-    description:
-      "Un recorrido por el Japón más espiritual y profundo: templos milenarios, rutas sagradas, ryokans, onsen y experiencias que transforman el viaje.",
-    ideal:
-      "Ideal para parejas, familias, lunas de miel y viajeros que buscan desconexión profunda.",
-    image1: "/images/japon/3-alma-de-japon-izq.webp",
-    image2: "/images/japon/3-alma-de-japon-der.webp",
-  },
-  {
-    id: 2,
-    day: "14 DÍAS · ANIME · PARQUES TEMÁTICOS · TECNOLOGÍA · CULTURA POP",
-    title: "Japón Pop",
-    description:
-      "Un recorrido por el Japón más vibrante y fantástico: anime, parques temáticos, tecnología, neón, tradición y experiencias que transforman el viaje.",
-    ideal:
-      "Ideal para familias, amigos, parejas jóvenes, fans del anime, manga y la tecnología.",
-    image1: "/images/japon/4-japon-pop-izq.webp",
-    image2: "/images/japon/4-japon-pop-der.webp",
-  },
-  {
-    id: 3,
-    day: "15 DÍAS · SAMURÁIS · GEISHAS · SUMO · ALPES JAPONESES",
-    title: "El Camino del Shōgun",
-    description:
-      "Un recorrido por el Japón más auténtico y menos transitado: alpes japoneses, templos zen, ryokans y santuarios sagrados que transforman el viaje.",
-    ideal:
-      "Ideal para parejas aventureras, viajeros con mirada cultural y quienes prefieren el Japón que pocos conocen.",
-    image1: "/images/japon/5-el-camino-del-shogun-izq.webp",
-    image2: "/images/japon/5-el-camino-del-shogun-der.webp",
-  },
-];
-
 const ITINERARIES_SCROLL_TUNING = {
   mobilePinAnticipation: 0.82,
   desktopPinAnticipation: 0.82,
@@ -101,6 +66,11 @@ type LenisLike = {
 };
 
 export default function Itinerary() {
+  const {
+    sections: { itineraries },
+  } = usePremiumLandingConfig();
+
+  const items = itineraries.items;
   const containerRef = useRef<HTMLDivElement>(null);
   const c1Refs = useRef<(HTMLDivElement | null)[]>([]);
   const c2Refs = useRef<(HTMLDivElement | null)[]>([]);
@@ -109,8 +79,13 @@ export default function Itinerary() {
   const [activeStep, setActiveStep] = useState(0);
   const currentStepRef = useRef(0);
   const handleGoToForm = useCallback(() => {
-    scrollToSection("#form", { duration: 1.15 });
-  }, []);
+    const target = itineraries.primaryCta.target;
+    if (target.startsWith("#")) {
+      scrollToSection(target, { duration: 1.15 });
+      return;
+    }
+    window.location.href = target;
+  }, [itineraries.primaryCta.target]);
 
   useGSAP(
     () => {
@@ -534,7 +509,7 @@ export default function Itinerary() {
 
   return (
     <div className={styles.container} ref={containerRef}>
-      <h2 className="srOnly">Itinerarios de Japón Premium</h2>
+      <h2 className="srOnly">{itineraries.srHeading}</h2>
       <div className={styles.content1}>
         {items.map((item, i) => (
           <div
@@ -603,6 +578,7 @@ export default function Itinerary() {
                     colors={["#BF953F", "#FCF6BA", "#B38728", "#FCF6BA"]}
                     animationSpeed={6}
                     direction="horizontal"
+                    allowWrap
                   >
                     <h2 className={styles.titleText}>{item.title}</h2>
                   </GradientText>
@@ -624,14 +600,14 @@ export default function Itinerary() {
           <div className={styles.cardFooter}>
             <div className={styles.buttons}>
               <Button variant="secondary" className={styles.ctaButton2}>
-                Descargar PDF
+                {itineraries.secondaryCtaLabel}
               </Button>
               <Button
                 variant="primary"
                 className={styles.ctaButton}
                 onClick={handleGoToForm}
               >
-                Quiero esta experiencia
+                {itineraries.primaryCta.label}
               </Button>
             </div>
 
@@ -648,3 +624,10 @@ export default function Itinerary() {
     </div>
   );
 }
+
+
+
+
+
+
+

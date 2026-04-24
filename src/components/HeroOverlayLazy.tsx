@@ -1,22 +1,53 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import dynamic from "next/dynamic";
+import { useEffect, useMemo, useState, type ComponentType } from "react";
 import Image from "next/image";
 import styles from "./heroOverlay.module.css";
 
-const HERO_GEISHA_IMAGE = "/images/japon/hero/geishaHero.webp";
-const HERO_SAMURAI_IMAGE = "/images/japon/hero/samuraiHero.webp";
+type HeroOverlayImages = {
+  baseImage: string;
+  samuraiImage: string;
+  baseAlt: string;
+  samuraiAlt: string;
+};
 
-function HeroOverlayStatic() {
+type HeroOverlayEnhancedProps = {
+  baseImage: string;
+  samuraiImage: string;
+  baseAlt?: string;
+  samuraiAlt?: string;
+};
+
+export type HeroOverlayLazyProps = {
+  overlayImages?: Partial<HeroOverlayImages>;
+};
+
+const DEFAULT_HERO_OVERLAY_IMAGES: HeroOverlayImages = {
+  baseImage: "/images/japon/hero/geishaHero.webp",
+  samuraiImage: "/images/japon/hero/samuraiHero.webp",
+  baseAlt: "Hero Base",
+  samuraiAlt: "Hero Samurai",
+};
+
+function resolveOverlayImages(
+  overlayImages?: Partial<HeroOverlayImages>,
+): HeroOverlayImages {
+  return {
+    ...DEFAULT_HERO_OVERLAY_IMAGES,
+    ...(overlayImages ?? {}),
+  };
+}
+
+function HeroOverlayStatic({ images }: { images: HeroOverlayImages }) {
   return (
     <div className={styles.heroOverlay} aria-hidden="true">
       <Image
-        src={HERO_GEISHA_IMAGE}
-        alt="Hero Base"
+        src={images.baseImage}
+        alt={images.baseAlt}
         width={5000}
         height={5000}
         sizes="(max-width: 768px) 210vw, 62vw"
+        loading="eager"
         quality={75}
         fetchPriority="high"
         decoding="async"
@@ -27,15 +58,16 @@ function HeroOverlayStatic() {
   );
 }
 
-function HeroOverlayMobileLite() {
+function HeroOverlayMobileLite({ images }: { images: HeroOverlayImages }) {
   return (
     <div className={styles.heroOverlay} aria-hidden="true">
       <Image
-        src={HERO_GEISHA_IMAGE}
-        alt="Hero Base"
+        src={images.baseImage}
+        alt={images.baseAlt}
         width={5000}
         height={5000}
         sizes="(max-width: 768px) 210vw, 62vw"
+        loading="eager"
         quality={75}
         fetchPriority="high"
         decoding="async"
@@ -44,8 +76,8 @@ function HeroOverlayMobileLite() {
 
       <div className={styles.mobileLiteSamuraiMask}>
         <Image
-          src={HERO_SAMURAI_IMAGE}
-          alt=""
+          src={images.samuraiImage}
+          alt={images.samuraiAlt}
           fill
           sizes="(max-width: 768px) 199vw, 0px"
           quality={58}
@@ -58,12 +90,14 @@ function HeroOverlayMobileLite() {
   );
 }
 
-const HeroOverlayEnhanced = dynamic(() => import("./heroOverlay"), {
-  ssr: false,
-  loading: HeroOverlayStatic,
-});
+export default function HeroOverlayLazy({ overlayImages }: HeroOverlayLazyProps) {
+  const images = useMemo(
+    () => resolveOverlayImages(overlayImages),
+    [overlayImages],
+  );
 
-export default function HeroOverlayLazy() {
+  const [EnhancedOverlay, setEnhancedOverlay] =
+    useState<ComponentType<HeroOverlayEnhancedProps> | null>(null);
   const [enableEnhancedOverlay, setEnableEnhancedOverlay] = useState(false);
   const [isMobileViewport, setIsMobileViewport] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
@@ -146,13 +180,32 @@ export default function HeroOverlayLazy() {
     };
   }, [isMobileViewport, prefersReducedMotion]);
 
+  useEffect(() => {
+    if (!enableEnhancedOverlay || EnhancedOverlay) return;
+
+    let cancelled = false;
+
+    import("./heroOverlay").then((module) => {
+      if (cancelled) return;
+      setEnhancedOverlay(() => module.default);
+    });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [enableEnhancedOverlay, EnhancedOverlay]);
+
   if (isMobileViewport) {
-    return prefersReducedMotion ? <HeroOverlayStatic /> : <HeroOverlayMobileLite />;
+    return prefersReducedMotion ? (
+      <HeroOverlayStatic images={images} />
+    ) : (
+      <HeroOverlayMobileLite images={images} />
+    );
   }
 
-  return enableEnhancedOverlay ? (
-    <HeroOverlayEnhanced />
-  ) : (
-    <HeroOverlayStatic />
-  );
+  if (enableEnhancedOverlay && EnhancedOverlay) {
+    return <EnhancedOverlay {...images} />;
+  }
+
+  return <HeroOverlayStatic images={images} />;
 }

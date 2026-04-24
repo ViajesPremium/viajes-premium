@@ -134,6 +134,8 @@
   bottom: 0;
   left: 0;
   right: 0;
+  display: flex;
+  flex-direction: column;
   padding: 1.5rem 1.8rem;
   display: flex;
   align-items: flex-end;
@@ -144,23 +146,41 @@
   transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
+.bentoCardExperiences {
+  font-family: var(--font-nohemi);
+  font-size: clamp(0.8rem, 1.5vw, 1rem);
+  font-weight: 300;
+  color: var(--white);
+  text-align: end;
+  font-weight: 500;
+  letter-spacing: 1px;
+  line-height: 1;
+}
+
 .bentoCard:hover .bentoCardContent {
   /* El contenido flota hacia arriba de forma independiente a la carta */
   transform: translateY(-6px);
 }
 
 .bentoCardText {
+  position: absolute;
   font-family: var(--font-nohemi);
   font-size: clamp(1.2rem, 2vw, 1.6rem);
   font-weight: 600;
-  color: #fff;
+  color: var(--black);
+  background-color: var(--bg);
+  padding: 5px;
+  padding-inline: 10px;
   line-height: 1.2;
-  margin: 0;
+  margin: 0px;
+  top: 0;
+  right: 0;
+  border-radius: 0 0 0 10px;
 }
 
 @media (max-width: 640px) {
   .snapshot {
-    padding: 4rem 1rem 4rem;
+    padding: 4rem 1rem 6rem;
   }
 
   .bentoGrid {

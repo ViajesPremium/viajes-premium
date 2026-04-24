@@ -13,6 +13,7 @@ interface GradientTextProps {
   direction?: "horizontal" | "vertical" | "diagonal";
   pauseOnHover?: boolean;
   yoyo?: boolean;
+  allowWrap?: boolean;
 }
 
 export default function GradientText({
@@ -25,6 +26,7 @@ export default function GradientText({
   direction = "horizontal",
   pauseOnHover = false,
   yoyo = true,
+  allowWrap = false,
 }: GradientTextProps) {
   const RootTag = as;
   // El tag interno debe coincidir con el externo para evitar anidamiento
@@ -71,7 +73,7 @@ export default function GradientText({
     <RootTag
       className={`animated-gradient-text ${showBorder ? "with-border" : ""} ${
         pauseOnHover ? "pause-on-hover" : ""
-      } ${className}`}
+      } ${allowWrap ? "allow-wrap" : ""} ${className}`}
     >
       {showBorder && <InnerTag className="gradient-overlay" style={gradientStyle} />}
       <InnerTag className="text-content" style={gradientStyle}>

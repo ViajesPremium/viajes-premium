@@ -8,7 +8,7 @@
   background-color: rgb(247, 203, 203);
   background-image:
     linear-gradient(rgb(243, 243, 240), rgba(243, 243, 240, 0.862)),
-    url("/images/japon/hero/japanHero.jpg");
+    var(--hero-bg-image, url("/images/japon/hero/japanHero.jpg"));
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

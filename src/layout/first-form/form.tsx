@@ -1,5 +1,9 @@
 "use client";
 
+import { DatePicker, type DateValue } from "@ark-ui/react/date-picker";
+import { Portal } from "@ark-ui/react/portal";
+import { CalendarDate } from "@internationalized/date";
+import { Calendar, ChevronLeft, ChevronRight, X } from "lucide-react";
 import { AnimatePresence, motion, type Variants } from "motion/react";
 import { isValidPhoneNumber } from "react-phone-number-input";
 import React, {
@@ -59,6 +63,11 @@ export type ImageSectionFormConfig = {
   subtitle: string;
   submitLabel: string;
   fields?: readonly FormFieldConfig[];
+  labels?: Partial<Record<StepFieldKey, string>>;
+  hints?: Partial<Record<StepFieldKey, string>>;
+  contactEmail?: string;
+  contactPhoneDisplay?: string;
+  contactPhoneLink?: string;
   onSubmit?: (values: TravelFormValues) => void | Promise<void>;
 };
 
@@ -82,6 +91,9 @@ type StepperProps = HTMLAttributes<HTMLDivElement> & {
   renderStepIndicator?: (props: RenderStepIndicatorProps) => ReactNode;
   completionContent?: ReactNode;
   theme?: ImageSectionFormTheme;
+  contactEmail?: string;
+  contactPhoneDisplay?: string;
+  contactPhoneLink?: string;
 };
 
 const STEP_ORDER: StepFieldKey[] = [
@@ -116,7 +128,7 @@ const FIELD_LABELS: Record<StepFieldKey, string> = {
 
 const INPUT_HINTS: Partial<Record<StepFieldKey, string>> = {
   phone: "Elige tu pais y la lada se agrega automaticamente.",
-  travelDate: "Selecciona mes y ano estimado.",
+  travelDate: "Selecciona mes y año estimado.",
   travelers: "Ingresa un numero entre 1 y 20.",
 };
 
@@ -139,7 +151,7 @@ const STEP_VARIANTS: Variants = {
   }),
 };
 
-function parseMonthToDate(value: string): Date | null {
+function parseMonthToCalendarDate(value: string): CalendarDate | null {
   if (!/^\d{4}-\d{2}$/.test(value)) {
     return null;
   }
@@ -148,7 +160,7 @@ function parseMonthToDate(value: string): Date | null {
   const year = Number(yearString);
   const month = Number(monthString);
 
-  if (!Number.isFinite(year) || !Number.isFinite(month)) {
+  if (!Number.isInteger(year) || !Number.isInteger(month)) {
     return null;
   }
 
@@ -156,7 +168,17 @@ function parseMonthToDate(value: string): Date | null {
     return null;
   }
 
-  return new Date(year, month - 1, 1);
+  return new CalendarDate(year, month, 1);
+}
+
+function formatMonthValue(date: DateValue): string {
+  return `${date.year}-${`${date.month}`.padStart(2, "0")}`;
+}
+
+function parseMonthToDate(value: string): Date | null {
+  const parsedMonth = parseMonthToCalendarDate(value);
+  if (!parsedMonth) return null;
+  return new Date(parsedMonth.year, parsedMonth.month - 1, 1);
 }
 
 function validateField(field: StepFieldKey, value: string): string | undefined {
@@ -249,9 +271,22 @@ export default function ImageSectionForm({
 
   const currentMonthMin = useMemo(() => {
     const now = new Date();
-    const month = `${now.getMonth() + 1}`.padStart(2, "0");
-    return `${now.getFullYear()}-${month}`;
+    return new CalendarDate(now.getFullYear(), now.getMonth() + 1, 1);
   }, []);
+
+  const fieldLabels = useMemo(
+    () => ({ ...FIELD_LABELS, ...(config.labels ?? {}) }),
+    [config.labels],
+  );
+
+  const inputHints = useMemo(
+    () => ({ ...INPUT_HINTS, ...(config.hints ?? {}) }),
+    [config.hints],
+  );
+
+  const contactEmail = config.contactEmail ?? CONTACT_EMAIL;
+  const contactPhoneDisplay = config.contactPhoneDisplay ?? CONTACT_PHONE_DISPLAY;
+  const contactPhoneLink = config.contactPhoneLink ?? CONTACT_PHONE_LINK;
 
   const setFieldValue = useCallback(
     (field: StepFieldKey, nextValue: string) => {
@@ -396,11 +431,14 @@ export default function ImageSectionForm({
             theme={theme}
           />
         )}
+        contactEmail={contactEmail}
+        contactPhoneDisplay={contactPhoneDisplay}
+        contactPhoneLink={contactPhoneLink}
       >
         <Step>
           <StepFieldShell
-            label={FIELD_LABELS.name}
-            hint={INPUT_HINTS.name}
+            label={fieldLabels.name}
+            hint={inputHints.name}
             htmlFor={`${idPrefix}-name`}
             error={touched.name ? errors.name : undefined}
           >
@@ -419,8 +457,8 @@ export default function ImageSectionForm({
 
         <Step>
           <StepFieldShell
-            label={FIELD_LABELS.phone}
-            hint={INPUT_HINTS.phone}
+            label={fieldLabels.phone}
+            hint={inputHints.phone}
             htmlFor={`${idPrefix}-phone`}
             error={touched.phone ? errors.phone : undefined}
           >
@@ -440,7 +478,7 @@ export default function ImageSectionForm({
 
         <Step>
           <StepFieldShell
-            label={FIELD_LABELS.email}
+            label={fieldLabels.email}
             htmlFor={`${idPrefix}-email`}
             error={touched.email ? errors.email : undefined}
           >
@@ -459,20 +497,18 @@ export default function ImageSectionForm({
 
         <Step>
           <StepFieldShell
-            label={FIELD_LABELS.travelDate}
-            hint={INPUT_HINTS.travelDate}
+            label={fieldLabels.travelDate}
+            hint={inputHints.travelDate}
             htmlFor={`${idPrefix}-travelDate`}
             error={touched.travelDate ? errors.travelDate : undefined}
           >
-            <input
+            <TravelMonthPicker
               id={`${idPrefix}-travelDate`}
-              type="month"
+              theme={theme}
               min={currentMonthMin}
-              className={styles.formInput}
+              invalid={Boolean(touched.travelDate && errors.travelDate)}
               value={values.travelDate}
-              onChange={(event) =>
-                setFieldValue("travelDate", event.target.value)
-              }
+              onChange={(nextValue) => setFieldValue("travelDate", nextValue)}
               onBlur={() => touchField("travelDate")}
             />
           </StepFieldShell>
@@ -480,8 +516,8 @@ export default function ImageSectionForm({
 
         <Step>
           <StepFieldShell
-            label={FIELD_LABELS.travelers}
-            hint={INPUT_HINTS.travelers}
+            label={fieldLabels.travelers}
+            hint={inputHints.travelers}
             htmlFor={`${idPrefix}-travelers`}
             error={touched.travelers ? errors.travelers : undefined}
           >
@@ -504,7 +540,7 @@ export default function ImageSectionForm({
 
         <Step>
           <StepFieldShell
-            label={FIELD_LABELS.japanWishes}
+            label={fieldLabels.japanWishes}
             htmlFor={`${idPrefix}-japanWishes`}
             error={touched.japanWishes ? errors.japanWishes : undefined}
           >
@@ -524,7 +560,7 @@ export default function ImageSectionForm({
 
         <Step>
           <StepFieldShell
-            label={FIELD_LABELS.experienceType}
+            label={fieldLabels.experienceType}
             htmlFor={`${idPrefix}-experienceType`}
             error={touched.experienceType ? errors.experienceType : undefined}
           >
@@ -578,6 +614,291 @@ function StepFieldShell({
   );
 }
 
+type TravelMonthPickerProps = {
+  id: string;
+  theme: ImageSectionFormTheme;
+  min: DateValue;
+  value: string;
+  invalid: boolean;
+  onChange: (value: string) => void;
+  onBlur: () => void;
+};
+
+function TravelMonthPicker({
+  id,
+  theme,
+  min,
+  value,
+  invalid,
+  onChange,
+  onBlur,
+}: TravelMonthPickerProps) {
+  const isLightTheme = theme === "light";
+  const selectedValue = useMemo(() => {
+    const parsedMonth = parseMonthToCalendarDate(value);
+    return parsedMonth ? [parsedMonth] : [];
+  }, [value]);
+
+  const controlClassName = [
+    styles.travelDatePickerControl,
+    isLightTheme ? styles.travelDatePickerControlLight : "",
+    invalid ? styles.travelDatePickerControlInvalid : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  const inputClassName = [
+    styles.travelDatePickerInput,
+    isLightTheme ? styles.travelDatePickerInputLight : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  const triggerClassName = [
+    styles.travelDatePickerTrigger,
+    isLightTheme ? styles.travelDatePickerTriggerLight : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  const clearTriggerClassName = [
+    styles.travelDatePickerClearTrigger,
+    isLightTheme ? styles.travelDatePickerClearTriggerLight : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  const contentClassName = [
+    styles.travelDatePickerContent,
+    isLightTheme ? styles.travelDatePickerContentLight : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  const selectClassName = [
+    styles.travelDatePickerSelect,
+    isLightTheme ? styles.travelDatePickerSelectLight : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  const viewControlClassName = [
+    styles.travelDatePickerViewControl,
+    isLightTheme ? styles.travelDatePickerViewControlLight : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  const navTriggerClassName = [
+    styles.travelDatePickerNavTrigger,
+    isLightTheme ? styles.travelDatePickerNavTriggerLight : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  const viewTriggerClassName = [
+    styles.travelDatePickerViewTrigger,
+    isLightTheme ? styles.travelDatePickerViewTriggerLight : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  const tableHeaderClassName = [
+    styles.travelDatePickerTableHeader,
+    isLightTheme ? styles.travelDatePickerTableHeaderLight : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  const dayCellTriggerClassName = [
+    styles.travelDatePickerDayCellTrigger,
+    isLightTheme ? styles.travelDatePickerDayCellTriggerLight : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  const monthYearCellTriggerClassName = [
+    styles.travelDatePickerMonthYearCellTrigger,
+    isLightTheme ? styles.travelDatePickerMonthYearCellTriggerLight : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  return (
+    <DatePicker.Root
+      min={min}
+      value={selectedValue}
+      invalid={invalid}
+      positioning={{ placement: "bottom-start" }}
+      onValueChange={(details) => {
+        const nextDate = details.value[0];
+        onChange(nextDate ? formatMonthValue(nextDate) : "");
+      }}
+    >
+      <DatePicker.Control className={controlClassName}>
+        <DatePicker.Input
+          id={id}
+          readOnly
+          placeholder="Selecciona mes y año"
+          className={inputClassName}
+          onBlur={onBlur}
+        />
+        <DatePicker.Trigger className={triggerClassName}>
+          <Calendar size={18} />
+        </DatePicker.Trigger>
+        <DatePicker.ClearTrigger className={clearTriggerClassName}>
+          <X size={16} />
+        </DatePicker.ClearTrigger>
+      </DatePicker.Control>
+
+      <Portal>
+        <DatePicker.Positioner>
+          <DatePicker.Content className={contentClassName}>
+            <div className={styles.travelDatePickerSelectRow}>
+              <DatePicker.YearSelect className={selectClassName} />
+              <DatePicker.MonthSelect className={selectClassName} />
+            </div>
+
+            <DatePicker.View view="day">
+              <DatePicker.Context>
+                {(datePicker) => (
+                  <>
+                    <DatePicker.ViewControl className={viewControlClassName}>
+                      <DatePicker.PrevTrigger className={navTriggerClassName}>
+                        <ChevronLeft size={18} />
+                      </DatePicker.PrevTrigger>
+                      <DatePicker.ViewTrigger className={viewTriggerClassName}>
+                        <DatePicker.RangeText />
+                      </DatePicker.ViewTrigger>
+                      <DatePicker.NextTrigger className={navTriggerClassName}>
+                        <ChevronRight size={18} />
+                      </DatePicker.NextTrigger>
+                    </DatePicker.ViewControl>
+
+                    <DatePicker.Table className={styles.travelDatePickerTable}>
+                      <DatePicker.TableHead>
+                        <DatePicker.TableRow>
+                          {datePicker.weekDays.map((weekDay, weekDayIndex) => (
+                            <DatePicker.TableHeader
+                              key={weekDayIndex}
+                              className={tableHeaderClassName}
+                            >
+                              {weekDay.short}
+                            </DatePicker.TableHeader>
+                          ))}
+                        </DatePicker.TableRow>
+                      </DatePicker.TableHead>
+                      <DatePicker.TableBody>
+                        {datePicker.weeks.map((week, weekIndex) => (
+                          <DatePicker.TableRow key={weekIndex}>
+                            {week.map((day, dayIndex) => (
+                              <DatePicker.TableCell key={dayIndex} value={day}>
+                                <DatePicker.TableCellTrigger
+                                  className={dayCellTriggerClassName}
+                                >
+                                  {day.day}
+                                </DatePicker.TableCellTrigger>
+                              </DatePicker.TableCell>
+                            ))}
+                          </DatePicker.TableRow>
+                        ))}
+                      </DatePicker.TableBody>
+                    </DatePicker.Table>
+                  </>
+                )}
+              </DatePicker.Context>
+            </DatePicker.View>
+
+            <DatePicker.View view="month">
+              <DatePicker.Context>
+                {(datePicker) => (
+                  <>
+                    <DatePicker.ViewControl className={viewControlClassName}>
+                      <DatePicker.PrevTrigger className={navTriggerClassName}>
+                        <ChevronLeft size={18} />
+                      </DatePicker.PrevTrigger>
+                      <DatePicker.ViewTrigger className={viewTriggerClassName}>
+                        <DatePicker.RangeText />
+                      </DatePicker.ViewTrigger>
+                      <DatePicker.NextTrigger className={navTriggerClassName}>
+                        <ChevronRight size={18} />
+                      </DatePicker.NextTrigger>
+                    </DatePicker.ViewControl>
+                    <DatePicker.Table className={styles.travelDatePickerTable}>
+                      <DatePicker.TableBody>
+                        {datePicker
+                          .getMonthsGrid({ columns: 4, format: "short" })
+                          .map((months, rowIndex) => (
+                            <DatePicker.TableRow key={rowIndex}>
+                              {months.map((month, monthIndex) => (
+                                <DatePicker.TableCell
+                                  key={monthIndex}
+                                  value={month.value}
+                                >
+                                  <DatePicker.TableCellTrigger
+                                    className={monthYearCellTriggerClassName}
+                                  >
+                                    {month.label}
+                                  </DatePicker.TableCellTrigger>
+                                </DatePicker.TableCell>
+                              ))}
+                            </DatePicker.TableRow>
+                          ))}
+                      </DatePicker.TableBody>
+                    </DatePicker.Table>
+                  </>
+                )}
+              </DatePicker.Context>
+            </DatePicker.View>
+
+            <DatePicker.View view="year">
+              <DatePicker.Context>
+                {(datePicker) => (
+                  <>
+                    <DatePicker.ViewControl className={viewControlClassName}>
+                      <DatePicker.PrevTrigger className={navTriggerClassName}>
+                        <ChevronLeft size={18} />
+                      </DatePicker.PrevTrigger>
+                      <DatePicker.ViewTrigger className={viewTriggerClassName}>
+                        <DatePicker.RangeText />
+                      </DatePicker.ViewTrigger>
+                      <DatePicker.NextTrigger className={navTriggerClassName}>
+                        <ChevronRight size={18} />
+                      </DatePicker.NextTrigger>
+                    </DatePicker.ViewControl>
+                    <DatePicker.Table className={styles.travelDatePickerTable}>
+                      <DatePicker.TableBody>
+                        {datePicker
+                          .getYearsGrid({ columns: 4 })
+                          .map((years, rowIndex) => (
+                            <DatePicker.TableRow key={rowIndex}>
+                              {years.map((year, yearIndex) => (
+                                <DatePicker.TableCell
+                                  key={yearIndex}
+                                  value={year.value}
+                                >
+                                  <DatePicker.TableCellTrigger
+                                    className={monthYearCellTriggerClassName}
+                                  >
+                                    {year.label}
+                                  </DatePicker.TableCellTrigger>
+                                </DatePicker.TableCell>
+                              ))}
+                            </DatePicker.TableRow>
+                          ))}
+                      </DatePicker.TableBody>
+                    </DatePicker.Table>
+                  </>
+                )}
+              </DatePicker.Context>
+            </DatePicker.View>
+          </DatePicker.Content>
+        </DatePicker.Positioner>
+      </Portal>
+    </DatePicker.Root>
+  );
+}
+
 function Stepper({
   children,
   initialStep = 1,
@@ -591,6 +912,9 @@ function Stepper({
   renderStepIndicator,
   completionContent,
   theme = "dark",
+  contactEmail = CONTACT_EMAIL,
+  contactPhoneDisplay = CONTACT_PHONE_DISPLAY,
+  contactPhoneLink = CONTACT_PHONE_LINK,
   ...rest
 }: StepperProps) {
   const [currentStep, setCurrentStep] = useState<number>(initialStep);
@@ -731,17 +1055,17 @@ function Stepper({
               Contáctanos ahora:
             </span>
             <a
-              href={`mailto:${CONTACT_EMAIL}`}
+              href={`mailto:${contactEmail}`}
               className={styles.contactActionLink}
             >
-              {CONTACT_EMAIL}
+              {contactEmail}
             </a>
 
             <a
-              href={`tel:${CONTACT_PHONE_LINK}`}
+              href={`tel:${contactPhoneLink}`}
               className={styles.contactActionLink}
             >
-              {CONTACT_PHONE_DISPLAY}
+              {contactPhoneDisplay}
             </a>
           </div>
         </div>

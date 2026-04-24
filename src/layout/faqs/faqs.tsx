@@ -8,63 +8,17 @@ import accordionStyles from "@/components/ui/accordion/accordion.module.css";
 import Badge from "@/components/ui/badge/badge";
 import GradientText from "@/components/ui/gradient-text/gradient-text";
 import { BlurredStagger } from "@/components/ui/blurred-stagger-text/blurred-stagger-text";
-
-const FAQS = [
-  {
-    id: "1",
-    question: "¿Japón es un destino complicado para viajar?",
-    answer:
-      "No, Japón no es un destino complicado si está bien planificado. Aunque el idioma y la logística pueden parecer desafiantes al inicio, el país es seguro, ordenado y fácil de recorrer. Cuando el viaje está bien estructurado, todo fluye con mayor claridad. En Japón Premium cuidamos ese proceso para que la experiencia se viva sin fricción.",
-  },
-  {
-    id: "2",
-    question: "¿Se puede viajar a Japón sin hablar japonés?",
-    answer:
-      "Sí, es posible viajar a Japón sin hablar japonés. En ciudades como Tokio o Kioto hay señalización clara y servicios pensados para viajeros internacionales. Aun así, saber cómo moverse y qué decisiones tomar marca la diferencia en la experiencia por eso nuestros guías hablan español para que no te preocupes por el idioma.",
-  },
-  {
-    id: "3",
-    question: "¿Cuántos días se recomiendan para viajar a Japón?",
-    answer:
-      "Se recomienda viajar entre 10 y 15 días para conocer Japón con mayor profundidad. Este tiempo permite recorrer varias ciudades y equilibrar cultura, gastronomía y experiencias. La duración ideal depende del ritmo del viajero y del tipo de experiencia que quiera construir.",
-  },
-  {
-    id: "4",
-    question: "¿Cuál es la mejor temporada para viajar a Japón?",
-    answer:
-      "No hay una única mejor temporada, depende del tipo de experiencia que buscas. Primavera (Sakuras) y otoño (Momiji) son muy populares por sus paisajes, pero también hay épocas con menos afluencia que permiten disfrutar Japón con mayor tranquilidad.",
-  },
-  {
-    id: "5",
-    question: "¿Es seguro viajar a Japón?",
-    answer:
-      "Sí, Japón es uno de los países más seguros del mundo. Se puede viajar con tranquilidad tanto en grandes ciudades como en zonas más tradicionales. Esa seguridad se aprovecha mucho más cuando el viaje está bien organizado y cada detalle está pensado.",
-  },
-  {
-    id: "6",
-    question: "¿Qué tipo de experiencias se pueden vivir en Japón?",
-    answer:
-      "Japón ofrece una combinación única de cultura, gastronomía, tradición, tecnología y naturaleza. Se pueden recorrer ciudades modernas, templos históricos y paisajes muy distintos en un mismo viaje. En Japón Premium diseñamos cada proyecto para integrar estos contrastes de forma coherente.",
-  },
-  {
-    id: "7",
-    question: "¿Es fácil moverse dentro de Japón?",
-    answer:
-      "Sí, moverse dentro de Japón es fácil gracias a su sistema de transporte eficiente y puntual. Los trenes y conexiones permiten recorrer el país de forma organizada y cómoda.",
-  },
-  {
-    id: "8",
-    question:
-      "¿Japón es un destino recomendable para viajar en pareja o en familia?",
-    answer:
-      "Sí, Japón es un destino ideal tanto para viajar en pareja como en familia ya que hay diversos parques de diversiones y experiencias que se disfrutan en compañía. La clave está en diseñar el recorrido según el tipo de experiencia que se quiere vivir.",
-  },
-];
+import { usePremiumLandingConfig } from "@/landings/premium/context";
 
 export default function Faqs() {
+  const {
+    sections: { faqs },
+  } = usePremiumLandingConfig();
+
+  const faqItems = faqs.items;
   const sectionRef = useRef<HTMLElement | null>(null);
   const mobileFiguresRef = useRef<HTMLDivElement | null>(null);
-  const [openFaqId, setOpenFaqId] = useState<string>(() => FAQS[0]?.id ?? "");
+  const [openFaqId, setOpenFaqId] = useState<string>(() => faqItems[0]?.id ?? "");
 
   // Igual que Snapshot: pin al final sin spacer extra para que la siguiente
   // seccion la cubra naturalmente desde abajo hacia arriba.
@@ -113,7 +67,7 @@ export default function Faqs() {
     };
   }, []);
 
-  // ── Scroll animation: progreso de los laterales ──────────────────────────
+  // -- Scroll animation: progreso de los laterales --------------------------
   useEffect(() => {
     const section = sectionRef.current;
     if (!section) return;
@@ -162,7 +116,7 @@ export default function Faqs() {
         motionProgress.toFixed(4),
       );
 
-      // ── Progreso independiente para las figuras mobile ────────────────────
+      // -- Progreso independiente para las figuras mobile --------------------
       // Trackeamos el propio elemento (no la sección entera) porque en mobile
       // el acordeón puede ser muy largo y las figuras están al fondo.
       if (mobileFigures) {
@@ -219,17 +173,17 @@ export default function Faqs() {
 
   return (
     <section ref={sectionRef} className={styles.section}>
-      <h2 className="srOnly">Preguntas frecuentes sobre Japón Premium</h2>
-      {/* Lateral izquierdo â€” samurai de perfil */}
+      <h2 className="srOnly">{faqs.srHeading}</h2>
+      {/* Lateral izquierdo - samurai de perfil */}
       <div className={styles.sideLeft}>
         <div className={styles.sideImgFadeLeft} />
       </div>
 
-      {/* â”€â”€ Contenido central â”€â”€ */}
+      {/* Contenido central */}
       <div className={styles.center}>
         {/* Encabezado */}
         <div className={styles.header}>
-          <Badge text="Preguntas frecuentes" variant="dark" align="center" />
+          <Badge text={faqs.badgeText} variant="dark" align="center" />
 
           <GradientText
             colors={["#BF953F", "#FCF6BA", "#B38728", "#FCF6BA"]}
@@ -237,29 +191,29 @@ export default function Faqs() {
             direction="horizontal"
             className={styles.titleGradient}
           >
-            <h2 className={styles.title}>Todo lo que necesitas saber</h2>
+            <h2 className={styles.title}>{faqs.title}</h2>
           </GradientText>
 
           <BlurredStagger
-            text="Resolvemos las dudas más comunes sobre nuestros viajes a Japón. Si no encuentras lo que buscas, escríbenos directamente."
+            text={faqs.subtitle}
             className={styles.subtitle}
           />
 
           <div className={styles.contactHint}>
-            <p className={styles.contactLabel}>¿Otra pregunta?</p>
+            <p className={styles.contactLabel}>{faqs.contactLabel}</p>
             <a
-              href="mailto:hola@japonpremium.com"
+              href={`mailto:${faqs.contactEmail}`}
               className={styles.contactLink}
             >
-              hola@japonpremium.com
+              {faqs.contactEmail}
             </a>
           </div>
         </div>
 
-        {/* AcordeÃ³n */}
+        {/* Acordeon */}
         <div className={styles.accordionWrap}>
-          <div role="list" aria-label="Preguntas frecuentes">
-            {FAQS.map((faq) => {
+          <div role="list" aria-label={faqs.accordionAriaLabel}>
+            {faqItems.map((faq) => {
               const isOpen = openFaqId === faq.id;
               const triggerId = `faq-trigger-${faq.id}`;
               const contentId = `faq-content-${faq.id}`;
@@ -331,10 +285,14 @@ export default function Faqs() {
         <div className={styles.mobileFigureRight} />
       </div>
 
-      {/* Lateral derecho â€” geisha de perfil */}
+      {/* Lateral derecho - geisha de perfil */}
       <div className={styles.sideRight}>
         <div className={styles.sideImgFade} />
       </div>
     </section>
   );
 }
+
+
+
+

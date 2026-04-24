@@ -210,6 +210,10 @@
   background: linear-gradient(90deg, #bf953f, #fcf6ba, #b38728);
 }
 
+.desliza {
+  display: none;
+}
+
 @media (max-width: 1024px) {
   .header {
     align-items: flex-start;
@@ -233,6 +237,14 @@
     gap: 0.9rem;
   }
 
+  .desliza {
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin-top: 1rem;
+    color: #ffffff6b;
+  }
+
   .subtitle {
     font-size: 0.78rem;
   }
@@ -240,7 +252,6 @@
   .headerButton {
     width: 100%;
     max-width: 260px;
-
   }
 
   .carouselShell {
@@ -277,14 +288,14 @@
     position: absolute;
     top: 48%;
     transform: translateY(-50%);
-    width: 24px;
-    height: 24px;
+    width: 40px;
+    height: 40px;
     align-items: center;
     justify-content: center;
     border: 1px solid rgba(255, 255, 255, 0.24);
     border-radius: 999px;
-    background: rgba(0, 0, 0, 0.22);
-    color: rgba(255, 255, 255, 0.78);
+    background: rgba(81, 81, 81, 0.697);
+    color: rgb(255, 255, 255);
     font-size: 1rem;
     line-height: 1;
     cursor: pointer;
@@ -294,11 +305,11 @@
   }
 
   .carouselArrowLeft {
-    left: 4px;
+    left: 5px;
   }
 
   .carouselArrowRight {
-    right: 4px;
+    right: 5px;
   }
 
   .track {

@@ -1,20 +1,15 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, type CSSProperties } from "react";
 import Image from "next/image";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import ImageSectionForm, {
-  type ImageSectionFormConfig,
-} from "@/layout/first-form/form";
+import ImageSectionForm from "@/layout/first-form/form";
 import styles from "./ctaForm.module.css";
+import { usePremiumLandingConfig } from "@/landings/premium/context";
 
 gsap.registerPlugin(ScrollTrigger);
-
-const SHOJI_BASE = "/images/japon/basePuertas2.webp";
-const SHOJI_LEFT = "/images/japon/puertaIzquierda.webp";
-const SHOJI_RIGHT = "/images/japon/puertaDerecha.webp";
 
 const CTA_FORM_SCROLL_TUNING = {
   desktopScrub: 0.82,
@@ -22,14 +17,11 @@ const CTA_FORM_SCROLL_TUNING = {
   pinAnticipation: 0.72,
 } as const;
 
-const ctaFormConfig: ImageSectionFormConfig = {
-  eyebrow: "",
-  title: "",
-  subtitle: "",
-  submitLabel: "",
-};
-
 export default function CTAForm() {
+  const {
+    sections: { ctaForm },
+  } = usePremiumLandingConfig();
+
   const sectionRef = useRef<HTMLElement>(null);
   const shojiRef = useRef<HTMLDivElement>(null);
   const baseRef = useRef<HTMLDivElement>(null);
@@ -114,7 +106,6 @@ export default function CTAForm() {
           scrub: scrubStrength,
           invalidateOnRefresh: true,
           onRefresh: () => {
-            // Keep Lenis limit in sync after pin spacer is inserted/resized
             window.__lenis?.resize();
           },
         },
@@ -164,16 +155,20 @@ export default function CTAForm() {
     { scope: sectionRef },
   );
 
+  const sectionStyle = {
+    "--cta-form-bg-image": `url("${ctaForm.backgroundImage}")`,
+  } as CSSProperties;
+
   return (
-    <section ref={sectionRef} className={styles.section}>
-      <h2 className="srOnly">Formulario de contacto Japón Premium</h2>
+    <section ref={sectionRef} className={styles.section} style={sectionStyle}>
+      <h2 className="srOnly">{ctaForm.srHeading}</h2>
       <div className={styles.stage}>
         <div ref={roomGlowRef} className={styles.roomGlow} aria-hidden="true" />
 
         <div ref={shojiRef} className={styles.shojiLayer} aria-hidden="true">
           <div ref={baseRef} className={styles.baseWrap}>
             <Image
-              src={SHOJI_BASE}
+              src={ctaForm.shojiBaseImage}
               alt=""
               fill
               sizes="100vw"
@@ -183,7 +178,7 @@ export default function CTAForm() {
 
           <div ref={leftDoorRef} className={styles.leftDoor}>
             <Image
-              src={SHOJI_LEFT}
+              src={ctaForm.shojiLeftImage}
               alt=""
               fill
               sizes="100vw"
@@ -193,7 +188,7 @@ export default function CTAForm() {
 
           <div ref={rightDoorRef} className={styles.rightDoor}>
             <Image
-              src={SHOJI_RIGHT}
+              src={ctaForm.shojiRightImage}
               alt=""
               fill
               sizes="100vw"
@@ -205,9 +200,9 @@ export default function CTAForm() {
         <div ref={formRef} className={styles.formLayer}>
           <div className={styles.formShell}>
             <ImageSectionForm
-              config={ctaFormConfig}
+              config={ctaForm.formConfig}
               idPrefix="cta-form"
-              theme="light"
+              theme={ctaForm.formTheme ?? "light"}
             />
           </div>
         </div>

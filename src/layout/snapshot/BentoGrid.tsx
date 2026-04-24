@@ -6,40 +6,38 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Button } from "@/components/ui/button/button";
 import { scrollToSection } from "@/lib/scroll-to-section";
 import styles from "./snapshot.module.css";
+import type { SnapshotCardConfig } from "@/landings/premium/types";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const bentoCards = [
-  {
-    image: "/images/japon/1-kyoto-nara.webp",
-    text: "Kyoto & Nara",
-    wide: false,
-  },
-  {
-    image: "/images/japon/1-gastronomia-autentica.webp",
-    text: "Gastronomía auténtica",
-    wide: false,
-  },
-  {
-    image: "/images/japon/1-alojamiento-de-lujo.webp",
-    text: "Hospedaje de lujo",
-    wide: false,
-  },
-];
+type BentoGridProps = {
+  cards: SnapshotCardConfig[];
+  buttonLabel: string;
+  buttonTarget: string;
+};
 
-export default function BentoGrid() {
+export default function BentoGrid({
+  cards,
+  buttonLabel,
+  buttonTarget,
+}: BentoGridProps) {
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const handleGoToForm = useCallback(() => {
-    scrollToSection("#form", { duration: 1.15 });
-  }, []);
+
+  const handleGoToTarget = useCallback(() => {
+    if (buttonTarget.startsWith("#")) {
+      scrollToSection(buttonTarget, { duration: 1.15 });
+      return;
+    }
+    window.location.href = buttonTarget;
+  }, [buttonTarget]);
 
   useEffect(() => {
-    const cards = cardRefs.current.filter(Boolean) as HTMLElement[];
-    if (!cards.length) return;
+    const cardElements = cardRefs.current.filter(Boolean) as HTMLElement[];
+    if (!cardElements.length) return;
 
     const ctx = gsap.context(() => {
       gsap.fromTo(
-        cards.slice(0, 3),
+        cardElements.slice(0, 3),
         { y: 34, opacity: 0, scale: 0.985 },
         {
           y: 0,
@@ -49,7 +47,7 @@ export default function BentoGrid() {
           stagger: 0.1,
           ease: "power2.out",
           scrollTrigger: {
-            trigger: cards[0],
+            trigger: cardElements[0],
             start: "top 90%",
             toggleActions: "play none none none",
             once: true,
@@ -63,20 +61,23 @@ export default function BentoGrid() {
 
   return (
     <div className={styles.bentoGrid}>
-      {bentoCards.map((card, i) => (
+      {cards.map((card, index) => (
         <div
-          key={i}
+          key={`${card.text}-${index}`}
           ref={(el) => {
-            cardRefs.current[i] = el;
+            cardRefs.current[index] = el;
           }}
           className={`${styles.bentoCard} ${card.wide ? styles.bentoCardWide : ""}`}
           style={{ backgroundImage: `url(${card.image})` }}
         >
           <div className={styles.bentoCardOverlay} />
+          <p className={styles.bentoCardText}>{card.text}</p>
           <div className={styles.bentoCardContent}>
-            <p className={styles.bentoCardText}>{card.text}</p>
-            <Button variant="secondary" onClick={handleGoToForm}>
-              Descubrir
+            <span className={styles.bentoCardExperiences}>
+              {card.experiences}
+            </span>
+            <Button variant="secondary" onClick={handleGoToTarget}>
+              {buttonLabel}
             </Button>
           </div>
         </div>

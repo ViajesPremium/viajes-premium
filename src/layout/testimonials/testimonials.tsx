@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import {
   useState,
@@ -18,49 +18,7 @@ import { scrollToSection } from "@/lib/scroll-to-section";
 import Badge from "@/components/ui/badge/badge";
 import styles from "./testimonials.module.css";
 import { Button } from "@/components/ui/button/button";
-
-const TESTIMONIALS = [
-  {
-    id: 1,
-    quote:
-      "Japón nos parecía un viaje complejo, pero aquí todo se sintió claro, cuidado y bien acompañado desde el principio.",
-    name: "Mariana Gutiérrez",
-    location: "Ciudad de México",
-    avatar: "/images/stock/avatar-1.svg",
-  },
-  {
-    id: 2,
-    quote:
-      "Se nota cuando un viaje está diseñado con criterio. Hubo orden, atención y experiencias que sí valieron la inversión.",
-    name: "Rodrigo Treviño",
-    location: "Guadalajara",
-    avatar: "/images/stock/avatar-2.svg",
-  },
-  {
-    id: 3,
-    quote:
-      "Viajamos en familia y lo que más agradecimos fue la enorme tranquilidad de sentir que todo estaba bien resuelto.",
-    name: "Paola Mendoza",
-    location: "Monterrey",
-    avatar: "/images/stock/avatar-3.svg",
-  },
-  {
-    id: 4,
-    quote:
-      "No fue solo un gran viaje, fue una experiencia mejor pensada, mejor cuidada y a la altura de lo que  estabamos buscando.",
-    name: "Ernesto Ramírez",
-    location: "Ciudad de México",
-    avatar: "/images/stock/avatar-4.svg",
-  },
-  {
-    id: 5,
-    quote:
-      "La diferencia estuvo en los detalles: tiempos bien organizados, atención cercana y una experiencia realmente fluida.",
-    name: "Fernanda Lozano",
-    location: "Puebla",
-    avatar: "/images/stock/avatar-5.svg",
-  },
-];
+import { usePremiumLandingConfig } from "@/landings/premium/context";
 
 function GoogleBadge({ data }: { data: GoogleRatingData }) {
   const fullStars = Math.floor(data.rating);
@@ -167,9 +125,7 @@ function StarIcon({ type }: { type: "full" | "half" | "empty" }) {
   );
 }
 
-interface TestimonialsProps {
-  googleRating?: GoogleRatingData;
-}
+
 
 const AUTOPLAY_DELAY = 8000;
 
@@ -219,7 +175,13 @@ const round = (value: number, precision = 3) => {
 const clamp = (value: number, min: number, max: number) =>
   Math.min(Math.max(value, min), max);
 
-export default function Testimonials({ googleRating }: TestimonialsProps) {
+export default function Testimonials() {
+  const {
+    sections: { testimonials },
+  } = usePremiumLandingConfig();
+
+  const testimonialItems = testimonials.items;
+  const testimonialCount = testimonialItems.length;
   const [current, setCurrent] = useState(0);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const sectionRef = useRef<HTMLElement>(null);
@@ -235,8 +197,13 @@ export default function Testimonials({ googleRating }: TestimonialsProps) {
   );
   const [isInView, setIsInView] = useState(false);
   const handleGoToForm = useCallback(() => {
-    scrollToSection("#form", { duration: 1.15 });
-  }, []);
+    const target = testimonials.cta.target;
+    if (target.startsWith("#")) {
+      scrollToSection(target, { duration: 1.15 });
+      return;
+    }
+    window.location.href = target;
+  }, [testimonials.cta.target]);
 
   const [sectionHeight, setSectionHeight] = useState(0);
 
@@ -280,17 +247,25 @@ export default function Testimonials({ googleRating }: TestimonialsProps) {
   }, []);
 
   useEffect(() => {
+    if (testimonialCount === 0) return;
     const autoplayEnabled =
       !prefersReducedMotion && !isMobileViewport && isInView;
     clearTimer();
     if (!autoplayEnabled) return;
 
     timerRef.current = setTimeout(() => {
-      setCurrent((c) => (c + 1) % TESTIMONIALS.length);
+      setCurrent((c) => (c + 1) % testimonialCount);
     }, AUTOPLAY_DELAY);
 
     return clearTimer;
-  }, [clearTimer, current, isInView, isMobileViewport, prefersReducedMotion]);
+  }, [
+    clearTimer,
+    current,
+    isInView,
+    isMobileViewport,
+    prefersReducedMotion,
+    testimonialCount,
+  ]);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -338,17 +313,17 @@ export default function Testimonials({ googleRating }: TestimonialsProps) {
   }, [isMobileViewport, prefersReducedMotion]);
 
   const prev = () => {
-    setCurrent((c) => (c - 1 + TESTIMONIALS.length) % TESTIMONIALS.length);
+    if (testimonialCount === 0) return;
+    setCurrent((c) => (c - 1 + testimonialCount) % testimonialCount);
   };
 
   const next = () => {
-    setCurrent((c) => (c + 1) % TESTIMONIALS.length);
+    if (testimonialCount === 0) return;
+    setCurrent((c) => (c + 1) % testimonialCount);
   };
-
-  const t = TESTIMONIALS[current];
   const shouldAnimateCarousel = !isMobileViewport && !prefersReducedMotion;
   const pad = (n: number) => String(n).padStart(2, "0");
-  const ratingData = googleRating ?? GOOGLE_RATING_FALLBACK;
+  const ratingData = testimonials.googleRating ?? GOOGLE_RATING_FALLBACK;
 
   const petals = useMemo(() => {
     if (sakuraConfig.petalCount <= 0) return [];
@@ -413,11 +388,23 @@ export default function Testimonials({ googleRating }: TestimonialsProps) {
     });
   }, [isMobileViewport, sakuraConfig, sectionHeight]);
 
+  if (testimonialCount === 0) {
+    return (
+      <section ref={sectionRef} className={styles.testimonials}>
+        <h2 className="srOnly">{testimonials.srHeading}</h2>
+        <Badge text={testimonials.badgeText} variant="dark" align="center" />
+      </section>
+    );
+  }
+
+  const safeCurrent = current % testimonialCount;
+  const t = testimonialItems[safeCurrent];
+
   return (
     <section ref={sectionRef} className={styles.testimonials}>
-      <h2 className="srOnly">Testimonios de viajeros</h2>
+      <h2 className="srOnly">{testimonials.srHeading}</h2>
       <Badge
-          text="La voz del viajero premium"
+          text={testimonials.badgeText}
           variant="dark"
           align="center"
         />
@@ -454,7 +441,7 @@ export default function Testimonials({ googleRating }: TestimonialsProps) {
             {shouldAnimateCarousel ? (
               <AnimatePresence mode="wait">
                 <motion.div
-                  key={current}
+                  key={safeCurrent}
                   style={{ position: "absolute", inset: 0 }}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
@@ -472,7 +459,7 @@ export default function Testimonials({ googleRating }: TestimonialsProps) {
               </AnimatePresence>
             ) : (
               <Image
-                key={`photo-${current}`}
+                key={`photo-${safeCurrent}`}
                 src={t.avatar}
                 alt={t.name}
                 fill
@@ -487,7 +474,7 @@ export default function Testimonials({ googleRating }: TestimonialsProps) {
           <div className={styles.controlsBar}>
             <div className={styles.testimonialNumber}>
               <p className={styles.number}>
-                {pad(current + 1)}/{pad(TESTIMONIALS.length)}
+                {pad(safeCurrent + 1)}/{pad(testimonialCount)}
               </p>
             </div>
 
@@ -539,7 +526,7 @@ export default function Testimonials({ googleRating }: TestimonialsProps) {
 
               {shouldAnimateCarousel ? (
                 <BlurredStagger
-                  key={current}
+                  key={safeCurrent}
                   text={t.quote}
                   isActive={true}
                   className={styles.text}
@@ -553,7 +540,7 @@ export default function Testimonials({ googleRating }: TestimonialsProps) {
               {shouldAnimateCarousel ? (
                 <AnimatePresence mode="wait">
                   <motion.div
-                    key={`author-${current}`}
+                    key={`author-${safeCurrent}`}
                     className={styles.author}
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -576,7 +563,10 @@ export default function Testimonials({ googleRating }: TestimonialsProps) {
                   </motion.div>
                 </AnimatePresence>
               ) : (
-                <div key={`author-static-${current}`} className={styles.author}>
+                <div
+                  key={`author-static-${safeCurrent}`}
+                  className={styles.author}
+                >
                   <div className={styles.authorThumb}>
                     <Image
                       src={t.avatar}
@@ -601,9 +591,16 @@ export default function Testimonials({ googleRating }: TestimonialsProps) {
 
       <div className={styles.bottomRow}>
         <Button variant="primary" onClick={handleGoToForm}>
-          Solicita tu propuesta
+          {testimonials.cta.label}
         </Button>
       </div>
     </section>
   );
 }
+
+
+
+
+
+
+

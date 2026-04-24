@@ -24,7 +24,7 @@
   position: absolute;
   inset: 0;
   z-index: 0;
-  background-image: url("/images/japon/geishaForm.webp");
+  background-image: var(--first-form-bg-image, url("/images/japon/geishaForm.webp"));
   background-size: cover;
   background-repeat: no-repeat;
 }

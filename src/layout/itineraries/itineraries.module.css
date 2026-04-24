@@ -64,6 +64,8 @@
   position: relative;
   flex-grow: 1;
   width: 100%;
+  min-width: 0;
+  overflow: visible;
 }
 
 .infoItem {
@@ -73,6 +75,7 @@
   width: 100%;
   will-change: transform, opacity;
   pointer-events: none;
+  min-width: 0;
 }
 
 .infoItem.active {
@@ -90,10 +93,13 @@
   font-family: var(--font-bigcaslon), serif;
   text-transform: uppercase;
   letter-spacing: 0.2em;
-  font-size: 0.7rem;
+  font-size: 0.9rem;
   color: var(--white);
   margin-bottom: 1rem;
   font-weight: 500;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .titleGradient {
@@ -127,6 +133,9 @@
   font-weight: 300 !important;
   line-height: 1.6 !important;
   padding-bottom: 1.5rem;
+  white-space: normal !important;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .idealText {
@@ -140,6 +149,9 @@
   font-weight: 300 !important;
   line-height: 1.6 !important;
   font-style: italic;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 /* ── FOOTER: CTA + CONTROLES ────────────────────────────────────────── */
@@ -149,7 +161,7 @@
   align-items: flex-end;
   z-index: 20;
   pointer-events: auto;
-  margin-top: auto; /* Empuja el footer siempre al fondo */
+  margin-top: 1.5rem;
 }
 
 .buttons {
@@ -296,7 +308,6 @@
     width: 100%;
     height: 50%;
   }
-
   /* En mobile: quitar will-change de todos los frames —
      6 capas GPU permanentes en dispositivos con poca RAM causan jank.
      Solo el primer hijo de cada panel (el visible al inicio) se pre-promueve;
@@ -305,16 +316,15 @@
     will-change: auto;
   }
 
-  .imageFrame:first-child {
-    will-change: transform;
+  .descriptionBlur {
+    display: none;
   }
 
   /* ── Card: centrada, altura más generosa en mobile ── */
   .premiumCard {
     width: 92%;
     max-width: 460px;
-    /* Altura fija para que flex-grow del infoContainer funcione bien con GSAP */
-    height: clamp(300px, 54svh, 360px);
+    height: fit-content !important;
   }
 
   .contentWrapper {
@@ -323,12 +333,14 @@
 
   /* Eyebrow: truncar texto largo para que no desborde */
   .eyebrow {
-    font-size: 0.56rem;
+    font-size: 0.9rem;
     margin-bottom: 0.55rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: calc(100% - 2rem); /* deja espacio al contador */
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+    max-width: 100%;
+    line-height: 1.35;
+    padding-right: 2.2rem; /* evita chocar con el contador */
   }
 
   .titleText {
@@ -339,19 +351,6 @@
     margin-top: 0.75rem;
     max-width: 100%;
   }
-
-  .descriptionBlur {
-    font-size: clamp(2rem, 3vw, 0.88rem) !important;
-    padding-bottom: 0.6rem;
-    line-height: 1.5 !important;
-  }
-
-  .idealText {
-    font-size: clamp(0.72rem, 2.8vw, 0.84rem) !important;
-    line-height: 1.45 !important;
-    padding: 4px 8px;
-  }
-
   /* infoContainer: flex-grow ya le da todo el espacio sobrante;
      min-height como seguro para que los items absolutos tengan contenedor */
   .infoContainer {
@@ -399,22 +398,20 @@
   }
 
   .eyebrow {
-    font-size: 0.52rem;
+    font-size: 0.65rem;
   }
 
   .titleText {
-    font-size: clamp(1.4rem, 6vw, 1.75rem);
+    font-size: clamp(2rem, 6vw, 2.3rem);
   }
 
   .infoContainer {
     min-height: 170px;
   }
 
-  .descriptionBlur {
-    font-size: 0.9rem !important;
-  }
-
   .idealText {
-    font-size: 0.9rem !important;
+    font-size: 1rem !important;
+    border: none;
+    font-style: normal !important;
   }
 }
