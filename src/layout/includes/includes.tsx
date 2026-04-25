@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useRef, type TouchEvent } from "react";
+import { useCallback, useEffect, useRef, type TouchEvent } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -193,6 +193,40 @@ export default function Includes() {
     },
     { scope: sectionRef },
   );
+
+  // Bloqueo de overscroll en los extremos del carrusel (mobile).
+  // React usa listeners pasivos por defecto; necesitamos uno no-pasivo
+  // para poder llamar preventDefault() y cortar el rubber-band de iOS/Android.
+  useEffect(() => {
+    const viewport = viewportRef.current;
+    if (!viewport) return;
+
+    let startX = 0;
+
+    const onStart = (e: globalThis.TouchEvent) => {
+      startX = e.touches[0]?.clientX ?? 0;
+    };
+
+    const onMove = (e: globalThis.TouchEvent) => {
+      const touch = e.touches[0];
+      if (!touch) return;
+      const dx = touch.clientX - startX;
+      const atStart = viewport.scrollLeft <= 0;
+      const atEnd =
+        viewport.scrollLeft >= viewport.scrollWidth - viewport.clientWidth - 1;
+      if ((atStart && dx > 0) || (atEnd && dx < 0)) {
+        e.preventDefault();
+      }
+    };
+
+    viewport.addEventListener("touchstart", onStart, { passive: true });
+    viewport.addEventListener("touchmove", onMove, { passive: false });
+
+    return () => {
+      viewport.removeEventListener("touchstart", onStart);
+      viewport.removeEventListener("touchmove", onMove);
+    };
+  }, []);
 
   return (
     <section ref={sectionRef} className={styles.includes}>

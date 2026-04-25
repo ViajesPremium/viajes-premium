@@ -80,7 +80,6 @@
   height: 360px;
   cursor: pointer;
   transform: translateZ(0) translateY(0) scale(1);
-  border: 2px solid var(--bg);
   box-shadow: var(--box-shadow);
 }
 
