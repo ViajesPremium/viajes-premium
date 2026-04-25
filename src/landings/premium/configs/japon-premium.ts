@@ -111,8 +111,8 @@ export const japonPremiumLandingConfig: PremiumLandingConfig = {
           text: "con una forma más cuidada de vivir Japón.",
         },
         {
-          highlight: "Diseñamos experiencias",
-          text: "para quienes valoran atención personal, criterio y una forma más cuidada de vivir Japón.",
+          highlight: "",
+          text: "",
         },
       ],
       ctaPrimary: {
