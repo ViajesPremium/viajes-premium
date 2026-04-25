@@ -19,12 +19,6 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: clamp(0.25rem, 1.1vh, 0.6rem);
-  gap: clamp(
-    0.25rem,
-    1.1dvh,
-    0.6rem
-  ); /* Small viewport height for mobile stability */
   opacity: 0.08;
 }
 
@@ -44,8 +38,8 @@
   font-family: var(--font-thunder-light), sans-serif;
   text-transform: uppercase;
   font-weight: 400;
-  font-size: 15rem;
-  line-height: 1.2;
+  font-size: 17rem;
+  line-height: 1;
 }
 
 .chunk {
@@ -65,6 +59,7 @@
   background: var(--white);
   padding: 10px;
   overflow: hidden;
+  box-shadow: var(--box-shadow);
 }
 
 .imageWrap {

@@ -43,12 +43,15 @@ const toRoman = (value: number) => {
 };
 
 const ITINERARIES_SCROLL_TUNING = {
-  mobilePinAnticipation: 0.82,
-  desktopPinAnticipation: 0.82,
-  desktopScrub: 0.18,
-  desktopSnapDelay: 0.2,
-  desktopSnapMin: 0.05,
-  desktopSnapMax: 0.14,
+  mobilePinAnticipation: 0.4,
+  desktopPinAnticipation: 0.4,
+  // scrub: true → GSAP sigue la posición de scroll directamente.
+  // Lenis ya provee suavizado; agregar lag de GSAP encima creaba doble
+  // suavizado y generaba tirones al entrar/salir de la sección.
+  desktopScrub: true,
+  desktopSnapDelay: 0.18,
+  desktopSnapMin: 0.06,
+  desktopSnapMax: 0.18,
 } as const;
 
 type LenisLike = {

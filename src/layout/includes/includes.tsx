@@ -14,7 +14,9 @@ import { usePremiumLandingConfig } from "@/landings/premium/context";
 
 const INCLUDES_SCROLL_TUNING = {
   horizontalFactor: 3,
-  pinAnticipation: 1,
+  // 0.4 calibrado para lerp=0.08: suficiente para absorber el salto de layout
+  // al entrar en scroll horizontal, sin disparar el pin demasiado pronto.
+  pinAnticipation: 0.4,
   pinScrub: true,
 } as const;
 

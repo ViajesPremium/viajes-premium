@@ -92,27 +92,27 @@ export const japonPremiumLandingConfig: PremiumLandingConfig = {
   },
   sections: {
     hero: {
-      seoHeading: "Viaja a Japon desde Mexico",
+      seoHeading: "Viaja a Japón desde México",
       title: {
         line1Lead: "Viaja a",
-        line1Focus: "Japon",
+        line1Focus: "Japón",
         line2Lead: "desde",
-        line2Focus: "Mexico",
+        line2Focus: "México",
       },
       mobileTitle: {
         line1Lead: "Viaja a",
-        line1Focus: "Japon",
+        line1Focus: "Japón",
         line2Lead: "Desde",
-        line2Focus: "Mexico",
+        line2Focus: "México",
       },
       descriptionLines: [
         {
           highlight: "Eleva tu vida",
-          text: "con una forma mas cuidada de vivir Japon.",
+          text: "con una forma más cuidada de vivir Japón.",
         },
         {
-          highlight: "Disenamos experiencias",
-          text: "para quienes valoran atencion personal, criterio y una forma mas cuidada de vivir Japon.",
+          highlight: "Diseñamos experiencias",
+          text: "para quienes valoran atención personal, criterio y una forma más cuidada de vivir Japón.",
         },
       ],
       ctaPrimary: {
@@ -132,7 +132,7 @@ export const japonPremiumLandingConfig: PremiumLandingConfig = {
       },
     },
     snapshot: {
-      srHeading: "Snapshot de Japon Premium",
+      srHeading: "Snapshot de Japón Premium",
       badgeText: "Snapshot",
       titleText: "Más de 21 años diseñando experiencias premium.",
       titleHighlightWords: ["21", "años", "premium"],
@@ -140,31 +140,31 @@ export const japonPremiumLandingConfig: PremiumLandingConfig = {
         {
           image: "/images/japon/1-kyoto-nara.webp",
           text: "Alma de Japón",
-          experiences: "14 DIAS · ESPIRITUALIDAD · TRADICION · BIENESTAR · CULTURA",
+          experiences: "14 DÍAS · ESPIRITUALIDAD · TRADICIÓN · BIENESTAR · CULTURA",
           wide: false,
         },
         {
           image: "/images/japon/1-gastronomia-autentica.webp",
           text: "Japón Pop",
-          experiences: "14 DIAS · ANIME · PARQUES TEMATICOS · TECNOLOGIA · CULTURA POP",
+          experiences: "14 DÍAS · ANIME · PARQUES TEMÁTICOS · TECNOLOGÍA · CULTURA POP",
           wide: false,
         },
         {
           image: "/images/japon/1-alojamiento-de-lujo.webp",
           text: "El Camino del Shogun",
-          experiences: "15 DIAS · SAMURAIS · GEISHAS · SUMO · ALPES JAPONESES",
+          experiences: "15 DÍAS · SAMURAIS · GEISHAS · SUMO · ALPES JAPONESES",
           wide: false,
         },
       ],
-      cardButtonLabel: "Descubrir",
+      cardButtonLabel: "Descubrir Itinerarios",
       cardButtonTarget: "#form",
     },
     firstForm: {
-      srHeading: "Cuentanos como imaginas tu viaje a Japon",
+      srHeading: "Cuentanos como imaginas tu viaje a Japón",
       sectionTitle: "Propuesta personalizada",
       sectionTitleHighlightWord: "personalizada",
       sectionSubtitle:
-        "Cuentanos como imaginas tu viaje a Japon, compartenos tus intereses y te ayudaremos a identificar cual de nuestros 3 itinerarios se adapta mejor a tu estilo de viaje.",
+        "Cuentanos como imaginas tu viaje a Japón, compartenos tus intereses y te ayudaremos a identificar cual de nuestros 3 itinerarios se adapta mejor a tu estilo de viaje.",
       backgroundImage: "/images/japon/geishaForm.webp",
       mobileImage: {
         src: "/images/japon/geishaFormSola.webp",
@@ -186,8 +186,8 @@ export const japonPremiumLandingConfig: PremiumLandingConfig = {
       },
     },
     highlights: {
-      srHeading: "Highlights de Japon Premium",
-      badgeText: "¿Por que Japon Premium?",
+      srHeading: "Highlights de Japón Premium",
+      badgeText: "¿Por que Japón Premium?",
       kickerTop: "Trabajamos con marcas",
       kickerBottom: "Cuidadosamente seleccionadas.",
       line1: {
@@ -228,18 +228,18 @@ export const japonPremiumLandingConfig: PremiumLandingConfig = {
       focusRailItems: [
         {
           id: "kyoto-privado",
-          title: "Recorridos disenados con mas criterio",
+          title: "Recorridos diseñados con más criterio",
           description:
-            "Cada itinerario se estructura para dar mas sentido, ritmo y calidad al viaje.",
+            "Cada itinerario se estructura para dar más sentido, ritmo y calidad al viaje.",
           meta: "Cultura",
           imageSrc: "/images/japon/2-recorridos-diseñados-con-mas-criterio.webp",
           href: "#form",
         },
         {
           id: "tokyo-nocturno",
-          title: "Acompanamiento personalizado",
+          title: "Acompañamiento personalizado",
           description:
-            "Atencion cercana antes, durante y despues de su experiencia en Japon.",
+            "Atención cercana antes, durante y después de su experiencia en Japón.",
           meta: "Urbano",
           imageSrc: "/images/japon/2-acompañamiento-personalizado.webp",
           href: "#form",
@@ -266,7 +266,7 @@ export const japonPremiumLandingConfig: PremiumLandingConfig = {
           id: "paisajes-iconicos",
           title: "Expertos que hablan su idioma",
           description:
-            "Guias en espanol para vivir Japon con mas claridad y profundidad.",
+            "Guías en español para vivir Japón con más claridad y profundidad.",
           meta: "Naturaleza",
           imageSrc: "/images/japon/2-expertos-que-hablan-su-idioma.webp",
           href: "#form",
@@ -275,8 +275,8 @@ export const japonPremiumLandingConfig: PremiumLandingConfig = {
           id: "experiencia-ryokan",
           title: "Tranquilidad de principio a fin",
           description:
-            "Cada detalle se cuida para que usted viaje con mas confianza y respaldo.",
-          meta: "Tradicion",
+            "Cada detalle se cuida para que usted viaje con más confianza y respaldo.",
+          meta: "Tradición",
           imageSrc: "/images/japon/2-tranquilidad-de-principio-a-fin.webp",
           href: "#form",
         },
@@ -291,11 +291,11 @@ export const japonPremiumLandingConfig: PremiumLandingConfig = {
       },
     },
     itineraries: {
-      srHeading: "Itinerarios de Japon Premium",
+      srHeading: "Itinerarios de Japón Premium",
       items: [
         {
           id: 1,
-          day: "14 DIAS · ESPIRITUALIDAD · TRADICION · BIENESTAR · CULTURA",
+          day: "14 DÍAS · ESPIRITUALIDAD · TRADICIÓN · BIENESTAR · CULTURA",
           title: "Alma de Japón",
           description:
             "Un recorrido por el Japón más espiritual y profundo: templos milenarios, rutas sagradas, ryokans, onsen y experiencias que transforman el viaje.",
@@ -306,7 +306,7 @@ export const japonPremiumLandingConfig: PremiumLandingConfig = {
         },
         {
           id: 2,
-          day: "14 DIAS · ANIME · PARQUES TEMATICOS · TECNOLOGIA · CULTURA POP",
+          day: "14 DÍAS · ANIME · PARQUES TEMÁTICOS · TECNOLOGÍA · CULTURA POP",
           title: "Japón Pop",
           description:
             "Un recorrido por el Japón más vibrante y fantástico: anime, parques temáticos, tecnología, neón, tradición y experiencias que transforman el viaje.",
@@ -317,10 +317,10 @@ export const japonPremiumLandingConfig: PremiumLandingConfig = {
         },
         {
           id: 3,
-          day: "15 DIAS · SAMURAIS · GEISHAS · SUMO · ALPES JAPONESES",
+          day: "15 DÍAS · SAMURAIS · GEISHAS · SUMO · ALPES JAPONESES",
           title: "El Camino del Shogun",
           description:
-            "Un recorrido por el Japón más auténtico y menos transitado: alpes japoneses, templos zen, ryokans y santuarios sagrados que transforman el viaje.",
+            "Un recorrido por el Japón más auténtico y menos transitado: Alpes Japoneses, templos zen, ryokans y santuarios sagrados que transforman el viaje.",
           ideal:
             "Ideal para parejas aventureras, viajeros con mirada cultural y quienes prefieren el Japón que pocos conocen.",
           image1: "/images/japon/5-el-camino-del-shogun-izq.webp",
@@ -367,7 +367,7 @@ export const japonPremiumLandingConfig: PremiumLandingConfig = {
           label: "III",
           title: "Experiencias culturales curadas",
           description:
-            "Templos, barrios historicos y actividades elegidas para conectar con el Japon mas autentico.",
+            "Templos, barrios historicos y actividades elegidas para conectar con el Japón más auténtico.",
           image: "/images/japon/6-experiencias-culturales-curadas.webp",
         },
         {
@@ -375,15 +375,15 @@ export const japonPremiumLandingConfig: PremiumLandingConfig = {
           label: "IV",
           title: "Escenas gastronomicas seleccionadas",
           description:
-            "Reservas y momentos en la mesa pensados para descubrir Japon con mas detalle y autenticidad.",
+            "Reservas y momentos en la mesa pensados para descubrir el Japón con más detalle y autenticidad.",
           image: "/images/japon/6-escenas-gastronomicas-seleccionadas.webp",
         },
         {
           id: "support",
           label: "V",
-          title: "Acompanamiento en cada etapa",
+          title: "Acompañamiento en cada etapa",
           description:
-            "Atencion en espanol antes y durante el viaje para acompanarle con claridad y resolver cada detalle.",
+            "Atención en español antes y durante el viaje para acompañarle con claridad y resolver cada detalle.",
           image: "/images/japon/6-acompañamiento-en-cada-etapa.webp",
         },
       ],
@@ -395,7 +395,7 @@ export const japonPremiumLandingConfig: PremiumLandingConfig = {
         {
           id: 1,
           quote:
-            "Japon nos parecia un viaje complejo, pero aqui todo se sintio claro, cuidado y bien acompanado desde el principio.",
+            "Japón nos parecía un viaje complejo, pero aquí todo se sintió claro, cuidado y bien acompañado desde el principio.",
           name: "Mariana Gutierrez",
           location: "Ciudad de Mexico",
           avatar: "/images/stock/avatar-1.svg",
@@ -403,7 +403,7 @@ export const japonPremiumLandingConfig: PremiumLandingConfig = {
         {
           id: 2,
           quote:
-            "Se nota cuando un viaje esta disenado con criterio. Hubo orden, atencion y experiencias que si valieron la inversion.",
+            "Se nota cuando un viaje está diseñado con criterio. Hubo orden, atención y experiencias que sí valieron la inversión.",
           name: "Rodrigo Trevino",
           location: "Guadalajara",
           avatar: "/images/stock/avatar-2.svg",
@@ -411,7 +411,7 @@ export const japonPremiumLandingConfig: PremiumLandingConfig = {
         {
           id: 3,
           quote:
-            "Viajamos en familia y lo que mas agradecimos fue la enorme tranquilidad de sentir que todo estaba bien resuelto.",
+            "Viajamos en familia y lo que más agradecimos fue la enorme tranquilidad de sentir que todo estaba bien resuelto.",
           name: "Paola Mendoza",
           location: "Monterrey",
           avatar: "/images/stock/avatar-3.svg",
@@ -427,7 +427,7 @@ export const japonPremiumLandingConfig: PremiumLandingConfig = {
         {
           id: 5,
           quote:
-            "La diferencia estuvo en los detalles: tiempos bien organizados, atencion cercana y una experiencia realmente fluida.",
+            "La diferencia estuvo en los detalles: tiempos bien organizados, atención cercana y una experiencia realmente fluida.",
           name: "Fernanda Lozano",
           location: "Puebla",
           avatar: "/images/stock/avatar-5.svg",
@@ -439,7 +439,7 @@ export const japonPremiumLandingConfig: PremiumLandingConfig = {
       },
     },
     interlude: {
-      srHeading: "Mensaje del equipo Japon Premium",
+      srHeading: "Mensaje del equipo Japón Premium",
       rows: [
         "japon premium",
         "momentos inolvidables",
@@ -450,25 +450,25 @@ export const japonPremiumLandingConfig: PremiumLandingConfig = {
       quote:
         "Nuestra misión es diseñar experiencias personalizadas para que conectes emocionalmente con tu viaje. Creemos que viajar va más allá de acumular destinos; se trata de crear vínculos reales con cada lugar.",
       quoteHighlight:
-        "viajar va más allá de acumular destinos; se trata de crear vínculos reales con cada lugar.",
+        "viajar va más allá de acumular destinos; se trata de crear vínculos reales con cada lugar. ",
       image: {
         src: "/images/japon/karina.webp",
         alt: "Asesora de viaje Japon Premium",
       },
     },
     faqs: {
-      srHeading: "Preguntas frecuentes sobre Japon Premium",
+      srHeading: "Preguntas frecuentes sobre Japón Premium",
       accordionAriaLabel: "Preguntas frecuentes",
       badgeText: "Preguntas frecuentes",
       title: "Todo lo que necesitas saber",
       subtitle:
-        "Resolvemos las dudas mas comunes sobre nuestros viajes a Japon. Si no encuentras lo que buscas, escribenos directamente.",
+        "Resolvemos las dudas más comunes sobre nuestros viajes a Japón. Si no encuentras lo que buscas, escríbenos directamente.",
       contactLabel: "¿Otra pregunta?",
       contactEmail: "hola@japonpremium.com",
       items: [...JAPAN_FAQS],
     },
     ctaForm: {
-      srHeading: "Formulario de contacto Japon Premium",
+      srHeading: "Formulario de contacto Japón Premium",
       backgroundImage: "/images/japon/7-formulario.webp",
       shojiBaseImage: "/images/japon/basePuertas2.webp",
       shojiLeftImage: "/images/japon/puertaIzquierda.webp",
@@ -490,7 +490,7 @@ export const japonPremiumLandingConfig: PremiumLandingConfig = {
       },
     },
     marquee: {
-      srHeading: "Alianzas de Japon Premium",
+      srHeading: "Alianzas de Japón Premium",
       badgeText: "Nuestras alianzas",
       introLeftLogo: {
         src: "/logos/japon/jp-negro.svg",
@@ -555,6 +555,7 @@ export const japonPremiumLandingConfig: PremiumLandingConfig = {
         { label: "TikTok", href: "#" },
         { label: "Instagram", href: "#" },
         { label: "Youtube", href: "#" },
+        { label: "Facebook", href: "#" },
       ],
       copyrightText:
         "Todas las marcas y servicios que se ofrecen son propiedad de Japón PREMIUM® Consulte Términos y Condiciones en el Contrato de Adhesión ante PROFECO con número 7735-2015 & 7180-2015",

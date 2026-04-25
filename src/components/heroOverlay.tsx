@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import * as THREE from "three";
+import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
 import styles from "./heroOverlay.module.css";
 
 // ====================================================================
@@ -44,8 +45,8 @@ type EffectConfig = {
 const DESKTOP_CONFIG: EffectConfig = {
   MAX_PIXEL_RATIO: 10,
   MAX_RADIUS: 0.2,
-  BLOB_COLOR: "#ff0000",
-  BLOB_OPACITY: 0.8,
+  BLOB_COLOR: "#4a4a4a",
+  BLOB_OPACITY: 0.1,
   TRAIL_SHRINK_SPEED: 0.3,
   TRAIL_DROP_DISTANCE: 0.005,
   VELOCITY_MULTIPLIER: 9,
@@ -58,7 +59,7 @@ const DESKTOP_CONFIG: EffectConfig = {
   POINTER_ENABLED: true,
   GHOST: {
     idleThreshold: 700,
-    travelDuration: 12000,
+    travelDuration: 19000,
     radiusLerp: 0.1,
     posLerp: 0.12,
     microJitterX: 0.0012,
@@ -400,6 +401,14 @@ export default function HeroOverlay({
 
   const [shouldBootWebGL, setShouldBootWebGL] = useState(false);
 
+  // ── Geisha cursor-parallax (desktop only) ──────────────────────────
+  const rawParallaxX = useMotionValue(0);
+  const rawParallaxY = useMotionValue(0);
+  const geishaSpringX = useSpring(rawParallaxX, { stiffness: 65, damping: 18, mass: 0.7 });
+  const geishaSpringY = useSpring(rawParallaxY, { stiffness: 65, damping: 18, mass: 0.7 });
+  const geishaX = useTransform(geishaSpringX, (v) => v * 30);
+  const geishaY = useTransform(geishaSpringY, (v) => v * 20);
+
   const handlePointerMove = useCallback(
     (event: React.PointerEvent<HTMLDivElement>) => {
       if (!configRef.current.POINTER_ENABLED) return;
@@ -411,8 +420,11 @@ export default function HeroOverlay({
       targetMouseRef.current.set(clamp01(rawX), clamp01(rawY));
       targetHoverStateRef.current = 1;
       lastInteractionTimeRef.current = Date.now();
+      // Update parallax (CSS coords: +x = right, +y = down)
+      rawParallaxX.set(rawX - 0.5);
+      rawParallaxY.set((event.clientY - rect.top) / rect.height - 0.5);
     },
-    [],
+    [rawParallaxX, rawParallaxY],
   );
 
   const handlePointerEnter = useCallback(
@@ -425,7 +437,9 @@ export default function HeroOverlay({
   const handlePointerLeave = useCallback(() => {
     if (!configRef.current.POINTER_ENABLED) return;
     targetHoverStateRef.current = 0;
-  }, []);
+    rawParallaxX.set(0);
+    rawParallaxY.set(0);
+  }, [rawParallaxX, rawParallaxY]);
 
   useEffect(() => {
     if (!ghostPathRef.current) return;
@@ -798,16 +812,22 @@ export default function HeroOverlay({
         <path ref={ghostPathRef} d={GHOST_SVG_PATH} fill="none" stroke="none" />
       </svg>
 
-      <Image
-        src={baseImage}
-        alt={baseAlt}
-        width={5000}
-        height={5000}
-        sizes="(max-width: 768px) 210vw, 62vw"
-        loading="eager"
-        quality={60}
-        className={styles.geishaHero}
-      />
+      <motion.div
+        className={styles.geishaParallaxLayer}
+        style={{ x: geishaX, y: geishaY }}
+        aria-hidden="true"
+      >
+        <Image
+          src={baseImage}
+          alt={baseAlt}
+          width={5000}
+          height={5000}
+          sizes="(max-width: 768px) 210vw, 62vw"
+          loading="eager"
+          quality={60}
+          className={styles.geishaHero}
+        />
+      </motion.div>
 
       <div
         ref={canvasContainerRef}

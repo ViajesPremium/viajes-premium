@@ -15,50 +15,50 @@ const BARRANCAS_FAQS = [
     id: "1",
     question: "¿Peru es un destino complicado para viajar?",
     answer:
-      "No, Peru no es un destino complicado si esta bien planificado. Aunque el idioma y la logistica pueden parecer desafiantes al inicio, el pais es seguro, ordenado y facil de recorrer. Cuando el viaje esta bien estructurado, todo fluye con mayor claridad. En Peru Premium cuidamos ese proceso para que la experiencia se viva sin friccion.",
+      "No, Perú no es un destino complicado si esta bien planificado. Aunque el idioma y la logistica pueden parecer desafiantes al inicio, el pais es seguro, ordenado y facil de recorrer. Cuando el viaje esta bien estructurado, todo fluye con mayor claridad. En Perú Premium cuidamos ese proceso para que la experiencia se viva sin friccion.",
   },
   {
     id: "2",
-    question: "¿Se puede viajar a Peru sin hablar espanol?",
+    question: "¿Se puede viajar a Perú sin hablar español?",
     answer:
-      "Si, es posible viajar a Peru sin hablar espanol. En ciudades como Lima o Cusco hay senalizacion clara y servicios pensados para viajeros internacionales. Aun asi, saber como moverse y que decisiones tomar marca la diferencia en la experiencia por eso nuestros guias hablan espanol para que no te preocupes por el idioma.",
+      "Si, es posible viajar a Perú sin hablar español. En ciudades como Lima o Cusco hay senalizacion clara y servicios pensados para viajeros internacionales. Aun asi, saber como moverse y que decisiones tomar marca la diferencia en la experiencia por eso nuestros guias hablan espanol para que no te preocupes por el idioma.",
   },
   {
     id: "3",
-    question: "¿Cuantos dias se recomiendan para viajar a Japon?",
+    question: "¿Cuantos dias se recomiendan para viajar a Japón?",
     answer:
-      "Se recomienda viajar entre 10 y 15 dias para conocer Japon con mayor profundidad. Este tiempo permite recorrer varias ciudades y equilibrar cultura, gastronomia y experiencias. La duracion ideal depende del ritmo del viajero y del tipo de experiencia que quiera construir.",
+      "Se recomienda viajar entre 10 y 15 dias para conocer Japón con mayor profundidad. Este tiempo permite recorrer varias ciudades y equilibrar cultura, gastronomia y experiencias. La duracion ideal depende del ritmo del viajero y del tipo de experiencia que quiera construir.",
   },
   {
     id: "4",
-    question: "¿Cual es la mejor temporada para viajar a Japon?",
+    question: "¿Cual es la mejor temporada para viajar a Japón?",
     answer:
-      "No hay una unica mejor temporada, depende del tipo de experiencia que buscas. Primavera (Sakuras) y otono (Momiji) son muy populares por sus paisajes, pero tambien hay epocas con menos afluencia que permiten disfrutar Japon con mayor tranquilidad.",
+      "No hay una unica mejor temporada, depende del tipo de experiencia que buscas. Primavera (Sakuras) y otono (Momiji) son muy populares por sus paisajes, pero tambien hay epocas con menos afluencia que permiten disfrutar Japón con mayor tranquilidad.",
   },
   {
     id: "5",
-    question: "¿Es seguro viajar a Japon?",
+    question: "¿Es seguro viajar a Japón?",
     answer:
-      "Si, Japon es uno de los paises mas seguros del mundo. Se puede viajar con tranquilidad tanto en grandes ciudades como en zonas mas tradicionales. Esa seguridad se aprovecha mucho mas cuando el viaje esta bien organizado y cada detalle esta pensado.",
+      "Si, Japón es uno de los países mas seguros del mundo. Se puede viajar con tranquilidad tanto en grandes ciudades como en zonas mas tradicionales. Esa seguridad se aprovecha mucho mas cuando el viaje esta bien organizado y cada detalle esta pensado.",
   },
   {
     id: "6",
-    question: "¿Que tipo de experiencias se pueden vivir en Japon?",
+    question: "¿Que tipo de experiencias se pueden vivir en Japón?",
     answer:
       "Japon ofrece una combinacion unica de cultura, gastronomia, tradicion, tecnologia y naturaleza. Se pueden recorrer ciudades modernas, templos historicos y paisajes muy distintos en un mismo viaje. En Japon Premium disenamos cada proyecto para integrar estos contrastes de forma coherente.",
   },
   {
     id: "7",
-    question: "¿Es facil moverse dentro de Japon?",
+    question: "¿Es facil moverse dentro de Japón?",
     answer:
-      "Si, moverse dentro de Japon es facil gracias a su sistema de transporte eficiente y puntual. Los trenes y conexiones permiten recorrer el pais de forma organizada y comoda.",
+      "Si, moverse dentro de Japón es facil gracias a su sistema de transporte eficiente y puntual. Los trenes y conexiones permiten recorrer el país de forma organizada y comoda.",
   },
   {
     id: "8",
     question:
-      "¿Japon es un destino recomendable para viajar en pareja o en familia?",
+      "¿Japón es un destino recomendable para viajar en pareja o en familia?",
     answer:
-      "Si, Japon es un destino ideal tanto para viajar en pareja como en familia ya que hay diversos parques de diversiones y experiencias que se disfrutan en compania. La clave esta en disenar el recorrido segun el tipo de experiencia que se quiere vivir.",
+      "Si, Japón es un destino ideal tanto para viajar en pareja como en familia ya que hay diversos parques de diversiones y experiencias que se disfrutan en compania. La clave esta en disenar el recorrido segun el tipo de experiencia que se quiere vivir.",
   },
 ] as const;
 
@@ -153,7 +153,7 @@ export const barrancasPremiumLandingConfig: PremiumLandingConfig = {
           wide: false,
         },
       ],
-      cardButtonLabel: "Descubrir",
+      cardButtonLabel: "Descubrir Itinerarios",
       cardButtonTarget: "#form",
     },
     firstForm: {

@@ -42,22 +42,16 @@
   padding-top: clamp(80px, 10vw, 100px);
   padding-inline: clamp(16px, 3vw, 56px);
   pointer-events: none;
-  --hero-title-column-width: clamp(280px, 33vw, 620px);
-  --hero-title-center-gap: clamp(80px, 10vw, 100px);
+  --hero-title-column-width: clamp(220px, 20vw, 420px);
+  --hero-title-center-gap: clamp(80px, 10vw, 80px);
 }
 
 .h1 {
   display: flex;
   flex-direction: column;
-  width: min(96vw, 1700px);
+  width: min(96vw, 1600px);
   color: var(--black);
   margin: 0 auto;
-}
-
-.highlightedText {
-  color: var(--primary-japon);
-  font-style: italic;
-  text-decoration: underline;
 }
 
 .line {

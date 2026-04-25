@@ -1,4 +1,4 @@
-﻿/* ─────────────────────────────────────────────────────────────
+/* ─────────────────────────────────────────────────────────────
    FOOTER — layout: samurai centrado, logo detrás, grid 3 cols
    ───────────────────────────────────────────────────────────── */
 
@@ -26,19 +26,17 @@
   z-index: 10;
 }
 
-/* ── Wrapper principal: contiene visual + contentGrid ── */
+/* ── Wrapper principal ── */
 .wrapper {
   position: relative;
   width: 100%;
   height: calc(100dvh - 58px);
-  min-height: 640px;
-
-  max-height: 1050px;
+  min-height: 680px;
+  max-height: 1100px;
 }
 
 /* ══════════════════════════════════════════════
    VISUAL: logo detrás (z1) + samurai encima (z2)
-   Ambos absolutamente posicionados dentro de .wrapper
    ══════════════════════════════════════════════ */
 .visual {
   position: absolute;
@@ -47,7 +45,6 @@
   pointer-events: none;
 }
 
-/* Logo: centrado horizontal, levemente por encima del centro */
 .logoLayer {
   position: absolute;
   top: 32%;
@@ -69,7 +66,6 @@
   opacity: 0.88;
 }
 
-/* Samurai: anclado al fondo, centrado horizontalmente */
 .samuraiLayer {
   position: absolute;
   bottom: 0;
@@ -80,7 +76,16 @@
   z-index: 2;
 }
 
-/* Wrapper de animación — NO toca transform del padre (.samuraiLayer) */
+.samuraiParallax {
+  width: 100%;
+  height: 100%;
+  will-change: transform;
+}
+
+.logoParallax {
+  will-change: transform;
+}
+
 .samuraiMotion {
   position: relative;
   width: 100%;
@@ -107,71 +112,74 @@
   inset: 0;
   z-index: 5;
   display: grid;
-  grid-template-columns: minmax(240px, 1fr) 1.4fr minmax(220px, 1fr);
+  grid-template-columns: minmax(200px, 1fr) 1.6fr minmax(190px, 1fr);
   align-items: stretch;
-  padding: clamp(5rem, 8vh, 7rem) clamp(1.5rem, 4vw, 3.5rem) 2rem;
-  padding: clamp(5rem, 8dvh, 7rem) clamp(1.5rem, 4vw, 3.5rem) 2rem; /* Small viewport height for mobile stability */
+  padding: clamp(4.5rem, 7dvh, 7rem) clamp(1.5rem, 4vw, 3.5rem) 2rem;
   gap: 0 1rem;
 }
 
-/* Spacer central: deja ver el visual */
 .centerGap {
-  /* vacío — el samurai/logo se ven a través */
+  /* vacío intencionalmente */
 }
 
 /* ── Columna izquierda ── */
 .colLeft {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  gap: clamp(1.2rem, 3dvh, 2.5rem);
   padding-bottom: 1rem;
+  min-width: 0;
 }
 
 /* ── Columna derecha ── */
 .colRight {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   align-items: flex-end;
   text-align: right;
+  gap: clamp(1.2rem, 3dvh, 2.5rem);
   padding-bottom: 1rem;
+  min-width: 0;
 }
 
 /* ── Bloques de navegación ── */
 .navSection {
   display: flex;
   flex-direction: column;
-  gap: 0.55rem;
+  gap: 0.5rem;
 }
 
 .sectionLabel {
-  font-size: 2rem;
+  font-size: clamp(1.1rem, 1.8vw, 2rem);
   text-transform: uppercase;
   font-weight: 300;
   color: #db2f21;
+  line-height: 1;
 }
 
 .navLinks {
   display: flex;
   flex-direction: column;
-  gap: 0.32rem;
+  gap: 0.28rem;
 }
 
 .navLink {
   color: var(--white);
   text-decoration: none;
-  font-size: clamp(1rem, 2.2vw, 2.5rem);
+  font-size: clamp(0.82rem, 1.5vw, 1.7rem);
   font-weight: 400;
   font-family: var(--font-nohemi);
-  line-height: 1.08;
-  transition:
-    color 0.22s ease,
-    opacity 0.22s ease;
+  line-height: 1.15;
+  transition: color 0.22s ease;
+  /* evita que textos largos (email/teléfono) rompan el layout */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
 }
 
 .navLink:hover {
   color: #db2f21;
-  opacity: 1;
 }
 
 /* ── Map card ── */
@@ -181,20 +189,19 @@
   gap: 0.45rem;
   padding: 0.6rem;
   border-radius: var(--radius-sm);
-  max-width: 480px;
+  min-width: 0;
 }
 
 .mapAddress {
   margin: 0;
-  font-size: 0.82rem;
-  text-align: center;
+  font-size: 0.68rem;
   line-height: 1.5;
   letter-spacing: 0.02em;
 }
 
 .mapFrameWrap {
   width: 100%;
-  height: clamp(160px, 16vw, 240px);
+  height: clamp(130px, 13vw, 230px);
   border-radius: var(--radius-sm);
   overflow: hidden;
 }
@@ -216,7 +223,7 @@
   background: rgba(255, 255, 255, 0.06);
   color: #fff;
   text-decoration: none;
-  font-size: 0.66rem;
+  font-size: 0.64rem;
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -235,13 +242,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 64px;
-  height: 64px;
+  width: 52px;
+  height: 52px;
   border-radius: 50%;
-  border: 2px solid rgba(255, 255, 255, 0.28);
+  border: 2px solid var(--primary-japon);
   background: rgba(255, 255, 255, 0.06);
   color: #fff;
   cursor: pointer;
+  flex-shrink: 0;
   transition:
     background 0.22s ease,
     border-color 0.22s ease,
@@ -249,8 +257,8 @@
 }
 
 .backToTopIcon svg {
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
 }
 
 .backToTopIcon:hover {
@@ -267,8 +275,8 @@
   z-index: 8;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
   padding: 0.8rem clamp(1.5rem, 4vw, 3.5rem);
   border-top: 1px solid rgba(255, 255, 255, 0.12);
 }
@@ -276,16 +284,17 @@
 .copy {
   margin: 0;
   flex: 1;
-  font-size: 0.9rem;
+  min-width: 220px;
+  font-size: 0.62rem;
+  line-height: 1.55;
   color: rgba(255, 255, 255, 0.48);
-  white-space: nowrap;
 }
 
 .legalLinks {
-  flex: 1;
   display: flex;
   justify-content: flex-end;
   gap: 1rem;
+  flex-shrink: 0;
 }
 
 .legalLinks a {
@@ -302,6 +311,29 @@
 }
 
 /* ══════════════════════════════════════════════
+   RESPONSIVE — laptop 1280px
+   Ajustes para pantallas de 13"-15"
+   ══════════════════════════════════════════════ */
+@media (max-width: 1280px) {
+  .contentGrid {
+    grid-template-columns: minmax(190px, 1fr) 1.4fr minmax(180px, 1fr);
+    padding-inline: clamp(1.5rem, 3.5vw, 3rem);
+  }
+
+  .sectionLabel {
+    font-size: clamp(1rem, 2vw, 1.7rem);
+  }
+
+  .navLink {
+    font-size: clamp(0.8rem, 1.6vw, 1.5rem);
+  }
+
+  .mapFrameWrap {
+    height: clamp(120px, 12vw, 200px);
+  }
+}
+
+/* ══════════════════════════════════════════════
    RESPONSIVE — tablet 1024px
    ══════════════════════════════════════════════ */
 @media (max-width: 1024px) {
@@ -310,27 +342,45 @@
   }
 
   .logoLayer {
-    width: min(68vw, 680px);
+    width: min(66vw, 640px);
   }
 
   .samuraiLayer {
-    width: min(52vw, 600px);
+    width: min(50vw, 560px);
     height: 104%;
   }
 
   .contentGrid {
-    grid-template-columns: minmax(210px, 1fr) 1.2fr minmax(200px, 1fr);
-    padding-inline: clamp(1.2rem, 3vw, 2.5rem);
+    grid-template-columns: minmax(175px, 1fr) 1.2fr minmax(165px, 1fr);
+    padding-inline: clamp(1.2rem, 3vw, 2rem);
+  }
+
+  .sectionLabel {
+    font-size: clamp(0.95rem, 2.2vw, 1.5rem);
   }
 
   .navLink {
-    font-size: clamp(1rem, 2.6vw, 1.28rem);
+    font-size: clamp(0.78rem, 1.8vw, 1.3rem);
+  }
+
+  .mapFrameWrap {
+    height: clamp(110px, 11vw, 180px);
+  }
+
+  .backToTopIcon {
+    width: 44px;
+    height: 44px;
+  }
+
+  .backToTopIcon svg {
+    width: 18px;
+    height: 18px;
   }
 }
 
 /* ══════════════════════════════════════════════
    RESPONSIVE — mobile 768px
-   Contenido ARRIBA → samurai/logo ABAJO (como el ejemplo)
+   Contenido ARRIBA → samurai/logo ABAJO
    ══════════════════════════════════════════════ */
 @media (max-width: 768px) {
   .topCap {
@@ -348,17 +398,16 @@
     flex-direction: column;
   }
 
-  /* ── Grid de nav: PRIMERO (order 0) ── */
+  /* Grid de nav: PRIMERO */
   .contentGrid {
     order: 0;
     position: relative;
     inset: auto;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto;
+    grid-template-rows: auto auto auto;
     height: auto;
-    padding: clamp(4rem, 8vh, 5.5rem) 1.1rem 1.4rem;
-    padding: clamp(4rem, 8dvh, 5.5rem) 1.1rem 1.4rem; /* Small viewport height for mobile stability */
-    gap: 1.2rem 1rem;
+    padding: clamp(4rem, 8dvh, 5.5rem) 1.1rem 1.4rem;
+    gap: 1.4rem 1rem;
     align-items: start;
   }
 
@@ -366,49 +415,56 @@
     display: none;
   }
 
-  /* display:contents hace que los hijos participen directo en el grid padre */
+  /* display:contents → los hijos participan directo en el grid */
   .colLeft,
   .colRight {
     display: contents;
   }
 
-  /* Nav de páginas → columna 1, fila 1 */
+  /* Fila 1, columna 1 — PÁGINAS */
   .colLeft > .navSection {
     grid-column: 1;
     grid-row: 1;
   }
 
-  /* Nav de redes → columna 2, fila 1 */
+  /* Fila 1, columna 2 — SÍGUENOS */
   .colRight > .navSection:first-child {
     grid-column: 2;
     grid-row: 1;
   }
 
-  /* Mapa: ancho completo, fila 2 */
+  /* Fila 2, ancho completo — Mapa */
   .mapCard {
     grid-column: 1 / -1;
     grid-row: 2;
-  }
-
-  /* Contacto nav: ancho completo, fila 3 */
-  .colRight > .navSection:last-child {
-    grid-column: 1 / -1;
-    grid-row: 3;
-  }
-
-  .sectionLabel {
-    font-size: 0.6rem;
-  }
-
-  .navLink {
-    font-size: clamp(0.95rem, 4.4vw, 1.18rem);
-  }
-
-  .mapCard {
     max-width: none;
     width: 100%;
     padding: 0.5rem;
     gap: 0.4rem;
+  }
+
+  /* Fila 3, columna 1 — CONTACTO */
+  .colRight > .navSection:nth-child(2) {
+    grid-column: 1;
+    grid-row: 3;
+    text-align: left;
+  }
+
+  /* Fila 3, columna 2 — Botón volver arriba */
+  .colRight > .backToTopIcon {
+    grid-column: 2;
+    grid-row: 3;
+    align-self: end;
+    justify-self: end;
+  }
+
+  .sectionLabel {
+    font-size: 0.58rem;
+  }
+
+  .navLink {
+    font-size: clamp(0.88rem, 4.2vw, 1.1rem);
+    white-space: normal;
   }
 
   .mapAddress {
@@ -424,7 +480,7 @@
     min-height: 28px;
   }
 
-  /* ── Visual hero: ÚLTIMO (order 1) — samurai grande al fondo ── */
+  /* Visual hero: ÚLTIMO */
   .visual {
     order: 1;
     position: relative;
@@ -432,11 +488,9 @@
     height: 60dvh;
     min-height: 340px;
     flex-shrink: 0;
-    /* overflow visible para que el samurai pueda sobresalir levemente */
     overflow: visible;
   }
 
-  /* Logo: centrado en el bloque visual, más grande */
   .logoLayer {
     position: absolute;
     top: 42%;
@@ -445,7 +499,6 @@
     width: min(90vw, 480px);
   }
 
-  /* Samurai: grande, centrado, anclado al fondo */
   .samuraiLayer {
     position: absolute;
     bottom: 0;
@@ -460,24 +513,24 @@
     flex-direction: column;
     align-items: center;
     gap: 0.55rem;
-    padding: 0.9rem 1rem 1.1rem;
+    padding: 0.9rem 1rem 1.2rem;
   }
 
   .copy {
     text-align: center;
-    font-size: 0.6rem;
-    white-space: normal;
+    font-size: 0.58rem;
+    min-width: unset;
+    flex: none;
   }
 
   .legalLinks {
-    flex: none;
     justify-content: center;
     gap: 0.9rem;
   }
 }
 
 /* ══════════════════════════════════════════════
-   RESPONSIVE — small phones 430px
+   RESPONSIVE — teléfonos pequeños 430px
    ══════════════════════════════════════════════ */
 @media (max-width: 430px) {
   .visual {
@@ -500,7 +553,7 @@
   }
 
   .navLink {
-    font-size: clamp(0.88rem, 4.1vw, 1rem);
+    font-size: clamp(0.84rem, 4vw, 1rem);
   }
 
   .mapFrameWrap {

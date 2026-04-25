@@ -158,6 +158,31 @@
   animation: bracketFlip 5.6s ease-in-out infinite;
 }
 
+/* —— Hover preview card (desktop only) ——————————————— */
+.hoverBracket {
+  cursor: default;
+}
+
+.hoverPreview {
+  position: absolute;
+  z-index: 20;
+  pointer-events: none;
+  /* top / left are set via inline motion styles */
+}
+
+.hoverPreviewFrame {
+  position: relative;
+  width: 220px;
+  height: 148px;
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.28);
+}
+
+.hoverPreviewImage {
+  object-fit: cover;
+}
+
 .ot,
 .epochal {
   margin: 0;

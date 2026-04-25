@@ -60,6 +60,11 @@ export default function SiteShell({ children }: SiteShellProps) {
               accentColor={premiumConfig.navbar.accentColor}
               menuButtonColor={premiumConfig.navbar.menuButtonColor}
               openMenuButtonColor={premiumConfig.navbar.openMenuButtonColor}
+              socialItems={premiumConfig.sections.footer.socialLinks.map((s) => ({
+                label: s.label,
+                link: s.href,
+              }))}
+              displaySocials={true}
             />
           ) : (
             <Navbar key={navbarKey} />

@@ -39,7 +39,10 @@ export default function Snapshot() {
           end: "bottom top",
           pin: true,
           pinSpacing: false,
-          anticipatePin: 0.72,
+          // Valor bajo: con lerp=0.08 el scroll es rápido y la sección
+          // ya está en su posición exacta cuando el pin dispara.
+          // Más anticipación = arranca antes del momento correcto = se ve brusco.
+          anticipatePin: 0.2,
           invalidateOnRefresh: true,
         });
 
@@ -47,8 +50,10 @@ export default function Snapshot() {
       };
 
       mm.add("(min-width: 769px)", () => {
-        const pinDelay = Math.round(window.innerHeight * 0.14);
-        return createPinnedSnapshot(`top+=${pinDelay} top`);
+        // "top top": pin arranca exactamente cuando el borde superior del
+        // elemento toca el borde superior del viewport — visualmente idéntico
+        // a su posición natural, por lo que la transición es imperceptible.
+        return createPinnedSnapshot("top top");
       });
 
       mm.add("(max-width: 768px)", () => createPinnedSnapshot("bottom bottom"));

@@ -36,6 +36,13 @@
   pointer-events: none;
 }
 
+.geishaParallaxLayer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  will-change: transform;
+}
+
 .geishaHero {
   position: absolute;
   bottom: 0;

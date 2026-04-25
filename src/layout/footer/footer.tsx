@@ -1,8 +1,8 @@
 "use client";
 
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, useRef } from "react";
 import Image from "next/image";
-import { motion } from "motion/react";
+import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
 import { scrollToSection } from "@/lib/scroll-to-section";
 import styles from "./footer.module.css";
 import { usePremiumLandingConfig } from "@/landings/premium/context";
@@ -11,6 +11,39 @@ export default function Footer() {
   const {
     sections: { footer },
   } = usePremiumLandingConfig();
+
+  // ── Staggered cursor-parallax (desktop only) ───────────────────────
+  const footerRef = useRef<HTMLElement>(null);
+  const rawX = useMotionValue(0);
+  const rawY = useMotionValue(0);
+
+  // Samurai: foreground — fast spring, larger translation
+  const samuraiSpringX = useSpring(rawX, { stiffness: 60, damping: 16, mass: 0.8 });
+  const samuraiSpringY = useSpring(rawY, { stiffness: 60, damping: 16, mass: 0.8 });
+  const samuraiX = useTransform(samuraiSpringX, (v) => v * 36);
+  const samuraiY = useTransform(samuraiSpringY, (v) => v * 24);
+
+  // Logo: background — slow spring, smaller translation (depth stagger)
+  const logoSpringX = useSpring(rawX, { stiffness: 32, damping: 12, mass: 1.1 });
+  const logoSpringY = useSpring(rawY, { stiffness: 32, damping: 12, mass: 1.1 });
+  const logoX = useTransform(logoSpringX, (v) => v * 14);
+  const logoY = useTransform(logoSpringY, (v) => v * 9);
+
+  const handleFooterMouseMove = useCallback(
+    (e: React.MouseEvent<HTMLElement>) => {
+      if (window.matchMedia("(max-width: 768px)").matches) return;
+      const rect = footerRef.current?.getBoundingClientRect();
+      if (!rect) return;
+      rawX.set((e.clientX - rect.left) / rect.width - 0.5);
+      rawY.set((e.clientY - rect.top) / rect.height - 0.5);
+    },
+    [rawX, rawY],
+  );
+
+  const handleFooterMouseLeave = useCallback(() => {
+    rawX.set(0);
+    rawY.set(0);
+  }, [rawX, rawY]);
 
   const mapQuery = useMemo(
     () => encodeURIComponent(footer.address),
@@ -39,43 +72,52 @@ export default function Footer() {
 
 
   return (
-    <footer className={styles.footer}>
+    <footer
+      ref={footerRef}
+      className={styles.footer}
+      onMouseMove={handleFooterMouseMove}
+      onMouseLeave={handleFooterMouseLeave}
+    >
       <h2 className="srOnly">{footer.srHeading}</h2>
       <div className={styles.topCap} />
 
       <div className={styles.wrapper}>
         <div className={styles.visual} aria-hidden="true">
           <div className={styles.logoLayer}>
-            <div className={styles.logoWrap}>
-              <Image
-                src={footer.brandLogo}
-                alt=""
-                fill
-                sizes="(max-width: 768px) 80vw, 55vw"
-                loading="lazy"
-                className={styles.logoImg}
-              />
-            </div>
+            <motion.div style={{ x: logoX, y: logoY }} className={styles.logoParallax}>
+              <div className={styles.logoWrap}>
+                <Image
+                  src={footer.brandLogo}
+                  alt=""
+                  fill
+                  sizes="(max-width: 768px) 80vw, 55vw"
+                  loading="lazy"
+                  className={styles.logoImg}
+                />
+              </div>
+            </motion.div>
           </div>
 
           <div className={styles.samuraiLayer}>
-            <motion.div
-              className={styles.samuraiMotion}
-              initial={{ y: 120, opacity: 0 }}
-              whileInView={{ y: 0, opacity: 1 }}
-              transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
-              viewport={{ once: true }}
-            >
-              <div className={styles.samuraiWrap}>
-                <Image
-                  src={footer.samuraiImage}
-                  alt=""
-                  fill
-                  sizes="(max-width: 768px) 70vw, 36vw"
-                  loading="lazy"
-                  className={styles.samuraiImg}
-                />
-              </div>
+            <motion.div style={{ x: samuraiX, y: samuraiY }} className={styles.samuraiParallax}>
+              <motion.div
+                className={styles.samuraiMotion}
+                initial={{ y: 120, opacity: 0 }}
+                whileInView={{ y: 0, opacity: 1 }}
+                transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
+                viewport={{ once: true }}
+              >
+                <div className={styles.samuraiWrap}>
+                  <Image
+                    src={footer.samuraiImage}
+                    alt=""
+                    fill
+                    sizes="(max-width: 768px) 70vw, 36vw"
+                    loading="lazy"
+                    className={styles.samuraiImg}
+                  />
+                </div>
+              </motion.div>
             </motion.div>
           </div>
         </div>

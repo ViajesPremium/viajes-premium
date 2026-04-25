@@ -50,6 +50,7 @@
   background-color: var(--black);
   border-radius: var(--radius-sm);
   overflow: hidden;
+  box-shadow: var(--box-shadow);
 }
 .contentWrapper {
   position: relative;

@@ -49,7 +49,9 @@ export default function Faqs() {
           end: "bottom top",
           pin: true,
           pinSpacing: false,
-          anticipatePin: 0.72,
+          // Igual que snapshot: sección cubierta por CTAForm, el pin debe
+          // ser invisible. Con lerp=0.08, 0.2 es la anticipación correcta.
+          anticipatePin: 0.2,
           invalidateOnRefresh: true,
         });
 
@@ -152,12 +154,29 @@ export default function Faqs() {
       });
     };
 
-    window.addEventListener("scroll", requestUpdate, { passive: true });
+    // Usar el evento de Lenis cuando esté disponible para sincronizar
+    // con el ticker de GSAP. Fallback a scroll nativo si Lenis no cargó.
+    let lenisUnsubscribe: (() => void) | null = null;
+
+    const attachLenis = () => {
+      const lenis = (window as unknown as { __lenis?: { on: (e: string, cb: () => void) => void; off: (e: string, cb: () => void) => void } }).__lenis;
+      if (lenis) {
+        lenis.on("scroll", requestUpdate);
+        lenisUnsubscribe = () => lenis.off("scroll", requestUpdate);
+      } else {
+        window.addEventListener("scroll", requestUpdate, { passive: true });
+        lenisUnsubscribe = () => window.removeEventListener("scroll", requestUpdate);
+      }
+    };
+
+    // Lenis puede inicializarse de forma asíncrona, esperar un frame
+    const rafSetup = window.requestAnimationFrame(attachLenis);
     window.addEventListener("resize", requestUpdate);
     requestUpdate();
 
     return () => {
-      window.removeEventListener("scroll", requestUpdate);
+      window.cancelAnimationFrame(rafSetup);
+      lenisUnsubscribe?.();
       window.removeEventListener("resize", requestUpdate);
 
       if (rafId !== null) {

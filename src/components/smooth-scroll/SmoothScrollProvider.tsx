@@ -3,10 +3,14 @@
 import { useEffect, useRef } from "react";
 import type Lenis from "lenis";
 
-// Lower lerp => smoother and slightly slower response.
-const DESKTOP_LERP = 0.03;
+// lerp: fracción de la distancia que se cubre por frame.
+// 0.08 = suave sin lag excesivo. Con lerp=0.03 el scroll "arrastraba"
+// muy lejos del cursor y luego aceleraba bruscamente (tirones).
+const DESKTOP_LERP = 0.08;
 const MOBILE_LERP = 0.09;
-const DESKTOP_WHEEL_MULTIPLIER = 0.52;
+// Multiplicador de rueda: afecta cuánto avanza cada tick de scroll.
+// 0.52 era muy bajo; 0.85 da respuesta natural sin sobre-disparar.
+const DESKTOP_WHEEL_MULTIPLIER = 0.85;
 const MOBILE_WHEEL_MULTIPLIER = 0.92;
 
 export default function SmoothScrollProvider({

@@ -80,10 +80,8 @@
   height: 360px;
   cursor: pointer;
   transform: translateZ(0) translateY(0) scale(1);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0);
-  transition:
-    transform 0.4s cubic-bezier(0.25, 1, 0.5, 1),
-    box-shadow 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  border: 2px solid var(--bg);
+  box-shadow: var(--box-shadow);
 }
 
 /* El Hover Premium */

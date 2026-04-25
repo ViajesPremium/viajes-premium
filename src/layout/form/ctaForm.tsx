@@ -12,9 +12,12 @@ import { usePremiumLandingConfig } from "@/landings/premium/context";
 gsap.registerPlugin(ScrollTrigger);
 
 const CTA_FORM_SCROLL_TUNING = {
-  desktopScrub: 0.82,
-  mobileScrub: 0.42,
-  pinAnticipation: 0.72,
+  // Reducido drásticamente: con Lenis lerp=0.08 ya hay suavizado.
+  // Doble suavizado (Lenis + GSAP scrub alto) = tirones visibles.
+  // Se mantiene un valor pequeño para el efecto cinematográfico de las puertas.
+  desktopScrub: 0.28,
+  mobileScrub: 0.14,
+  pinAnticipation: 0.4,
 } as const;
 
 export default function CTAForm() {
