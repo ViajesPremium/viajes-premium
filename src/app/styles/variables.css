@@ -12,7 +12,7 @@
   --bg: #f3f3f0;
   --black: #16181b;
   --radius: 0.2rem;
-  --box-shadow: 0px 10px 22px rgba(0, 0, 0, 0.2);
+  --box-shadow: 0px 10px 22px rgba(0, 0, 0, 0.1);
 
   /* Fonts (from globals.css @font-face) */
   --font-nohemi: "Nohemi", sans-serif;
