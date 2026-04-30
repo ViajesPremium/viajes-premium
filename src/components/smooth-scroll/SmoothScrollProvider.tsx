@@ -77,6 +77,7 @@ export default function SmoothScrollProvider({
         refreshRaf = window.requestAnimationFrame(() => {
           refreshRaf = null;
           lenisRef.current?.resize();
+          stApi?.sort();
           stApi?.refresh();
         });
       }, delay);
@@ -105,13 +106,8 @@ export default function SmoothScrollProvider({
         autoRefreshEvents: "visibilitychange,DOMContentLoaded,load",
       });
 
-      // normalizeScroll suaviza la inercia nativa de touch sin interceptar los
-      // eventos de forma agresiva. allowNestedScroll permite que los contenedores
-      // internos con scroll propio (p.ej. el form) sigan funcionando.
-      ScrollTrigger.normalizeScroll({ allowNestedScroll: true });
-
-      // syncTouch: false — inercia nativa del navegador en mobile.
-      // normalizeScroll de GSAP complementa la suavidad sin los freezes de syncTouch.
+      // Lenis es el unico controlador de scroll; evitamos normalizeScroll para
+      // que GSAP no compita con el scroll nativo tactil en mobile.
       const lenis = new LenisCtor({
         lerp: isMobile ? MOBILE_LERP : DESKTOP_LERP,
         smoothWheel: true,

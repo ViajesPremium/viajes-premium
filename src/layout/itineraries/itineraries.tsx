@@ -61,6 +61,7 @@ type LenisLike = {
       duration?: number;
       easing?: (t: number) => number;
       immediate?: boolean;
+      force?: boolean;
     },
   ) => void;
   stop: () => void;
@@ -151,12 +152,7 @@ export default function Itinerary() {
         //   EXITING     → user triggered exit, Lenis takes over scroll
         let isInteractive = false;
         let isExiting = false;
-        // True when the user scrolled back up into this section from below (Includes).
-        // Enables backward exit from step 0 so they can return to Highlights.
-        let enteredFromBelow = false;
-        // True once the user advanced at least one card in the current mobile session.
-        // Allows exiting upward from step 0 after interacting (prevents hard lock).
-        let hasMovedForwardInSession = false;
+        let lastCaptureDirection: 1 | -1 = 1;
 
         const MOBILE_STEP_DURATION = 0.52;
         const MOBILE_INFO_ACTIVE_DURATION = 0.4;
@@ -188,20 +184,51 @@ export default function Itinerary() {
         const enterInteractive = () => {
           if (isInteractive) return;
           isInteractive = true;
-          getLenis()?.stop();
         };
 
         const exitInteractive = () => {
           if (!isInteractive) return;
           isInteractive = false;
-          getLenis()?.start();
+        };
+
+        const captureAt = (
+          step: number,
+          scrollTarget: number,
+          direction: 1 | -1,
+        ) => {
+          const lenis = getLenis();
+          lastCaptureDirection = direction;
+          activeTransition?.kill();
+          activeTransition = null;
+          isExiting = false;
+
+          if (lenis) {
+            lenis.scrollTo(scrollTarget, { immediate: true, force: true });
+          } else {
+            window.scrollTo({ top: scrollTarget, behavior: "auto" });
+          }
+
+          setStepState(step);
+          setVisualState(step);
+          enterInteractive();
+        };
+
+        const captureFromTop = () => {
+          captureAt(0, pinTrigger.start + 2, 1);
+        };
+
+        const captureFromBottom = () => {
+          captureAt(
+            total - 1,
+            Math.max(pinTrigger.start + 2, pinTrigger.end - 2),
+            -1,
+          );
         };
 
         // ── Step animation ────────────────────────────────────────────────────
         const animateToStep = (targetStep: number) => {
           const from = currentStepRef.current;
           if (targetStep === from || activeTransition) return;
-          if (targetStep > from) hasMovedForwardInSession = true;
 
           setStepState(targetStep);
           activeTransition = gsap.timeline({
@@ -261,19 +288,14 @@ export default function Itinerary() {
           start: "top top",
           end: () => `+=${window.innerHeight * MOBILE_PIN_VH}`,
           pin: true,
+          pinType: "fixed",
           pinSpacing: true,
           anticipatePin: ITINERARIES_SCROLL_TUNING.mobilePinAnticipation,
+          fastScrollEnd: true,
+          refreshPriority: 40,
           invalidateOnRefresh: true,
           onEnter: () => {
-            // Fresh forward entry (from top). Reset everything to card 0.
-            activeTransition?.kill();
-            activeTransition = null;
-            enteredFromBelow = false;
-            hasMovedForwardInSession = false;
-            isExiting = false;
-            isInteractive = false;
-            setStepState(0);
-            setVisualState(0);
+            captureFromTop();
           },
           onUpdate: () => {
             // Continuously poll until Highlights is gone, then lock in.
@@ -282,16 +304,26 @@ export default function Itinerary() {
             }
           },
           onLeave: () => {
+            if (!isExiting) {
+              captureFromTop();
+              return;
+            }
             // Pin naturally ended (edge case — normally exit is via doExit).
             exitInteractive();
             isExiting = false;
           },
           onLeaveBack: () => {
+            if (!isExiting) {
+              if (lastCaptureDirection < 0) {
+                captureFromBottom();
+              } else {
+                captureFromTop();
+              }
+              return;
+            }
             // User scrolled back above the pin start (past Highlights into top).
             exitInteractive();
             isExiting = false;
-            enteredFromBelow = false;
-            hasMovedForwardInSession = false;
           },
           onEnterBack: () => {
             // Guard: scroll programático activo (p.ej. botón back-to-top).
@@ -306,23 +338,10 @@ export default function Itinerary() {
 
             if (isPassthrough) {
               isExiting = false;
-              enteredFromBelow = false;
-              hasMovedForwardInSession = false;
               return;
             }
 
-            // User scrolled back UP into the pin from below (from Includes).
-            // Kill any lingering animation, reset all flags, land on last card.
-            activeTransition?.kill();
-            activeTransition = null;
-            enteredFromBelow = true;
-            hasMovedForwardInSession = true;
-            isExiting = false;
-            isInteractive = false; // reset so enterInteractive() fires cleanly
-            setStepState(total - 1);
-            setVisualState(total - 1);
-            // Highlights is definitely gone if we're coming from below.
-            enterInteractive();
+            captureFromBottom();
           },
           onRefresh: () => {
             window.__lenis?.resize();
@@ -384,10 +403,9 @@ export default function Itinerary() {
           } else {
             if (step > 0) {
               animateToStep(step - 1);
-            } else if (enteredFromBelow || hasMovedForwardInSession) {
-              doExit(-1); // first card + came from below → exit backward to Highlights
+            } else {
+              doExit(-1);
             }
-            // First card + came from top → do nothing (must see all cards first)
           }
         };
 
@@ -414,8 +432,7 @@ export default function Itinerary() {
             else doExit(1);
           } else {
             if (step > 0) animateToStep(step - 1);
-            else if (enteredFromBelow || hasMovedForwardInSession) doExit(-1);
-            // First card + came from top → no backward exit
+            else doExit(-1);
           }
         };
 
