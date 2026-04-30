@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import dynamic from "next/dynamic";
@@ -144,7 +144,9 @@ export default function PremiumLandingClient({
         <section id="inicio">
           <Hero />
         </section>
-        <Snapshot />
+        <section id="nosotros">
+          <Snapshot />
+        </section>
         <FirstForm />
 
         <DeferredSection

@@ -727,13 +727,57 @@ function ExperienceChips({
   theme,
 }: ExperienceChipsProps) {
   const isLightTheme = theme === "light";
+  const topOptions = options.slice(0, 3);
+  const lastOption = options[3];
+
+  const getChipClassName = (isSelected: boolean, isCompact: boolean) =>
+    [
+      styles.experienceChip,
+      isCompact ? styles.experienceChipCompact : "",
+      isLightTheme ? styles.experienceChipLight : styles.experienceChipDark,
+      isSelected ? styles.experienceChipSelected : "",
+    ]
+      .filter(Boolean)
+      .join(" ");
+
   return (
     <div
       className={styles.experienceChips}
       role="group"
       aria-label="Tipo de experiencia"
     >
-      {options.map((option) => {
+      <div className={styles.experienceChipsTopRow}>
+        {topOptions.map((option) => {
+          const isSelected = value === option.value;
+          return (
+            <button
+              key={option.value}
+              type="button"
+              aria-pressed={isSelected}
+              onClick={() => onChange(isSelected ? "" : option.value)}
+              className={getChipClassName(isSelected, true)}
+            >
+              {option.label}
+            </button>
+          );
+        })}
+      </div>
+      {lastOption ? (
+        <button
+          type="button"
+          aria-pressed={value === lastOption.value}
+          onClick={() => onChange(value === lastOption.value ? "" : lastOption.value)}
+          className={[
+            getChipClassName(value === lastOption.value, false),
+            styles.experienceChipFull,
+          ]
+            .filter(Boolean)
+            .join(" ")}
+        >
+          {lastOption.label}
+        </button>
+      ) : null}
+      {options.slice(4).map((option) => {
         const isSelected = value === option.value;
         return (
           <button
@@ -741,15 +785,7 @@ function ExperienceChips({
             type="button"
             aria-pressed={isSelected}
             onClick={() => onChange(isSelected ? "" : option.value)}
-            className={[
-              styles.experienceChip,
-              isLightTheme
-                ? styles.experienceChipLight
-                : styles.experienceChipDark,
-              isSelected ? styles.experienceChipSelected : "",
-            ]
-              .filter(Boolean)
-              .join(" ")}
+            className={getChipClassName(isSelected, false)}
           >
             {option.label}
           </button>

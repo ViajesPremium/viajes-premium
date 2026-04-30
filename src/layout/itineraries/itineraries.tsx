@@ -646,7 +646,11 @@ export default function Itinerary() {
 
           <div className={styles.cardFooter}>
             <div className={styles.buttons}>
-              <Button variant="secondary" className={styles.ctaButton2}>
+              <Button
+                variant="secondary"
+                className={styles.ctaButton2}
+                onClick={handleGoToForm}
+              >
                 {itineraries.secondaryCtaLabel}
               </Button>
               <Button

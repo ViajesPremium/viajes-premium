@@ -18,7 +18,7 @@ const SECTION_ALIAS_MAP: Record<string, string> = {
 };
 
 const REVEAL_SCROLL_OFFSETS: Record<string, ScrollOffsetConfig> = {
-  "#itinerarios": { viewportHeightMultiplier: 1 },
+  "#itinerarios": { viewportHeightMultiplier: 1, desktopOnly: true },
   "#testimonials": { viewportHeightMultiplier: 1, desktopOnly: true },
 };
 
@@ -100,7 +100,8 @@ export function scrollToSection(
       });
     } else {
       // Avoid native smooth scrolling here; it can fight GSAP pinning.
-      window.scrollTo({ top: targetY, behavior: "auto" });
+      // On mobile where we have sequential scrolling now, smooth is safer.
+      window.scrollTo({ top: targetY, behavior: "smooth" });
       refreshScrollSystems();
     }
 

@@ -25,13 +25,13 @@
 
 .buttonPrimary {
   padding: 0.15rem 4.2rem 0.15rem 2rem;
-  background-color: var(--secondary-japon);
+  background-color: var(--primary-japon);
 }
 
 .buttonPrimary:hover {
   padding-left: 3rem;
   padding-right: 1rem;
-  background-color: var(--primary-japon);
+  background-color: var(--secondary-japon);
 }
 
 .buttonSecondary {

@@ -537,14 +537,22 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
         aria-label="Main navigation header"
       >
         <div className="sm-logo" aria-label="Logo">
-          <Image
-            src={logoUrl || "/logos/reactbits-gh-white.svg"}
-            alt="Logo"
-            className="sm-logo-img"
-            draggable={false}
-            width={110}
-            height={24}
-          />
+          <a
+            href="#inicio"
+            onClick={(e) => {
+              e.preventDefault();
+              scrollToSection("#inicio", { duration: 1.15 });
+            }}
+          >
+            <Image
+              src={logoUrl || "/logos/reactbits-gh-white.svg"}
+              alt="Logo"
+              className="sm-logo-img"
+              draggable={false}
+              width={110}
+              height={24}
+            />
+          </a>
         </div>
         <div className="sm-toggle-container">
           <button

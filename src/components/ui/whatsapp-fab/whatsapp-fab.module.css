@@ -8,9 +8,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: #25d366;
+  background: #41d476;
   color: #fff;
-  box-shadow: 0 10px 24px rgb(0 0 0 / 0.28);
   border: 1px solid rgb(0 0 0 / 0.08);
   z-index: 1200;
   transition:
@@ -31,8 +30,8 @@
 }
 
 .icon {
-  width: 1.65rem;
-  height: 1.65rem;
+  width: 2rem;
+  height: 2rem;
 }
 
 @media (max-width: 768px) {
