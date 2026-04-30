@@ -4,13 +4,8 @@ import { useEffect, useRef } from "react";
 import type Lenis from "lenis";
 
 const DESKTOP_LERP = 0.08;
-const MOBILE_LERP = 0.1;
 const DESKTOP_WHEEL_MULTIPLIER = 0.85;
-const MOBILE_WHEEL_MULTIPLIER = 1;
 
-// Mínima diferencia de altura (px) para considerar un resize real en mobile.
-// Cambios menores (barra del navegador: ~56–100 px) quedan por debajo de este
-// umbral y se ignoran. Cambios mayores (rotación, teclado virtual) lo superan.
 const MOBILE_HEIGHT_THRESHOLD = 100;
 
 type ScrollTriggerType = typeof import("gsap/ScrollTrigger").ScrollTrigger;
@@ -50,7 +45,6 @@ export default function SmoothScrollProvider({
     let refreshTimeout: ReturnType<typeof setTimeout> | null = null;
     let resizeObserver: ResizeObserver | null = null;
 
-    // Dimensiones rastreadas para filtrar cambios de barra de navegador en mobile.
     let lastWidth = window.innerWidth;
     let lastHeight = window.innerHeight;
 
@@ -84,12 +78,10 @@ export default function SmoothScrollProvider({
     };
 
     const init = async () => {
-      const [{ default: LenisCtor }, { gsap }, { ScrollTrigger }] =
-        await Promise.all([
-          import("lenis"),
-          import("gsap"),
-          import("gsap/ScrollTrigger"),
-        ]);
+      const [{ gsap }, { ScrollTrigger }] = await Promise.all([
+        import("gsap"),
+        import("gsap/ScrollTrigger"),
+      ]);
 
       if (cancelled) return;
 
@@ -98,52 +90,49 @@ export default function SmoothScrollProvider({
 
       gsapApi.registerPlugin(ScrollTrigger);
 
-      // autoRefreshEvents limitado: ScrollTrigger sólo auto-refresca en estos
-      // eventos del DOM — NO en "resize" — porque manejamos eso manualmente con
-      // filtrado inteligente para evitar saltos por la barra del navegador.
       ScrollTrigger.config({
         ignoreMobileResize: false,
         autoRefreshEvents: "visibilitychange,DOMContentLoaded,load",
       });
 
-      // Lenis es el unico controlador de scroll; evitamos normalizeScroll para
-      // que GSAP no compita con el scroll nativo tactil en mobile.
-      const lenis = new LenisCtor({
-        lerp: isMobile ? MOBILE_LERP : DESKTOP_LERP,
-        smoothWheel: true,
-        syncTouch: false,
-        touchMultiplier: 1,
-        wheelMultiplier: isMobile
-          ? MOBILE_WHEEL_MULTIPLIER
-          : DESKTOP_WHEEL_MULTIPLIER,
-        gestureOrientation: "vertical",
-        autoRaf: false,
-      });
+      if (isMobile) {
+        if (window.__lenis) {
+          delete window.__lenis;
+        }
+        clearStaleLenisStoppedClass();
+      } else {
+        const { default: LenisCtor } = await import("lenis");
+        if (cancelled) return;
 
-      lenisRef.current = lenis;
-      window.__lenis = lenis;
-      clearStaleLenisStoppedClass();
+        const lenis = new LenisCtor({
+          lerp: DESKTOP_LERP,
+          smoothWheel: true,
+          syncTouch: false,
+          touchMultiplier: 1,
+          wheelMultiplier: DESKTOP_WHEEL_MULTIPLIER,
+          gestureOrientation: "vertical",
+          autoRaf: false,
+        });
 
-      lenisOffScroll = lenis.on("scroll", () => {
-        stApi?.update();
-      });
+        lenisRef.current = lenis;
+        window.__lenis = lenis;
+        clearStaleLenisStoppedClass();
 
-      // Ticker de GSAP como fuente única de verdad para el RAF.
-      // lenis.raf recibe ms absolutos — time del ticker ya viene en segundos.
-      tickerCb = (time: number) => {
-        lenis.raf(time * 1000);
-      };
+        lenisOffScroll = lenis.on("scroll", () => {
+          stApi?.update();
+        });
 
-      gsapApi.ticker.add(tickerCb);
-      gsapApi.ticker.lagSmoothing(0);
+        tickerCb = (time: number) => {
+          lenis.raf(time * 1000);
+        };
 
-      stRefreshCb = () => scheduleLenisResize();
-      ScrollTrigger.addEventListener("refresh", stRefreshCb);
+        gsapApi.ticker.add(tickerCb);
+        gsapApi.ticker.lagSmoothing(0);
 
-      // ── Resize inteligente ─────────────────────────────────────────────────
-      // En mobile, ignoramos cambios que sean solo de altura < 100 px (barra del
-      // navegador). Solo refrescamos si el ancho cambió (orientación real) o si
-      // la altura varió significativamente (teclado virtual, cambio de layout).
+        stRefreshCb = () => scheduleLenisResize();
+        ScrollTrigger.addEventListener("refresh", stRefreshCb);
+      }
+
       const onResize = () => {
         const newWidth = window.innerWidth;
         const newHeight = window.innerHeight;
@@ -151,7 +140,7 @@ export default function SmoothScrollProvider({
         const heightDiff = Math.abs(newHeight - lastHeight);
 
         if (isMobile && !widthChanged && heightDiff <= MOBILE_HEIGHT_THRESHOLD) {
-          return; // cambio de barra de navegador — ignorar
+          return;
         }
 
         lastWidth = newWidth;
@@ -160,7 +149,6 @@ export default function SmoothScrollProvider({
       };
 
       const onOrientation = () => {
-        // Actualizar referencias para que onResize no filtre el cambio post-rotación.
         lastWidth = window.innerWidth;
         lastHeight = window.innerHeight;
         scheduleRefresh(150);
@@ -185,21 +173,16 @@ export default function SmoothScrollProvider({
       window.addEventListener("pageshow", onPageShow);
       document.addEventListener("visibilitychange", onVisibility);
 
-      // ResizeObserver en desktop para detectar cambios de layout por contenido
-      // (imágenes lazy, fuentes, etc.). En mobile está controlado por onResize.
       if (!isMobile) {
         resizeObserver = new ResizeObserver(() => scheduleLenisResize());
         resizeObserver.observe(document.documentElement);
       }
 
-      // Fuentes cargadas → posiciones de elementos pueden haber cambiado.
       document.fonts?.ready.then(() => {
         if (cancelled) return;
         scheduleRefresh(0);
       });
 
-      // Ordenar triggers por posición en el DOM antes del primer refresh para
-      // garantizar que itineraries y demás secciones se calculen en secuencia.
       ScrollTrigger.sort();
       scheduleRefresh(0);
 
