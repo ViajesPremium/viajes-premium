@@ -1,0 +1,50 @@
+.fab {
+  position: fixed;
+  right: max(1rem, env(safe-area-inset-right));
+  bottom: max(1rem, env(safe-area-inset-bottom));
+  width: 3.8rem;
+  height: 3.8rem;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #25d366;
+  color: #fff;
+  box-shadow: 0 10px 24px rgb(0 0 0 / 0.28);
+  border: 1px solid rgb(0 0 0 / 0.08);
+  z-index: 1200;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    filter 0.2s ease;
+}
+
+.fab:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.03);
+  box-shadow: 0 14px 28px rgb(0 0 0 / 0.34);
+}
+
+.fab:focus-visible {
+  outline: 2px solid var(--white);
+  outline-offset: 3px;
+}
+
+.icon {
+  width: 1.65rem;
+  height: 1.65rem;
+}
+
+@media (max-width: 768px) {
+  .fab {
+    width: 3.5rem;
+    height: 3.5rem;
+    right: max(0.85rem, env(safe-area-inset-right));
+    bottom: max(0.85rem, env(safe-area-inset-bottom));
+  }
+
+  .icon {
+    width: 1.8rem;
+    height: 1.8rem;
+  }
+}

@@ -11,7 +11,7 @@
   overflow: hidden;
   white-space: nowrap;
   font-size: 1rem;
-  font-weight: 300;
+  font-weight: 400;
   color: var(--white, #ffffff);
   transition: all 500ms ease;
   font-family: var(--font-nohemi);
@@ -25,13 +25,13 @@
 
 .buttonPrimary {
   padding: 0.15rem 4.2rem 0.15rem 2rem;
-  background-color: var(--primary-japon);
+  background-color: var(--secondary-japon);
 }
 
 .buttonPrimary:hover {
   padding-left: 3rem;
   padding-right: 1rem;
-  background-color: var(--secondary-japon);
+  background-color: var(--primary-japon);
 }
 
 .buttonSecondary {

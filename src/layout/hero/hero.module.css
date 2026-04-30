@@ -2,7 +2,10 @@
   position: relative;
   width: 100%;
   height: 100vh;
-  height: var(--app-vh, 100svh); /* Small viewport height for mobile stability */
+  height: var(
+    --app-vh,
+    100svh
+  ); /* Small viewport height for mobile stability */
   overflow: hidden;
   isolation: isolate;
   background-color: rgb(247, 203, 203);
@@ -125,7 +128,7 @@
   transform: translate(-50%, -50%);
   width: clamp(250px, 30vw, 400px);
   height: clamp(250px, 30vw, 400px);
-  background-color: var(--primary-japon);
+  background-color: var(--secondary-japon);
   border-radius: 50%;
   z-index: 1;
   pointer-events: none;
@@ -306,4 +309,3 @@
     width: 100%;
   }
 }
-

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import SiteShell from "@/app/SiteShell";
+import WhatsAppFab from "@/components/ui/whatsapp-fab/whatsapp-fab";
 import "./globals.css";
 
 const baseUrl =
@@ -32,6 +33,7 @@ export default function RootLayout({
       </head>
       <body className="flex min-h-screen flex-col">
         <SiteShell>{children}</SiteShell>
+        <WhatsAppFab />
       </body>
     </html>
   );
