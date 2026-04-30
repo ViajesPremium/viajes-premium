@@ -4,7 +4,14 @@ import { motion } from "framer-motion";
 import { FaWhatsapp } from "react-icons/fa6";
 import styles from "./whatsapp-fab.module.css";
 
-const WHATSAPP_LINK = "https://wa.me/5215573728880";
+/**
+ * Explicación del Link:
+ * - 5215573728880: Tu número.
+ * - ?text=: El parámetro para el mensaje predefinido.
+ * - %20: Es el código para los espacios.
+ */
+const MESSAGE = "Hola!, quiero mi viaje premium";
+const WHATSAPP_LINK = `https://wa.me/5215573728880?text=${encodeURIComponent(MESSAGE)}`;
 
 export default function WhatsAppFab() {
   return (
@@ -14,23 +21,20 @@ export default function WhatsAppFab() {
       rel="noopener noreferrer"
       aria-label="Escribir por WhatsApp"
       className={styles.fab}
-      // Animación continua estable
+      // La animación fluida que ya aprobaste
       animate={{
-        // "Pulse" sutil: apenas un 5% de cambio de tamaño
         scale: [1, 1.05, 1],
-        // Movimiento vertical mínimo para que no se salga de su lugar
         y: [0, -6, 0],
       }}
       transition={{
-        duration: 3, // Ciclo lento para que no estrese
-        ease: "easeInOut", // Movimiento orgánico
-        repeat: Infinity, // Infinito
-        repeatType: "loop", // Ciclo cerrado
+        duration: 3,
+        ease: "easeInOut",
+        repeat: Infinity,
+        repeatType: "loop",
       }}
-      // Interacciones manuales (estas tienen prioridad sobre 'animate')
       whileHover={{
         scale: 1.1,
-        y: -2,
+        backgroundColor: "#1ebea5",
         transition: { type: "spring", stiffness: 300 },
       }}
       whileTap={{ scale: 0.95 }}
