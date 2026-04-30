@@ -8,6 +8,11 @@ const MOBILE_LERP = 0.1;
 const DESKTOP_WHEEL_MULTIPLIER = 0.85;
 const MOBILE_WHEEL_MULTIPLIER = 1;
 
+// Mínima diferencia de altura (px) para considerar un resize real en mobile.
+// Cambios menores (barra del navegador: ~56–100 px) quedan por debajo de este
+// umbral y se ignoran. Cambios mayores (rotación, teclado virtual) lo superan.
+const MOBILE_HEIGHT_THRESHOLD = 100;
+
 type ScrollTriggerType = typeof import("gsap/ScrollTrigger").ScrollTrigger;
 
 function clearStaleLenisStoppedClass() {
@@ -44,6 +49,10 @@ export default function SmoothScrollProvider({
     let refreshRaf: number | null = null;
     let refreshTimeout: ReturnType<typeof setTimeout> | null = null;
     let resizeObserver: ResizeObserver | null = null;
+
+    // Dimensiones rastreadas para filtrar cambios de barra de navegador en mobile.
+    let lastWidth = window.innerWidth;
+    let lastHeight = window.innerHeight;
 
     const scheduleLenisResize = () => {
       if (resizeRaf !== null) return;
@@ -87,10 +96,22 @@ export default function SmoothScrollProvider({
       stApi = ScrollTrigger;
 
       gsapApi.registerPlugin(ScrollTrigger);
-      ScrollTrigger.config({ ignoreMobileResize: true });
 
-      // syncTouch apagado por estabilidad: evita congelamientos táctiles
-      // y deja la inercia nativa del navegador en mobile.
+      // autoRefreshEvents limitado: ScrollTrigger sólo auto-refresca en estos
+      // eventos del DOM — NO en "resize" — porque manejamos eso manualmente con
+      // filtrado inteligente para evitar saltos por la barra del navegador.
+      ScrollTrigger.config({
+        ignoreMobileResize: false,
+        autoRefreshEvents: "visibilitychange,DOMContentLoaded,load",
+      });
+
+      // normalizeScroll suaviza la inercia nativa de touch sin interceptar los
+      // eventos de forma agresiva. allowNestedScroll permite que los contenedores
+      // internos con scroll propio (p.ej. el form) sigan funcionando.
+      ScrollTrigger.normalizeScroll({ allowNestedScroll: true });
+
+      // syncTouch: false — inercia nativa del navegador en mobile.
+      // normalizeScroll de GSAP complementa la suavidad sin los freezes de syncTouch.
       const lenis = new LenisCtor({
         lerp: isMobile ? MOBILE_LERP : DESKTOP_LERP,
         smoothWheel: true,
@@ -111,6 +132,8 @@ export default function SmoothScrollProvider({
         stApi?.update();
       });
 
+      // Ticker de GSAP como fuente única de verdad para el RAF.
+      // lenis.raf recibe ms absolutos — time del ticker ya viene en segundos.
       tickerCb = (time: number) => {
         lenis.raf(time * 1000);
       };
@@ -121,20 +144,29 @@ export default function SmoothScrollProvider({
       stRefreshCb = () => scheduleLenisResize();
       ScrollTrigger.addEventListener("refresh", stRefreshCb);
 
-      // ── Resize handling ────────────────────────────────────────────────────
-      // On mobile we completely ignore window/visualViewport resize events.
-      // Those fire every time the browser address bar shows or hides (height
-      // change only) and would cause scroll-position jumps. The only real
-      // layout change on mobile that we care about is orientationchange, which
-      // is handled separately below.
-      // On desktop, resize always means a genuine viewport change.
+      // ── Resize inteligente ─────────────────────────────────────────────────
+      // En mobile, ignoramos cambios que sean solo de altura < 100 px (barra del
+      // navegador). Solo refrescamos si el ancho cambió (orientación real) o si
+      // la altura varió significativamente (teclado virtual, cambio de layout).
       const onResize = () => {
-        if (isMobile) return; // completely skip on mobile
+        const newWidth = window.innerWidth;
+        const newHeight = window.innerHeight;
+        const widthChanged = newWidth !== lastWidth;
+        const heightDiff = Math.abs(newHeight - lastHeight);
+
+        if (isMobile && !widthChanged && heightDiff <= MOBILE_HEIGHT_THRESHOLD) {
+          return; // cambio de barra de navegador — ignorar
+        }
+
+        lastWidth = newWidth;
+        lastHeight = newHeight;
         scheduleRefresh(120);
       };
 
       const onOrientation = () => {
-        // Give the browser time to settle after rotation before refreshing.
+        // Actualizar referencias para que onResize no filtre el cambio post-rotación.
+        lastWidth = window.innerWidth;
+        lastHeight = window.innerHeight;
         scheduleRefresh(150);
         scheduleRefresh(400);
       };
@@ -144,6 +176,7 @@ export default function SmoothScrollProvider({
         clearStaleLenisStoppedClass();
         scheduleRefresh(0);
       };
+
       const onVisibility = () => {
         if (document.visibilityState !== "visible") return;
         gsapApi?.ticker.wake();
@@ -156,23 +189,22 @@ export default function SmoothScrollProvider({
       window.addEventListener("pageshow", onPageShow);
       document.addEventListener("visibilitychange", onVisibility);
 
-      // visualViewport resize fires on browser-bar show/hide — skip entirely.
-      // Desktop doesn't have this problem; the window resize handler above
-      // covers desktop layout changes.
-
-      // ResizeObserver: only on desktop. On mobile the browser bar triggers it
-      // constantly, causing jumps. Content height changes on mobile are handled
-      // naturally by Lenis without a forced refresh.
+      // ResizeObserver en desktop para detectar cambios de layout por contenido
+      // (imágenes lazy, fuentes, etc.). En mobile está controlado por onResize.
       if (!isMobile) {
         resizeObserver = new ResizeObserver(() => scheduleLenisResize());
         resizeObserver.observe(document.documentElement);
       }
 
+      // Fuentes cargadas → posiciones de elementos pueden haber cambiado.
       document.fonts?.ready.then(() => {
         if (cancelled) return;
         scheduleRefresh(0);
       });
 
+      // Ordenar triggers por posición en el DOM antes del primer refresh para
+      // garantizar que itineraries y demás secciones se calculen en secuencia.
+      ScrollTrigger.sort();
       scheduleRefresh(0);
 
       return () => {
