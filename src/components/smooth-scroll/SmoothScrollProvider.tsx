@@ -6,8 +6,6 @@ import type Lenis from "lenis";
 const DESKTOP_LERP = 0.08;
 const DESKTOP_WHEEL_MULTIPLIER = 0.85;
 
-const MOBILE_HEIGHT_THRESHOLD = 100;
-
 type ScrollTriggerType = typeof import("gsap/ScrollTrigger").ScrollTrigger;
 
 function clearStaleLenisStoppedClass() {
@@ -91,7 +89,7 @@ export default function SmoothScrollProvider({
       gsapApi.registerPlugin(ScrollTrigger);
 
       ScrollTrigger.config({
-        ignoreMobileResize: false,
+        ignoreMobileResize: true,
         autoRefreshEvents: "visibilitychange,DOMContentLoaded,load",
       });
 
@@ -135,16 +133,16 @@ export default function SmoothScrollProvider({
 
       const onResize = () => {
         const newWidth = window.innerWidth;
-        const newHeight = window.innerHeight;
         const widthChanged = newWidth !== lastWidth;
-        const heightDiff = Math.abs(newHeight - lastHeight);
 
-        if (isMobile && !widthChanged && heightDiff <= MOBILE_HEIGHT_THRESHOLD) {
+        // Mobile browser bars change viewport height constantly.
+        // To avoid visual jumps, only refresh on real width changes (rotation/layout).
+        if (isMobile && !widthChanged) {
           return;
         }
 
         lastWidth = newWidth;
-        lastHeight = newHeight;
+        lastHeight = window.innerHeight;
         scheduleRefresh(120);
       };
 
