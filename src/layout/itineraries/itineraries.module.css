@@ -2,7 +2,7 @@
 .container {
   width: 100%;
   height: 100vh;
-  height: 100svh; /* Small viewport height for mobile stability */
+  height: var(--app-vh, 100svh); /* Small viewport height for mobile stability */
   display: flex;
   flex-direction: row;
   position: relative;
@@ -499,3 +499,4 @@
     font-style: normal !important;
   }
 }
+

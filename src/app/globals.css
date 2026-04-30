@@ -4,6 +4,7 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --app-vh: 100svh;
 }
 
 html {
@@ -44,7 +45,7 @@ html.lenis body {
 
 body {
   min-height: 100vh;
-  min-height: 100svh;
+  min-height: var(--app-vh, 100svh);
   display: flex;
   flex-direction: column;
   background-color: var(--black);
@@ -413,3 +414,4 @@ body {
     ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
     "Courier New", monospace;
 }
+

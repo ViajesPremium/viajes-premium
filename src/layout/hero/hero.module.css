@@ -2,7 +2,7 @@
   position: relative;
   width: 100%;
   height: 100vh;
-  height: 100svh; /* Small viewport height for mobile stability */
+  height: var(--app-vh, 100svh); /* Small viewport height for mobile stability */
   overflow: hidden;
   isolation: isolate;
   background-color: rgb(247, 203, 203);
@@ -306,3 +306,4 @@
     width: 100%;
   }
 }
+

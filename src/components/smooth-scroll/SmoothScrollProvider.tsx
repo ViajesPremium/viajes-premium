@@ -45,6 +45,12 @@ export default function SmoothScrollProvider({
 
     let lastWidth = window.innerWidth;
     let lastHeight = window.innerHeight;
+    const setAppViewportHeight = () => {
+      document.documentElement.style.setProperty(
+        "--app-vh",
+        `${window.innerHeight}px`,
+      );
+    };
 
     const scheduleLenisResize = () => {
       if (resizeRaf !== null) return;
@@ -76,6 +82,8 @@ export default function SmoothScrollProvider({
     };
 
     const init = async () => {
+      setAppViewportHeight();
+
       const [{ gsap }, { ScrollTrigger }] = await Promise.all([
         import("gsap"),
         import("gsap/ScrollTrigger"),
@@ -143,12 +151,14 @@ export default function SmoothScrollProvider({
 
         lastWidth = newWidth;
         lastHeight = window.innerHeight;
+        setAppViewportHeight();
         scheduleRefresh(120);
       };
 
       const onOrientation = () => {
         lastWidth = window.innerWidth;
         lastHeight = window.innerHeight;
+        setAppViewportHeight();
         scheduleRefresh(150);
         scheduleRefresh(400);
       };
