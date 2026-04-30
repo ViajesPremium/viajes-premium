@@ -2,7 +2,7 @@
   display: block;
   width: 100%;
   height: 100vh;
-  height: 100dvh; /* Small viewport height for mobile stability */
+  height: 100svh; /* Small viewport height for mobile stability */
   padding: clamp(1.75rem, 4vw, 4rem);
   box-sizing: border-box;
   background-color: var(--bg, #fff);
@@ -111,7 +111,7 @@
     transform: translate3d(0, -12vh, 0);
     transform: translate3d(
       0,
-      -12dvh,
+      -12svh,
       0
     ); /* Small viewport height for mobile stability */
     opacity: 0;
@@ -473,7 +473,7 @@
 @media (max-width: 768px) {
   .testimonials {
     height: auto;
-    min-height: 100dvh;
+    min-height: 100svh;
     padding: 4rem 1rem 4rem;
     overflow: hidden;
   }

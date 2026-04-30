@@ -2,7 +2,7 @@
 .container {
   width: 100%;
   height: 100vh;
-  height: 100dvh; /* Small viewport height for mobile stability */
+  height: 100svh; /* Small viewport height for mobile stability */
   display: flex;
   flex-direction: row;
   position: relative;
@@ -474,7 +474,7 @@
 
   .premiumCard {
     width: 100%;
-    height: clamp(320px, 62dvh, 420px);
+    height: clamp(320px, 62svh, 420px);
   }
 
   .contentWrapper {

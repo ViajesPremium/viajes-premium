@@ -56,7 +56,7 @@
   margin-top: clamp(4.4rem, 10vh, 8.5rem);
   margin-top: clamp(
     4.4rem,
-    10dvh,
+    10svh,
     8.5rem
   ); /* Small viewport height for mobile stability */
   display: flex;
@@ -64,7 +64,7 @@
   gap: clamp(0.4rem, 1.1vh, 0.95rem);
   gap: clamp(
     0.4rem,
-    1.1dvh,
+    1.1svh,
     0.95rem
   ); /* Small viewport height for mobile stability */
   align-items: center;

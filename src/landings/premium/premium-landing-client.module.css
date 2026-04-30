@@ -19,7 +19,7 @@
   overflow: hidden;
   background: var(--black);
   margin-top: -100vh;
-  margin-top: -100dvh;
+  margin-top: -100svh;
 }
 
 .includesLayer {
@@ -51,7 +51,7 @@
   z-index: 2;
   background: transparent;
   margin-top: -100vh;
-  margin-top: -100dvh;
+  margin-top: -100svh;
 }
 
 .ctaMapMobileLayer {
@@ -99,6 +99,6 @@
   .formWrapper {
     z-index: 2;
     margin-top: -100vh;
-    margin-top: -100dvh;
+    margin-top: -100svh;
   }
 }

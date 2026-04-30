@@ -5,7 +5,7 @@ const heroImg = "/vision/assets/hero-kyoto.jpg";
 
 export function Hero() {
   return (
-    <section id="top" className="relative min-h-[100dvh] w-full overflow-hidden bg-primary text-primary-foreground">
+    <section id="top" className="relative min-h-[100svh] w-full overflow-hidden bg-primary text-primary-foreground">
       {/* Background image */}
       <div className="absolute inset-0">
         <img
@@ -31,7 +31,7 @@ export function Hero() {
       </div>
 
       {/* Main content */}
-      <div className="relative z-10 editorial-container min-h-[100dvh] flex flex-col justify-end pb-20 md:pb-28 pt-40">
+      <div className="relative z-10 editorial-container min-h-[100svh] flex flex-col justify-end pb-20 md:pb-28 pt-40">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}

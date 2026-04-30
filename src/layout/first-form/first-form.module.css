@@ -1,7 +1,7 @@
 ﻿.section {
   position: relative;
   width: 100%;
-  min-height: 100dvh;
+  min-height: 100svh;
   padding: 2rem;
   height: auto;
   display: block;
@@ -15,7 +15,7 @@
   width: 100%;
   max-width: var(--site-max);
   margin-inline: auto;
-  min-height: 100dvh;
+  min-height: 100svh;
   display: grid;
   grid-template-columns: 1fr 1fr;
   pointer-events: none;
@@ -228,14 +228,14 @@
 
 @media (max-width: 768px) {
   .section {
-    min-height: 100dvh;
+    min-height: 100svh;
     padding: 1rem;
     padding-top: 4rem;
     padding-bottom: 0;
   }
 
   .inner {
-    min-height: 100dvh;
+    min-height: 100svh;
   }
 
   .left {
