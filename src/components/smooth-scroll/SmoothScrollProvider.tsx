@@ -45,6 +45,15 @@ export default function SmoothScrollProvider({
     let refreshTimeout: ReturnType<typeof setTimeout> | null = null;
     let resizeObserver: ResizeObserver | null = null;
 
+    // Tracked widths to detect orientation vs. browser-bar-only changes on mobile.
+    let lastWindowWidth = window.innerWidth;
+    let lastVVWidth = window.visualViewport?.width ?? window.innerWidth;
+    // Tracked document height for the ResizeObserver threshold.
+    let lastDocHeight = document.documentElement.clientHeight;
+    // Minimum height delta (px) that we consider a real layout change on mobile.
+    // Browser bars are typically 50-100 px; we use 150 as a comfortable margin.
+    const MOBILE_HEIGHT_THRESHOLD = 150;
+
     const scheduleLenisResize = () => {
       if (resizeRaf !== null) return;
       resizeRaf = window.requestAnimationFrame(() => {
@@ -121,8 +130,23 @@ export default function SmoothScrollProvider({
       stRefreshCb = () => scheduleLenisResize();
       ScrollTrigger.addEventListener("refresh", stRefreshCb);
 
-      const onResize = () => scheduleRefresh(120);
+      // On mobile, only react to width changes (orientation / real resize).
+      // Height-only changes are caused by the browser address bar appearing or
+      // disappearing — we must ignore those to avoid page jumps.
+      const onResize = () => {
+        if (isMobile) {
+          const newWidth = window.innerWidth;
+          if (newWidth === lastWindowWidth) return; // height-only → browser bar, skip
+          lastWindowWidth = newWidth;
+        }
+        scheduleRefresh(120);
+      };
+
       const onOrientation = () => {
+        // Orientation always means a real layout change; reset tracked widths so
+        // the subsequent resize event is not filtered out.
+        lastWindowWidth = window.innerWidth;
+        lastVVWidth = window.visualViewport?.width ?? window.innerWidth;
         scheduleRefresh(100);
         scheduleRefresh(320);
       };
@@ -144,10 +168,30 @@ export default function SmoothScrollProvider({
       document.addEventListener("visibilitychange", onVisibility);
 
       const vv = window.visualViewport;
-      vv?.addEventListener("resize", onResize, { passive: true });
 
-      // Detecta cambios reales de altura del documento sin forzar refresh en loop.
-      resizeObserver = new ResizeObserver(() => scheduleLenisResize());
+      // visualViewport fires whenever the browser bar shows/hides (height-only).
+      // We only act when the *width* changes (real resize / orientation change).
+      const onVVResize = () => {
+        const newWidth = vv?.width ?? window.innerWidth;
+        if (newWidth === lastVVWidth) return; // height-only → browser bar, skip
+        lastVVWidth = newWidth;
+        scheduleRefresh(120);
+      };
+      vv?.addEventListener("resize", onVVResize, { passive: true });
+
+      // ResizeObserver on <html>: only trigger lenis.resize() for changes large
+      // enough to be a real layout change, not a browser-bar flicker.
+      resizeObserver = new ResizeObserver(() => {
+        const newHeight = document.documentElement.clientHeight;
+        if (
+          isMobile &&
+          Math.abs(newHeight - lastDocHeight) < MOBILE_HEIGHT_THRESHOLD
+        ) {
+          return; // browser bar height change — ignore
+        }
+        lastDocHeight = newHeight;
+        scheduleLenisResize();
+      });
       resizeObserver.observe(document.documentElement);
 
       document.fonts?.ready.then(() => {
@@ -162,7 +206,7 @@ export default function SmoothScrollProvider({
         window.removeEventListener("orientationchange", onOrientation);
         window.removeEventListener("pageshow", onPageShow);
         document.removeEventListener("visibilitychange", onVisibility);
-        vv?.removeEventListener("resize", onResize);
+        vv?.removeEventListener("resize", onVVResize);
       };
     };
 

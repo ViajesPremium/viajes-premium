@@ -350,7 +350,9 @@ export default function Itinerary() {
           if (!isInteractive) return;
           // After unlock: we own all scroll. Prevent browser default AND stop
           // propagation so any window-level Lenis listener can't interfere.
-          event.preventDefault();
+          if (event.cancelable) {
+            event.preventDefault();
+          }
           event.stopPropagation();
         };
 
@@ -397,8 +399,9 @@ export default function Itinerary() {
         const onWheel = (event: WheelEvent) => {
           if (!isInteractive || isExiting) return;
           if (Math.abs(event.deltaY) < 4) return;
-
-          event.preventDefault();
+          if (event.cancelable) {
+            event.preventDefault();
+          }
           event.stopPropagation();
 
           if (activeTransition) return; // one step at a time
