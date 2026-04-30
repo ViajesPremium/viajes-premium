@@ -1,0 +1,121 @@
+﻿.snapshot {
+  width: 100%;
+  background-color: var(--bg);
+  display: flex;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  padding: 2rem;
+  min-height: 150vh;
+}
+
+.trustStrip {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  font-size: clamp(2.5rem, 7vw, 5rem);
+  line-height: 1.1;
+}
+
+.snapshotContent {
+  width: 100%;
+  max-width: var(--site-max);
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  z-index: 10;
+}
+
+.bentoGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.bentoCard {
+  position: relative;
+  flex: 1 1 420px;
+  min-height: 400px;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  cursor: pointer;
+}
+
+.bentoCard:hover {
+  transform: translateY(-8px);
+}
+
+/* --- Tag Superior --- */
+.bentoCardText {
+  position: absolute;
+  top: -1;
+  right: -1;
+  font-family: var(--font-nohemi);
+  font-size: 1.1rem;
+  font-weight: 300;
+  color: var(--black);
+  background-color: var(--bg);
+  padding: 0.7rem 1.5rem;
+  border-radius: 0 0 0 4px;
+  z-index: 5;
+}
+
+/* --- Overlays --- */
+.bentoCardOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.85) 0%,
+    rgba(0, 0, 0, 0.2) 60%,
+    transparent 100%
+  );
+  z-index: 1;
+}
+
+/* --- Footer (Contenido) --- */
+.bentoCardFooter {
+  position: relative;
+  z-index: 10;
+  padding: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 2rem;
+  width: 100%;
+}
+
+.bentoCardExperiences {
+  font-family: var(--font-nohemi);
+  font-size: clamp(1.2rem, 1.8vw, 1.6rem);
+  font-weight: 300;
+  color: var(--white);
+  line-height: 1.1;
+  flex: 1;
+}
+
+/* --- Media Queries --- */
+@media (max-width: 768px) {
+  .snapshot {
+    padding: 1rem;
+    padding-bottom: 3rem;
+  }
+
+  .bentoCard {
+    flex: 1 1 100%;
+    min-height: 385px;
+  }
+
+  .bentoCardFooter {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.2rem;
+    padding: 1.5rem;
+  }
+}

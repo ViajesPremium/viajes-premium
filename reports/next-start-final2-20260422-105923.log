@@ -1,0 +1,9 @@
+
+> viajes-premium@0.1.0 start
+> next start --port 4173
+
+▲ Next.js 16.2.4
+- Local:         http://localhost:4173
+- Network:       http://192.168.100.51:4173
+✓ Ready in 145ms
+^C

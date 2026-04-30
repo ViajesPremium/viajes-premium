@@ -1,0 +1,208 @@
+/* Isolated style scope for migrated Vision landing */
+.vp-vision {
+  --background: hsl(38 25% 97%);
+  --foreground: hsl(211 100% 13%);
+  --card: hsl(0 0% 100%);
+  --card-foreground: hsl(211 100% 13%);
+  --popover: hsl(0 0% 100%);
+  --popover-foreground: hsl(211 100% 13%);
+  --primary: hsl(211 100% 13%);
+  --primary-foreground: hsl(38 25% 97%);
+  --secondary: hsl(0 0% 92%);
+  --secondary-foreground: hsl(211 100% 13%);
+  --muted: hsl(38 15% 93%);
+  --muted-foreground: hsl(211 25% 35%);
+  --accent: hsl(45 98% 60%);
+  --accent-foreground: hsl(211 100% 13%);
+  --destructive: hsl(0 70% 45%);
+  --destructive-foreground: hsl(0 0% 98%);
+  --border: hsl(211 20% 88%);
+  --input: hsl(211 20% 88%);
+  --ring: hsl(211 100% 13%);
+  --gold: hsl(45 98% 60%);
+  --gold-soft: hsl(45 70% 78%);
+  --gold-deep: hsl(40 85% 45%);
+  --surface-elevated: hsl(0 0% 100%);
+  --surface-cream: hsl(38 35% 95%);
+  --ink: hsl(211 100% 13%);
+  --ink-soft: hsl(211 40% 25%);
+  --hairline: hsl(211 15% 82%);
+  --font-thunder: var(--font-nohemi);
+  --font-thunder-lc: var(--font-nohemi);
+  --gradient-hero:
+    linear-gradient(
+      180deg,
+      hsl(211 100% 13% / 0) 0%,
+      hsl(211 100% 13% / 0.15) 40%,
+      hsl(211 100% 13% / 0.85) 100%
+    );
+  --shadow-editorial: 0 20px 60px -20px hsl(211 100% 13% / 0.25);
+}
+
+.dark .vp-vision {
+  --background: hsl(211 60% 5%);
+  --foreground: hsl(38 30% 94%);
+  --card: hsl(211 50% 8%);
+  --card-foreground: hsl(38 30% 94%);
+  --popover: hsl(211 60% 6%);
+  --popover-foreground: hsl(38 30% 94%);
+  --primary: hsl(45 98% 60%);
+  --primary-foreground: hsl(211 100% 8%);
+  --secondary: hsl(211 40% 14%);
+  --secondary-foreground: hsl(38 30% 94%);
+  --muted: hsl(211 35% 12%);
+  --muted-foreground: hsl(211 15% 65%);
+  --accent: hsl(45 98% 60%);
+  --accent-foreground: hsl(211 100% 8%);
+  --destructive: hsl(0 60% 45%);
+  --destructive-foreground: hsl(0 0% 98%);
+  --border: hsl(211 30% 18%);
+  --input: hsl(211 30% 18%);
+  --ring: hsl(45 98% 60%);
+  --gold: hsl(45 98% 65%);
+  --gold-soft: hsl(45 50% 35%);
+  --gold-deep: hsl(40 85% 55%);
+  --surface-elevated: hsl(211 50% 9%);
+  --surface-cream: hsl(211 55% 7%);
+  --ink: hsl(38 30% 94%);
+  --ink-soft: hsl(211 15% 75%);
+  --hairline: hsl(211 30% 20%);
+}
+
+.vp-vision * {
+  box-sizing: border-box;
+}
+
+@keyframes vp-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes vp-ken-burns {
+  0% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1.15);
+  }
+}
+
+.vp-vision .display-xl {
+  font-family: var(--font-nohemi), sans-serif;
+  font-weight: 300;
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+  font-size: clamp(3rem, 9vw, 8.5rem);
+}
+
+.vp-vision .display-lg {
+  font-family: var(--font-nohemi), sans-serif;
+  font-weight: 300;
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+  font-size: clamp(2.5rem, 6vw, 5.5rem);
+}
+
+.vp-vision .display-md {
+  font-family: var(--font-nohemi), sans-serif;
+  font-weight: 300;
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  font-size: clamp(2rem, 4.5vw, 3.75rem);
+}
+
+.vp-vision .body-lg {
+  font-family: var(--font-nohemi), sans-serif;
+  font-weight: 300;
+  font-size: 1.125rem;
+  line-height: 1.55;
+  letter-spacing: -0.005em;
+}
+
+@media (min-width: 768px) {
+  .vp-vision .body-lg {
+    font-size: 1.25rem;
+  }
+}
+
+.vp-vision .label-mono {
+  font-family: var(--font-nohemi), sans-serif;
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+}
+
+.vp-vision .tagline {
+  font-family: var(--font-nohemi), sans-serif;
+  font-weight: 200;
+  font-style: italic;
+}
+
+.vp-vision .brand-premium::after {
+  content: "®";
+  margin-left: 0.05em;
+  font-size: 0.45em;
+  vertical-align: super;
+  font-weight: 400;
+  opacity: 0.85;
+}
+
+.vp-vision .hairline {
+  width: 100%;
+  height: 1px;
+  background: var(--hairline);
+}
+
+.vp-vision .gold-line {
+  display: inline-block;
+  width: 3rem;
+  height: 1px;
+  vertical-align: middle;
+  background: var(--gold);
+}
+
+.vp-vision .editorial-container {
+  width: 100%;
+  max-width: 1440px;
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .vp-vision .editorial-container {
+    padding-inline: 2.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .vp-vision .editorial-container {
+    padding-inline: 4rem;
+  }
+}
+
+.vp-vision .marquee-track {
+  animation: vp-marquee 60s linear infinite;
+}
+
+.vp-vision .glass {
+  background: color-mix(in oklab, var(--background) 65%, transparent);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+}
+
+.vp-vision .shadow-editorial {
+  box-shadow: var(--shadow-editorial);
+}
+
+.vp-vision .ease-editorial {
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.vp-vision .animate-ken-burns {
+  animation: vp-ken-burns 20s ease-out both;
+}

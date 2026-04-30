@@ -1,0 +1,344 @@
+﻿.highlights {
+  position: relative;
+  width: 100%;
+  background: var(--bg);
+  overflow: hidden;
+  overflow-x: clip;
+  padding: 1rem;
+  padding-bottom: 10rem;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--site-max);
+  margin-inline: auto;
+  padding-top: 2.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.badgeRow {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: clamp(0.7rem, 1.6vw, 1.2rem);
+}
+
+.kicker {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.1rem;
+  margin-top: 3rem;
+}
+
+.kickerTop {
+  margin: 0;
+  font-family: var(--font-nohemi), sans-serif;
+  font-weight: 700;
+  color: var(--black);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  font-size: clamp(1rem, 2vw, 1.2rem);
+}
+
+.kickerBottom {
+  margin: 0;
+  font-family: var(--font-bigcaslon), sans-serif;
+  color: var(--secondary-japon);
+  font-style: italic;
+  line-height: 0.95;
+  font-size: clamp(1rem, 1.6vw, 1.85rem);
+}
+
+/* —— Editorial Grid (Desktop) —————— */
+.editorialGrid {
+  margin-top: clamp(4.4rem, 10vh, 8.5rem);
+  margin-top: clamp(
+    4.4rem,
+    10dvh,
+    8.5rem
+  ); /* Small viewport height for mobile stability */
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.4rem, 1.1vh, 0.95rem);
+  gap: clamp(
+    0.4rem,
+    1.1dvh,
+    0.95rem
+  ); /* Small viewport height for mobile stability */
+  align-items: center;
+  width: fit-content;
+  margin-inline: auto;
+}
+
+.editorialGridMobile {
+  display: none;
+}
+
+.megaText {
+  margin: 0;
+  font-family: var(--font-nohemi), sans-serif;
+  font-weight: 700;
+  color: var(--black);
+  text-transform: uppercase;
+  letter-spacing: 0.008em;
+  line-height: 1; /* Ajustado para mejor centrado vertical */
+  white-space: nowrap;
+  font-size: clamp(3.4rem, 6.4vw, 6.4rem);
+  display: inline-flex;
+  align-items: center;
+}
+
+.lineRow {
+  display: inline-flex;
+  align-items: center; /* CRUCIAL: Centra verticalmente texto y brackets */
+  justify-content: center;
+  gap: clamp(0.65rem, 1.2vw, 1.2rem);
+  width: 100%;
+}
+
+.lineRowWithBracket {
+  position: relative;
+}
+
+.lineText {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* —— Brackets & Hover Box —————— */
+.bracketBox {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(150px, 10.8vw, 196px);
+  overflow: visible;
+}
+
+.bracketBox::before,
+.bracketBox::after {
+  content: "";
+  position: absolute;
+  width: 11px;
+  height: 30px;
+  border-style: solid;
+  border-color: rgba(7, 20, 45, 0.58);
+  z-index: 5;
+  pointer-events: none;
+  transition: border-color 0.25s ease;
+}
+
+.bracketBox::before {
+  top: -9px;
+  left: -9px;
+  border-width: 1px 0 0 1px;
+}
+
+.bracketBox::after {
+  right: -9px;
+  bottom: -9px;
+  border-width: 0 1px 1px 0;
+}
+
+.bracketContent {
+  position: relative;
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.flipInner {
+  display: inline-block;
+  transform-style: preserve-3d;
+  animation: bracketFlip 5.6s ease-in-out infinite;
+}
+
+/* —— Hover preview card (desktop only) ——————————————— */
+.hoverBracket {
+  cursor: default;
+}
+
+.hoverPreview {
+  position: absolute;
+  z-index: 20;
+  pointer-events: none;
+  /* top / left are set via inline motion styles */
+}
+
+.hoverPreviewFrame {
+  position: relative;
+  width: 220px;
+  height: 148px;
+  overflow: hidden;
+  border-radius: var(--radius);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.28);
+}
+
+.hoverPreviewImage {
+  object-fit: cover;
+}
+
+.ot,
+.epochal {
+  margin: 0;
+  color: var(--secondary-japon);
+  font-family: var(--font-bigcaslon), sans-serif;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+}
+
+.epochal {
+  font-size: clamp(1.7rem, 2.5vw, 2.45rem);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  color: var(--white);
+  background-color: var(--secondary-japon);
+  padding: 8px 5px 4px 5px; /* Ajuste fino de padding */
+}
+
+.ot {
+  font-size: clamp(3rem, 3.5vw, 3.2rem);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+}
+
+@keyframes bracketFlip {
+  0%,
+  18%,
+  100% {
+    transform: rotateX(0deg);
+  }
+  24%,
+  42% {
+    transform: rotateX(180deg);
+  }
+  48%,
+  66% {
+    transform: rotateX(0deg);
+  }
+  72%,
+  90% {
+    transform: rotateX(180deg);
+  }
+}
+
+/* —— Elementos del Rail y Otros —————— */
+.skiperSection {
+  width: 100%;
+  margin-top: 8rem;
+}
+
+.ctaRow {
+  margin-top: clamp(2rem, 4vw, 4rem);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.japanWord {
+  color: var(--black);
+}
+
+.secondaryUnderline {
+  text-decoration-line: underline;
+  text-decoration-color: var(--secondary-japon);
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.11em;
+}
+
+/* —— Responsive (Tablet & Mobile) —————— */
+@media (max-width: 1200px) {
+  .editorialGrid {
+    margin-top: 4rem;
+    gap: 0.7rem;
+  }
+  .bracketBox {
+    width: clamp(136px, 15vw, 188px);
+    height: clamp(60px, 8vw, 82px);
+  }
+}
+
+@media (max-width: 768px) {
+  .highlights {
+    padding: 1rem 1rem;
+  }
+  .container {
+    align-items: center;
+  }
+
+  .badgeRow {
+    justify-content: center;
+  }
+
+  .editorialGrid {
+    display: none;
+  }
+
+  .editorialGridMobile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-top: 3rem;
+    gap: 0.4rem;
+  }
+
+  .mobileLineWithBracket {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .mobileBracket {
+    margin: 0.2rem 0.5rem;
+    transform: none; /* Eliminado el desplazamiento que lo sacaba de centro */
+  }
+
+  .megaText {
+    font-size: clamp(2rem, 9vw, 3.2rem);
+    text-align: center;
+    justify-content: center;
+  }
+
+  .bracketBox {
+    width: clamp(90px, 25vw, 120px);
+    height: clamp(15px, 8vw, 30px);
+  }
+
+  .bracketBox::before,
+  .bracketBox::after {
+    width: 8px;
+    height: 16px;
+  }
+
+  .ot {
+    font-size: clamp(1.4rem, 6vw, 1.8rem);
+  }
+  .epochal {
+    font-size: clamp(1rem, 4vw, 1.2rem);
+    padding: 4px 6px;
+  }
+
+  .flipInner {
+    animation: none;
+  } /* Desactivado en móvil por legibilidad */
+
+  .skiperSection {
+    margin-top: 4rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flipInner {
+    animation: none;
+  }
+}

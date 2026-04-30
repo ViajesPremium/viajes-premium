@@ -1,0 +1,22 @@
+:root {
+  /* Japon */
+  --primary-japon: #db2f21;
+  --secondary-japon: #95231c;
+  --complementary-japon: #8c8380;
+  --yellow-japon: #f2cd5e;
+  --site-max: 1300px;
+  --heroTextMaxWidth: 1000px;
+
+  /* Globales */
+  --white: #f3f3f0;
+  --bg: #f3f3f0;
+  --black: #16181b;
+  --radius: 0.15rem;
+  --box-shadow: 0px 10px 22px rgba(0, 0, 0, 0.1);
+
+  /* Fonts (from globals.css @font-face) */
+  --font-nohemi: "Nohemi", sans-serif;
+  --font-bigcaslon: "BigCaslon", serif;
+  --font-thunder: "Thunder", sans-serif;
+  --font-thunder-lc: "ThunderLC", sans-serif;
+}

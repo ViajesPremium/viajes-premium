@@ -1,0 +1,104 @@
+.main {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+}
+
+.highlightsLayer {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  overflow: visible;
+  background: var(--bg);
+}
+
+.itinerariesLayer {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  overflow: hidden;
+  background: var(--black);
+  margin-top: -100vh;
+  margin-top: -100dvh;
+}
+
+.includesLayer {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  overflow: hidden;
+  background: var(--black);
+}
+
+.testimonialsLayer {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  overflow: visible;
+  background: var(--bg);
+  margin-top: 0;
+}
+
+.faqsLayer {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  background: var(--bg);
+}
+
+.formWrapper {
+  position: relative;
+  z-index: 2;
+  background: transparent;
+  margin-top: -100vh;
+  margin-top: -100dvh;
+}
+
+.ctaMapMobileLayer {
+  display: block;
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  background: transparent;
+  pointer-events: none;
+}
+
+.marqueeFooterLayer {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  background: var(--black);
+}
+
+.marqueeBlock {
+  position: relative;
+  z-index: 1;
+  background: var(--black);
+}
+
+.footerBlock {
+  position: relative;
+  z-index: 1;
+  background: var(--black);
+}
+
+@media (max-width: 768px) {
+  .itinerariesLayer {
+    margin-top: 0;
+    z-index: 1; /* Sequential, no need to be under Highlights */
+  }
+
+  .testimonialsLayer {
+    margin-top: 0;
+  }
+
+  .ctaMapMobileLayer {
+    z-index: 3;
+  }
+
+  .formWrapper {
+    z-index: 2;
+    margin-top: -100vh;
+    margin-top: -100dvh;
+  }
+}
