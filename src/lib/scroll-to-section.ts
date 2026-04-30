@@ -44,6 +44,45 @@ const refreshScrollSystems = () => {
   });
 };
 
+function animateNativeScrollTo(
+  toY: number,
+  durationSeconds: number,
+  token: number,
+  onComplete: () => void,
+) {
+  const fromY = window.scrollY;
+  const delta = toY - fromY;
+  if (Math.abs(delta) < 1) {
+    window.scrollTo({ top: toY, behavior: "auto" });
+    onComplete();
+    return;
+  }
+
+  const durationMs = Math.max(durationSeconds * 1000, 120);
+  const startAt = performance.now();
+
+  const step = (now: number) => {
+    if (token !== scrollToken) return;
+
+    const elapsed = now - startAt;
+    const t = clamp(elapsed / durationMs, 0, 1);
+    const eased = easeOutQuint(t);
+    const nextY = fromY + delta * eased;
+
+    window.scrollTo({ top: nextY, behavior: "auto" });
+
+    if (t < 1) {
+      requestAnimationFrame(step);
+      return;
+    }
+
+    window.scrollTo({ top: toY, behavior: "auto" });
+    onComplete();
+  };
+
+  requestAnimationFrame(step);
+}
+
 export function scrollToSection(
   hash: string,
   options: ScrollToSectionOptions = {},
@@ -99,10 +138,9 @@ export function scrollToSection(
         },
       });
     } else {
-      // Avoid native smooth scrolling here; it can fight GSAP pinning.
-      // On mobile where we have sequential scrolling now, smooth is safer.
-      window.scrollTo({ top: targetY, behavior: "smooth" });
-      refreshScrollSystems();
+      animateNativeScrollTo(targetY, duration, currentToken, () => {
+        refreshScrollSystems();
+      });
     }
 
     if (updateHash) {
