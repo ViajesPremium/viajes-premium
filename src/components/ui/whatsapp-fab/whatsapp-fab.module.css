@@ -1,9 +1,9 @@
 .fab {
   position: fixed;
-  right: max(1rem, env(safe-area-inset-right));
-  bottom: max(1rem, env(safe-area-inset-bottom));
-  width: 3.8rem;
-  height: 3.8rem;
+  right: max(2rem, env(safe-area-inset-right));
+  bottom: max(2rem, env(safe-area-inset-bottom));
+  width: 4.8rem;
+  height: 4.8rem;
   border-radius: 9999px;
   display: inline-flex;
   align-items: center;
@@ -30,20 +30,20 @@
 }
 
 .icon {
-  width: 2rem;
-  height: 2rem;
+  width: 2.5rem;
+  height: 2.5rem;
 }
 
 @media (max-width: 768px) {
   .fab {
-    width: 3.5rem;
-    height: 3.5rem;
+    width: 4rem;
+    height: 4rem;
     right: max(0.85rem, env(safe-area-inset-right));
     bottom: max(0.85rem, env(safe-area-inset-bottom));
   }
 
   .icon {
-    width: 1.8rem;
-    height: 1.8rem;
+    width: 2.2rem;
+    height: 2.2rem;
   }
 }

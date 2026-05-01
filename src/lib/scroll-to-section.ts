@@ -123,6 +123,7 @@ export function scrollToSection(
     }
 
     const lenis = window.__lenis;
+    const isDesktop = window.matchMedia("(min-width: 768px)").matches;
     if (lenis) {
       // A few sections pause Lenis during interactive pins.
       // Force/start ensures CTA navigation always works.
@@ -138,9 +139,14 @@ export function scrollToSection(
         },
       });
     } else {
-      animateNativeScrollTo(targetY, duration, currentToken, () => {
+      if (isDesktop) {
+        window.scrollTo({ top: targetY, behavior: "smooth" });
         refreshScrollSystems();
-      });
+      } else {
+        animateNativeScrollTo(targetY, duration, currentToken, () => {
+          refreshScrollSystems();
+        });
+      }
     }
 
     if (updateHash) {
