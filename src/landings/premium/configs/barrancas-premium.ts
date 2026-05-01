@@ -1,4 +1,4 @@
-import type { PremiumLandingConfig } from "@/landings/premium/types";
+﻿import type { PremiumLandingConfig } from "@/landings/premium/types";
 
 const BARRANCAS_MENU_ITEMS = [
   { label: "Inicio", ariaLabel: "Ir al inicio", link: "#inicio" },
@@ -13,52 +13,52 @@ const BARRANCAS_MENU_ITEMS = [
 const BARRANCAS_FAQS = [
   {
     id: "1",
-    question: "¿Peru es un destino complicado para viajar?",
+    question: "Â¿Peru es un destino complicado para viajar?",
     answer:
-      "No, Perú no es un destino complicado si esta bien planificado. Aunque el idioma y la logistica pueden parecer desafiantes al inicio, el pais es seguro, ordenado y facil de recorrer. Cuando el viaje esta bien estructurado, todo fluye con mayor claridad. En Perú Premium cuidamos ese proceso para que la experiencia se viva sin friccion.",
+      "No, PerÃº no es un destino complicado si esta bien planificado. Aunque el idioma y la logistica pueden parecer desafiantes al inicio, el pais es seguro, ordenado y facil de recorrer. Cuando el viaje esta bien estructurado, todo fluye con mayor claridad. En PerÃº Premium cuidamos ese proceso para que la experiencia se viva sin friccion.",
   },
   {
     id: "2",
-    question: "¿Se puede viajar a Perú sin hablar español?",
+    question: "Â¿Se puede viajar a PerÃº sin hablar espaÃ±ol?",
     answer:
-      "Si, es posible viajar a Perú sin hablar español. En ciudades como Lima o Cusco hay senalizacion clara y servicios pensados para viajeros internacionales. Aun asi, saber como moverse y que decisiones tomar marca la diferencia en la experiencia por eso nuestros guias hablan espanol para que no te preocupes por el idioma.",
+      "Si, es posible viajar a PerÃº sin hablar espaÃ±ol. En ciudades como Lima o Cusco hay senalizacion clara y servicios pensados para viajeros internacionales. Aun asi, saber como moverse y que decisiones tomar marca la diferencia en la experiencia por eso nuestros guias hablan espanol para que no te preocupes por el idioma.",
   },
   {
     id: "3",
-    question: "¿Cuantos dias se recomiendan para viajar a Japón?",
+    question: "Â¿Cuantos dias se recomiendan para viajar a JapÃ³n?",
     answer:
-      "Se recomienda viajar entre 10 y 15 dias para conocer Japón con mayor profundidad. Este tiempo permite recorrer varias ciudades y equilibrar cultura, gastronomia y experiencias. La duracion ideal depende del ritmo del viajero y del tipo de experiencia que quiera construir.",
+      "Se recomienda viajar entre 10 y 15 dias para conocer JapÃ³n con mayor profundidad. Este tiempo permite recorrer varias ciudades y equilibrar cultura, gastronomia y experiencias. La duracion ideal depende del ritmo del viajero y del tipo de experiencia que quiera construir.",
   },
   {
     id: "4",
-    question: "¿Cual es la mejor temporada para viajar a Japón?",
+    question: "Â¿Cual es la mejor temporada para viajar a JapÃ³n?",
     answer:
-      "No hay una unica mejor temporada, depende del tipo de experiencia que buscas. Primavera (Sakuras) y otono (Momiji) son muy populares por sus paisajes, pero tambien hay epocas con menos afluencia que permiten disfrutar Japón con mayor tranquilidad.",
+      "No hay una unica mejor temporada, depende del tipo de experiencia que buscas. Primavera (Sakuras) y otono (Momiji) son muy populares por sus paisajes, pero tambien hay epocas con menos afluencia que permiten disfrutar JapÃ³n con mayor tranquilidad.",
   },
   {
     id: "5",
-    question: "¿Es seguro viajar a Japón?",
+    question: "Â¿Es seguro viajar a JapÃ³n?",
     answer:
-      "Si, Japón es uno de los países mas seguros del mundo. Se puede viajar con tranquilidad tanto en grandes ciudades como en zonas mas tradicionales. Esa seguridad se aprovecha mucho mas cuando el viaje esta bien organizado y cada detalle esta pensado.",
+      "Si, JapÃ³n es uno de los paÃ­ses mas seguros del mundo. Se puede viajar con tranquilidad tanto en grandes ciudades como en zonas mas tradicionales. Esa seguridad se aprovecha mucho mas cuando el viaje esta bien organizado y cada detalle esta pensado.",
   },
   {
     id: "6",
-    question: "¿Que tipo de experiencias se pueden vivir en Japón?",
+    question: "Â¿Que tipo de experiencias se pueden vivir en JapÃ³n?",
     answer:
       "Japon ofrece una combinacion unica de cultura, gastronomia, tradicion, tecnologia y naturaleza. Se pueden recorrer ciudades modernas, templos historicos y paisajes muy distintos en un mismo viaje. En Japon Premium disenamos cada proyecto para integrar estos contrastes de forma coherente.",
   },
   {
     id: "7",
-    question: "¿Es facil moverse dentro de Japón?",
+    question: "Â¿Es facil moverse dentro de JapÃ³n?",
     answer:
-      "Si, moverse dentro de Japón es facil gracias a su sistema de transporte eficiente y puntual. Los trenes y conexiones permiten recorrer el país de forma organizada y comoda.",
+      "Si, moverse dentro de JapÃ³n es facil gracias a su sistema de transporte eficiente y puntual. Los trenes y conexiones permiten recorrer el paÃ­s de forma organizada y comoda.",
   },
   {
     id: "8",
     question:
-      "¿Japón es un destino recomendable para viajar en pareja o en familia?",
+      "Â¿JapÃ³n es un destino recomendable para viajar en pareja o en familia?",
     answer:
-      "Si, Japón es un destino ideal tanto para viajar en pareja como en familia ya que hay diversos parques de diversiones y experiencias que se disfrutan en compania. La clave esta en disenar el recorrido segun el tipo de experiencia que se quiere vivir.",
+      "Si, JapÃ³n es un destino ideal tanto para viajar en pareja como en familia ya que hay diversos parques de diversiones y experiencias que se disfrutan en compania. La clave esta en disenar el recorrido segun el tipo de experiencia que se quiere vivir.",
   },
 ] as const;
 
@@ -128,33 +128,33 @@ export const barrancasPremiumLandingConfig: PremiumLandingConfig = {
     snapshot: {
       srHeading: "Snapshot de Japon Premium",
       badgeText: "Snapshot",
-      titleText: "Más de 21 años diseñando experiencias premium.",
-      titleHighlightWords: ["21", "años", "premium"],
+      titleText: "MÃ¡s de 21 aÃ±os diseÃ±ando experiencias premium.",
+      titleHighlightWords: ["21", "aÃ±os", "premium"],
       cards: [
         {
           image: "/images/peru/1-machu-pichu.webp",
           text: "Machu Picchu",
-                    experiences: "14 DIAS · ANIME · PARQUES TEMATICOS · TECNOLOGIA · CULTURA POP",
+                    experiences: "14 DIAS Â· ANIME Â· PARQUES TEMATICOS Â· TECNOLOGIA Â· CULTURA POP",
 
           wide: false,
         },
         {
           image: "/images/peru/1-gastronomia-autentica.webp",
           text: "Gastronomia autentica",
-                    experiences: "14 DIAS · ANIME · PARQUES TEMATICOS · TECNOLOGIA · CULTURA POP",
+                    experiences: "14 DIAS Â· ANIME Â· PARQUES TEMATICOS Â· TECNOLOGIA Â· CULTURA POP",
 
           wide: false,
         },
         {
           image: "/images/japon/1-alojamiento-de-lujo.webp",
           text: "Hospedaje de lujo",
-                    experiences: "14 DIAS · ANIME · PARQUES TEMATICOS · TECNOLOGIA · CULTURA POP",
+                    experiences: "14 DIAS Â· ANIME Â· PARQUES TEMATICOS Â· TECNOLOGIA Â· CULTURA POP",
 
           wide: false,
         },
       ],
       cardButtonLabel: "Descubrir Itinerarios",
-      cardButtonTarget: "#form",
+      cardButtonTarget: "#itinerarios",
     },
     firstForm: {
       srHeading: "Cuentanos como imaginas tu viaje a Japon",
@@ -179,7 +179,7 @@ export const barrancasPremiumLandingConfig: PremiumLandingConfig = {
     },
     highlights: {
       srHeading: "Highlights de Japon Premium",
-      badgeText: "¿Por que Japon Premium?",
+      badgeText: "Â¿Por que Japon Premium?",
       kickerTop: "Trabajamos con marcas",
       kickerBottom: "Cuidadosamente seleccionadas.",
       line1: {
@@ -224,7 +224,7 @@ export const barrancasPremiumLandingConfig: PremiumLandingConfig = {
           description:
             "Cada itinerario se estructura para dar mas sentido, ritmo y calidad al viaje.",
           meta: "Cultura",
-          imageSrc: "/images/japon/2-recorridos-diseñados-con-mas-criterio.webp",
+          imageSrc: "/images/japon/2-recorridos-diseÃ±ados-con-mas-criterio.webp",
           href: "#form",
         },
         {
@@ -233,7 +233,7 @@ export const barrancasPremiumLandingConfig: PremiumLandingConfig = {
           description:
             "Atencion cercana antes, durante y despues de su experiencia en Japon.",
           meta: "Urbano",
-          imageSrc: "/images/japon/2-acompañamiento-personalizado.webp",
+          imageSrc: "/images/japon/2-acompaÃ±amiento-personalizado.webp",
           href: "#form",
         },
         {
@@ -288,7 +288,7 @@ export const barrancasPremiumLandingConfig: PremiumLandingConfig = {
       items: [
         {
           id: 1,
-          day: "14 DIAS · ESPIRITUALIDAD · TRADICION · BIENESTAR · CULTURA",
+          day: "14 DIAS Â· ESPIRITUALIDAD Â· TRADICION Â· BIENESTAR Â· CULTURA",
           title: "Alma de Japon",
           description:
             "Un recorrido por el Japon mas espiritual y profundo: templos milenarios, rutas sagradas, ryokans, onsen y experiencias que transforman el viaje.",
@@ -300,7 +300,7 @@ export const barrancasPremiumLandingConfig: PremiumLandingConfig = {
         },
         {
           id: 2,
-          day: "14 DIAS · ANIME · PARQUES TEMATICOS · TECNOLOGIA · CULTURA POP",
+          day: "14 DIAS Â· ANIME Â· PARQUES TEMATICOS Â· TECNOLOGIA Â· CULTURA POP",
           title: "Japon Pop",
           description:
             "Un recorrido por el Japon mas vibrante y fantastico: anime, parques tematicos, tecnologia, neon, tradicion y experiencias que transforman el viaje.",
@@ -312,7 +312,7 @@ export const barrancasPremiumLandingConfig: PremiumLandingConfig = {
         },
         {
           id: 3,
-          day: "15 DIAS · SAMURAIS · GEISHAS · SUMO · ALPES JAPONESES",
+          day: "15 DIAS Â· SAMURAIS Â· GEISHAS Â· SUMO Â· ALPES JAPONESES",
           title: "El Camino del Shogun",
           description:
             "Un recorrido por el Japon mas autentico y menos transitado: alpes japoneses, templos zen, ryokans y santuarios sagrados que transforman el viaje.",
@@ -380,7 +380,7 @@ export const barrancasPremiumLandingConfig: PremiumLandingConfig = {
           title: "Acompanamiento en cada etapa",
           description:
             "Atencion en espanol antes y durante el viaje para acompanarle con claridad y resolver cada detalle.",
-          image: "/images/japon/6-acompañamiento-en-cada-etapa.webp",
+          image: "/images/japon/6-acompaÃ±amiento-en-cada-etapa.webp",
         },
       ],
     },
@@ -459,7 +459,7 @@ export const barrancasPremiumLandingConfig: PremiumLandingConfig = {
       title: "Todo lo que necesitas saber",
       subtitle:
         "Resolvemos las dudas mas comunes sobre nuestros viajes a Peru. Si no encuentras lo que buscas, escribenos directamente.",
-      contactLabel: "¿Otra pregunta?",
+      contactLabel: "Â¿Otra pregunta?",
       contactEmail: "hola@perupremium.com",
       items: [...BARRANCAS_FAQS],
     },
@@ -547,7 +547,7 @@ export const barrancasPremiumLandingConfig: PremiumLandingConfig = {
         { label: "YOUTUBE", href: "#" },
       ],
       copyrightText:
-        "© 2026 Viaja a Japon Premium. Todos los derechos reservados.",
+        "Â© 2026 Viaja a Japon Premium. Todos los derechos reservados.",
       backToTopLabel: "Volver al inicio",
       legalLinks: [
         { label: "PRIVACIDAD", href: "#" },
@@ -556,3 +556,4 @@ export const barrancasPremiumLandingConfig: PremiumLandingConfig = {
     },
   },
 };
+

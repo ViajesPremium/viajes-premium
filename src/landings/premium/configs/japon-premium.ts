@@ -13,7 +13,7 @@ const JAPAN_MENU_ITEMS = [
 const JAPAN_FAQS = [
   {
     id: "1",
-    question: "¿Japón es un destino complicado para viajar?",
+    question: "¿Japón es un destination complicado para viajar?",
     answer:
       "No, Japón no es un destino complicado si está bien planificado. Aunque el idioma y la logística pueden parecer desafiantes al inicio, el país es seguro, ordenado y fácil de recorrer. Cuando el viaje está bien estructurado, todo fluye con mayor claridad. En Japón Premium cuidamos ese proceso para que la experiencia se viva sin fricción.",
   },
@@ -66,9 +66,9 @@ export const japonPremiumLandingConfig: PremiumLandingConfig = {
   id: "japon-premium",
   routePath: "/japon-premium",
   metadata: {
-    title: "Japon Premium",
-    description: "Japon Premium",
-    keywords: ["Japon Premium", "Viajes Premium"],
+    title: "Japón Premium",
+    description: "Viajes de lujo a Japón con acompañamiento en español",
+    keywords: ["Japón Premium", "Viajes Premium", "Japón desde México"],
     canonicalPath: "/japon-premium",
     ogImagePath: "/japon-premium/og-image.jpg",
     locale: "es_MX",
@@ -127,8 +127,8 @@ export const japonPremiumLandingConfig: PremiumLandingConfig = {
       heroOverlay: {
         baseImage: "/images/japon/hero/geishaHero.webp",
         samuraiImage: "/images/japon/hero/samuraiHero.webp",
-        baseAlt: "Hero Japon Premium",
-        samuraiAlt: "Samurai Japon Premium",
+        baseAlt: "Hero Japón Premium",
+        samuraiAlt: "Samurai Japón Premium",
       },
     },
     snapshot: {
@@ -152,48 +152,48 @@ export const japonPremiumLandingConfig: PremiumLandingConfig = {
         {
           image: "/images/japon/1-camino-del-shogun.webp",
           text: "El Camino del Shogun",
-          experiences: "15 Días · Samurais · Geishas · Sumo · Alpes Japoneses",
+          experiences: "15 Días · Samuráis · Geishas · Sumo · Alpes Japoneses",
           wide: false,
         },
       ],
       cardButtonLabel: "Descubrir Itinerarios",
-      cardButtonTarget: "#form",
+      cardButtonTarget: "#itinerarios",
     },
     firstForm: {
-      srHeading: "Cuentanos como imaginas tu viaje a Japón",
+      srHeading: "Cuéntanos cómo imaginas tu viaje a Japón",
       sectionTitle: "Propuesta personalizada",
       sectionTitleHighlightWord: "personalizada",
       sectionSubtitle:
-        "Cuentanos como imaginas tu viaje a Japón, compartenos tus intereses y te ayudaremos a identificar cual de nuestros 3 itinerarios se adapta mejor a tu estilo de viaje.",
+        "Cuéntanos cómo imaginas tu viaje a Japón, compártenos tus intereses y te ayudaremos a identificar cuál de nuestros 3 itinerarios se adapta mejor a tu estilo de viaje.",
       backgroundImage: "/images/japon/geishaForm.webp",
       mobileImage: {
         src: "/images/japon/geishaFormSola.webp",
-        alt: "Geisha en Japon",
+        alt: "Geisha en Japón",
       },
-formConfig: {
-  eyebrow: "Asesoria Privada",
-  title: "",
-  subtitle: "",
-  submitLabel: "Solicita tu propuesta",
-  contactEmail: "hola@japonpremium.com",
-  contactPhoneDisplay: "+52 55 1234 5678",
-  contactPhoneLink: "+525512345678",
-  formAction: "https://formsubmit.co/grupo-santa-f@add.nocrm.io",
-  formMethod: "POST",
-  formNextUrl: "https://tusitio.com/gracias", // opcional
-  formCc: "crm@viajespremium.com.mx", // opcional
-  crmTag: "#tags:Japon Premium",
-  experienceOptions: [
-    { label: "Alma de Japón — Espiritualidad y tradición ❘ $9,999usd  ", value: "alma-de-japon" },
-    { label: "Japón Pop — Anime, tecnología y cultura pop ❘ $9,999usd", value: "japon-pop" },
-    { label: "El Camino del Shōgun — Samurais y cultura ❘ $9,999usd", value: "camino-del-shogun" },
-    { label: "Deseo una experiencia más personalizada", value: "otro" },  ],
-}
-
+      formConfig: {
+        eyebrow: "Asesoría Privada",
+        title: "",
+        subtitle: "",
+        submitLabel: "Solicita tu propuesta",
+        contactEmail: "hola@japonpremium.com",
+        contactPhoneDisplay: "+52 55 1234 5678",
+        contactPhoneLink: "+525512345678",
+        formAction: "https://formsubmit.co/grupo-santa-f@add.nocrm.io",
+        formMethod: "POST",
+        formNextUrl: "https://tusitio.com/gracias", // opcional
+        formCc: "crm@viajespremium.com.mx", // opcional
+        crmTag: "#tags:Japon Premium",
+        experienceOptions: [
+          { label: "Alma de Japón — Espiritualidad y tradición | $9,999usd", value: "alma-de-japon" },
+          { label: "Japón Pop — Anime, tecnología y cultura pop | $9,999usd", value: "japon-pop" },
+          { label: "El Camino del Shōgun — Samuráis y cultura | $9,999usd", value: "camino-del-shogun" },
+          { label: "Deseo una experiencia más personalizada", value: "otro" },
+        ],
+      },
     },
     highlights: {
       srHeading: "Highlights de Japón Premium",
-      badgeText: "¿Por que Japón Premium?",
+      badgeText: "¿Por qué Japón Premium?",
       kickerTop: "Trabajamos con marcas",
       kickerBottom: "Cuidadosamente seleccionadas.",
       line1: {
@@ -207,8 +207,8 @@ formConfig: {
         tail: "A",
       },
       line2: {
-        text: "VIVIR JAPON",
-        highlightWord: "JAPON",
+        text: "VIVIR JAPÓN",
+        highlightWord: "JAPÓN",
         bracket: {
           label: "KIOTO",
           imageSrc: "/images/japon/frase_kioto.webp",
@@ -222,13 +222,13 @@ formConfig: {
         bracket: {
           label: "TOKIO",
           imageSrc: "/images/japon/frase_tokio.webp",
-          imageAlt: "Paisaje iconico de Tokio",
+          imageAlt: "Paisaje icónico de Tokio",
           textTone: "ot",
         },
         tail: "Y LA",
       },
       line4: {
-        text: "ATENCION QUE MERECES",
+        text: "ATENCIÓN QUE MERECES",
         highlightWord: "MERECES",
       },
       focusRailItems: [
@@ -255,7 +255,7 @@ formConfig: {
           title: "Respaldo 24/7",
           description:
             "Soporte continuo para viajar con tranquilidad de principio a fin.",
-          meta: "Gastronomia",
+          meta: "Gastronomía",
           imageSrc: "/images/japon/2-respaldo-24-7.webp",
           href: "#form",
         },
@@ -263,7 +263,7 @@ formConfig: {
           id: "onsen-premium",
           title: "Estancias a la altura del viaje",
           description:
-            "Seleccionadas por su caracter, ubicacion y nivel de servicio.",
+            "Seleccionadas por su carácter, ubicación y nivel de servicio.",
           meta: "Bienestar",
           imageSrc: "/images/japon/2-estancia-a-la-altura-del-viaje.webp",
           href: "#form",
@@ -326,7 +326,7 @@ formConfig: {
         },
         {
           id: 3,
-          day: "15 DÍAS · SAMURAIS · GEISHAS · SUMO · ALPES JAPONESES",
+          day: "15 DÍAS · SAMURÁIS · GEISHAS · SUMO · ALPES JAPONESES",
           title: "El Camino del Shogun",
           description:
             "Un recorrido por el Japón más auténtico y menos transitado: Alpes Japoneses, templos zen, ryokans y santuarios sagrados que transforman el viaje.",
@@ -345,7 +345,7 @@ formConfig: {
     },
     includes: {
       srHeading: "Lo esencial de la experiencia premium",
-      badgeText: "LO ESCENCIAL",
+      badgeText: "LO ESENCIAL",
       titleText: "Lo que da forma a tu experiencia premium",
       titleHighlightWords: ["premium", "forma", "da"],
       cta: {
@@ -451,19 +451,18 @@ formConfig: {
     interlude: {
       srHeading: "Mensaje del equipo Japón Premium",
       rows: [
-        "japon premium",
-        "momentos inolvidables",
-        "reales conexiones",
+        "Japón Premium",
+        "Momentos inolvidables",
+        "Reales conexiones",
       ],
       role: "Directora Comercial - Japón PREMIUM",
       name: "Karina Sánchez",
       quote:
         "Nuestra misión es diseñar experiencias personalizadas para que conectes emocionalmente con tu viaje. Creemos que viajar va más allá de acumular destinos; se trata de crear vínculos reales con cada lugar.",
-      quoteHighlight:
-        "",
+      quoteHighlight: "",
       image: {
         src: "/images/japon/karina.webp",
-        alt: "Asesora de viaje Japon Premium",
+        alt: "Asesora de viaje Japón Premium",
       },
     },
     faqs: {
@@ -492,14 +491,14 @@ formConfig: {
         eyebrow: "",
         title: "",
         subtitle: "",
-        submitLabel: "",
+        submitLabel: "Solicita tu propuesta",
         contactEmail: "hola@japonpremium.com",
         contactPhoneDisplay: "+52 55 1234 5678",
         contactPhoneLink: "+525512345678",
         experienceOptions: [
-          { label: "Alma de Japón — espiritual y de bienestar", value: "alma-de-japon" },
-          { label: "Japón Pop — anime, tecnología y cultura pop", value: "japon-pop" },
-          { label: "El Camino del Shōgun — auténtico y cultural", value: "camino-del-shogun" },
+          { label: "Alma de Japón — Espiritual y de bienestar", value: "alma-de-japon" },
+          { label: "Japón Pop — Anime, tecnología y cultura pop", value: "japon-pop" },
+          { label: "El Camino del Shōgun — Auténtico y cultural", value: "camino-del-shogun" },
           { label: "Otro", value: "otro" },
         ],
       },
@@ -509,7 +508,7 @@ formConfig: {
       badgeText: "Nuestras alianzas",
       introLeftLogo: {
         src: "/logos/japon/jp-blanco.svg",
-        alt: "Japon Premium",
+        alt: "Japón Premium",
         width: 460,
         height: 96,
       },
@@ -522,7 +521,7 @@ formConfig: {
       logos: [
         {
           src: "/images/japon/marquee-logos/22.png",
-          alt: "Japon Premium",
+          alt: "Japón Premium",
           width: 420,
           height: 90,
         },
@@ -534,26 +533,25 @@ formConfig: {
         },
         {
           src: "/images/japon/marquee-logos/24.png",
-
-          alt: "Japon Grande",
+          alt: "Japón Grande",
           width: 540,
           height: 120,
         },
         {
           src: "/images/japon/marquee-logos/25.png",
-          alt: "Logo Japon",
+          alt: "Logo Japón",
           width: 380,
           height: 110,
         },
       ],
     },
     footer: {
-      srHeading: "Footer Japon Premium",
+      srHeading: "Footer Japón Premium",
       samuraiImage: "/images/japon/hero/samuraiHero.webp",
       brandLogo: "/logos/japon/japon-grande-logo.png",
       address:
-        "Cda. de Omega 306, Romero de Terreros, Coyoacan, 04310 Ciudad de Mexico, CDMX",
-      mapEmbedTitle: "Ubicacion Japon Premium",
+        "Cda. de Omega 306, Romero de Terreros, Coyoacán, 04310 Ciudad de México, CDMX",
+      mapEmbedTitle: "Ubicación Japón Premium",
       contactEmail: "hola@japonpremium.com",
       contactPhoneDisplay: "+52 55 1234 5678",
       contactPhoneLink: "+525512345678",
@@ -577,7 +575,7 @@ formConfig: {
       backToTopLabel: "Volver al inicio",
       legalLinks: [
         { label: "PRIVACIDAD", href: "#" },
-        { label: "TERMINOS", href: "#" },
+        { label: "TÉRMINOS", href: "#" },
       ],
     },
   },

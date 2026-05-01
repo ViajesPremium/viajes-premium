@@ -1,4 +1,4 @@
-import { barrancasPremiumLandingConfig } from "@/landings/premium/configs/barrancas-premium";
+﻿import { barrancasPremiumLandingConfig } from "@/landings/premium/configs/barrancas-premium";
 import { canadaPremiumLandingConfig } from "@/landings/premium/configs/canada-premium";
 import { chiapasPremiumLandingConfig } from "@/landings/premium/configs/chiapas-premium";
 import { coreaPremiumLandingConfig } from "@/landings/premium/configs/corea-premium";
@@ -26,3 +26,4 @@ export {
   japonPremiumLandingConfig,
   peruPremiumLandingConfig,
 };
+
