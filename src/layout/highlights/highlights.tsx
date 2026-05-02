@@ -153,12 +153,10 @@ export default function Highlights() {
         </div>
 
         <div className={styles.editorialGridMobile}>
-          <BlurredStagger
-            text={`${highlights.line1.lead} ${highlights.line1.tail}`}
-            className={`${styles.megaText} ${styles.mobileLine}`}
-          />
-
-          <div className={styles.mobileLineWithBracket}>
+          <div className={styles.mobileLineRow}>
+            <p className={`${styles.megaText} ${styles.mobileLineText}`}>
+              {highlights.line1.lead}
+            </p>
             <BracketHoverBox
               className={`${styles.inlineBracket} ${styles.mobileBracket}`}
               imageSrc={highlights.line1.bracket.imageSrc}
@@ -170,27 +168,21 @@ export default function Highlights() {
                 {highlights.line1.bracket.label}
               </p>
             </BracketHoverBox>
+            <p className={`${styles.megaText} ${styles.mobileLineText}`}>
+              {highlights.line1.tail}
+            </p>
+          </div>
+
+          <div className={styles.mobileLineRow}>
             <BlurredStagger
               text={highlights.line2.text}
-              className={`${styles.megaText} ${styles.mobileLine}`}
+              className={`${styles.megaText} ${styles.mobileLineText}`}
               highlights={[
                 {
                   word: highlights.line2.highlightWord,
                   className: `${styles.japanWord} ${styles.secondaryUnderline}`,
                 },
               ]}
-            />
-          </div>
-
-          <BlurredStagger
-            text={`${highlights.line2.tail} ${highlights.line3.lead}`}
-            className={`${styles.megaText} ${styles.mobileLine}`}
-          />
-
-          <div className={styles.mobileLineWithBracket}>
-            <BlurredStagger
-              text={highlights.line3.tail}
-              className={`${styles.megaText} ${styles.mobileLine}`}
             />
             <BracketHoverBox
               className={`${styles.inlineBracket} ${styles.mobileBracket}`}
@@ -203,24 +195,15 @@ export default function Highlights() {
                 {highlights.line2.bracket.label}
               </p>
             </BracketHoverBox>
+            <p className={`${styles.megaText} ${styles.mobileLineText}`}>
+              {highlights.line2.tail}
+            </p>
           </div>
 
-          <BlurredStagger
-            text={line4Parts.before || highlights.line4.text}
-            className={`${styles.megaText} ${styles.mobileLine}`}
-          />
-
-          <div className={styles.mobileLineWithBracket}>
-            <BlurredStagger
-              text={line4Parts.highlighted}
-              className={`${styles.megaText} ${styles.mobileLine}`}
-              highlights={[
-                {
-                  word: highlights.line4.highlightWord,
-                  className: styles.secondaryUnderline,
-                },
-              ]}
-            />
+          <div className={styles.mobileLineRow}>
+            <p className={`${styles.megaText} ${styles.mobileLineText}`}>
+              {highlights.line3.lead}
+            </p>
             <BracketHoverBox
               className={`${styles.inlineBracket} ${styles.mobileBracket}`}
               imageSrc={highlights.line3.bracket.imageSrc}
@@ -232,6 +215,26 @@ export default function Highlights() {
                 {highlights.line3.bracket.label}
               </p>
             </BracketHoverBox>
+            <p className={`${styles.megaText} ${styles.mobileLineText}`}>
+              {highlights.line3.tail}
+            </p>
+          </div>
+
+          <div className={styles.mobileLineRow}>
+            <BlurredStagger
+              text={line4Parts.before || highlights.line4.text}
+              className={`${styles.megaText} ${styles.mobileLineText}`}
+            />
+            <BlurredStagger
+              text={line4Parts.highlighted}
+              className={`${styles.megaText} ${styles.mobileLineText}`}
+              highlights={[
+                {
+                  word: highlights.line4.highlightWord,
+                  className: styles.secondaryUnderline,
+                },
+              ]}
+            />
           </div>
         </div>
       </div>

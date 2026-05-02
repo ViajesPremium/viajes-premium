@@ -287,20 +287,30 @@
     align-items: center;
     width: 100%;
     margin-top: 3rem;
-    gap: 0.4rem;
+    gap: 0.65rem;
   }
 
-  .mobileLineWithBracket {
+  .mobileLineRow {
     display: flex;
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
-    gap: 0.5rem;
+    width: 100%;
+    max-width: min(96vw, 780px);
+    gap: 0.55rem 0.75rem;
+    text-align: center;
+  }
+
+  .mobileLineText {
+    text-align: center;
+    justify-content: center;
+    white-space: normal;
+    line-height: 0.96;
   }
 
   .mobileBracket {
-    margin: 0.2rem 0.5rem;
-    transform: none; /* Eliminado el desplazamiento que lo sacaba de centro */
+    margin: 0.12rem 0.2rem;
+    transform: none;
   }
 
   .megaText {
@@ -310,8 +320,8 @@
   }
 
   .bracketBox {
-    width: clamp(90px, 25vw, 120px);
-    height: clamp(15px, 8vw, 30px);
+    width: clamp(96px, 26vw, 132px);
+    height: clamp(24px, 9vw, 36px);
   }
 
   .bracketBox::before,
