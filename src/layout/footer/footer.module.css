@@ -215,9 +215,7 @@
   z-index: 1;
   width: 100%;
   min-height: clamp(250px, 38vw, 660px);
-  padding:
-    clamp(0.35rem, 1.2vw, 1rem)
-    var(--footer-logo-inline-pad)
+  padding: clamp(0.35rem, 1.2vw, 1rem) var(--footer-logo-inline-pad)
     clamp(1rem, 2.2vw, 2.2rem);
   display: flex;
   flex-direction: column;

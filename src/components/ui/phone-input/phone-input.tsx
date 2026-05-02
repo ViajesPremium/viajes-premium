@@ -24,7 +24,7 @@ type PhoneInputProps = Omit<
   defaultCountry?: Country;
   onCountryChange?: (country: Country) => void;
   invalid?: boolean;
-  theme?: "dark" | "light";
+  theme?: "dark" | "light" | "terra";
 };
 
 const FALLBACK_COUNTRY: Country = "MX";
@@ -111,6 +111,7 @@ const PhoneInput = React.forwardRef<HTMLInputElement, PhoneInputProps>(
     },
     ref,
   ) {
+    const isLightTheme = theme === "light";
     const [country, setCountry] = React.useState<Country>(() =>
       resolveCountry(defaultCountry),
     );
@@ -154,7 +155,7 @@ const PhoneInput = React.forwardRef<HTMLInputElement, PhoneInputProps>(
       <div
         className={cn(
           styles.root,
-          theme === "light" ? styles.rootLight : styles.rootDark,
+          isLightTheme ? styles.rootLight : styles.rootDark,
           invalid && styles.invalid,
           className,
         )}

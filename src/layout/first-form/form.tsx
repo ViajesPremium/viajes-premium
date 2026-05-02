@@ -26,7 +26,7 @@ type ImageSectionFormProps = {
   theme?: ImageSectionFormTheme;
 };
 
-export type ImageSectionFormTheme = "dark" | "light";
+export type ImageSectionFormTheme = "dark" | "light" | "terra";
 
 type FormOption = {
   label: string;
@@ -145,7 +145,7 @@ const FIELD_LABELS: Record<StepFieldKey, string> = {
 
 const INPUT_HINTS: Partial<Record<StepFieldKey, string>> = {
   phone: "Elige tu pais y la lada se agrega automaticamente.",
-  travelDate: "Selecciona mes y año estimado.",
+  travelDate: "Selecciona día, mes y año estimado.",
   travelers: "Ingresa un numero entre 1 y 20.",
 };
 
@@ -281,6 +281,12 @@ export default function ImageSectionForm({
   theme = "dark",
 }: ImageSectionFormProps) {
   const isLightTheme = theme === "light";
+  const themeClassName =
+    theme === "light"
+      ? styles.themeLight
+      : theme === "terra"
+        ? styles.themeTerra
+        : styles.themeDark;
   const [stepperInstanceKey, setStepperInstanceKey] = useState(0);
   const [values, setValues] = useState<TravelFormValues>(INITIAL_VALUES);
   const [errors, setErrors] = useState<TravelFormErrors>({});
@@ -395,9 +401,12 @@ export default function ImageSectionForm({
       const responseText = await response.text();
       const result = (() => {
         try {
-          return JSON.parse(responseText) as
-            | { ok?: boolean; error?: string; messageId?: string; details?: string }
-            | null;
+          return JSON.parse(responseText) as {
+            ok?: boolean;
+            error?: string;
+            messageId?: string;
+            details?: string;
+          } | null;
         } catch {
           return null;
         }
@@ -442,9 +451,7 @@ export default function ImageSectionForm({
   }, []);
 
   return (
-    <div
-      className={`${styles.formContainer} ${isLightTheme ? styles.themeLight : styles.themeDark}`}
-    >
+    <div className={`${styles.formContainer} ${themeClassName}`}>
       {(config.eyebrow || config.title || config.subtitle) && (
         <div className={styles.formHead}>
           {config.eyebrow ? (
@@ -509,7 +516,7 @@ export default function ImageSectionForm({
           onBeforeStepChange={handleBeforeStepChange}
           onBeforeComplete={handleBeforeComplete}
           onFinalStepCompleted={handleFinalSubmit}
-          backButtonText="Atras"
+          backButtonText="Atrás"
           nextButtonText="Siguiente"
           completeButtonText={isSubmitting ? "Enviando..." : config.submitLabel}
           completionContent={
@@ -766,7 +773,9 @@ function ExperienceChips({
         <button
           type="button"
           aria-pressed={value === lastOption.value}
-          onClick={() => onChange(value === lastOption.value ? "" : lastOption.value)}
+          onClick={() =>
+            onChange(value === lastOption.value ? "" : lastOption.value)
+          }
           className={[
             getChipClassName(value === lastOption.value, false),
             styles.experienceChipFull,
@@ -952,7 +961,7 @@ function TravelMonthPicker({
         <DatePicker.Input
           id={id}
           readOnly
-          placeholder="Selecciona mes y año"
+          placeholder="Selecciona día, mes y año"
           className={inputClassName}
           onBlur={onBlur}
         />
@@ -1119,7 +1128,7 @@ function Stepper({
   onFinalStepCompleted = () => {},
   onBeforeStepChange = () => true,
   onBeforeComplete = () => true,
-  backButtonText = "Atras",
+  backButtonText = "Atrás",
   nextButtonText = "Siguiente",
   completeButtonText = "Enviar",
   renderStepIndicator,

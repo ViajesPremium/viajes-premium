@@ -247,7 +247,7 @@ export type CtaFormSectionConfig = {
   shojiBaseImage: string;
   shojiLeftImage: string;
   shojiRightImage: string;
-  formTheme?: "dark" | "light";
+  formTheme?: "dark" | "light" | "terra";
   formConfig: ImageSectionFormConfig;
 };
 

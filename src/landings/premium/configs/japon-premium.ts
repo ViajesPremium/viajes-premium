@@ -13,7 +13,7 @@ const JAPAN_MENU_ITEMS = [
 const JAPAN_FAQS = [
   {
     id: "1",
-    question: "¿Japón es un destination complicado para viajar?",
+    question: "¿Japón es un destino complicado para viajar?",
     answer:
       "No, Japón no es un destino complicado si está bien planificado. Aunque el idioma y la logística pueden parecer desafiantes al inicio, el país es seguro, ordenado y fácil de recorrer. Cuando el viaje está bien estructurado, todo fluye con mayor claridad. En Japón Premium cuidamos ese proceso para que la experiencia se viva sin fricción.",
   },
@@ -133,7 +133,7 @@ export const japonPremiumLandingConfig: PremiumLandingConfig = {
     },
     snapshot: {
       srHeading: "Snapshot de Japón Premium",
-      badgeText: "Snapshot",
+      badgeText: "TOP ITINERARIOS",
       titleText: "Más de 21 años diseñando experiencias premium.",
       titleHighlightWords: ["21", "años", "premium"],
       cards: [
@@ -161,8 +161,8 @@ export const japonPremiumLandingConfig: PremiumLandingConfig = {
     },
     firstForm: {
       srHeading: "Cuéntanos cómo imaginas tu viaje a Japón",
-      sectionTitle: "Propuesta personalizada",
-      sectionTitleHighlightWord: "personalizada",
+      sectionTitle: "Última oportunidad",
+      sectionTitleHighlightWord: "oportunidad",
       sectionSubtitle:
         "Cuéntanos cómo imaginas tu viaje a Japón, compártenos tus intereses y te ayudaremos a identificar cuál de nuestros 3 itinerarios se adapta mejor a tu estilo de viaje.",
       backgroundImage: "/images/japon/geishaForm.webp",
@@ -175,18 +175,18 @@ export const japonPremiumLandingConfig: PremiumLandingConfig = {
         title: "",
         subtitle: "",
         submitLabel: "Solicita tu propuesta",
-        contactEmail: "hola@japonpremium.com",
-        contactPhoneDisplay: "+52 55 1234 5678",
-        contactPhoneLink: "+525512345678",
+        contactEmail: "reservaciones@viajespremium.com.mx",
+        contactPhoneDisplay: "+52 55 4161 9428",
+        contactPhoneLink: "+525541619428",
         formAction: "https://formsubmit.co/grupo-santa-f@add.nocrm.io",
         formMethod: "POST",
         formNextUrl: "https://tusitio.com/gracias", // opcional
         formCc: "crm@viajespremium.com.mx", // opcional
         crmTag: "#tags:Japon Premium",
         experienceOptions: [
-          { label: "Alma de Japón — Espiritualidad y tradición | $9,999usd", value: "alma-de-japon" },
-          { label: "Japón Pop — Anime, tecnología y cultura pop | $9,999usd", value: "japon-pop" },
-          { label: "El Camino del Shōgun — Samuráis y cultura | $9,999usd", value: "camino-del-shogun" },
+          { label: "Alma de Japón — Espiritualidad y tradición | Desde $9,999usd", value: "alma-de-japon" },
+          { label: "Japón Pop — Anime, tecnología y cultura pop | Desde $9,999usd", value: "japon-pop" },
+          { label: "El Camino del Shogun — Samuráis y cultura | Desde $9,999usd", value: "camino-del-shogun" },
           { label: "Deseo una experiencia más personalizada", value: "otro" },
         ],
       },
@@ -197,39 +197,39 @@ export const japonPremiumLandingConfig: PremiumLandingConfig = {
       kickerTop: "Trabajamos con marcas",
       kickerBottom: "Cuidadosamente seleccionadas.",
       line1: {
-        lead: "TE LLEVAMOS",
+        lead: "VIAJA POR",
         bracket: {
-          label: "OSAKA",
+          label: "Osaka",
           imageSrc: "/images/japon/frase_osaka.webp",
           imageAlt: "Vista urbana de Osaka",
           textTone: "ot",
         },
-        tail: "A",
+        tail: "CON CALMA",
       },
       line2: {
-        text: "VIVIR JAPÓN",
-        highlightWord: "JAPÓN",
+        text: "MIENTRAS",
+        highlightWord: "",
         bracket: {
-          label: "KIOTO",
+          label: "Kioto",
           imageSrc: "/images/japon/frase_kioto.webp",
           imageAlt: "Escena tradicional de Kioto",
           textTone: "epochal",
         },
-        tail: "CON",
+        tail: "REVELA SU",
       },
       line3: {
-        lead: "EL RESPALDO",
+        lead: "ESENCIA Y",
         bracket: {
-          label: "TOKIO",
+          label: "Tokio",
           imageSrc: "/images/japon/frase_tokio.webp",
           imageAlt: "Paisaje icónico de Tokio",
           textTone: "ot",
         },
-        tail: "Y LA",
+        tail: "REDEFINE TU",
       },
       line4: {
-        text: "ATENCIÓN QUE MERECES",
-        highlightWord: "MERECES",
+        text: "FORMA DE VIAJAR",
+        highlightWord: "VIAJAR",
       },
       focusRailItems: [
         {
@@ -414,7 +414,7 @@ export const japonPremiumLandingConfig: PremiumLandingConfig = {
           id: 2,
           quote:
             "Gracias por todas las atenciones; fue una experiencia única. Todo perfecto: hoteles, transporte y guías, quienes hicieron el viaje sentir como entre amigos. Infinitamente agradecida.",
-          name: "Carolina G",
+          name: "Carolina Grijalva",
           location: "Guadalajara",
           avatar: "/images/japon/testimonios/carolina_grijalva.webp",
         },
@@ -422,7 +422,7 @@ export const japonPremiumLandingConfig: PremiumLandingConfig = {
           id: 3,
           quote:
             "Desde el primer contacto entendí que no era un viaje más. Todo estuvo pensado con muchísimo detalle y claridad. Sin duda, fue uno de los viajes más especiales que he vivido.",
-          name: "Lilia G.",
+          name: "Lilia Gordillo.",
           location: "Monterrey",
           avatar: "/images/japon/testimonios/lilia_gordillo.webp",
         },
@@ -473,7 +473,7 @@ export const japonPremiumLandingConfig: PremiumLandingConfig = {
       subtitle:
         "Resolvemos las dudas más comunes sobre nuestros viajes a Japón. Si no encuentras lo que buscas, escríbenos directamente.",
       contactLabel: "¿Otra pregunta?",
-      contactEmail: "hola@japonpremium.com",
+      contactEmail: "reservaciones@viajespremium.com.mx",
       items: [...JAPAN_FAQS],
     },
     ctaForm: {
@@ -486,19 +486,19 @@ export const japonPremiumLandingConfig: PremiumLandingConfig = {
       shojiBaseImage: "/images/japon/basePuertas2.webp",
       shojiLeftImage: "/images/japon/puertaIzquierda.webp",
       shojiRightImage: "/images/japon/puertaDerecha.webp",
-      formTheme: "light",
+      formTheme: "terra",
       formConfig: {
         eyebrow: "",
         title: "",
         subtitle: "",
         submitLabel: "Solicita tu propuesta",
-        contactEmail: "hola@japonpremium.com",
-        contactPhoneDisplay: "+52 55 1234 5678",
-        contactPhoneLink: "+525512345678",
+        contactEmail: "reservaciones@viajespremium.com.mx",
+        contactPhoneDisplay: "+52 55 4161 9428",
+        contactPhoneLink: "+525541619428",
         experienceOptions: [
           { label: "Alma de Japón — Espiritual y de bienestar", value: "alma-de-japon" },
           { label: "Japón Pop — Anime, tecnología y cultura pop", value: "japon-pop" },
-          { label: "El Camino del Shōgun — Auténtico y cultural", value: "camino-del-shogun" },
+          { label: "El Camino del Shogun — Auténtico y cultural", value: "camino-del-shogun" },
           { label: "Otro", value: "otro" },
         ],
       },
@@ -552,9 +552,9 @@ export const japonPremiumLandingConfig: PremiumLandingConfig = {
       address:
         "Cda. de Omega 306, Romero de Terreros, Coyoacán, 04310 Ciudad de México, CDMX",
       mapEmbedTitle: "Ubicación Japón Premium",
-      contactEmail: "hola@japonpremium.com",
-      contactPhoneDisplay: "+52 55 1234 5678",
-      contactPhoneLink: "+525512345678",
+      contactEmail: "reservaciones@viajespremium.com.mx",
+      contactPhoneDisplay: "+52 55 4161 9428",
+      contactPhoneLink: "+525541619428",
       pageLinks: [
         { label: "Inicio", href: "#inicio" },
         { label: "Nosotros", href: "#nosotros" },
@@ -574,8 +574,7 @@ export const japonPremiumLandingConfig: PremiumLandingConfig = {
         "Todas las marcas y servicios que se ofrecen son propiedad de Japón PREMIUM® Consulte Términos y Condiciones en el Contrato de Adhesión ante PROFECO con número 7735-2015 & 7180-2015",
       backToTopLabel: "Volver al inicio",
       legalLinks: [
-        { label: "PRIVACIDAD", href: "#" },
-        { label: "TÉRMINOS", href: "#" },
+        { label: "AVISO DE PRIVACIDAD", href: "/japon-premium/aviso-de-privacidad" },
       ],
     },
   },

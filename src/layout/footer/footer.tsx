@@ -41,6 +41,16 @@ export default function Footer() {
   const logoBandRef = useRef<HTMLDivElement>(null);
   const pressureWordRef = useRef<HTMLDivElement>(null);
   const [logoSvgMarkup, setLogoSvgMarkup] = useState("");
+  const [isMobileViewport, setIsMobileViewport] = useState(false);
+
+  useEffect(() => {
+    const media = window.matchMedia("(max-width: 768px)");
+    const sync = () => setIsMobileViewport(media.matches);
+    sync();
+
+    media.addEventListener("change", sync);
+    return () => media.removeEventListener("change", sync);
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
@@ -205,7 +215,7 @@ export default function Footer() {
         <div className={styles.topLeft}>
           <div className={styles.textCols}>
             <div className={styles.navSection}>
-              <span className={styles.sectionLabel}>PAGINAS</span>
+              <span className={styles.sectionLabel}>PÁGINAS</span>
               <nav className={styles.navLinks}>
                 {footer.pageLinks.map((item) => (
                   <a
@@ -221,7 +231,7 @@ export default function Footer() {
             </div>
 
             <div className={styles.navSection}>
-              <span className={styles.sectionLabel}>SIGUENOS</span>
+              <span className={styles.sectionLabel}>SÍGUENOS</span>
               <nav className={styles.socialNav} aria-label="Redes sociales">
                 {footer.socialLinks.map((item) => {
                   const Icon = getSocialBrandIcon(item.label);
@@ -331,14 +341,14 @@ export default function Footer() {
             flex={false}
             alpha={false}
             stroke={false}
-            width={false}
-            weight={false}
-            italic={false}
+            width={true}
+            weight={true}
+            italic={true}
             weightFrom={700}
-            weightTo={200}
+            weightTo={400}
             scaleFrom={1}
             scaleTo={1}
-            animate={false}
+            animate={!isMobileViewport}
             textColor="var(--primary-japon)"
           />
         </div>

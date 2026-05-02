@@ -621,6 +621,7 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
           </ul>
           {displaySocials && socialItems && socialItems.length > 0 && (
             <div className="sm-socials" aria-label="Social links">
+              <span className="sm-socials-title">Síguenos en:</span>
               <ul className="sm-socials-list" role="list">
                 {socialItems.map((s, i) => (
                   <li key={s.label + i} className="sm-socials-item">

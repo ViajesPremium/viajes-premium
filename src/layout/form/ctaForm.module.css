@@ -41,8 +41,8 @@
     linear-gradient(
       90deg,
       rgba(10, 7, 6, 0.45) 0%,
-      rgba(10, 7, 6, 0.24) 48%,
-      rgba(10, 7, 6, 0.58) 100%
+      rgba(10, 7, 6, 0.002) 48%,
+      rgba(10, 7, 6, 0.109) 100%
     );
 }
 
@@ -214,7 +214,9 @@
     width: min(620px, 100%);
     padding: 1rem;
     box-sizing: border-box;
-    max-height: calc(var(--app-vh, 100svh) - 2.5rem - env(safe-area-inset-bottom));
+    max-height: calc(
+      var(--app-vh, 100svh) - 2.5rem - env(safe-area-inset-bottom)
+    );
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
   }
@@ -302,7 +304,29 @@
   }
 
   .mobileGalleryItem {
+    position: relative;
     aspect-ratio: 3 / 4;
+  }
+
+  .mobileGalleryItem::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(
+        0deg,
+        var(--black) 0%,
+        rgba(0, 0, 0, 0.58) 18%,
+        rgba(0, 0, 0, 0.12) 44%,
+        rgba(0, 0, 0, 0) 72%
+      ),
+      linear-gradient(
+        90deg,
+        rgba(10, 7, 6, 0.35) 0%,
+        rgba(10, 7, 6, 0.04) 46%,
+        rgba(10, 7, 6, 0.28) 100%
+      );
   }
 }
 
@@ -315,4 +339,3 @@
     font-size: clamp(0.95rem, 4.8vw, 1.08rem);
   }
 }
-
