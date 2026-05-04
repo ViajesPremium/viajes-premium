@@ -113,8 +113,10 @@ function DeferredSection({
       if (cancelled) return;
       requestAnimationFrame(() =>
         requestAnimationFrame(() => {
-          ScrollTrigger.refresh();
+          // lenis.resize() debe ir primero para que Lenis recalcule la altura
+          // total de la página antes de que ScrollTrigger recalcule sus triggers.
           window.__lenis?.resize();
+          ScrollTrigger.refresh();
         }),
       );
     });
@@ -138,6 +140,34 @@ type PremiumLandingClientProps = {
 export default function PremiumLandingClient({
   config,
 }: PremiumLandingClientProps) {
+  // useGSAP() en los hijos usa useLayoutEffect → se ejecuta antes de este
+  // useEffect. En el momento en que este RAF corre, todos los ScrollTriggers
+  // de Snapshot, Itineraries, Includes, etc. ya están registrados.
+  // Lenis persiste entre rutas pero no sabe del nuevo contenido hasta que se
+  // le notifica explícitamente con resize() + refresh().
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    window.__lenis?.scrollTo(0, { immediate: true });
+    window.__lenis?.start();
+    document.documentElement.classList.remove("lenis-stopped");
+    document.body.classList.remove("lenis-stopped");
+
+    let cancelled = false;
+    const rafId = requestAnimationFrame(() => {
+      if (cancelled) return;
+      void import("gsap/ScrollTrigger").then(({ ScrollTrigger }) => {
+        if (cancelled) return;
+        window.__lenis?.resize();
+        ScrollTrigger.refresh();
+      });
+    });
+
+    return () => {
+      cancelled = true;
+      cancelAnimationFrame(rafId);
+    };
+  }, []);
+
   return (
     <PremiumLandingProvider config={config}>
       <main className={styles.main}>
