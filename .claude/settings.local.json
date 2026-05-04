@@ -8,7 +8,8 @@
       "Bash(npx eslint *)",
       "Bash(xargs grep *)",
       "Bash(cat)",
-      "Read(//tmp/**)"
+      "Read(//tmp/**)",
+      "Bash(git add *)"
     ]
   }
 }

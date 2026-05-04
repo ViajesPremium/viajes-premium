@@ -161,8 +161,8 @@ export const japonPremiumLandingConfig: PremiumLandingConfig = {
     },
     firstForm: {
       srHeading: "Cuéntanos cómo imaginas tu viaje a Japón",
-      sectionTitle: "Última oportunidad",
-      sectionTitleHighlightWord: "oportunidad",
+      sectionTitle: "Propuesta personalizada",
+      sectionTitleHighlightWord: "personalizada",
       sectionSubtitle:
         "Cuéntanos cómo imaginas tu viaje a Japón, compártenos tus intereses y te ayudaremos a identificar cuál de nuestros 3 itinerarios se adapta mejor a tu estilo de viaje.",
       backgroundImage: "/images/japon/geishaForm.webp",
@@ -478,8 +478,8 @@ export const japonPremiumLandingConfig: PremiumLandingConfig = {
     },
     ctaForm: {
       srHeading: "Formulario de contacto Japón Premium",
-      sectionTitle: "Propuesta personalizada",
-      sectionTitleHighlightWord: "personalizada",
+      sectionTitle: "Última oportunidad",
+      sectionTitleHighlightWord: "oportunidad",
       sectionSubtitle:
         "Completa tus datos y da el primer paso para vivir una experiencia en Japón bien diseñada, clara y completamente personalizada con Japón PREMIUM.",
       backgroundImage: "/images/japon/samuraiForm.webp",

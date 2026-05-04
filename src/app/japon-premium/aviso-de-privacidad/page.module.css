@@ -47,3 +47,7 @@
   line-height: 1.6;
   color: rgba(243, 243, 240, 0.9);
 }
+
+.backBtn {
+  margin-bottom: 2rem;
+}

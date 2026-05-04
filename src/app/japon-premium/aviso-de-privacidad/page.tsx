@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import styles from "./page.module.css";
+import BackButton from "./BackButton";
 
 export const metadata: Metadata = {
   title: "Aviso de Privacidad | Japón Premium",
@@ -8,6 +9,9 @@ export const metadata: Metadata = {
 export default function AvisoDePrivacidadPage() {
   return (
     <main className={styles.page}>
+      <div className={styles.backBtn}>
+        <BackButton />
+      </div>
       <article className={styles.content}>
         <h1 className={styles.title}>Política de Privacidad</h1>
 

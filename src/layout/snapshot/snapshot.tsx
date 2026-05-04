@@ -1,11 +1,16 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import styles from "./snapshot.module.css";
 import { BlurredStagger } from "@/components/ui/blurred-stagger-text/blurred-stagger-text";
 import BentoGrid from "./BentoGrid";
 import Badge from "@/components/ui/badge/badge";
 import { usePremiumLandingConfig } from "@/landings/premium/context";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function Snapshot() {
   const {
@@ -14,26 +19,14 @@ export default function Snapshot() {
 
   const sectionRef = useRef<HTMLElement>(null);
 
-  useEffect(() => {
-    let cancelled = false;
-    let cleanup: (() => void) | undefined;
-
-    const setupPinnedSnapshot = async () => {
+  useGSAP(
+    () => {
       const section = sectionRef.current;
       if (!section) return;
 
-      const [{ gsap }, { ScrollTrigger }] = await Promise.all([
-        import("gsap"),
-        import("gsap/ScrollTrigger"),
-      ]);
-
-      if (cancelled) return;
-
-      gsap.registerPlugin(ScrollTrigger);
-
       const mm = gsap.matchMedia();
       const createPinnedSnapshot = (start: string) => {
-        const st = ScrollTrigger.create({
+        ScrollTrigger.create({
           trigger: section,
           start,
           end: "bottom top",
@@ -42,26 +35,20 @@ export default function Snapshot() {
           anticipatePin: 0.2,
           invalidateOnRefresh: true,
         });
-
-        return () => st.kill();
       };
 
       mm.add("(min-width: 769px)", () => {
-        return createPinnedSnapshot("bottom bottom");
+        createPinnedSnapshot("bottom bottom");
       });
 
-      mm.add("(max-width: 768px)", () => createPinnedSnapshot("bottom bottom"));
+      mm.add("(max-width: 768px)", () => {
+        createPinnedSnapshot("bottom bottom");
+      });
 
-      cleanup = () => mm.revert();
-    };
-
-    void setupPinnedSnapshot();
-
-    return () => {
-      cancelled = true;
-      cleanup?.();
-    };
-  }, []);
+      return () => mm.revert();
+    },
+    { scope: sectionRef }
+  );
 
   const titleHighlights = snapshot.titleHighlightWords.map((word) => ({
     word,
