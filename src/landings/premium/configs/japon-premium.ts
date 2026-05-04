@@ -133,7 +133,7 @@ export const japonPremiumLandingConfig: PremiumLandingConfig = {
     },
     snapshot: {
       srHeading: "Snapshot de Japón Premium",
-      badgeText: "TOP ITINERARIOS",
+      badgeText: "Nosotros",
       titleText: "Más de 21 años diseñando experiencias premium.",
       titleHighlightWords: ["21", "años", "premium"],
       cards: [

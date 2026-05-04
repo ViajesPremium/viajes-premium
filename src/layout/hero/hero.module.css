@@ -222,6 +222,11 @@
     pointer-events: none;
   }
 
+  .hero {
+    background-image: none !important;
+    background-color: var(--background);
+  }
+
   .h1 {
     width: 100%;
     align-items: center;
