@@ -164,6 +164,16 @@ export default function Itinerary() {
         const getLenis = () =>
           (window as unknown as Record<string, LenisLike>).__lenis;
 
+        const getBypassDirection = (): 1 | -1 | null => {
+          const state = window as unknown as Record<string, unknown>;
+          const until =
+            typeof state.__itinerariesBypassUntil === "number"
+              ? (state.__itinerariesBypassUntil as number)
+              : 0;
+          if (!until || Date.now() > until) return null;
+          return state.__itinerariesBypassDirection === -1 ? -1 : 1;
+        };
+
         // ── Unlock detection ──────────────────────────────────────────────────
         // True once the Highlights section (z-index layer above Itineraries) has
         // completely scrolled off the top of the viewport.
@@ -295,6 +305,12 @@ export default function Itinerary() {
           refreshPriority: 40,
           invalidateOnRefresh: true,
           onEnter: () => {
+            const bypassDirection = getBypassDirection();
+            if (bypassDirection === 1) {
+              isExiting = true;
+              exitInteractive();
+              return;
+            }
             captureFromTop();
           },
           onUpdate: () => {
@@ -330,14 +346,17 @@ export default function Itinerary() {
             // Comprobación 1 — flag global puesto por el botón del footer.
             // Comprobación 2 — Lenis.targetScroll por encima del pin start.
             const lenis = getLenis();
+            const bypassDirection = getBypassDirection();
             const isPassthrough =
+              bypassDirection === -1 ||
               !!(window as unknown as Record<string, unknown>).__lenisScrollingToTop ||
               (lenis &&
                 typeof lenis.targetScroll === "number" &&
                 lenis.targetScroll < pinTrigger.start);
 
             if (isPassthrough) {
-              isExiting = false;
+              isExiting = true;
+              exitInteractive();
               return;
             }
 

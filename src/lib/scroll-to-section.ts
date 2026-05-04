@@ -17,6 +17,8 @@ const SECTION_ALIAS_MAP: Record<string, string> = {
   "#cta-form": "#form",
 };
 
+const ITINERARIES_PASSTHROUGH_TARGETS = new Set(["#form", "#inicio"]);
+
 const REVEAL_SCROLL_OFFSETS: Record<string, ScrollOffsetConfig> = {
   "#itinerarios": { viewportHeightMultiplier: 1, desktopOnly: true },
   "#testimonials": { viewportHeightMultiplier: 1, desktopOnly: true },
@@ -123,6 +125,26 @@ export function scrollToSection(
     // Drop stale scroll jobs if user clicked another CTA quickly.
     if (currentToken !== scrollToken) {
       return;
+    }
+
+    const isItinerariesPassthroughTarget =
+      ITINERARIES_PASSTHROUGH_TARGETS.has(normalizedHash);
+    if (isItinerariesPassthroughTarget) {
+      const direction = targetY >= window.scrollY ? 1 : -1;
+      const passthroughState = window as unknown as Record<string, unknown>;
+      passthroughState.__itinerariesBypassDirection = direction;
+      passthroughState.__itinerariesBypassUntil = Date.now() + 2400;
+      setTimeout(() => {
+        const now = Date.now();
+        const stillActiveUntil =
+          typeof passthroughState.__itinerariesBypassUntil === "number"
+            ? (passthroughState.__itinerariesBypassUntil as number)
+            : 0;
+        if (now >= stillActiveUntil) {
+          delete passthroughState.__itinerariesBypassDirection;
+          delete passthroughState.__itinerariesBypassUntil;
+        }
+      }, 2600);
     }
 
     const lenis = window.__lenis;

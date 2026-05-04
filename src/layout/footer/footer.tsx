@@ -187,6 +187,21 @@ export default function Footer() {
   );
 
   const handleBackToTop = useCallback(() => {
+    const globalState = window as unknown as Record<string, unknown>;
+    const BYPASS_MS = 9000;
+    globalState.__itinerariesBypassDirection = -1;
+    globalState.__itinerariesBypassUntil = Date.now() + BYPASS_MS;
+    setTimeout(() => {
+      const until =
+        typeof globalState.__itinerariesBypassUntil === "number"
+          ? (globalState.__itinerariesBypassUntil as number)
+          : 0;
+      if (Date.now() >= until) {
+        delete globalState.__itinerariesBypassDirection;
+        delete globalState.__itinerariesBypassUntil;
+      }
+    }, BYPASS_MS + 200);
+
     const lenis = (
       window as unknown as {
         __lenis?: { scrollTo: (target: number, opts: object) => void };
