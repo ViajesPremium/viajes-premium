@@ -21,9 +21,10 @@ function getThemeStyle(config: PremiumLandingConfig): CSSProperties {
   } as CSSProperties;
 }
 
-function resolvePremiumConfig(pathname: string | null): PremiumLandingConfig | null {
+function resolvePremiumConfig(
+  pathname: string | null,
+): PremiumLandingConfig | null {
   if (!pathname) return null;
-
   return (
     Object.values(premiumLandingConfigs).find(
       (config) =>
@@ -40,11 +41,15 @@ type SiteShellProps = {
 export default function SiteShell({ children }: SiteShellProps) {
   const pathname = usePathname();
   const isPremiumRoute = pathname?.includes("-premium") ?? false;
-  const premiumConfig = useMemo(() => resolvePremiumConfig(pathname), [pathname]);
+  const premiumConfig = useMemo(
+    () => resolvePremiumConfig(pathname),
+    [pathname],
+  );
   const navbarKey = `navbar-${pathname ?? "root"}`;
 
   if (!isPremiumRoute) {
-    return <>{children}</>;
+    // También aplicamos la key aquí para limpiar la memoria en rutas normales
+    return <div key={pathname}>{children}</div>;
   }
 
   return (
@@ -60,16 +65,23 @@ export default function SiteShell({ children }: SiteShellProps) {
               accentColor={premiumConfig.navbar.accentColor}
               menuButtonColor={premiumConfig.navbar.menuButtonColor}
               openMenuButtonColor={premiumConfig.navbar.openMenuButtonColor}
-              socialItems={premiumConfig.sections.footer.socialLinks.map((s) => ({
-                label: s.label,
-                link: s.href,
-              }))}
+              socialItems={premiumConfig.sections.footer.socialLinks.map(
+                (s) => ({
+                  label: s.label,
+                  link: s.href,
+                }),
+              )}
               displaySocials={true}
             />
           ) : (
             <Navbar key={navbarKey} />
           )}
-          {children}
+
+          {/* LA MAGIA: Al cambiar el pathname, React destruye y recrea esto.
+              GSAP obtiene un DOM limpio y sin bugs */}
+          <div key={pathname} className="w-full">
+            {children}
+          </div>
         </CursorEffect>
       </SmoothScrollProvider>
     </div>

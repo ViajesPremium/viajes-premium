@@ -1,12 +1,13 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import type Lenis from "lenis";
+import { usePathname } from "next/navigation"; // <- IMPORTANTE
+import Lenis from "lenis";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const DESKTOP_LERP = 0.08;
 const DESKTOP_WHEEL_MULTIPLIER = 0.85;
-
-type ScrollTriggerType = typeof import("gsap/ScrollTrigger").ScrollTrigger;
 
 function clearStaleLenisStoppedClass() {
   document.documentElement.classList.remove("lenis-stopped");
@@ -19,7 +20,9 @@ export default function SmoothScrollProvider({
   children?: React.ReactNode;
 }) {
   const lenisRef = useRef<Lenis | null>(null);
+  const pathname = usePathname(); // Detecta cambios de ruta en Next.js
 
+  // 1. EFECTO PRINCIPAL DE INICIALIZACIÓN
   useEffect(() => {
     const isMobile = window.matchMedia("(max-width: 1024px)").matches;
     const prefersReducedMotion = window.matchMedia(
@@ -27,229 +30,102 @@ export default function SmoothScrollProvider({
     ).matches;
 
     history.scrollRestoration = "manual";
-    window.scrollTo(0, 0);
 
     if (prefersReducedMotion) return;
 
-    let cancelled = false;
     let tickerCb: ((time: number) => void) | null = null;
-    let lenisOffScroll: (() => void) | void;
-    let gsapApi: typeof import("gsap").gsap | null = null;
-    let stApi: ScrollTriggerType | null = null;
-    let stRefreshCb: (() => void) | null = null;
-
-    let resizeRaf: number | null = null;
-    let refreshRaf: number | null = null;
-    let refreshTimeout: ReturnType<typeof setTimeout> | null = null;
     let resizeObserver: ResizeObserver | null = null;
 
-    let lastWidth = window.innerWidth;
-    let lastHeight = window.innerHeight;
-    const setAppViewportHeight = () => {
-      document.documentElement.style.setProperty(
-        "--app-vh",
-        `${window.innerHeight}px`,
-      );
-    };
+    gsap.registerPlugin(ScrollTrigger);
 
-    const scheduleLenisResize = () => {
-      if (resizeRaf !== null) return;
-      resizeRaf = window.requestAnimationFrame(() => {
-        resizeRaf = null;
+    ScrollTrigger.config({
+      ignoreMobileResize: true,
+      autoRefreshEvents: "visibilitychange,DOMContentLoaded,load",
+    });
+
+    if (isMobile) {
+      if (window.__lenis) delete window.__lenis;
+      clearStaleLenisStoppedClass();
+    } else {
+      // Inicialización síncrona, eliminamos el await problemático
+      const lenis = new Lenis({
+        lerp: DESKTOP_LERP,
+        smoothWheel: true,
+        syncTouch: false,
+        touchMultiplier: 1,
+        wheelMultiplier: DESKTOP_WHEEL_MULTIPLIER,
+        gestureOrientation: "vertical",
+        autoRaf: false,
+      });
+
+      lenisRef.current = lenis;
+      window.__lenis = lenis;
+      clearStaleLenisStoppedClass();
+
+      // Sincronizar Lenis con GSAP
+      lenis.on("scroll", ScrollTrigger.update);
+
+      tickerCb = (time: number) => {
+        lenis.raf(time * 1000);
+      };
+
+      gsap.ticker.add(tickerCb);
+      gsap.ticker.lagSmoothing(0);
+    }
+
+    // ResizeObserver global que actualiza Lenis Y ScrollTrigger
+    if (!isMobile) {
+      resizeObserver = new ResizeObserver(() => {
         lenisRef.current?.resize();
+        ScrollTrigger.refresh();
       });
-    };
+      resizeObserver.observe(document.documentElement);
+    }
 
-    const scheduleRefresh = (delay = 0) => {
-      if (!stApi) return;
-
-      if (refreshTimeout !== null) {
-        clearTimeout(refreshTimeout);
-        refreshTimeout = null;
-      }
-
-      refreshTimeout = setTimeout(() => {
-        refreshTimeout = null;
-        if (refreshRaf !== null) return;
-
-        refreshRaf = window.requestAnimationFrame(() => {
-          refreshRaf = null;
-          lenisRef.current?.resize();
-          stApi?.sort();
-          stApi?.refresh();
-        });
-      }, delay);
-    };
-
-    const init = async () => {
-      setAppViewportHeight();
-
-      const [{ gsap }, { ScrollTrigger }] = await Promise.all([
-        import("gsap"),
-        import("gsap/ScrollTrigger"),
-      ]);
-
-      if (cancelled) return;
-
-      gsapApi = gsap;
-      stApi = ScrollTrigger;
-
-      gsapApi.registerPlugin(ScrollTrigger);
-
-      ScrollTrigger.config({
-        ignoreMobileResize: true,
-        autoRefreshEvents: "visibilitychange,DOMContentLoaded,load",
-      });
-
-      if (isMobile) {
-        if (window.__lenis) {
-          delete window.__lenis;
-        }
-        clearStaleLenisStoppedClass();
-      } else {
-        const { default: LenisCtor } = await import("lenis");
-        if (cancelled) return;
-
-        const lenis = new LenisCtor({
-          lerp: DESKTOP_LERP,
-          smoothWheel: true,
-          syncTouch: false,
-          touchMultiplier: 1,
-          wheelMultiplier: DESKTOP_WHEEL_MULTIPLIER,
-          gestureOrientation: "vertical",
-          autoRaf: false,
-        });
-
-        lenisRef.current = lenis;
-        window.__lenis = lenis;
-        clearStaleLenisStoppedClass();
-
-        lenisOffScroll = lenis.on("scroll", () => {
-          stApi?.update();
-        });
-
-        tickerCb = (time: number) => {
-          lenis.raf(time * 1000);
-        };
-
-        gsapApi.ticker.add(tickerCb);
-        gsapApi.ticker.lagSmoothing(0);
-
-        stRefreshCb = () => scheduleLenisResize();
-        ScrollTrigger.addEventListener("refresh", stRefreshCb);
-      }
-
-      const onResize = () => {
-        const newWidth = window.innerWidth;
-        const widthChanged = newWidth !== lastWidth;
-
-        // Mobile browser bars change viewport height constantly.
-        // To avoid visual jumps, only refresh on real width changes (rotation/layout).
-        if (isMobile && !widthChanged) {
-          return;
-        }
-
-        lastWidth = newWidth;
-        lastHeight = window.innerHeight;
-        setAppViewportHeight();
-        scheduleRefresh(120);
-      };
-
-      const onOrientation = () => {
-        lastWidth = window.innerWidth;
-        lastHeight = window.innerHeight;
-        setAppViewportHeight();
-        scheduleRefresh(150);
-        scheduleRefresh(400);
-      };
-
-      const onPageShow = () => {
-        gsapApi?.ticker.wake();
-        clearStaleLenisStoppedClass();
-        scheduleRefresh(0);
-      };
-
-      const onVisibility = () => {
-        if (document.visibilityState !== "visible") return;
-        gsapApi?.ticker.wake();
-        clearStaleLenisStoppedClass();
-        scheduleRefresh(0);
-      };
-
-      window.addEventListener("resize", onResize, { passive: true });
-      window.addEventListener("orientationchange", onOrientation);
-      window.addEventListener("pageshow", onPageShow);
-      document.addEventListener("visibilitychange", onVisibility);
-
-      if (!isMobile) {
-        resizeObserver = new ResizeObserver(() => scheduleLenisResize());
-        resizeObserver.observe(document.documentElement);
-      }
-
-      document.fonts?.ready.then(() => {
-        if (cancelled) return;
-        scheduleRefresh(0);
-      });
-
-      ScrollTrigger.sort();
-      scheduleRefresh(0);
-
-      return () => {
-        window.removeEventListener("resize", onResize);
-        window.removeEventListener("orientationchange", onOrientation);
-        window.removeEventListener("pageshow", onPageShow);
-        document.removeEventListener("visibilitychange", onVisibility);
-      };
-    };
-
-    let teardown: (() => void) | null = null;
-
-    void init().then((cleanup) => {
-      if (cancelled) {
-        cleanup?.();
-        return;
-      }
-      teardown = cleanup ?? null;
+    // Refresco inicial asegurado
+    requestAnimationFrame(() => {
+      lenisRef.current?.resize();
+      ScrollTrigger.refresh();
     });
 
     return () => {
-      cancelled = true;
-      teardown?.();
-
       resizeObserver?.disconnect();
 
-      if (refreshTimeout !== null) {
-        clearTimeout(refreshTimeout);
-        refreshTimeout = null;
-      }
-      if (resizeRaf !== null) {
-        window.cancelAnimationFrame(resizeRaf);
-        resizeRaf = null;
-      }
-      if (refreshRaf !== null) {
-        window.cancelAnimationFrame(refreshRaf);
-        refreshRaf = null;
+      if (tickerCb) {
+        gsap.ticker.remove(tickerCb);
       }
 
-      if (tickerCb && gsapApi) {
-        gsapApi.ticker.remove(tickerCb);
-      }
-      if (stRefreshCb && stApi) {
-        stApi.removeEventListener("refresh", stRefreshCb);
-      }
-      if (typeof lenisOffScroll === "function") {
-        lenisOffScroll();
+      if (lenisRef.current) {
+        lenisRef.current.destroy();
+        lenisRef.current = null;
       }
 
-      const lenis = lenisRef.current;
-      lenis?.destroy();
-      lenisRef.current = null;
-
-      if (window.__lenis === lenis) {
+      if (window.__lenis) {
         delete window.__lenis;
       }
     };
   }, []);
 
-  return <>{children ?? null}</>;
+  // 2. EFECTO DE NAVEGACIÓN (NEXT.JS ROUTER)
+  useEffect(() => {
+    if (lenisRef.current) {
+      // 1. Resetea el scroll a 0 instantáneamente
+      lenisRef.current.scrollTo(0, { immediate: true });
+
+      // 2. Quitamos el killAll().
+      // En su lugar, le damos tiempo a React para inyectar el DOM de la nueva página
+      // y a useGSAP (en los hijos) para crear sus triggers.
+      // Luego, simplemente forzamos a ScrollTrigger a recalcular las posiciones.
+      const timeout = setTimeout(() => {
+        lenisRef.current?.resize();
+        import("gsap/ScrollTrigger").then(({ ScrollTrigger }) => {
+          ScrollTrigger.refresh();
+        });
+      }, 150);
+
+      return () => clearTimeout(timeout);
+    }
+  }, [pathname]);
+
+  return <>{children}</>;
 }
