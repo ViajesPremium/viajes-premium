@@ -1,20 +1,17 @@
-"use client";
+﻿"use client";
 
 import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
-import { BlurredStagger } from "@/components/ui/blurred-stagger-text/blurred-stagger-text";
 import styles from "./cta-map-mobile.module.css";
 
 const MOBILE_QUERY = "(max-width: 768px)";
 const DESKTOP_QUERY = "(min-width: 769px)";
-const CTA_MAP_IMAGE = "/images/japon/mapaJapon5.svg";
+const CTA_MAP_IMAGE = "/images/japon/segundo_formulario_2.webp";
 const REVEAL_SCROLL_VH = 1;
-// Segundos de scroll antes de que el círculo empiece a crecer.
 const CIRCLE_START_DELAY = 0.45;
-// Duración de la expansión del círculo. A mayor valor, más lenta la animación.
 const CIRCLE_DURATION = 5;
 
 gsap.registerPlugin(ScrollTrigger);
@@ -101,7 +98,7 @@ export default function CtaMapMobile() {
               autoAlpha: 0,
               duration: 0.8,
             },
-            CIRCLE_START_DELAY + CIRCLE_DURATION - 0.08, // siempre anclado al final del círculo
+            CIRCLE_START_DELAY + CIRCLE_DURATION - 0.08,
           );
 
         return () => tl.kill();
@@ -134,7 +131,7 @@ export default function CtaMapMobile() {
             <div className={styles.mapWrap}>
               <Image
                 src={CTA_MAP_IMAGE}
-                alt="Mapa de Japon"
+                alt="Imagen CTA"
                 width={1920}
                 height={2000}
                 sizes="100vw"
@@ -142,30 +139,7 @@ export default function CtaMapMobile() {
               />
             </div>
 
-            <div className={styles.copy}>
-              <BlurredStagger
-                text="JAPÓN"
-                className={styles.copyText}
-                staticOnMobile
-              />
-              <BlurredStagger
-                text="CON"
-                className={styles.text}
-                staticOnMobile
-              />
-              <BlurredStagger
-                text="CRITERIO"
-                className={styles.text2}
-                staticOnMobile
-              />
-            </div>
-
             <div ref={startCircleRef} className={styles.startCircle} />
-            <p className={styles.infoText}>
-              Tokio, Kioto, Nara, Hakone, Osaka e Hiroshima forman parte de
-              experiencias diseñadas con más claridad, mejor ritmo y respaldo
-              PREMIUM®.
-            </p>
           </div>
         </div>
       </div>

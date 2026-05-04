@@ -755,13 +755,13 @@ function ExperienceChips({
     >
       <div className={styles.experienceChipsTopRow}>
         {topOptions.map((option) => {
-          const isSelected = value === option.value;
+          const isSelected = value === option.label;
           return (
             <button
               key={option.value}
               type="button"
               aria-pressed={isSelected}
-              onClick={() => onChange(isSelected ? "" : option.value)}
+              onClick={() => onChange(isSelected ? "" : option.label)}
               className={getChipClassName(isSelected, true)}
             >
               {option.label}
@@ -772,12 +772,12 @@ function ExperienceChips({
       {lastOption ? (
         <button
           type="button"
-          aria-pressed={value === lastOption.value}
+          aria-pressed={value === lastOption.label}
           onClick={() =>
-            onChange(value === lastOption.value ? "" : lastOption.value)
+            onChange(value === lastOption.label ? "" : lastOption.label)
           }
           className={[
-            getChipClassName(value === lastOption.value, false),
+            getChipClassName(value === lastOption.label, false),
             styles.experienceChipFull,
           ]
             .filter(Boolean)
@@ -787,13 +787,13 @@ function ExperienceChips({
         </button>
       ) : null}
       {options.slice(4).map((option) => {
-        const isSelected = value === option.value;
+        const isSelected = value === option.label;
         return (
           <button
             key={option.value}
             type="button"
             aria-pressed={isSelected}
-            onClick={() => onChange(isSelected ? "" : option.value)}
+            onClick={() => onChange(isSelected ? "" : option.label)}
             className={getChipClassName(isSelected, false)}
           >
             {option.label}

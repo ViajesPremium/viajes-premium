@@ -164,8 +164,7 @@ export const japonPremiumLandingConfig: PremiumLandingConfig = {
       sectionTitle: "Propuesta personalizada",
       sectionTitleHighlightWord: "personalizada",
       sectionSubtitle:
-        "Cuéntanos cómo imaginas tu viaje a Japón, compártenos tus intereses y te ayudaremos a identificar cuál de nuestros 3 itinerarios se adapta mejor a tu estilo de viaje.",
-      backgroundImage: "/images/japon/geishaForm.webp",
+"Cuéntanos cómo imaginas tu viaje a Japón y descubriremos cuál de nuestros 3 itinerarios es perfecto para ti.",     backgroundImage: "/images/japon/geishaForm.webp",
       mobileImage: {
         src: "/images/japon/geishaFormSola.webp",
         alt: "Geisha en Japón",
@@ -184,9 +183,9 @@ export const japonPremiumLandingConfig: PremiumLandingConfig = {
         formCc: "crm@viajespremium.com.mx", // opcional
         crmTag: "#tags:Japon Premium",
         experienceOptions: [
-          { label: "Alma de Japón — Espiritualidad y tradición | Desde $9,999usd", value: "alma-de-japon" },
-          { label: "Japón Pop — Anime, tecnología y cultura pop | Desde $9,999usd", value: "japon-pop" },
-          { label: "El Camino del Shogun — Samuráis y cultura | Desde $9,999usd", value: "camino-del-shogun" },
+          { label: "Alma de Japón — Espiritualidad y tradición | Desde $5,703 USD", value: "alma-de-japon" },
+          { label: "Japón Pop — Anime, tecnología y cultura pop | Desde $6,478 USD", value: "japon-pop" },
+          { label: "El Camino del Shogun — Samuráis y cultura | Desde $5,938 USD", value: "camino-del-shogun" },
           { label: "Deseo una experiencia más personalizada", value: "otro" },
         ],
       },
@@ -310,7 +309,7 @@ export const japonPremiumLandingConfig: PremiumLandingConfig = {
             "Ideal para parejas, familias, lunas de miel y viajeros que buscan desconexión profunda.",
           image1: "/images/japon/3.1-alma-de-japon-izq.webp",
           image2: "/images/japon/3.2-alma-de-japon-der.webp",
-          price: "Desde $4,990 USD base doble",
+          price: "Desde $5,703 USD base doble",
         },
         {
           id: 2,
@@ -322,7 +321,7 @@ export const japonPremiumLandingConfig: PremiumLandingConfig = {
             "Ideal para familias, amigos, parejas jóvenes, fans del anime, manga y la tecnología.",
           image1: "/images/japon/4.2-japon-pop-izq.webp",
           image2: "/images/japon/4.3-japon-pop-der.webp",
-          price: "Desde $4,590 USD base doble",
+          price: "Desde $6,478 USD base doble",
         },
         {
           id: 3,
@@ -334,7 +333,7 @@ export const japonPremiumLandingConfig: PremiumLandingConfig = {
             "Ideal para parejas aventureras, viajeros con mirada cultural y quienes prefieren el Japón que pocos conocen.",
           image1: "/images/japon/5.2-el-camino-del-shogun-izq.webp",
           image2: "/images/japon/5.1-el-camino-del-shogun-der.webp",
-          price: "Desde $5,290 USD base doble",
+          price: "Desde $5,938 USD base doble",
         },
       ],
       secondaryCtaLabel: "Descargar PDF",
@@ -458,8 +457,7 @@ export const japonPremiumLandingConfig: PremiumLandingConfig = {
       role: "Directora Comercial - Japón PREMIUM",
       name: "Karina Sánchez",
       quote:
-        "Nuestra misión es diseñar experiencias personalizadas para que conectes emocionalmente con tu viaje. Creemos que viajar va más allá de acumular destinos; se trata de crear vínculos reales con cada lugar.",
-      quoteHighlight: "",
+"Nuestra misión es diseñar viajes personalizados que crean vínculos reales. No acumulamos destinos, conectamos con ellos.",      quoteHighlight: "",
       image: {
         src: "/images/japon/karina.webp",
         alt: "Asesora de viaje Japón Premium",
@@ -481,7 +479,7 @@ export const japonPremiumLandingConfig: PremiumLandingConfig = {
       sectionTitle: "Última oportunidad",
       sectionTitleHighlightWord: "oportunidad",
       sectionSubtitle:
-        "Completa tus datos y da el primer paso para vivir una experiencia en Japón bien diseñada, clara y completamente personalizada con Japón PREMIUM.",
+"Completa tus datos y da el primer paso hacia tu viaje a Japón, diseñado a tu medida por Japón PREMIUM.",
       backgroundImage: "/images/japon/samuraiForm.webp",
       shojiBaseImage: "/images/japon/basePuertas2.webp",
       shojiLeftImage: "/images/japon/puertaIzquierda.webp",

@@ -17,8 +17,8 @@
   position: absolute;
   inset: 0;
   --desktop-mask-r: 14px;
-  --desktop-mask-x: 70%;
-  --desktop-mask-y: 58%;
+  --desktop-mask-x: 50%;
+  --desktop-mask-y: 50%;
   will-change:
     transform,
     clip-path,
@@ -59,53 +59,8 @@
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: contain;
-  transform: translateX(clamp(2.4rem, 20vw, 25rem)) scale(1);
-}
-
-.copy {
-  position: absolute;
-  z-index: 3;
-  width: min(65vw, 860px);
-  left: clamp(5%, 6vw, 20%);
-  top: clamp(2%, 15vh, 25%);
-  pointer-events: none;
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.copyText {
-  margin: 0;
-  color: var(--black);
-  font-family: var(--font-thunder-lc), sans-serif;
-  font-size: clamp(2.4rem, 22vw, 17rem);
-  font-weight: 800;
-  width: 100%;
-  line-height: 0.9;
-  text-wrap: pretty;
-  justify-content: flex-start;
-}
-
-.text {
-  margin: 0 0.5rem;
-  color: var(--black);
-  font-family: var(--font-thunder-lc), sans-serif;
-  font-size: clamp(2.4rem, 20vw, 9rem);
-  font-weight: 100;
-  line-height: 0.9;
-  text-wrap: pretty;
-  justify-content: flex-start;
-}
-
-.text2 {
-  margin: 0;
-  color: var(--black);
-  font-family: var(--font-thunder-lc), sans-serif;
-  font-size: clamp(2.4rem, 20vw, 14rem);
-  font-weight: 300;
-  line-height: 0.9;
-  text-wrap: pretty;
-  justify-content: flex-start;
+  object-fit: cover;
+  transform: none;
 }
 
 .startCircle {
@@ -123,41 +78,7 @@
   pointer-events: none;
 }
 
-.infoText {
-  position: absolute;
-  display: flex;
-  width: 40%;
-  left: 5%;
-  bottom: 5%;
-  color: var(--black);
-  font-family: var(--font-thunder-lc), sans-serif;
-  font-size: clamp(1.8rem, 2vw, 2.4rem);
-  font-weight: 200;
-  line-height: 1.3;
-  text-wrap: pretty;
-  justify-content: flex-start;
-}
-
 @media (max-width: 1024px) {
-  .copy {
-    width: min(86vw, 620px);
-  }
-
-  .copyText {
-    font-size: clamp(5rem, 12vw, 5rem);
-  }
-
-  .text {
-    font-size: clamp(2rem, 8vw, 4rem);
-  }
-
-  .text2 {
-    font-size: clamp(4rem, 8vw, 3.5rem);
-  }
-
-  .mapImage {
-    transform: translateX(0) scale(1.06);
-  }
 }
 
 @media (max-width: 768px) {
@@ -172,18 +93,6 @@
 
   .startCircle {
     display: none;
-  }
-
-  .copy {
-    top: 10%;
-    position: relative;
-  }
-
-  .infoText {
-    position: relative;
-    font-size: clamp(1.6rem, 2vw, 2.4rem);
-    width: 100%;
-    top: 12%;
   }
 }
 

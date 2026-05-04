@@ -1,7 +1,114 @@
-.fab {
+﻿.wrap {
   position: fixed;
-  right: max(2rem, env(safe-area-inset-right));
-  bottom: max(2rem, env(safe-area-inset-bottom));
+  right: max(1.1rem, env(safe-area-inset-right));
+  bottom: max(1.1rem, env(safe-area-inset-bottom));
+  z-index: 1200;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.7rem;
+}
+
+.panel {
+  --wa-focus: var(--primary-japon);
+  --wa-bg: #ffffff;
+  --wa-title: #0f172a;
+  --wa-label: #334155;
+  --wa-text: #0f172a;
+  width: min(22rem, calc(100vw - 1.4rem));
+  background: var(--wa-bg);
+  border-radius: var(--radius);
+  box-shadow: var(--box-shadow);
+  padding: 0.9rem;
+  display: grid;
+  gap: 0.45rem;
+}
+
+.title {
+  margin: 0 0 0.2rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--wa-title);
+}
+
+.label {
+  margin: 0.15rem 0 0;
+  font-size: 0.85rem;
+  font-weight: 300;
+  color: var(--wa-label);
+}
+
+.input,
+.textarea,
+.select {
+  width: 100%;
+  border: 1px solid #cbd5e1;
+  border-radius: var(--radius);
+  padding: 0.62rem 0.72rem;
+  font-size: 0.9rem;
+  color: var(--wa-text);
+  background: #ffffff;
+  outline: none;
+}
+
+.phoneField {
+  border-radius: var(--radius);
+}
+
+.input:focus,
+.textarea:focus,
+.select:focus {
+  border-color: var(--wa-focus);
+  box-shadow: 0 0 0 2px color-mix(in oklab, var(--wa-focus) 18%, white);
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 4.2rem;
+}
+
+.select {
+  min-height: 2.6rem;
+  appearance: none;
+  cursor: pointer;
+}
+
+.error {
+  margin: 0.1rem 0 0;
+  color: #dc2626;
+  font-size: 0.78rem;
+  font-weight: 300;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.45rem;
+  margin-top: 0.25rem;
+}
+
+.cancel,
+.submit {
+  border: 0;
+  width: 100%;
+  border-radius: var(--radius);
+  padding: 0.55rem 0.82rem;
+  font-weight: 400;
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+
+.cancel {
+  background: #e2e8f0;
+  color: #0f172a;
+}
+
+.submit {
+  background: var(--wa-submit-bg, var(--primary-japon));
+  color: var(--wa-submit-color, #fff);
+}
+
+.fab {
   width: 4.8rem;
   height: 4.8rem;
   border-radius: 9999px;
@@ -11,7 +118,6 @@
   background: #41d476;
   color: #fff;
   border: 1px solid rgb(0 0 0 / 0.08);
-  z-index: 1200;
   transition:
     transform 0.2s ease,
     box-shadow 0.2s ease,
@@ -35,11 +141,19 @@
 }
 
 @media (max-width: 768px) {
+  .wrap {
+    right: max(0.85rem, env(safe-area-inset-right));
+    bottom: max(0.85rem, env(safe-area-inset-bottom));
+  }
+
+  .panel {
+    width: min(20rem, calc(100vw - 1rem));
+    padding: 0.78rem;
+  }
+
   .fab {
     width: 4rem;
     height: 4rem;
-    right: max(0.85rem, env(safe-area-inset-right));
-    bottom: max(0.85rem, env(safe-area-inset-bottom));
   }
 
   .icon {

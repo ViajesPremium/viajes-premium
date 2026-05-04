@@ -132,7 +132,7 @@
   font-weight: 200;
   letter-spacing: 1px;
   line-height: 1.4;
-  font-size: clamp(0.9rem, 1.1vw, 1.1rem);
+  font-size: clamp(1rem, 1.1vw, 1.1rem);
   font-style: italic;
 }
 
@@ -168,4 +168,3 @@
     width: 88vw;
   }
 }
-
