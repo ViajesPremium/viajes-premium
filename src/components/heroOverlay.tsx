@@ -824,7 +824,7 @@ export default function HeroOverlay({
           height={5000}
           sizes="(max-width: 768px) 210vw, 62vw"
           loading="eager"
-          quality={60}
+          quality={100}
           className={styles.geishaHero}
         />
       </motion.div>

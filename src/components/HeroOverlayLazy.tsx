@@ -48,7 +48,7 @@ function HeroOverlayStatic({ images }: { images: HeroOverlayImages }) {
         height={5000}
         sizes="(max-width: 768px) 210vw, 62vw"
         loading="eager"
-        quality={75}
+        quality={100}
         fetchPriority="high"
         decoding="async"
         className={styles.geishaHero}
@@ -68,7 +68,7 @@ function HeroOverlayMobileLite({ images }: { images: HeroOverlayImages }) {
         height={5000}
         sizes="(max-width: 768px) 210vw, 62vw"
         loading="eager"
-        quality={75}
+        quality={100}
         fetchPriority="high"
         decoding="async"
         className={styles.geishaHero}
@@ -80,7 +80,7 @@ function HeroOverlayMobileLite({ images }: { images: HeroOverlayImages }) {
           alt={images.samuraiAlt}
           fill
           sizes="(max-width: 768px) 199vw, 0px"
-          quality={58}
+          quality={100}
           className={styles.mobileLiteSamuraiImage}
         />
       </div>

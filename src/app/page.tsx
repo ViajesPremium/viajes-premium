@@ -5,20 +5,21 @@ import VisionLandingPage from "@/vision/VisionLandingPage";
 import styles from "./page.module.css";
 import Hero from "@/home/hero";
 import AboutUs from "@/home/aboutUs";
+import Destinations from "@/home/destinations";
 import { useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 
 export default function Home() {
-  const pageRef = useRef<HTMLElement | null>(null);
+  const horizontalRef = useRef<HTMLElement | null>(null);
   const trackRef = useRef<HTMLDivElement | null>(null);
 
   useGSAP(
     () => {
       gsap.registerPlugin(ScrollTrigger);
 
-      const page = pageRef.current;
+      const page = horizontalRef.current;
       const track = trackRef.current;
       if (!page || !track) return;
 
@@ -38,6 +39,7 @@ export default function Home() {
           scrub: 1,
           pin: true,
           anticipatePin: 1,
+          refreshPriority: 2,
           invalidateOnRefresh: true,
         },
       });
@@ -47,20 +49,25 @@ export default function Home() {
         tween.kill();
       };
     },
-    { scope: pageRef },
+    { scope: horizontalRef },
   );
 
   // return <VisionLandingPage />;
   return (
-    <main ref={pageRef} className={styles.page}>
-      <div ref={trackRef} className={styles.track}>
-        <section className={styles.column}>
-          <Hero />
-        </section>
-        <section className={styles.column}>
-          <AboutUs />
-        </section>
-      </div>
+    <main className={styles.page}>
+      <section ref={horizontalRef} className={styles.horizontalScene}>
+        <div ref={trackRef} className={styles.track}>
+          <section className={styles.column}>
+            <Hero />
+          </section>
+          <section className={styles.column}>
+            <AboutUs />
+          </section>
+        </div>
+      </section>
+      <section className={styles.verticalScene}>
+        <Destinations />
+      </section>
     </main>
   );
 }

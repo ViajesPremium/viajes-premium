@@ -1,5 +1,10 @@
 .page {
   position: relative;
+  width: 100%;
+}
+
+.horizontalScene {
+  position: relative;
   height: 100vh;
   overflow: hidden;
 }
@@ -17,4 +22,9 @@
   height: 100vh;
   scroll-snap-align: start;
   scroll-snap-stop: always;
+}
+
+.verticalScene {
+  position: relative;
+  width: 100%;
 }
