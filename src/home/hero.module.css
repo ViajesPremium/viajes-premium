@@ -1,0 +1,28 @@
+.container {
+  min-height: 100vh;
+  background-color: var(--black);
+  display: flex;
+  align-items: center;
+  padding: 2rem;
+}
+
+.titleWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  margin-right: 1rem;
+}
+
+.titleFirst {
+  color: var(--white);
+  font-size: clamp(5rem, 10vw, 10rem);
+  max-width: 65rem;
+  line-height: 1.1;
+}
+
+.subtitle {
+  color: var(--white);
+  font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+  font-weight: 200;
+  max-width: 65rem;
+}
