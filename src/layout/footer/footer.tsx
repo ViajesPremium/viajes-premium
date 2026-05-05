@@ -285,6 +285,9 @@ export default function Footer() {
                   {footer.contactPhoneDisplay}
                 </a>
               </nav>
+            </div>
+
+            <div className={`${styles.navSection} ${styles.backToTopSection}`}>
               <button
                 type="button"
                 onClick={handleBackToTop}

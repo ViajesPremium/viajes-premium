@@ -1,0 +1,50 @@
+.container {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  user-select: none;
+}
+
+.canvas {
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+  opacity: 0;
+  transition: opacity 1.2s ease;
+  border-radius: 50%;
+  overflow: visible;
+}
+
+.canvasVisible {
+  opacity: 1;
+}
+
+.polaroid {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  background: var(--white);
+  padding: 6px 6px 24px;
+  pointer-events: auto;
+  transition: opacity 0.3s;
+  text-decoration: none;
+  border-radius: 2px;
+}
+
+.polaroidImage {
+  display: block;
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+
+.polaroidCaption {
+  position: absolute;
+  bottom: 5px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-family: system-ui, sans-serif;
+  font-size: 0.8rem;
+  color: var(--black);
+  letter-spacing: 0.02em;
+}

@@ -9,7 +9,7 @@ import styles from "./cta-map-mobile.module.css";
 
 const MOBILE_QUERY = "(max-width: 768px)";
 const DESKTOP_QUERY = "(min-width: 769px)";
-const CTA_MAP_IMAGE = "/images/japon/segundo_formulario_2.webp";
+const CTA_MAP_IMAGE = "/images/japon/ejemplo-japon.png";
 const REVEAL_SCROLL_VH = 1;
 const CIRCLE_START_DELAY = 0.45;
 const CIRCLE_DURATION = 5;

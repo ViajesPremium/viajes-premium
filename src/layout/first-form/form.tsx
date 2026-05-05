@@ -675,7 +675,7 @@ export default function ImageSectionForm({
                 id={`${idPrefix}-japanWishes`}
                 rows={5}
                 className={`${styles.formInput} ${styles.formTextarea}`}
-                placeholder="Templos, gastronomia, arte, tradiciones, wellness..."
+                placeholder="Ej. Kioto tradicional, ryokan con onsen, gastronomía, templos, anime, naturaleza, tren bala o tiempo libre para explorar."
                 value={values.japanWishes}
                 onChange={(event) =>
                   setFieldValue("japanWishes", event.target.value)

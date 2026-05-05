@@ -1,28 +1,122 @@
 .container {
-  min-height: 100vh;
-  background-color: var(--black);
+  position: relative;
+  height: 100%;
+  background-color: var(--white);
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding: 2rem;
+  overflow: hidden;
+}
+
+.backgroundMedia {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.backgroundColumn {
+  position: relative;
+  overflow: hidden;
+}
+
+.backgroundTrack {
+  display: flex;
+  flex-direction: column;
+  height: max-content;
+  will-change: transform;
+  gap: 1rem;
+}
+
+.trackUp {
+  animation: heroColumnUp 28s linear infinite;
+}
+
+.trackDown {
+  animation: heroColumnUp 28s linear infinite reverse;
+}
+
+.backgroundTile {
+  position: relative;
+  min-height: 34vh;
+}
+
+.backgroundImage {
+  object-fit: cover;
+  opacity: 0;
+}
+
+@keyframes heroColumnUp {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
 }
 
 .titleWrap {
+  position: relative;
+  z-index: 2;
   display: flex;
   flex-direction: column;
-  gap: 0.1rem;
-  margin-right: 1rem;
+  gap: 4rem;
+  align-items: start;
+  width: 50%;
 }
 
 .titleFirst {
-  color: var(--white);
+  color: var(--black);
   font-size: clamp(5rem, 10vw, 10rem);
-  max-width: 65rem;
+  max-width: 85rem;
   line-height: 1.1;
+  font-weight: 400;
+}
+
+.viajesWord {
+  font-family: "BigCaslon", serif;
+  font-weight: 300;
 }
 
 .subtitle {
-  color: var(--white);
-  font-size: clamp(1.25rem, 2.5vw, 1.75rem);
-  font-weight: 200;
-  max-width: 65rem;
+  color: var(--black);
+  font-size: clamp(1.25rem, 2.5vw, 1.6rem);
+  font-weight: 300;
+  line-height: 2;
+  max-width: 80rem;
+  text-align: start;
+}
+
+.heroCta {
+  background-color: rgb(207, 167, 74) !important;
+}
+
+.buttonRow {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: start;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.globeWrap {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  align-items: center;
+  z-index: 2;
+  width: 50%;
+}
+
+.globe {
+  width: 90%;
+}
+
+.textMap {
+  font-weight: 300;
+  text-decoration: underline;
 }

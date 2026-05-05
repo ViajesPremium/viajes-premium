@@ -68,6 +68,11 @@
   gap: 0.5rem;
 }
 
+.backToTopSection {
+  justify-content: flex-end;
+  align-items: flex-start;
+}
+
 .sectionLabel {
   margin: 0;
   font-size: clamp(1rem, 1.8vw, 2rem);
@@ -366,12 +371,24 @@
 
   .textCols .navSection:nth-child(2) {
     grid-column: 2;
-    grid-row: 1 / span 2;
+    grid-row: 1;
+    align-items: flex-end;
+  }
+
+  .textCols .navSection:nth-child(2) .socialNav {
+    justify-content: flex-end;
   }
 
   .textCols .navSection:nth-child(3) {
     grid-column: 1;
     grid-row: 2;
+  }
+
+  .textCols .navSection:nth-child(4) {
+    grid-column: 2;
+    grid-row: 2;
+    align-self: end;
+    align-items: flex-end;
   }
 
   .topSection .navLink {
@@ -388,6 +405,7 @@
   .mapCard {
     width: 100%;
     max-width: none;
+    margin-bottom: -2.8rem;
   }
 
   .logoBand {

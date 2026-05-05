@@ -40,17 +40,11 @@ type SiteShellProps = {
 
 export default function SiteShell({ children }: SiteShellProps) {
   const pathname = usePathname();
-  const isPremiumRoute = pathname?.includes("-premium") ?? false;
   const premiumConfig = useMemo(
     () => resolvePremiumConfig(pathname),
     [pathname],
   );
   const navbarKey = `navbar-${pathname ?? "root"}`;
-
-  if (!isPremiumRoute) {
-    // También aplicamos la key aquí para limpiar la memoria en rutas normales
-    return <div key={pathname}>{children}</div>;
-  }
 
   return (
     <div style={premiumConfig ? getThemeStyle(premiumConfig) : undefined}>
@@ -87,3 +81,5 @@ export default function SiteShell({ children }: SiteShellProps) {
     </div>
   );
 }
+
+
