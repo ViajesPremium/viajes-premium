@@ -84,7 +84,7 @@ function HeroOverlayMobileLite({ images }: { images: HeroOverlayImages }) {
           alt={images.samuraiAlt}
           fill
           sizes={HERO_SAMURAI_IMAGE_SIZES}
-          quality={88}
+          quality={75}
           className={styles.mobileLiteSamuraiImage}
         />
       </div>
