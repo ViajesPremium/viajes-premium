@@ -30,6 +30,8 @@ const DEFAULT_HERO_OVERLAY_IMAGES: HeroOverlayImages = {
   baseAlt: "Hero Base",
   samuraiAlt: "Hero Samurai",
 };
+const HERO_BASE_IMAGE_SIZES = "(max-width: 768px) 745px, 690px";
+const HERO_SAMURAI_IMAGE_SIZES = "(max-width: 768px) 779px, 0px";
 
 function resolveOverlayImages(
   overlayImages?: Partial<HeroOverlayImages>,
@@ -46,11 +48,11 @@ function HeroOverlayStatic({ images }: { images: HeroOverlayImages }) {
       <Image
         src={images.baseImage}
         alt={images.baseAlt}
-        width={5000}
-        height={5000}
-        sizes="(max-width: 768px) 210vw, 62vw"
+        width={745}
+        height={745}
+        sizes={HERO_BASE_IMAGE_SIZES}
         loading="eager"
-        quality={100}
+        quality={90}
         fetchPriority="high"
         decoding="async"
         className={styles.geishaHero}
@@ -66,11 +68,11 @@ function HeroOverlayMobileLite({ images }: { images: HeroOverlayImages }) {
       <Image
         src={images.baseImage}
         alt={images.baseAlt}
-        width={5000}
-        height={5000}
-        sizes="(max-width: 768px) 210vw, 62vw"
+        width={745}
+        height={745}
+        sizes={HERO_BASE_IMAGE_SIZES}
         loading="eager"
-        quality={100}
+        quality={90}
         fetchPriority="high"
         decoding="async"
         className={styles.geishaHero}
@@ -81,8 +83,8 @@ function HeroOverlayMobileLite({ images }: { images: HeroOverlayImages }) {
           src={images.samuraiImage}
           alt={images.samuraiAlt}
           fill
-          sizes="(max-width: 768px) 199vw, 0px"
-          quality={100}
+          sizes={HERO_SAMURAI_IMAGE_SIZES}
+          quality={88}
           className={styles.mobileLiteSamuraiImage}
         />
       </div>

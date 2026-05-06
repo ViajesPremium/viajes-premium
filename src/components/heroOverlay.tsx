@@ -832,11 +832,11 @@ export default function HeroOverlay({
         <Image
           src={baseImage}
           alt={baseAlt}
-          width={5000}
-          height={5000}
-          sizes="(max-width: 768px) 210vw, 62vw"
+          width={745}
+          height={745}
+          sizes="(max-width: 768px) 745px, 690px"
           loading="eager"
-          quality={100}
+          quality={90}
           className={styles.geishaHero}
         />
       </motion.div>

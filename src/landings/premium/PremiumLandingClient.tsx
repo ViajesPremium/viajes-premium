@@ -146,20 +146,6 @@ export default function PremiumLandingClient({
     // Cuando Next.js en local compila un componente dinámico, inyecta múltiples
     // nodos rápidamente. Usamos un "debounce" para esperar a que termine de inyectar
     // antes de recalcular GSAP.
-    let debounceTimeout: NodeJS.Timeout;
-
-    const resizeObserver = new ResizeObserver(() => {
-      clearTimeout(debounceTimeout);
-      debounceTimeout = setTimeout(() => {
-        window.__lenis?.resize();
-        ScrollTrigger.refresh();
-      }, 200); // 200ms de calma tras el último cambio en el DOM
-    });
-
-    if (document.body) {
-      resizeObserver.observe(document.body);
-    }
-
     // Refresco de respaldo después de un tiempo prudencial por si la hidratación fue lenta
     const fallbackTimeout = setTimeout(() => {
       window.__lenis?.resize();
@@ -167,8 +153,6 @@ export default function PremiumLandingClient({
     }, 1000);
 
     return () => {
-      resizeObserver.disconnect();
-      clearTimeout(debounceTimeout);
       clearTimeout(fallbackTimeout);
     };
   }, []);

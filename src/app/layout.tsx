@@ -22,15 +22,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es-mx" className="antialiased">
-      <head>
-        <link
-          rel="preload"
-          href="/fonts/nohemi-font-family/Nohemi-VF-BF6438cc58ad63d.ttf"
-          as="font"
-          type="font/ttf"
-          crossOrigin="anonymous"
-        />
-      </head>
       <body className="flex min-h-screen flex-col">
         <SiteShell>{children}</SiteShell>
         <WhatsAppFab />

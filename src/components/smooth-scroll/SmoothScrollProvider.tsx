@@ -35,6 +35,9 @@ export default function SmoothScrollProvider({
 
     let tickerCb: ((time: number) => void) | null = null;
     let resizeObserver: ResizeObserver | null = null;
+    let resizeDebounce: ReturnType<typeof setTimeout> | null = null;
+    let lastDocWidth = window.innerWidth;
+    let lastDocHeight = window.innerHeight;
 
     gsap.registerPlugin(ScrollTrigger);
 
@@ -76,8 +79,18 @@ export default function SmoothScrollProvider({
     // ResizeObserver global que actualiza Lenis Y ScrollTrigger
     if (!isMobile) {
       resizeObserver = new ResizeObserver(() => {
-        lenisRef.current?.resize();
-        ScrollTrigger.refresh();
+        if (resizeDebounce) clearTimeout(resizeDebounce);
+        resizeDebounce = setTimeout(() => {
+          const width = window.innerWidth;
+          const height = window.innerHeight;
+          const widthDelta = Math.abs(width - lastDocWidth);
+          const heightDelta = Math.abs(height - lastDocHeight);
+          if (widthDelta < 2 && heightDelta < 2) return;
+          lastDocWidth = width;
+          lastDocHeight = height;
+          lenisRef.current?.resize();
+          ScrollTrigger.refresh();
+        }, 120);
       });
       resizeObserver.observe(document.documentElement);
     }
@@ -90,6 +103,7 @@ export default function SmoothScrollProvider({
 
     return () => {
       resizeObserver?.disconnect();
+      if (resizeDebounce) clearTimeout(resizeDebounce);
 
       if (tickerCb) {
         gsap.ticker.remove(tickerCb);
