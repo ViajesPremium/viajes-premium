@@ -1,98 +1,12 @@
-﻿.section {
+.section {
   position: relative;
   width: 100%;
-  height: var(--app-vh, 100svh);
-  min-height: var(--app-vh, 100svh);
-  z-index: 1;
+  background: var(--black);
 }
 
-.stickyViewport {
-  position: relative;
+.video {
+  display: block;
   width: 100%;
-  height: 100%;
-  overflow: clip;
+  height: auto;
+  object-fit: contain;
 }
-
-.revealSurface {
-  position: absolute;
-  inset: 0;
-  --desktop-mask-r: 14px;
-  --desktop-mask-x: 50%;
-  --desktop-mask-y: 50%;
-  will-change:
-    transform,
-    clip-path,
-    -webkit-mask-image,
-    mask-image;
-  pointer-events: none;
-  -webkit-mask-image: radial-gradient(
-    circle var(--desktop-mask-r) at var(--desktop-mask-x) var(--desktop-mask-y),
-    transparent 99%,
-    #000 100%
-  );
-  mask-image: radial-gradient(
-    circle var(--desktop-mask-r) at var(--desktop-mask-x) var(--desktop-mask-y),
-    transparent 99.9%,
-    #000 100%
-  );
-}
-
-.mapScene {
-  position: absolute;
-  inset: 0;
-}
-
-.mapBase {
-  position: absolute;
-  inset: 0;
-  background: var(--white);
-}
-
-.mapWrap {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-}
-
-.mapImage {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transform: none;
-}
-
-.startCircle {
-  position: absolute;
-  left: var(--desktop-mask-x);
-  top: var(--desktop-mask-y);
-  transform: translate(-50%, -50%);
-  width: clamp(18px, 1.7vw, 26px);
-  height: clamp(18px, 1.7vw, 26px);
-  border-radius: 999px;
-  border: 2px solid rgba(0, 0, 0, 0.9);
-  background: rgba(255, 255, 255, 0.9);
-  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.45);
-  z-index: 4;
-  pointer-events: none;
-}
-
-@media (max-width: 1024px) {
-}
-
-@media (max-width: 768px) {
-  .revealSurface {
-    -webkit-mask-image: none;
-    mask-image: none;
-  }
-
-  .mapImage {
-    transform: translateY(clamp(12vh, 17vh, 20vh)) scale(0.9);
-  }
-
-  .startCircle {
-    display: none;
-  }
-}
-

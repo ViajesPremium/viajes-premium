@@ -18,8 +18,6 @@ import { yucatanPremiumLandingConfig } from "@/landings/premium/configs/yucatan-
 import type { PremiumLandingConfig } from "@/landings/premium/types";
 import styles from "./destinations.module.css";
 
-// ─── Types ────────────────────────────────────────────────────────────────────
-
 type DestinationCard = {
   label: string;
   route: string;
@@ -36,8 +34,6 @@ type DestinationVisualSet = {
   backgroundImage: string;
   galleryImages: string[];
 };
-
-// ─── Visual overrides per destination ────────────────────────────────────────
 
 const destinationVisualsByRoute: Record<string, DestinationVisualSet> = {
   "/japon-premium": {
@@ -114,8 +110,6 @@ const destinationVisualsByRoute: Record<string, DestinationVisualSet> = {
   },
 };
 
-// ─── Card builder ─────────────────────────────────────────────────────────────
-
 function buildDestinationCard(
   label: string,
   route: string,
@@ -143,16 +137,14 @@ function buildDestinationCard(
     ? destinationVisualSet.galleryImages
     : fallbackGalleryImages;
 
-  const reviews = config.sections.testimonials.items
-    .slice(0, 3)
-    .map((item) => ({
-      name: item.name,
-      quote: item.quote,
-      avatar: item.avatar,
-    }));
+  const reviews = config.sections.testimonials.items.slice(0, 3).map((item) => ({
+    name: item.name,
+    quote: item.quote,
+    avatar: item.avatar,
+  }));
 
   const reviewUrl = `https://www.google.com/search?q=${encodeURIComponent(
-    `${config.metadata.title} reseñas`,
+    `${config.metadata.title} resenas`,
   )}`;
 
   return {
@@ -179,22 +171,6 @@ const destinationCards: DestinationCard[] = [
   buildDestinationCard("Mexico", "/yucatan-premium", yucatanPremiumLandingConfig),
 ];
 
-// ─── Animation constants ──────────────────────────────────────────────────────
-
-/**
- * FOLD_DUR   – tiempo que dura el pliegue del card (se dobla hasta quedar de canto)
- * DWELL_DUR  – tiempo que el nuevo card queda quieto antes del siguiente pliegue
- * STEP_DUR   – duración total de cada transición en la timeline
- *
- * perspective – alto valor → menos distorsión → aspecto más editorial / impreso
- */
-const FOLD_DUR  = 0.65;
-const DWELL_DUR = 1.0;
-const STEP_DUR  = FOLD_DUR + DWELL_DUR;
-const PERSPECTIVE = 2600;
-
-// ─── Component ────────────────────────────────────────────────────────────────
-
 export default function Destinations() {
   const pinRef = useRef<HTMLElement | null>(null);
 
@@ -205,123 +181,41 @@ export default function Destinations() {
       const pin = pinRef.current;
       if (!pin) return;
 
-      const cards = Array.from(
-        pin.querySelectorAll<HTMLElement>(`.${styles.card}`),
-      );
+      const cards = Array.from(pin.querySelectorAll<HTMLElement>(`.${styles.card}`));
       if (cards.length < 2) return;
+
+      cards.forEach((card, index) => {
+        card.style.zIndex = String(index + 1);
+      });
+
+      gsap.set(cards.slice(1), { xPercent: 100 });
+      gsap.set(cards, { pointerEvents: "none" });
+      gsap.set(cards[0], { pointerEvents: "auto" });
+
+      const timeline = gsap.timeline({ defaults: { ease: "none" } });
+      for (let i = 1; i < cards.length; i += 1) {
+        timeline.to(cards[i], { xPercent: 0, duration: 1 }, i - 1);
+      }
 
       const stepCount = cards.length - 1;
 
-      // ── Z-order: primer card arriba (mayor z-index) ──────────────────
-      cards.forEach((card, index) => {
-        card.style.zIndex = String(cards.length + 1 - index);
-      });
-
-      // ── Estado inicial ───────────────────────────────────────────────
-      gsap.set(cards, {
-        rotationY: 0,
-        transformOrigin: "50% 50%",  // eje de doblado: mitad del card
-        transformPerspective: PERSPECTIVE,
-        backfaceVisibility: "hidden", // se oculta cuando pasa de canto (-90°)
-        pointerEvents: "none",
-      });
-      gsap.set(cards[0], { pointerEvents: "auto" });
-
-      // Cards debajo comienzan levemente más pequeños → sensación de profundidad
-      gsap.set(cards.slice(1), { scale: 0.96 });
-
-      // Spine: línea de pliegue central
-      const spines = Array.from(
-        pin.querySelectorAll<HTMLElement>(`.${styles.bookSpine}`),
-      );
-      gsap.set(spines, { opacity: 0, scaleY: 0 });
-
-      // Shadow: oscurece el card mientras se dobla
-      const shadows = Array.from(
-        pin.querySelectorAll<HTMLElement>(`.${styles.bookShadow}`),
-      );
-      gsap.set(shadows, { opacity: 0 });
-
-      // ── Timeline principal ───────────────────────────────────────────
-      const tl = gsap.timeline({ defaults: { ease: "none" } });
-
-      for (let i = 0; i < stepCount; i++) {
-        const t = i * STEP_DUR;
-
-        // Card se dobla en su eje central hasta quedar de canto (-90°)
-        tl.to(
-          cards[i],
-          { rotationY: -90, duration: FOLD_DUR },
-          t,
-        );
-
-        // El card debajo sube de escala mientras el de arriba se dobla
-        tl.to(
-          cards[i + 1],
-          { scale: 1, duration: FOLD_DUR },
-          t,
-        );
-
-        // Línea de pliegue: aparece al inicio del fold y se desvanece al terminar
-        if (spines[i]) {
-          tl.to(
-            spines[i],
-            { opacity: 1, scaleY: 1, duration: FOLD_DUR * 0.45, ease: "power2.out" },
-            t,
-          );
-          tl.to(
-            spines[i],
-            { opacity: 0, duration: FOLD_DUR * 0.55, ease: "power2.in" },
-            t + FOLD_DUR * 0.45,
-          );
-        }
-
-        // Sombra progresiva: simula la oscuridad en el doblez del papel
-        if (shadows[i]) {
-          tl.to(
-            shadows[i],
-            { opacity: 1, duration: FOLD_DUR * 0.5 },
-            t,
-          );
-          tl.to(
-            shadows[i],
-            { opacity: 0, duration: FOLD_DUR * 0.5 },
-            t + FOLD_DUR * 0.5,
-          );
-        }
-      }
-
-      const totalDuration = stepCount * STEP_DUR;
-
-      // Snap points: tras cada pliegue, el nuevo card queda centrado un momento
-      const snapPoints = cards.map((_, i) => {
-        if (i === 0) return 0;
-        // snap justo cuando termina el fold (inicio del dwell)
-        return (i * STEP_DUR - DWELL_DUR * 0.5) / totalDuration;
-      });
-
       const trigger = ScrollTrigger.create({
-        animation: tl,
+        animation: timeline,
         trigger: pin,
         start: "top top",
-        end: () => `+=${window.innerHeight * stepCount * 2.4}`,
-        scrub: 1.1,
+        end: () => `+=${window.innerHeight * stepCount * 1.9}`,
+        scrub: 1,
         pin: true,
         anticipatePin: 1,
         refreshPriority: 1,
         invalidateOnRefresh: true,
         snap: {
-          snapTo: snapPoints,
-          duration: { min: 0.08, max: 0.28 },
-          delay: 0.04,
-          ease: "power2.inOut",
+          snapTo: 1 / stepCount,
+          duration: { min: 0.08, max: 0.25 },
+          delay: 0.02,
         },
         onUpdate: (self) => {
-          const progress = self.progress * totalDuration;
-          let activeIndex = 0;
-          for (let i = 0; i < stepCount; i++) {
-            if (progress >= i * STEP_DUR + FOLD_DUR * 0.5) activeIndex = i + 1;
-          }
+          const activeIndex = Math.round(self.progress * stepCount);
           cards.forEach((card, index) => {
             card.style.pointerEvents = index === activeIndex ? "auto" : "none";
           });
@@ -330,18 +224,14 @@ export default function Destinations() {
 
       return () => {
         trigger.kill();
-        tl.kill();
+        timeline.kill();
       };
     },
     { scope: pinRef },
   );
 
   return (
-    <section
-      ref={pinRef}
-      className={styles.container}
-      aria-label="Destinations Story"
-    >
+    <section ref={pinRef} className={styles.container} aria-label="Destinations Story">
       <div className={styles.stack}>
         {destinationCards.map((card) => (
           <article
@@ -349,7 +239,6 @@ export default function Destinations() {
             className={styles.card}
             style={{ "--card-primary": card.primaryColor } as CSSProperties}
           >
-            {/* ── Fondo ────────────────────────────────────────────────── */}
             <div
               className={styles.cardBackground}
               style={{ backgroundImage: `url(${card.backgroundImage})` }}
@@ -357,18 +246,13 @@ export default function Destinations() {
             />
             <div className={styles.cardBackgroundOverlay} aria-hidden="true" />
 
-            {/* ── Overlay interactivo ──────────────────────────────────── */}
             <div className={styles.heroOverlayWrap}>
-              <HeroOverlayLazy overlayImages={card.overlayImages} />
+              <HeroOverlayLazy
+                overlayImages={card.overlayImages}
+                disableParallax
+              />
             </div>
 
-            {/* ── Efectos de doblado (animados por GSAP) ───────────────── */}
-            {/* Línea de pliegue en el eje central */}
-            <div className={styles.bookSpine} aria-hidden="true" />
-            {/* Sombra que oscurece el card mientras se dobla */}
-            <div className={styles.bookShadow} aria-hidden="true" />
-
-            {/* ── Galería fotográfica ──────────────────────────────────── */}
             <div className={styles.visualPane} aria-hidden="true">
               <div className={styles.photoSpread}>
                 {card.galleryImages.slice(0, 3).map((image, index) => (
@@ -376,18 +260,12 @@ export default function Destinations() {
                     key={`${card.route}-photo-${index}`}
                     className={`${styles.photoFrame} ${styles[`photoFrame${index + 1}`]}`}
                   >
-                    <img
-                      src={image}
-                      alt=""
-                      className={styles.photoImage}
-                      loading="lazy"
-                    />
+                    <img src={image} alt="" className={styles.photoImage} loading="lazy" />
                   </figure>
                 ))}
               </div>
             </div>
 
-            {/* ── Contenido editorial ──────────────────────────────────── */}
             <div className={styles.cardCopy}>
               <h2 className={styles.title}>{card.label}</h2>
               <GradientText as="span" className={styles.premiumText}>
@@ -412,11 +290,7 @@ export default function Destinations() {
                     className={styles.reviewNoteFlow}
                   >
                     <div className={styles.reviewHeader}>
-                      <img
-                        src={review.avatar}
-                        alt={review.name}
-                        className={styles.reviewAvatar}
-                      />
+                      <img src={review.avatar} alt={review.name} className={styles.reviewAvatar} />
                       <p className={styles.reviewName}>{review.name}</p>
                     </div>
                     <p className={styles.reviewText}>"{review.quote}"</p>
@@ -425,14 +299,10 @@ export default function Destinations() {
                       variant="secondary"
                       className={styles.reviewButton}
                       onClick={() =>
-                        window.open(
-                          card.reviewUrl,
-                          "_blank",
-                          "noopener,noreferrer",
-                        )
+                        window.open(card.reviewUrl, "_blank", "noopener,noreferrer")
                       }
                     >
-                      Ver reseña en Google
+                      Ver resena en Google
                     </Button>
                   </article>
                 ))}

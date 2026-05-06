@@ -16,10 +16,12 @@ type HeroOverlayEnhancedProps = {
   samuraiImage: string;
   baseAlt?: string;
   samuraiAlt?: string;
+  disableParallax?: boolean;
 };
 
 export type HeroOverlayLazyProps = {
   overlayImages?: Partial<HeroOverlayImages>;
+  disableParallax?: boolean;
 };
 
 const DEFAULT_HERO_OVERLAY_IMAGES: HeroOverlayImages = {
@@ -90,7 +92,10 @@ function HeroOverlayMobileLite({ images }: { images: HeroOverlayImages }) {
   );
 }
 
-export default function HeroOverlayLazy({ overlayImages }: HeroOverlayLazyProps) {
+export default function HeroOverlayLazy({
+  overlayImages,
+  disableParallax = false,
+}: HeroOverlayLazyProps) {
   const images = useMemo(
     () => resolveOverlayImages(overlayImages),
     [overlayImages],
@@ -204,7 +209,7 @@ export default function HeroOverlayLazy({ overlayImages }: HeroOverlayLazyProps)
   }
 
   if (enableEnhancedOverlay && EnhancedOverlay) {
-    return <EnhancedOverlay {...images} />;
+    return <EnhancedOverlay {...images} disableParallax={disableParallax} />;
   }
 
   return <HeroOverlayStatic images={images} />;

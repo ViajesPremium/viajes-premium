@@ -160,6 +160,10 @@ export type ItinerariesSectionConfig = {
   topTabText: string;
   items: ItineraryItemConfig[];
   secondaryCtaLabel: string;
+  pdfDownloads?: Array<{
+    href: string;
+    fileName?: string;
+  }>;
   primaryCta: {
     label: string;
     target: string;

@@ -337,6 +337,12 @@ export const japonPremiumLandingConfig: PremiumLandingConfig = {
         },
       ],
       secondaryCtaLabel: "Descargar PDF",
+      pdfDownloads: [
+        {
+          href: "/images/japon/pdf/alma-de-japon.pdf",
+          fileName: "alma-de-japon.pdf",
+        },
+      ],
       primaryCta: {
         label: "Quiero esta experiencia",
         target: "#form",

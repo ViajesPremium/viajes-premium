@@ -1,6 +1,5 @@
 import styles from "./hero.module.css";
 import { BlurredStagger } from "@/components/ui/blurred-stagger-text/blurred-stagger-text";
-import { GlobePolaroids } from "@/components/ui/globe/cobe-globe-polaroids";
 import Image from "next/image";
 import { Button } from "@/components/ui/button/button";
 
@@ -85,21 +84,6 @@ export default function Hero() {
             Explorar destinos
           </Button>
         </div>
-      </div>
-      <div className={styles.globeWrap}>
-        <GlobePolaroids
-          className={styles.globe}
-          rotationSpeed={0}
-          mapSamples={32000}
-          mapBrightness={0}
-          diffuse={0.05}
-          dark={0}
-          opacity={0.8}
-          markerColor={[0.75, 0.75, 0.75]}
-          glowColor={[0.88, 0.88, 0.88]}
-          markerSize={0.016}
-        />
-        <span className={styles.textMap}>arrastra para ver</span>
       </div>
     </div>
   );

@@ -50,8 +50,7 @@
   position: relative;
   z-index: 2;
   background: transparent;
-  margin-top: -100vh;
-  margin-top: calc(var(--app-vh, 100svh) * -1);
+  margin-top: 0;
 }
 
 .ctaMapMobileLayer {
@@ -60,7 +59,7 @@
   z-index: 3;
   width: 100%;
   background: transparent;
-  pointer-events: none;
+  pointer-events: auto;
 }
 
 .marqueeFooterLayer {
@@ -98,8 +97,7 @@
 
   .formWrapper {
     z-index: 2;
-    margin-top: -100vh;
-    margin-top: calc(var(--app-vh, 100svh) * -1);
+    margin-top: 0;
   }
 }
 

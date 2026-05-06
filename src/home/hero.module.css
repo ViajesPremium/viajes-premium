@@ -1,4 +1,6 @@
 .container {
+  --bridgeGlobeHalf: clamp(140px, 18vw, 340px);
+  --bridgeGlobeGap: clamp(20px, 2.2vw, 42px);
   position: relative;
   height: 100%;
   background-color: var(--white);
@@ -6,6 +8,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 2rem;
+  padding-right: calc(2rem + var(--bridgeGlobeHalf) + var(--bridgeGlobeGap));
   overflow: hidden;
 }
 
@@ -65,7 +68,8 @@
   flex-direction: column;
   gap: 2rem;
   align-items: start;
-  width: 50%;
+  width: min(50vw, 840px);
+  max-width: 100%;
 }
 
 .titleFirst {
@@ -88,6 +92,17 @@
   line-height: 2;
   max-width: 80rem;
   text-align: start;
+}
+
+@media (max-width: 900px) {
+  .container {
+    --bridgeGlobeHalf: clamp(110px, 28vw, 220px);
+    --bridgeGlobeGap: clamp(12px, 3vw, 24px);
+    padding-right: calc(2rem + var(--bridgeGlobeHalf) + var(--bridgeGlobeGap));
+  }
+  .titleWrap {
+    width: min(64vw, 640px);
+  }
 }
 
 .heroCta {

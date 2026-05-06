@@ -9,7 +9,8 @@
       "Bash(xargs grep *)",
       "Bash(cat)",
       "Read(//tmp/**)",
-      "Bash(git add *)"
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)"
     ]
   }
 }

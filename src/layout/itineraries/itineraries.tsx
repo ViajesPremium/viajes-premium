@@ -10,6 +10,7 @@ import GradientText from "@/components/ui/gradient-text/gradient-text";
 import { BlurredStagger } from "@/components/ui/blurred-stagger-text/blurred-stagger-text";
 import { Button } from "@/components/ui/button/button";
 import { scrollToSection } from "@/lib/scroll-to-section";
+import { downloadFiles } from "@/lib/download-files";
 import { usePremiumLandingConfig } from "@/landings/premium/context";
 
 const toRoman = (value: number) => {
@@ -84,6 +85,11 @@ export default function Itinerary() {
 
   const [activeStep, setActiveStep] = useState(0);
   const currentStepRef = useRef(0);
+  const handleDownloadPdf = useCallback(() => {
+    const files = itineraries.pdfDownloads ?? [];
+    if (!files.length) return;
+    downloadFiles(files);
+  }, [itineraries.pdfDownloads]);
   const handleGoToForm = useCallback(() => {
     const target = itineraries.primaryCta.target;
     if (target.startsWith("#")) {
@@ -668,7 +674,7 @@ export default function Itinerary() {
               <Button
                 variant="secondary"
                 className={styles.ctaButton2}
-                onClick={handleGoToForm}
+                onClick={handleDownloadPdf}
               >
                 {itineraries.secondaryCtaLabel}
               </Button>

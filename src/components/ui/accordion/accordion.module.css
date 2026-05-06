@@ -39,8 +39,8 @@
 .trigger {
   display: flex;
   flex: 1;
-  width: 100%; /* Asegura que no crezca más allá del contenedor padre */
-  align-items: center;
+  width: 100%;
+  align-items: start;
   justify-content: space-between;
   gap: 1rem;
   padding: 1.4rem 0;
@@ -48,7 +48,7 @@
   border: none;
   cursor: pointer;
   font-family: var(--font-nohemi), sans-serif;
-  font-size: clamp(1.1rem, 2vw, 2rem);
+  font-size: clamp(1.1rem, 2vw, 1.5rem);
   font-weight: 400;
   color: var(--black);
   letter-spacing: 0.01em;
@@ -64,7 +64,7 @@
 .triggerText {
   flex: 1 1 auto;
   text-align: left;
-  min-width: 0; /* ESTO ES CLAVE: Permite que el flex child se encoja y fuerce el salto de línea */
+  min-width: 0;
   word-wrap: break-word;
   overflow-wrap: break-word;
 }

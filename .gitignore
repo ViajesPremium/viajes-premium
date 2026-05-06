@@ -39,3 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local heavy media sources (keep delivery variants only)
+public/images/japon/video/Japon-Premium-Video.mp4
+public/images/japon/video/Japon-Premium-Video-compressed.mp4

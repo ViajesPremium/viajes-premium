@@ -1,9 +1,6 @@
 "use client";
 
-import { useRef, type CSSProperties } from "react";
-import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import type { CSSProperties } from "react";
 import Image from "next/image";
 import ImageSectionForm from "@/layout/first-form/form";
 import { BlurredStagger } from "@/components/ui/blurred-stagger-text/blurred-stagger-text";
@@ -12,15 +9,8 @@ import { usePremiumLandingConfig } from "@/landings/premium/context";
 
 const CTA_FORM_MOBILE_BACKGROUND_IMAGE = "/images/japon/fullblack.webp";
 const CTA_FORM_MOBILE_FIGURE_IMAGE = "/images/japon/samuraiFormSola.webp";
-const DESKTOP_QUERY = "(min-width: 769px)";
-const MOBILE_QUERY = "(max-width: 768px)";
-const CTA_FORM_PIN_VH = 0.72;
-const CTA_FORM_PIN_MOBILE_VH = 1.15;
-
-gsap.registerPlugin(ScrollTrigger);
 
 export default function CTAForm() {
-  const sectionRef = useRef<HTMLElement>(null);
   const {
     sections: { ctaForm },
   } = usePremiumLandingConfig();
@@ -41,50 +31,8 @@ export default function CTAForm() {
         ]
       : [];
 
-  useGSAP(
-    () => {
-      const section = sectionRef.current;
-      if (!section) return;
-
-      const mm = gsap.matchMedia();
-
-      mm.add(DESKTOP_QUERY, () => {
-        const trigger = ScrollTrigger.create({
-          trigger: section,
-          start: "top top",
-          end: () => `+=${window.innerHeight * CTA_FORM_PIN_VH}`,
-          pin: true,
-          pinSpacing: true,
-          anticipatePin: 0.2,
-          invalidateOnRefresh: true,
-          onRefresh: () => window.__lenis?.resize(),
-        });
-
-        return () => trigger.kill();
-      });
-
-      mm.add(MOBILE_QUERY, () => {
-        const trigger = ScrollTrigger.create({
-          trigger: section,
-          start: "top top",
-          end: () => `+=${window.innerHeight * CTA_FORM_PIN_MOBILE_VH}`,
-          pin: true,
-          pinSpacing: true,
-          anticipatePin: 0.2,
-          invalidateOnRefresh: true,
-          onRefresh: () => window.__lenis?.resize(),
-        });
-
-        return () => trigger.kill();
-      });
-
-      return () => mm.revert();
-    },
-    { scope: sectionRef },
-  );
-
   return (
-    <section ref={sectionRef} className={styles.section} style={sectionStyle}>
+    <section className={styles.section} style={sectionStyle}>
       <h2 className="srOnly">{ctaForm.srHeading}</h2>
 
       <div className={styles.stage}>

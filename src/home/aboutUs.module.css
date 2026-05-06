@@ -1,16 +1,19 @@
 .container {
+  --bridgeGlobeHalf: clamp(140px, 18vw, 340px);
+  --bridgeGlobeGap: clamp(20px, 2.2vw, 42px);
   display: flex;
   flex-direction: column;
   justify-content: center;
   height: 100%;
   background: var(--white);
   padding: 2rem;
+  padding-left: calc(2rem + var(--bridgeGlobeHalf) + var(--bridgeGlobeGap));
 }
 
 .content {
   display: flex;
   flex-direction: column;
-  max-width: 70%;
+  max-width: min(64vw, 900px);
   gap: 1rem;
 }
 
@@ -35,4 +38,15 @@
   color: #3d352d;
   font-size: clamp(1rem, 1.8vw, 1.2rem);
   line-height: 1.55;
+}
+
+@media (max-width: 900px) {
+  .container {
+    --bridgeGlobeHalf: clamp(110px, 28vw, 220px);
+    --bridgeGlobeGap: clamp(12px, 3vw, 24px);
+    padding-left: calc(2rem + var(--bridgeGlobeHalf) + var(--bridgeGlobeGap));
+  }
+  .content {
+    max-width: min(72vw, 620px);
+  }
 }
