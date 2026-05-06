@@ -1,7 +1,7 @@
 ﻿"use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { FormEvent, type CSSProperties, useMemo, useState } from "react";
+import { FormEvent, type CSSProperties, useEffect, useMemo, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { isValidPhoneNumber } from "react-phone-number-input";
 import { FaWhatsapp } from "react-icons/fa6";
@@ -104,6 +104,7 @@ function validateTravelDate(value: string): string | undefined {
 
 export default function WhatsAppFab() {
   const pathname = usePathname();
+  const wrapRef = useRef<HTMLDivElement | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
@@ -138,11 +139,12 @@ export default function WhatsAppFab() {
   const canSubmit =
     trimmedName.length > 1 && trimmedInterest.length > 1 && !phoneError && !dateError;
 
-  const submitBg = premiumConfig?.theme.secondary ?? "#22c55e";
+  const accentColor = "#1cbd57";
+  const submitBg = accentColor;
   const submitText = premiumConfig?.theme.white ?? "#ffffff";
-  const focusColor = premiumConfig?.theme.secondary ?? "#22c55e";
+  const focusColor = accentColor;
   const panelBg = premiumConfig?.theme.background ?? "#ffffff";
-  const panelTitle = premiumConfig?.theme.secondary ?? "#0f172a";
+  const panelTitle = accentColor;
   const panelLabel = premiumConfig?.theme.black ?? "#334155";
   const panelText = premiumConfig?.theme.black ?? "#0f172a";
   const leadMailboxPrefix = premiumConfig
@@ -226,8 +228,20 @@ export default function WhatsAppFab() {
     }
   };
 
+  useEffect(() => {
+    if (!isOpen) return;
+    const handlePointerDown = (event: PointerEvent) => {
+      const root = wrapRef.current;
+      const target = event.target as Node | null;
+      if (!root || !target || root.contains(target)) return;
+      setIsOpen(false);
+    };
+    document.addEventListener("pointerdown", handlePointerDown);
+    return () => document.removeEventListener("pointerdown", handlePointerDown);
+  }, [isOpen]);
+
   return (
-    <div className={styles.wrap}>
+    <div ref={wrapRef} className={styles.wrap}>
       <AnimatePresence>
         {isOpen ? (
           <motion.form
@@ -309,9 +323,6 @@ export default function WhatsAppFab() {
             ) : null}
 
             <div className={styles.actions}>
-              <button type="button" className={styles.cancel} onClick={() => setIsOpen(false)}>
-                Cerrar
-              </button>
               <button type="submit" className={styles.submit}>
                 {isSubmitting ? "Enviando..." : "Enviar"}
               </button>
