@@ -10,14 +10,18 @@ import styles from "./premium-landing-client.module.css";
 import type { PremiumLandingConfig } from "@/landings/premium/types";
 import { PremiumLandingProvider } from "@/landings/premium/context";
 import Hero from "@/layout/hero/hero";
-import Snapshot from "@/layout/snapshot/snapshot";
-import FirstForm from "@/layout/first-form/first-form";
 
 // 2. REGISTRAR GSAP GLOBALMENTE PARA ESTE CLIENTE
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
+const Snapshot = dynamic(() => import("@/layout/snapshot/snapshot"), {
+  loading: () => <PinPlaceholder height="90svh" bg="var(--black)" />,
+});
+const FirstForm = dynamic(() => import("@/layout/first-form/first-form"), {
+  loading: () => <PinPlaceholder height="90svh" bg="var(--bg)" />,
+});
 const Itineraries = dynamic(() => import("@/layout/itineraries/itineraries"), {
   loading: () => <PinPlaceholder height="110svh" bg="var(--black)" />,
 });
@@ -175,10 +179,22 @@ export default function PremiumLandingClient({
         <section id="inicio">
           <Hero />
         </section>
-        <section id="nosotros">
+        <DeferredSection
+          id="nosotros"
+          minHeight="90svh"
+          bg="var(--black)"
+          rootMargin="250px 0px"
+        >
           <Snapshot />
-        </section>
-        <FirstForm />
+        </DeferredSection>
+        <DeferredSection
+          id="first-form"
+          minHeight="90svh"
+          bg="var(--bg)"
+          rootMargin="200px 0px"
+        >
+          <FirstForm />
+        </DeferredSection>
 
         <DeferredSection
           id="highlights"
@@ -189,13 +205,25 @@ export default function PremiumLandingClient({
           <Highlights />
         </DeferredSection>
 
-        <section id="itinerarios" className={styles.itinerariesLayer}>
+        <DeferredSection
+          id="itinerarios"
+          className={styles.itinerariesLayer}
+          minHeight="110svh"
+          bg="var(--black)"
+          rootMargin="400px 0px"
+        >
           <Itineraries />
-        </section>
+        </DeferredSection>
 
-        <section id="includes" className={styles.includesLayer}>
+        <DeferredSection
+          id="includes"
+          className={styles.includesLayer}
+          minHeight="100svh"
+          bg="var(--black)"
+          rootMargin="350px 0px"
+        >
           <Includes />
-        </section>
+        </DeferredSection>
 
         <DeferredSection
           id="testimonials"
@@ -210,17 +238,35 @@ export default function PremiumLandingClient({
           <Interlude />
         </DeferredSection>
 
-        <section id="faqs" className={styles.faqsLayer}>
+        <DeferredSection
+          id="faqs"
+          className={styles.faqsLayer}
+          minHeight="100svh"
+          bg="var(--bg)"
+          rootMargin="320px 0px"
+        >
           <Faqs />
-        </section>
+        </DeferredSection>
 
-        <section id="cta-map-mobile" className={styles.ctaMapMobileLayer}>
+        <DeferredSection
+          id="cta-map-mobile"
+          className={styles.ctaMapMobileLayer}
+          minHeight="80svh"
+          bg="var(--black)"
+          rootMargin="320px 0px"
+        >
           <CtaMapMobile />
-        </section>
+        </DeferredSection>
 
-        <section id="form" className={styles.formWrapper}>
+        <DeferredSection
+          id="form"
+          className={styles.formWrapper}
+          minHeight="90svh"
+          bg="var(--bg)"
+          rootMargin="280px 0px"
+        >
           <CTAForm />
-        </section>
+        </DeferredSection>
 
         <DeferredSection
           id="marquee-footer"
