@@ -5,21 +5,23 @@ import styles from "./cta-map-mobile.module.css";
 
 const CTA_MAP_VIDEO_720 = "/images/japon/video/Japon-Premium-Video-720p.mp4";
 const CTA_MAP_VIDEO_480 = "/images/japon/video/Japon-Premium-Video-480p.mp4";
+const CTA_MAP_VIDEO_720_WEBM = "/images/japon/video/Japon-Premium-Video-720p.webm";
+const CTA_MAP_VIDEO_480_WEBM = "/images/japon/video/Japon-Premium-Video-480p.webm";
 const CTA_MAP_POSTER = "/images/japon/ejemplo-japon8.webp";
 
 export default function CtaMapMobile() {
   const sectionRef = useRef<HTMLElement | null>(null);
-  const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const [isNearViewport, setIsNearViewport] = useState(false);
 
   useEffect(() => {
-    if (shouldLoadVideo) return;
     const section = sectionRef.current;
     if (!section) return;
 
     const observer = new IntersectionObserver(
       (entries) => {
         if (!entries[0]?.isIntersecting) return;
-        setShouldLoadVideo(true);
+        setIsNearViewport(true);
         observer.disconnect();
       },
       { rootMargin: "550px 0px" },
@@ -27,33 +29,41 @@ export default function CtaMapMobile() {
 
     observer.observe(section);
     return () => observer.disconnect();
-  }, [shouldLoadVideo]);
+  }, []);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    if (!isNearViewport) {
+      video.pause();
+      return;
+    }
+    const tryPlay = async () => {
+      try {
+        await video.play();
+      } catch {
+        // Ignore autoplay interruption and keep paused state if browser blocks playback.
+      }
+    };
+    void tryPlay();
+  }, [isNearViewport]);
 
   return (
     <section ref={sectionRef} className={styles.section} aria-label="Video CTA">
-      {shouldLoadVideo ? (
-        <video
-          className={styles.video}
-          poster={CTA_MAP_POSTER}
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
-        >
-          <source src={CTA_MAP_VIDEO_480} type="video/mp4" media="(max-width: 640px)" />
-          <source src={CTA_MAP_VIDEO_720} type="video/mp4" />
-        </video>
-      ) : (
-        <img
-          src={CTA_MAP_POSTER}
-          alt=""
-          className={styles.video}
-          loading="lazy"
-          decoding="async"
-          aria-hidden="true"
-        />
-      )}
+      <video
+        ref={videoRef}
+        className={styles.video}
+        poster={CTA_MAP_POSTER}
+        muted
+        loop
+        playsInline
+        preload="none"
+      >
+        <source src={CTA_MAP_VIDEO_480_WEBM} type="video/webm" media="(max-width: 640px)" />
+        <source src={CTA_MAP_VIDEO_480} type="video/mp4" media="(max-width: 640px)" />
+        <source src={CTA_MAP_VIDEO_720_WEBM} type="video/webm" />
+        <source src={CTA_MAP_VIDEO_720} type="video/mp4" />
+      </video>
     </section>
   );
 }
