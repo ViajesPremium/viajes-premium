@@ -7,6 +7,7 @@ import { isValidPhoneNumber } from "react-phone-number-input";
 import { FaWhatsapp } from "react-icons/fa6";
 import styles from "./whatsapp-fab.module.css";
 import PhoneInput from "@/components/ui/phone-input/phone-input";
+import { pushGenerateLeadEvent } from "@/lib/gtm";
 import { premiumLandingConfigs } from "@/landings/premium/configs";
 import type { PremiumLandingConfig } from "@/landings/premium/types";
 
@@ -182,38 +183,65 @@ export default function WhatsAppFab() {
       const crmTag = premiumConfig
         ? `#tags:${premiumConfig.metadata.title}`
         : "#tags:WhatsApp Lead";
-      const response = await fetch(LEAD_API_ENDPOINT, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: trimmedName,
-          phone: trimmedPhone,
-          email: leadEmail,
-          travelDate: trimmedTravelDate,
-          japanWishes: trimmedInterest,
-          crmTag,
-          subject: `Nuevo Lead - WhatsApp ${crmTag}`,
-          formId: `whatsapp-fab-${premiumConfig?.id ?? "default"}`,
-          pagePath: window.location.pathname,
-        }),
-      });
-
-      const result = (await response.json().catch(() => ({}))) as {
-        ok?: boolean;
-        messageId?: string;
-        error?: string;
+      const payload = {
+        name: trimmedName,
+        phone: trimmedPhone,
+        email: leadEmail,
+        travelDate: trimmedTravelDate,
+        japanWishes: trimmedInterest,
+        crmTag,
+        subject: `Nuevo Lead - WhatsApp ${crmTag}`,
+        formId: `whatsapp-fab-${premiumConfig?.id ?? "default"}`,
+        pagePath: window.location.pathname,
       };
 
-      if (!response.ok || !result.ok) {
-        throw new Error(result.error ?? "No se pudo enviar lead desde WhatsApp FAB.");
+      const sendLead = async () => {
+        const response = await fetch(LEAD_API_ENDPOINT, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        });
+        const result = (await response.json().catch(() => ({}))) as {
+          ok?: boolean;
+          messageId?: string;
+          error?: string;
+          details?: string;
+          requestId?: string;
+        };
+        return { response, result };
+      };
+
+      let { response, result } = await sendLead();
+      if (!response.ok && response.status >= 500) {
+        await new Promise((resolve) => setTimeout(resolve, 400));
+        ({ response, result } = await sendLead());
+      }
+
+      const isLeadSuccess = response.status === 200 && result.ok === true;
+
+      if (!isLeadSuccess) {
+        throw new Error(
+          [
+            result.error ?? "No se pudo enviar lead desde WhatsApp FAB.",
+            result.details ? `Detalle: ${result.details}` : "",
+            result.requestId ? `RequestId: ${result.requestId}` : "",
+          ]
+            .filter(Boolean)
+            .join(" | "),
+        );
       }
 
       console.log("[WhatsAppFab] Correo enviado correctamente", {
         formId: `whatsapp-fab-${premiumConfig?.id ?? "default"}`,
         email: leadEmail,
         messageId: result.messageId ?? null,
+        requestId: result.requestId ?? null,
+      });
+      pushGenerateLeadEvent({
+        pathname: window.location.pathname,
+        formId: `whatsapp-fab-${premiumConfig?.id ?? "default"}`,
       });
     } catch (error: unknown) {
       const message =
@@ -223,6 +251,7 @@ export default function WhatsAppFab() {
         message,
         error,
       });
+      alert(`No se pudo enviar el correo del lead. ${message}`);
     } finally {
       setIsSubmitting(false);
     }

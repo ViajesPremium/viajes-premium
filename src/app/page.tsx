@@ -8,21 +8,35 @@ import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import { destinationCardsData } from "@/home/destinations.data";
 
 const Destinations = dynamic(() => import("@/home/destinations"), {
   ssr: false,
   loading: () => <div className={styles.destinationsFallback} aria-hidden="true" />,
 });
+const HomeFaqs = dynamic(() => import("@/home/homeFaqs"), {
+  ssr: false,
+  loading: () => <div className={styles.faqsFallback} aria-hidden="true" />,
+});
+const HomeTestimonials = dynamic(() => import("@/home/homeTestimonials"), {
+  ssr: false,
+  loading: () => <div className={styles.sectionFallback} aria-hidden="true" />,
+});
+const HomeFooter = dynamic(() => import("@/home/homeFooter"), {
+  ssr: false,
+  loading: () => <div className={styles.footerFallback} aria-hidden="true" />,
+});
 
 export default function Home() {
   const horizontalRef = useRef<HTMLElement | null>(null);
   const trackRef = useRef<HTMLDivElement | null>(null);
-  const destinationsRef = useRef<HTMLElement | null>(null);
+  const dualSceneRef = useRef<HTMLElement | null>(null);
+  const dualTrackRef = useRef<HTMLDivElement | null>(null);
   const [shouldLoadDestinations, setShouldLoadDestinations] = useState(false);
 
   useEffect(() => {
     if (shouldLoadDestinations) return;
-    const target = destinationsRef.current;
+    const target = dualSceneRef.current;
     if (!target) return;
 
     const observer = new IntersectionObserver(
@@ -31,7 +45,7 @@ export default function Home() {
         setShouldLoadDestinations(true);
         observer.disconnect();
       },
-      { root: null, rootMargin: "450px 0px" },
+      { root: null, rootMargin: "1200px 0px" },
     );
 
     observer.observe(target);
@@ -57,10 +71,11 @@ export default function Home() {
         scrollTrigger: {
           trigger: page,
           start: "top top",
-          end: () => `+=${getMaxHorizontalScroll()}`,
-          scrub: 1,
+          end: () => `+=${getMaxHorizontalScroll() * 1.12}`,
+          scrub: 1.25,
           pin: true,
-          anticipatePin: 1,
+          anticipatePin: 0.4,
+          fastScrollEnd: true,
           refreshPriority: 2,
           invalidateOnRefresh: true,
         },
@@ -74,6 +89,71 @@ export default function Home() {
     { scope: horizontalRef },
   );
 
+  useGSAP(
+    () => {
+      gsap.registerPlugin(ScrollTrigger);
+
+      const scene = dualSceneRef.current;
+      const track = dualTrackRef.current;
+      if (!scene || !track) return;
+
+      const stepCount = Math.max(1, destinationCardsData.length - 1);
+      const cardsScrollDistance = window.innerHeight * stepCount * 1.9;
+      const faqHorizontalDistance = window.innerWidth;
+      const totalDistance = cardsScrollDistance + faqHorizontalDistance;
+
+      gsap.set(track, { x: () => -window.innerWidth });
+
+      const timeline = gsap.timeline({
+        defaults: { ease: "none" },
+        scrollTrigger: {
+          trigger: scene,
+          start: "top top",
+          end: () => `+=${totalDistance * 1.08}`,
+          scrub: 1.2,
+          pin: true,
+          anticipatePin: 0.35,
+          fastScrollEnd: true,
+          invalidateOnRefresh: true,
+        },
+      });
+
+      timeline
+        .to(track, { x: () => -window.innerWidth, duration: cardsScrollDistance })
+        .to(track, { x: 0, duration: faqHorizontalDistance });
+
+      return () => {
+        timeline.scrollTrigger?.kill();
+        timeline.kill();
+      };
+    },
+    { scope: dualSceneRef },
+  );
+
+  useGSAP(
+    () => {
+      gsap.registerPlugin(ScrollTrigger);
+
+      const scene = dualSceneRef.current;
+      if (!scene) return;
+
+      const onRefresh = () => {
+        const lenis = (
+          window as unknown as {
+            __lenis?: { resize: () => void };
+          }
+        ).__lenis;
+        lenis?.resize();
+      };
+
+      ScrollTrigger.addEventListener("refresh", onRefresh);
+      return () => {
+        ScrollTrigger.removeEventListener("refresh", onRefresh);
+      };
+    },
+    { scope: dualSceneRef },
+  );
+
   // return <VisionLandingPage />;
   return (
     <main className={styles.page}>
@@ -82,12 +162,31 @@ export default function Home() {
           <HeroAboutUnified />
         </div>
       </section>
-      <section ref={destinationsRef} className={styles.verticalScene}>
-        {shouldLoadDestinations ? (
-          <Destinations />
-        ) : (
-          <div className={styles.destinationsFallback} aria-hidden="true" />
-        )}
+
+      <section ref={dualSceneRef} className={styles.dualScene}>
+        <div ref={dualTrackRef} className={styles.dualTrack}>
+          <div className={styles.dualPanelFaq}>
+            <HomeFaqs />
+          </div>
+          <div className={styles.dualPanelDest}>
+            {shouldLoadDestinations ? (
+              <Destinations embedded />
+            ) : (
+              <div
+                className={styles.destinationsFallback}
+                aria-hidden="true"
+              />
+            )}
+          </div>
+        </div>
+      </section>
+
+      <section className={styles.testimonialsScene}>
+        <HomeTestimonials />
+      </section>
+
+      <section className={styles.footerScene}>
+        <HomeFooter />
       </section>
     </main>
   );

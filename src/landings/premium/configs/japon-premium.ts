@@ -71,7 +71,7 @@ export const japonPremiumLandingConfig: PremiumLandingConfig = {
     keywords: ["Japón Premium", "Viajes Premium", "Japón desde México"],
     canonicalPath: "/japon-premium",
     ogImagePath: "/japon-premium/og-image.jpg",
-    locale: "es_MX",
+    locale: "es_MX", 
   },
   theme: {
     primary: "#db2f21",

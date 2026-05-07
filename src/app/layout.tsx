@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import SiteShell from "@/app/SiteShell";
+import GTMTracking from "@/components/analytics/GTMTracking";
 import WhatsAppFab from "@/components/ui/whatsapp-fab/whatsapp-fab";
 import "./globals.css";
 
@@ -23,6 +24,7 @@ export default function RootLayout({
   return (
     <html lang="es-mx" className="antialiased">
       <body className="flex min-h-screen flex-col">
+        <GTMTracking />
         <SiteShell>{children}</SiteShell>
         <WhatsAppFab />
       </body>

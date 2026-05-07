@@ -22,6 +22,8 @@ type HeroOverlayEnhancedProps = {
 export type HeroOverlayLazyProps = {
   overlayImages?: Partial<HeroOverlayImages>;
   disableParallax?: boolean;
+  forceStatic?: boolean;
+  preferLiteAnimation?: boolean;
 };
 
 const DEFAULT_HERO_OVERLAY_IMAGES: HeroOverlayImages = {
@@ -97,6 +99,8 @@ function HeroOverlayMobileLite({ images }: { images: HeroOverlayImages }) {
 export default function HeroOverlayLazy({
   overlayImages,
   disableParallax = false,
+  forceStatic = false,
+  preferLiteAnimation = false,
 }: HeroOverlayLazyProps) {
   const images = useMemo(
     () => resolveOverlayImages(overlayImages),
@@ -142,7 +146,7 @@ export default function HeroOverlayLazy({
       !!connection?.saveData || /2g/.test(connection?.effectiveType ?? "");
 
     // Mobile uses CSS pre-animated effect instead of runtime WebGL.
-    if (!isDesktop || prefersReducedMotion) {
+    if (forceStatic || !isDesktop || prefersReducedMotion) {
       return;
     }
 
@@ -185,7 +189,7 @@ export default function HeroOverlayLazy({
       cancelled = true;
       releaseScheduled?.();
     };
-  }, [isMobileViewport, prefersReducedMotion]);
+  }, [forceStatic, isMobileViewport, prefersReducedMotion]);
 
   useEffect(() => {
     if (!enableEnhancedOverlay || EnhancedOverlay) return;
@@ -208,6 +212,14 @@ export default function HeroOverlayLazy({
     ) : (
       <HeroOverlayMobileLite images={images} />
     );
+  }
+
+  if (forceStatic) {
+    return <HeroOverlayStatic images={images} />;
+  }
+
+  if (preferLiteAnimation) {
+    return <HeroOverlayMobileLite images={images} />;
   }
 
   if (enableEnhancedOverlay && EnhancedOverlay) {

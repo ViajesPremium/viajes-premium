@@ -1,6 +1,7 @@
 .page {
   position: relative;
   width: 100%;
+  overflow-x: clip;
 }
 
 .horizontalScene {
@@ -16,14 +17,66 @@
   overflow-y: hidden;
 }
 
-.verticalScene {
-  position: relative;
-  width: 100%;
-  min-height: 100vh;
-}
-
 .destinationsFallback {
   width: 100%;
   height: 100vh;
   background: #020307;
+}
+
+.faqsFallback {
+  width: 100%;
+  min-height: 100vh;
+  background: var(--bg, #f3f3f3);
+}
+
+.sectionFallback {
+  width: 100%;
+  min-height: 100vh;
+  background: var(--bg, #f3f3f3);
+}
+
+.footerFallback {
+  width: 100%;
+  min-height: 60vh;
+  background: #020307;
+}
+
+.dualScene {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background: #020307;
+}
+
+.dualTrack {
+  display: flex;
+  width: 200vw;
+  height: 100%;
+  will-change: transform;
+}
+
+.dualPanelFaq,
+.dualPanelDest {
+  width: 100vw;
+  min-width: 100vw;
+  height: 100%;
+}
+
+.dualPanelFaq {
+  background: var(--bg, #f3f3f3);
+}
+
+.dualPanelDest {
+  background: #020307;
+}
+
+.testimonialsScene {
+  position: relative;
+  width: 100%;
+}
+
+.footerScene {
+  position: relative;
+  width: 100%;
 }

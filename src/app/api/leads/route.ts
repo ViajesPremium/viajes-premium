@@ -19,13 +19,31 @@ type LeadPayload = {
 
 type LeadChannel = "whatsapp" | "web-form";
 
-const SMTP_HOST = process.env.SMTP_HOST ?? "smtp.hostinger.com";
-const SMTP_PORT = Number(process.env.SMTP_PORT ?? "465");
-const SMTP_SECURE = (process.env.SMTP_SECURE ?? "true").toLowerCase() !== "false";
-const SMTP_USER = process.env.SMTP_USER ?? "";
-const SMTP_PASS = process.env.SMTP_PASS ?? "";
+function sanitizeEnv(value: string | undefined): string {
+  if (!value) return "";
+  let next = value.trim();
+  if (
+    (next.startsWith('"') && next.endsWith('"')) ||
+    (next.startsWith("'") && next.endsWith("'"))
+  ) {
+    next = next.slice(1, -1);
+  }
+  // Normalize escaped dollars from .env strings like "\$"
+  next = next.replaceAll("\\$", "$");
+  // Remove zero-width/invisible chars that may appear when copy-pasting secrets
+  next = next.replace(/[\u200B-\u200D\uFEFF]/g, "");
+  return next;
+}
+
+const SMTP_HOST = sanitizeEnv(process.env.SMTP_HOST) || "smtp.hostinger.com";
+const SMTP_PORT = Number(sanitizeEnv(process.env.SMTP_PORT) || "465");
+const SMTP_SECURE = (sanitizeEnv(process.env.SMTP_SECURE) || "true").toLowerCase() !== "false";
+const SMTP_USER = sanitizeEnv(process.env.SMTP_USER);
+const SMTP_PASS = sanitizeEnv(process.env.SMTP_PASS);
 const SMTP_FROM_EMAIL = process.env.SMTP_FROM_EMAIL ?? "reservaciones@viajespremium.com.mx";
 const SMTP_TO_EMAIL = process.env.SMTP_TO_EMAIL ?? "grupo-santa-f@add.nocrm.io";
+const SMTP_ARCHIVE_EMAIL =
+  sanitizeEnv(process.env.SMTP_ARCHIVE_EMAIL) || SMTP_FROM_EMAIL;
 
 function escapeHtml(value: string): string {
   return value
@@ -115,12 +133,14 @@ function formatTravelDate(value: string): string {
 }
 
 export async function POST(request: Request) {
+  const requestId = crypto.randomUUID();
   try {
     if (!SMTP_USER || !SMTP_PASS) {
       return NextResponse.json(
         {
           ok: false,
           error: "SMTP no configurado. Faltan SMTP_USER o SMTP_PASS.",
+          requestId,
         },
         { status: 500 },
       );
@@ -162,6 +182,7 @@ export async function POST(request: Request) {
         {
           ok: false,
           error: "Faltan campos obligatorios (name, phone, email).",
+          requestId,
         },
         { status: 400 },
       );
@@ -224,6 +245,7 @@ export async function POST(request: Request) {
     const info = await transporter.sendMail({
       from: `"Viajes Premium" <${SMTP_FROM_EMAIL}>`,
       to: SMTP_TO_EMAIL,
+      bcc: SMTP_ARCHIVE_EMAIL,
       replyTo: payload.email,
       subject,
       text: textBody,
@@ -233,10 +255,12 @@ export async function POST(request: Request) {
     return NextResponse.json({
       ok: true,
       messageId: info.messageId,
+      requestId,
     });
   } catch (error) {
     const details = error instanceof Error ? error.message : JSON.stringify(error);
     console.error("[API /api/leads] Error enviando correo", {
+      requestId,
       details,
       error,
     });
@@ -245,6 +269,7 @@ export async function POST(request: Request) {
         ok: false,
         error: "No se pudo enviar el correo de contacto.",
         details,
+        requestId,
       },
       { status: 500 },
     );

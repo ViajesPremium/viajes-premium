@@ -44,15 +44,15 @@ const toRoman = (value: number) => {
 };
 
 const ITINERARIES_SCROLL_TUNING = {
-  mobilePinAnticipation: 0.4,
-  desktopPinAnticipation: 0.4,
+  mobilePinAnticipation: 0.25,
+  desktopPinAnticipation: 0.25,
   // scrub: true → GSAP sigue la posición de scroll directamente.
   // Lenis ya provee suavizado; agregar lag de GSAP encima creaba doble
   // suavizado y generaba tirones al entrar/salir de la sección.
-  desktopScrub: true,
-  desktopSnapDelay: 0.18,
-  desktopSnapMin: 0.06,
-  desktopSnapMax: 0.18,
+  desktopScrub: 0.8,
+  desktopSnapDelay: 0.24,
+  desktopSnapMin: 0.12,
+  desktopSnapMax: 0.3,
 } as const;
 
 type LenisLike = {
@@ -165,7 +165,7 @@ export default function Itinerary() {
         const MOBILE_INFO_INACTIVE_DURATION = 0.32;
         // Pin only needs to cover: (A) unlock scroll ≈1 vh + (B) exit scroll ≈0.3 vh.
         // We never reach the natural end — exit is always triggered programmatically.
-        const MOBILE_PIN_VH = 1.42;
+        const MOBILE_PIN_VH = 1.65;
 
         const getLenis = () =>
           (window as unknown as Record<string, LenisLike>).__lenis;
@@ -290,7 +290,7 @@ export default function Itinerary() {
 
           if (lenis) {
             lenis.scrollTo(target, {
-              duration: 0.38,
+              duration: 0.56,
               easing: (t) => t * (2 - t),
             });
           } else {

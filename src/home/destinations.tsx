@@ -1,178 +1,51 @@
 "use client";
 
-import { useRef, type CSSProperties } from "react";
+import Image from "next/image";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import GradientText from "@/components/ui/gradient-text/gradient-text";
-import HeroOverlayLazy from "@/components/HeroOverlayLazy";
 import { Button } from "@/components/ui/button/button";
-import { barrancasPremiumLandingConfig } from "@/landings/premium/configs/barrancas-premium";
-import { canadaPremiumLandingConfig } from "@/landings/premium/configs/canada-premium";
-import { chiapasPremiumLandingConfig } from "@/landings/premium/configs/chiapas-premium";
-import { coreaPremiumLandingConfig } from "@/landings/premium/configs/corea-premium";
-import { europaPremiumLandingConfig } from "@/landings/premium/configs/europa-premium";
-import { japonPremiumLandingConfig } from "@/landings/premium/configs/japon-premium";
-import { peruPremiumLandingConfig } from "@/landings/premium/configs/peru-premium";
-import { yucatanPremiumLandingConfig } from "@/landings/premium/configs/yucatan-premium";
-import type { PremiumLandingConfig } from "@/landings/premium/types";
+import {
+  destinationCardsData,
+  type DestinationDataCard,
+} from "./destinations.data";
 import styles from "./destinations.module.css";
 
-type DestinationCard = {
-  label: string;
-  route: string;
-  overlayImages?: PremiumLandingConfig["sections"]["hero"]["heroOverlay"];
-  primaryColor: string;
-  backgroundImage?: string;
-  description: string;
-  galleryImages: string[];
-  reviewUrl: string;
-  reviews: Array<{ name: string; quote: string; avatar: string }>;
-};
-
-type DestinationVisualSet = {
-  backgroundImage: string;
-  galleryImages: string[];
-};
-
-const destinationVisualsByRoute: Record<string, DestinationVisualSet> = {
-  "/japon-premium": {
-    backgroundImage:
-      "https://images.pexels.com/photos/402028/pexels-photo-402028.jpeg?auto=compress&cs=tinysrgb&w=1600",
-    galleryImages: [
-      "https://images.pexels.com/photos/2187605/pexels-photo-2187605.jpeg?auto=compress&cs=tinysrgb&w=1200",
-      "https://images.unsplash.com/photo-1492571350019-22de08371fd3?auto=format&fit=crop&w=1200&q=80",
-      "https://images.pexels.com/photos/1440476/pexels-photo-1440476.jpeg?auto=compress&cs=tinysrgb&w=1200",
-    ],
-  },
-  "/europa-premium": {
-    backgroundImage:
-      "https://images.pexels.com/photos/532826/pexels-photo-532826.jpeg?auto=compress&cs=tinysrgb&w=1600",
-    galleryImages: [
-      "https://images.unsplash.com/photo-1499856871958-5b9357976b82?auto=format&fit=crop&w=1200&q=80",
-      "https://images.pexels.com/photos/338515/pexels-photo-338515.jpeg?auto=compress&cs=tinysrgb&w=1200",
-      "https://images.pexels.com/photos/460672/pexels-photo-460672.jpeg?auto=compress&cs=tinysrgb&w=1200",
-    ],
-  },
-  "/corea-premium": {
-    backgroundImage:
-      "https://images.pexels.com/photos/237211/pexels-photo-237211.jpeg?auto=compress&cs=tinysrgb&w=1600",
-    galleryImages: [
-      "https://images.unsplash.com/photo-1538485399081-7c89779f9b35?auto=format&fit=crop&w=1200&q=80",
-      "https://images.pexels.com/photos/2948247/pexels-photo-2948247.jpeg?auto=compress&cs=tinysrgb&w=1200",
-      "https://images.pexels.com/photos/1440475/pexels-photo-1440475.jpeg?auto=compress&cs=tinysrgb&w=1200",
-    ],
-  },
-  "/canada-premium": {
-    backgroundImage:
-      "https://images.pexels.com/photos/417074/pexels-photo-417074.jpeg?auto=compress&cs=tinysrgb&w=1600",
-    galleryImages: [
-      "https://images.unsplash.com/photo-1503614472-8c93d56e92ce?auto=format&fit=crop&w=1200&q=80",
-      "https://images.pexels.com/photos/1126384/pexels-photo-1126384.jpeg?auto=compress&cs=tinysrgb&w=1200",
-      "https://images.pexels.com/photos/1430677/pexels-photo-1430677.jpeg?auto=compress&cs=tinysrgb&w=1200",
-    ],
-  },
-  "/peru-premium": {
-    backgroundImage:
-      "https://images.pexels.com/photos/210243/pexels-photo-210243.jpeg?auto=compress&cs=tinysrgb&w=1600",
-    galleryImages: [
-      "https://images.unsplash.com/photo-1526392060635-9d6019884377?auto=format&fit=crop&w=1200&q=80",
-      "https://images.pexels.com/photos/1653361/pexels-photo-1653361.jpeg?auto=compress&cs=tinysrgb&w=1200",
-      "https://images.pexels.com/photos/71241/pexels-photo-71241.jpeg?auto=compress&cs=tinysrgb&w=1200",
-    ],
-  },
-  "/chiapas-premium": {
-    backgroundImage:
-      "https://images.pexels.com/photos/325185/pexels-photo-325185.jpeg?auto=compress&cs=tinysrgb&w=1600",
-    galleryImages: [
-      "https://images.unsplash.com/photo-1518632616182-6b3c9952f4f5?auto=format&fit=crop&w=1200&q=80",
-      "https://images.pexels.com/photos/1761279/pexels-photo-1761279.jpeg?auto=compress&cs=tinysrgb&w=1200",
-      "https://images.pexels.com/photos/15286/pexels-photo.jpg?auto=compress&cs=tinysrgb&w=1200",
-    ],
-  },
-  "/barrancas-premium": {
-    backgroundImage:
-      "https://images.pexels.com/photos/356807/pexels-photo-356807.jpeg?auto=compress&cs=tinysrgb&w=1600",
-    galleryImages: [
-      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80",
-      "https://images.pexels.com/photos/2901209/pexels-photo-2901209.jpeg?auto=compress&cs=tinysrgb&w=1200",
-      "https://images.pexels.com/photos/1510595/pexels-photo-1510595.jpeg?auto=compress&cs=tinysrgb&w=1200",
-    ],
-  },
-  "/yucatan-premium": {
-    backgroundImage:
-      "https://images.pexels.com/photos/1450353/pexels-photo-1450353.jpeg?auto=compress&cs=tinysrgb&w=1600",
-    galleryImages: [
-      "https://images.unsplash.com/photo-1552074284-5e88ef1aef18?auto=format&fit=crop&w=1200&q=80",
-      "https://images.pexels.com/photos/1202723/pexels-photo-1202723.jpeg?auto=compress&cs=tinysrgb&w=1200",
-      "https://images.pexels.com/photos/1624438/pexels-photo-1624438.jpeg?auto=compress&cs=tinysrgb&w=1200",
-    ],
-  },
-};
-
-function buildDestinationCard(
-  label: string,
-  route: string,
-  config: PremiumLandingConfig,
-): DestinationCard {
-  const heroLine = config.sections.hero.descriptionLines?.[0];
-  const description = heroLine
-    ? `${heroLine.highlight} ${heroLine.text}`
-    : config.metadata.description;
-
-  const fallbackGalleryImages = [
-    config.sections.hero.backgroundImage,
-    ...config.sections.snapshot.cards.map((card) => card.image),
-    ...config.sections.includes.items.map((item) => item.image),
-  ]
-    .filter(Boolean)
-    .filter((value, index, array) => array.indexOf(value) === index)
-    .slice(0, 7);
-
-  const destinationVisualSet = destinationVisualsByRoute[route];
-  const backgroundImage =
-    destinationVisualSet?.backgroundImage ??
-    config.sections.hero.backgroundImage;
-  const galleryImages = destinationVisualSet?.galleryImages?.length
-    ? destinationVisualSet.galleryImages
-    : fallbackGalleryImages;
-
-  const reviews = config.sections.testimonials.items.slice(0, 3).map((item) => ({
-    name: item.name,
-    quote: item.quote,
-    avatar: item.avatar,
-  }));
-
-  const reviewUrl = `https://www.google.com/search?q=${encodeURIComponent(
-    `${config.metadata.title} resenas`,
-  )}`;
-
-  return {
-    label,
-    route,
-    overlayImages: config.sections.hero.heroOverlay,
-    primaryColor: config.theme.primary,
-    backgroundImage,
-    description,
-    galleryImages,
-    reviewUrl,
-    reviews,
-  };
+function shouldRenderCardMedia(
+  index: number,
+  activeIndex: number,
+  total: number,
+) {
+  if (index === activeIndex) return true;
+  if (index === activeIndex + 1) return true;
+  if (index === activeIndex - 1) return true;
+  if (activeIndex === 0 && index === total - 1) return true;
+  if (activeIndex === total - 1 && index === 0) return true;
+  return false;
 }
 
-const destinationCards: DestinationCard[] = [
-  buildDestinationCard("Japon", "/japon-premium", japonPremiumLandingConfig),
-  buildDestinationCard("Europa", "/europa-premium", europaPremiumLandingConfig),
-  buildDestinationCard("Corea", "/corea-premium", coreaPremiumLandingConfig),
-  buildDestinationCard("Canada", "/canada-premium", canadaPremiumLandingConfig),
-  buildDestinationCard("Peru", "/peru-premium", peruPremiumLandingConfig),
-  buildDestinationCard("Chiapas", "/chiapas-premium", chiapasPremiumLandingConfig),
-  buildDestinationCard("Barrancas", "/barrancas-premium", barrancasPremiumLandingConfig),
-  buildDestinationCard("Mexico", "/yucatan-premium", yucatanPremiumLandingConfig),
-];
-
-export default function Destinations() {
+export default function Destinations({ embedded = false }: { embedded?: boolean }) {
   const pinRef = useRef<HTMLElement | null>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+  const activeIndexRef = useRef(0);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 900px)");
+
+    const syncViewport = () => {
+      setIsMobile(mediaQuery.matches);
+    };
+
+    syncViewport();
+    mediaQuery.addEventListener("change", syncViewport);
+
+    return () => {
+      mediaQuery.removeEventListener("change", syncViewport);
+    };
+  }, []);
 
   useGSAP(
     () => {
@@ -181,20 +54,100 @@ export default function Destinations() {
       const pin = pinRef.current;
       if (!pin) return;
 
-      const cards = Array.from(pin.querySelectorAll<HTMLElement>(`.${styles.card}`));
+      const cards = Array.from(
+        pin.querySelectorAll<HTMLElement>(`.${styles.card}`),
+      );
+      const dimLayers = Array.from(
+        pin.querySelectorAll<HTMLElement>(`.${styles.previousCardDim}`),
+      );
+      const leftCharacters = cards.map((card) =>
+        card.querySelector<HTMLElement>(`.${styles.sideCharacterLeft}`),
+      );
+      const rightCharacters = cards.map((card) =>
+        card.querySelector<HTMLElement>(`.${styles.sideCharacterRight}`),
+      );
       if (cards.length < 2) return;
 
       cards.forEach((card, index) => {
         card.style.zIndex = String(index + 1);
       });
 
-      gsap.set(cards.slice(1), { xPercent: 100 });
+      gsap.set(cards.slice(1), {
+        yPercent: 100,
+        scale: 0.92,
+        transformOrigin: "50% 100%",
+      });
+      gsap.set(dimLayers, { opacity: 0 });
       gsap.set(cards, { pointerEvents: "none" });
       gsap.set(cards[0], { pointerEvents: "auto" });
+      gsap.set(leftCharacters, { xPercent: -130 });
+      gsap.set(rightCharacters, { xPercent: 130 });
+      if (leftCharacters[0] && rightCharacters[0]) {
+        gsap.set([leftCharacters[0], rightCharacters[0]], { xPercent: 0 });
+      }
 
       const timeline = gsap.timeline({ defaults: { ease: "none" } });
+
       for (let i = 1; i < cards.length; i += 1) {
-        timeline.to(cards[i], { xPercent: 0, duration: 1 }, i - 1);
+        const start = i - 1;
+        const previousLeft = leftCharacters[i - 1];
+        const previousRight = rightCharacters[i - 1];
+        const currentLeft = leftCharacters[i];
+        const currentRight = rightCharacters[i];
+
+        if (previousLeft) {
+          timeline.to(
+            previousLeft,
+            {
+              xPercent: -130,
+              duration: 0.36,
+              ease: "power2.inOut",
+            },
+            start + 0.02,
+          );
+        }
+        if (previousRight) {
+          timeline.to(
+            previousRight,
+            {
+              xPercent: 130,
+              duration: 0.36,
+              ease: "power2.inOut",
+            },
+            start + 0.02,
+          );
+        }
+
+        timeline.to(dimLayers[i - 1], { opacity: 0.13, duration: 0.2 }, start);
+        timeline.to(cards[i], { yPercent: 0, scale: 1, duration: 1 }, start);
+        timeline.to(
+          dimLayers[i - 1],
+          { opacity: 0, duration: 0.8 },
+          start + 0.2,
+        );
+
+        if (currentLeft) {
+          timeline.to(
+            currentLeft,
+            {
+              xPercent: 0,
+              duration: 0.42,
+              ease: "power2.out",
+            },
+            start + 0.44,
+          );
+        }
+        if (currentRight) {
+          timeline.to(
+            currentRight,
+            {
+              xPercent: 0,
+              duration: 0.42,
+              ease: "power2.out",
+            },
+            start + 0.44,
+          );
+        }
       }
 
       const stepCount = cards.length - 1;
@@ -203,22 +156,29 @@ export default function Destinations() {
         animation: timeline,
         trigger: pin,
         start: "top top",
-        end: () => `+=${window.innerHeight * stepCount * 1.9}`,
-        scrub: 1,
-        pin: true,
-        anticipatePin: 1,
+        end: () => `+=${window.innerHeight * stepCount * 2.15}`,
+        scrub: 1.2,
+        pin: !embedded,
+        anticipatePin: 0.35,
+        fastScrollEnd: true,
         refreshPriority: 1,
         invalidateOnRefresh: true,
-        snap: {
-          snapTo: 1 / stepCount,
-          duration: { min: 0.08, max: 0.25 },
-          delay: 0.02,
-        },
+        snap: embedded
+          ? undefined
+          : {
+              snapTo: 1 / stepCount,
+              duration: { min: 0.12, max: 0.32 },
+              delay: 0.08,
+            },
         onUpdate: (self) => {
-          const activeIndex = Math.round(self.progress * stepCount);
+          const nextIndex = Math.round(self.progress * stepCount);
           cards.forEach((card, index) => {
-            card.style.pointerEvents = index === activeIndex ? "auto" : "none";
+            card.style.pointerEvents = index === nextIndex ? "auto" : "none";
           });
+          if (nextIndex !== activeIndexRef.current) {
+            activeIndexRef.current = nextIndex;
+            setActiveIndex(nextIndex);
+          }
         },
       });
 
@@ -231,85 +191,97 @@ export default function Destinations() {
   );
 
   return (
-    <section ref={pinRef} className={styles.container} aria-label="Destinations Story">
+    <section
+      ref={pinRef}
+      className={styles.container}
+      aria-label="Destinations Story"
+    >
       <div className={styles.stack}>
-        {destinationCards.map((card) => (
-          <article
-            key={card.route}
-            className={styles.card}
-            style={{ "--card-primary": card.primaryColor } as CSSProperties}
-          >
-            <div
-              className={styles.cardBackground}
-              style={{ backgroundImage: `url(${card.backgroundImage})` }}
-              aria-hidden="true"
-            />
-            <div className={styles.cardBackgroundOverlay} aria-hidden="true" />
-
-            <div className={styles.heroOverlayWrap}>
-              <HeroOverlayLazy
-                overlayImages={card.overlayImages}
-                disableParallax
+        {destinationCardsData.map((card: DestinationDataCard, index) => {
+          const renderHeavyMedia = shouldRenderCardMedia(
+            index,
+            activeIndex,
+            destinationCardsData.length,
+          );
+          return (
+            <article
+              key={card.route}
+              className={styles.card}
+              style={
+                {
+                  "--card-primary": card.primaryColor,
+                  "--card-secondary": card.secondaryColor,
+                } as CSSProperties
+              }
+            >
+              <div className={styles.previousCardDim} aria-hidden="true" />
+              <div
+                className={styles.cardBackgroundOverlay}
+                aria-hidden="true"
               />
-            </div>
 
-            <div className={styles.visualPane} aria-hidden="true">
-              <div className={styles.photoSpread}>
-                {card.galleryImages.slice(0, 3).map((image, index) => (
-                  <figure
-                    key={`${card.route}-photo-${index}`}
-                    className={`${styles.photoFrame} ${styles[`photoFrame${index + 1}`]}`}
-                  >
-                    <img src={image} alt="" className={styles.photoImage} loading="lazy" />
-                  </figure>
-                ))}
+              <div className={styles.sideCharacters} aria-hidden="true">
+                <div className={styles.sideCharacterLeft} />
+                <div className={styles.sideCharacterRight} />
               </div>
-            </div>
 
-            <div className={styles.cardCopy}>
-              <h2 className={styles.title}>{card.label}</h2>
-              <GradientText as="span" className={styles.premiumText}>
-                PREMIUM
-              </GradientText>
-              <p className={styles.description}>{card.description}</p>
-
-              <Button
-                type="button"
-                className={styles.primaryButton}
-                onClick={() => {
-                  window.location.href = card.route;
-                }}
-              >
-                Ver Destino
-              </Button>
-
-              <div className={styles.reviewsFlow}>
-                {card.reviews.slice(0, 2).map((review, index) => (
-                  <article
-                    key={`${card.route}-review-${review.name}-${index}`}
-                    className={styles.reviewNoteFlow}
-                  >
-                    <div className={styles.reviewHeader}>
-                      <img src={review.avatar} alt={review.name} className={styles.reviewAvatar} />
-                      <p className={styles.reviewName}>{review.name}</p>
-                    </div>
-                    <p className={styles.reviewText}>"{review.quote}"</p>
-                    <Button
-                      type="button"
-                      variant="secondary"
-                      className={styles.reviewButton}
-                      onClick={() =>
-                        window.open(card.reviewUrl, "_blank", "noopener,noreferrer")
-                      }
+              {renderHeavyMedia && !isMobile ? (
+                <div className={styles.editorialImages} aria-hidden="true">
+                  {card.galleryImages.slice(0, 4).map((image, imageIndex) => (
+                    <figure
+                      key={`${card.route}-photo-${imageIndex}`}
+                      className={`${styles.editorialFrame} ${styles[`editorialFrame${imageIndex + 1}`]}`}
                     >
-                      Ver resena en Google
-                    </Button>
-                  </article>
-                ))}
+                      <Image
+                        src={image}
+                        alt=""
+                        fill
+                        sizes="(max-width: 900px) 55vw, 30vw"
+                        quality={70}
+                        className={styles.editorialImage}
+                        loading={
+                          index === 0 && imageIndex === 0 ? "eager" : "lazy"
+                        }
+                        priority={index === 0 && imageIndex === 0}
+                      />
+                    </figure>
+                  ))}
+                </div>
+              ) : null}
+
+              <div className={styles.cardCopy}>
+                <h2 className={styles.title}>{card.label}</h2>
+                <GradientText as="span" className={styles.premiumText}>
+                  PREMIUM
+                </GradientText>
+                {isMobile ? (
+                  <figure className={styles.mobileFeatureImage}>
+                    <Image
+                      src={card.galleryImages[0]}
+                      alt={card.label}
+                      fill
+                      sizes="92vw"
+                      quality={70}
+                      className={styles.mobileFeatureImageMedia}
+                      loading={index === 0 ? "eager" : "lazy"}
+                      priority={index === 0}
+                    />
+                  </figure>
+                ) : null}
+                <p className={styles.description}>{card.description}</p>
+                <Button
+                  type="button"
+                  className={styles.primaryButton}
+                  onClick={() => {
+                    window.location.href = card.route;
+                  }}
+                >
+                  Ver Destino
+                </Button>
               </div>
-            </div>
-          </article>
-        ))}
+            </article>
+          );
+        })}
       </div>
     </section>
   );

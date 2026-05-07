@@ -1,0 +1,206 @@
+.page {
+  min-height: 100svh;
+  background:
+    radial-gradient(120% 100% at 50% -12%, rgba(149, 35, 28, 0.11), transparent 62%),
+    #f4f4f0;
+  color: #111;
+}
+
+.section {
+  width: min(74rem, calc(100% - 2rem));
+  margin: 0 auto;
+  padding: clamp(6rem, 8.6vw, 8.8rem) 0 clamp(10rem, 12vw, 14rem);
+}
+
+.header {
+  width: min(62rem, 100%);
+  margin: 0 auto;
+  text-align: center;
+}
+
+.kicker {
+  margin: 0;
+  font-size: 0.74rem;
+  letter-spacing: 0.3em;
+  font-weight: 600;
+  color: #95231c;
+}
+
+.title {
+  margin: 0.56rem 0 0;
+  font-size: clamp(2.2rem, 5vw, 4.3rem);
+  line-height: 0.96;
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  font-family: var(--font-nohemi), sans-serif;
+}
+
+.subtitle {
+  margin: 1.04rem auto 0;
+  max-width: 52ch;
+  font-size: clamp(0.98rem, 1.22vw, 1.13rem);
+  line-height: 1.58;
+  color: rgba(17, 17, 17, 0.7);
+}
+
+.timelineTrack {
+  position: relative;
+  width: min(74rem, 100%);
+  margin: 0 auto;
+  padding: clamp(2.8rem, 4vw, 4.3rem) 0 clamp(2.8rem, 4vw, 4.8rem);
+}
+
+.spineSvg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  overflow: visible;
+}
+
+.spineBase {
+  fill: none;
+  stroke: rgba(17, 17, 17, 0.16);
+  stroke-width: 2;
+}
+
+.spineProgress {
+  fill: none;
+  stroke: #a2261f;
+  stroke-width: 3.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 2px 5px rgba(149, 35, 28, 0.28));
+}
+
+.spineDot {
+  fill: #a2261f;
+  stroke: #f4f4f0;
+  stroke-width: 3;
+}
+
+.list {
+  position: relative;
+  z-index: 2;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(4.3rem, 6vw, 7rem);
+}
+
+.row {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(10rem, 14vw, 13rem) minmax(0, 1fr);
+  align-items: center;
+  min-height: clamp(10rem, 12vw, 13.8rem);
+}
+
+.rowLeft .card {
+  grid-column: 1;
+  justify-self: end;
+  text-align: right;
+}
+
+.rowRight .card {
+  grid-column: 3;
+  justify-self: start;
+  text-align: left;
+}
+
+.centerCol {
+  grid-column: 2;
+  justify-self: center;
+  width: 100%;
+  min-height: 0.01rem;
+}
+
+.card {
+  width: min(30rem, 96%);
+  padding: 1.35rem 1.24rem 1.32rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(17, 17, 17, 0.08);
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow:
+    0 12px 36px rgba(16, 16, 16, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(4px);
+  will-change: transform, opacity;
+  transform: translate3d(0, 28px, 0);
+  opacity: 0;
+}
+
+.rowLeft .card {
+  border-right: 3px solid #a2261f;
+}
+
+.rowRight .card {
+  border-left: 3px solid #a2261f;
+}
+
+.year {
+  margin: 0;
+  font-size: clamp(2rem, 3vw, 3.25rem);
+  line-height: 0.86;
+  letter-spacing: -0.04em;
+  font-weight: 300;
+  font-family: var(--font-nohemi), sans-serif;
+  color: #111;
+  transition: color 0.42s ease;
+}
+
+.copy {
+  margin: 0.74rem 0 0;
+  font-size: clamp(0.96rem, 1.05vw, 1.07rem);
+  line-height: 1.62;
+  color: rgba(17, 17, 17, 0.82);
+}
+
+@media (max-width: 959px) {
+  .section {
+    width: min(42rem, calc(100% - 1rem));
+    padding: 5.4rem 0 clamp(8.5rem, 18vw, 10.5rem);
+  }
+
+  .header {
+    width: min(38rem, 100%);
+  }
+
+  .list {
+    gap: clamp(2.2rem, 6.6vw, 3.1rem);
+    padding-top: 0.2rem;
+  }
+
+  .row {
+    grid-template-columns: 3.35rem minmax(0, 1fr);
+    min-height: auto;
+  }
+
+  .centerCol {
+    grid-column: 1;
+  }
+
+  .rowLeft .card,
+  .rowRight .card {
+    grid-column: 2;
+    justify-self: stretch;
+    text-align: left;
+    width: 100%;
+    border-right: none;
+    border-left: 3px solid #a2261f;
+    padding: 1.05rem 0.95rem 1.04rem;
+  }
+
+  .year {
+    font-size: clamp(1.82rem, 8vw, 2.35rem);
+  }
+
+  .copy {
+    font-size: 0.95rem;
+    line-height: 1.54;
+  }
+}

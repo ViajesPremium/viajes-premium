@@ -40,6 +40,7 @@ export interface StaggeredMenuProps {
 
 const DEFAULT_MENU_ITEMS: StaggeredMenuItem[] = [
   { label: "Inicio", ariaLabel: "Ir a inicio", link: "/" },
+  { label: "Nosotros", ariaLabel: "Ir a nosotros", link: "/nosotros" },
   {
     label: "Japón Premium",
     ariaLabel: "Ir a Japón Premium",
@@ -61,6 +62,38 @@ const JAPAN_SECTION_MENU_ITEMS: StaggeredMenuItem[] = [
   { label: "Contacto", ariaLabel: "Ir al formulario", link: "#form" },
 ];
 
+const NOSOTROS_MENU_ITEM: StaggeredMenuItem = {
+  label: "Nosotros",
+  ariaLabel: "Ir a nosotros",
+  link: "/nosotros",
+};
+
+function normalizeMenuItemLabel(item: StaggeredMenuItem): string {
+  return item.label.trim().toLowerCase();
+}
+
+function withNosotrosItem(items: StaggeredMenuItem[]): StaggeredMenuItem[] {
+  if (!items.length) return [NOSOTROS_MENU_ITEM];
+
+  const alreadyHasNosotros = items.some((item) => {
+    const normalizedLabel = normalizeMenuItemLabel(item);
+    return normalizedLabel === "nosotros" || item.link === "/nosotros";
+  });
+
+  if (!alreadyHasNosotros) {
+    return [items[0], NOSOTROS_MENU_ITEM, ...items.slice(1)];
+  }
+
+  return items.map((item) => {
+    if (normalizeMenuItemLabel(item) !== "nosotros") return item;
+    return {
+      ...item,
+      link: "/nosotros",
+      ariaLabel: "Ir a nosotros",
+    };
+  });
+}
+
 export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
   position = "right",
   colors = ["var(--primary)", "var(--secondary)"],
@@ -81,15 +114,17 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
 }: StaggeredMenuProps) => {
   const pathname = usePathname();
   const items = React.useMemo<StaggeredMenuItem[]>(() => {
+    let resolvedItems: StaggeredMenuItem[];
+
     if (providedItems && providedItems.length > 0) {
-      return providedItems;
+      resolvedItems = providedItems;
+    } else if (pathname?.startsWith("/japon-premium")) {
+      resolvedItems = JAPAN_SECTION_MENU_ITEMS;
+    } else {
+      resolvedItems = DEFAULT_MENU_ITEMS;
     }
 
-    if (pathname?.startsWith("/japon-premium")) {
-      return JAPAN_SECTION_MENU_ITEMS;
-    }
-
-    return DEFAULT_MENU_ITEMS;
+    return withNosotrosItem(resolvedItems);
   }, [providedItems, pathname]);
 
   const [open, setOpen] = useState(false);
@@ -481,6 +516,17 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
     [closeMenu],
   );
 
+  const handleLogoClick = useCallback(
+    (event: React.MouseEvent<HTMLAnchorElement>) => {
+      event.preventDefault();
+      const didScroll = scrollToSection("#inicio", { duration: 1.15 });
+      if (!didScroll) {
+        window.location.href = "/";
+      }
+    },
+    [],
+  );
+
   React.useEffect(() => {
     if (!closeOnClickAway || !open) return;
 
@@ -539,10 +585,7 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
         <div className="sm-logo" aria-label="Logo">
           <a
             href="#inicio"
-            onClick={(e) => {
-              e.preventDefault();
-              scrollToSection("#inicio", { duration: 1.15 });
-            }}
+            onClick={handleLogoClick}
           >
             <Image
               src={logoUrl || "/logos/reactbits-gh-white.svg"}

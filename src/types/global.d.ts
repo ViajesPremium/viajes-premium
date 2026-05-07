@@ -23,5 +23,6 @@ declare global {
 
   interface Window {
     __lenis?: LenisLike;
+    dataLayer?: Array<Record<string, unknown>>;
   }
 }

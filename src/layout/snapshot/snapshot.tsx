@@ -32,7 +32,8 @@ export default function Snapshot() {
           end: "bottom top",
           pin: true,
           pinSpacing: false,
-          anticipatePin: 0.2,
+          anticipatePin: 0.12,
+          fastScrollEnd: true,
           invalidateOnRefresh: true,
         });
       };

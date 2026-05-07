@@ -6,8 +6,8 @@ import Lenis from "lenis";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-const DESKTOP_LERP = 0.08;
-const DESKTOP_WHEEL_MULTIPLIER = 0.85;
+const DESKTOP_LERP = 0.085;
+const DESKTOP_WHEEL_MULTIPLIER = 0.9;
 
 function clearStaleLenisStoppedClass() {
   document.documentElement.classList.remove("lenis-stopped");

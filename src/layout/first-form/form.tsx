@@ -18,6 +18,7 @@ import React, {
   useState,
 } from "react";
 import PhoneInput from "@/components/ui/phone-input/phone-input";
+import { pushGenerateLeadEvent } from "@/lib/gtm";
 import styles from "./form.module.css";
 
 type ImageSectionFormProps = {
@@ -384,45 +385,67 @@ export default function ImageSectionForm({
       setIsSubmitting(true);
       await config.onSubmit?.(values);
 
-      const response = await fetch(LEAD_API_ENDPOINT, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          ...values,
-          crmTag,
-          subject: `Nuevo Lead - Japon Premium ${crmTag}`,
-          formId: idPrefix,
-          pagePath: window.location.pathname,
-        }),
-      });
+      const payload = {
+        ...values,
+        crmTag,
+        subject: `Nuevo Lead - Japon Premium ${crmTag}`,
+        formId: idPrefix,
+        pagePath: window.location.pathname,
+      };
+      const sendLead = async () => {
+        const response = await fetch(LEAD_API_ENDPOINT, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        });
+        const responseText = await response.text();
+        const result = (() => {
+          try {
+            return JSON.parse(responseText) as {
+              ok?: boolean;
+              error?: string;
+              messageId?: string;
+              details?: string;
+              requestId?: string;
+            } | null;
+          } catch {
+            return null;
+          }
+        })();
+        return { response, responseText, result };
+      };
 
-      const responseText = await response.text();
-      const result = (() => {
-        try {
-          return JSON.parse(responseText) as {
-            ok?: boolean;
-            error?: string;
-            messageId?: string;
-            details?: string;
-          } | null;
-        } catch {
-          return null;
-        }
-      })();
+      let { response, responseText, result } = await sendLead();
+      if (!response.ok && response.status >= 500) {
+        await new Promise((resolve) => setTimeout(resolve, 400));
+        ({ response, responseText, result } = await sendLead());
+      }
 
-      if (!response.ok || !result?.ok) {
-        const errorMessage =
+      const isLeadSuccess = response.status === 200 && result?.ok === true;
+
+      if (!isLeadSuccess) {
+        const errorMessage = [
           result?.error ||
-          responseText ||
-          `Error HTTP ${response.status} al enviar correo`;
+            responseText ||
+            `Error HTTP ${response.status} al enviar correo`,
+          result?.details ? `Detalle: ${result.details}` : "",
+          result?.requestId ? `RequestId: ${result.requestId}` : "",
+        ]
+          .filter(Boolean)
+          .join(" | ");
         throw new Error(errorMessage);
       }
 
       console.log("[LeadForm] Correo enviado correctamente", {
         formId: idPrefix,
-        messageId: result.messageId ?? null,
+        messageId: result?.messageId ?? null,
+        requestId: result?.requestId ?? null,
+      });
+      pushGenerateLeadEvent({
+        pathname: window.location.pathname,
+        formId: idPrefix,
       });
       setIsSubmitted(true);
     } catch (error: unknown) {

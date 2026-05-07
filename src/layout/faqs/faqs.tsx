@@ -9,7 +9,11 @@ import Badge from "@/components/ui/badge/badge";
 import { BlurredStagger } from "@/components/ui/blurred-stagger-text/blurred-stagger-text";
 import { usePremiumLandingConfig } from "@/landings/premium/context";
 
-export default function Faqs() {
+type FaqsProps = {
+  hideCharacters?: boolean;
+};
+
+export default function Faqs({ hideCharacters = false }: FaqsProps) {
   const {
     sections: { faqs },
   } = usePremiumLandingConfig();
@@ -156,10 +160,14 @@ export default function Faqs() {
   return (
     <section ref={sectionRef} className={styles.section}>
       <h2 className="srOnly">{faqs.srHeading}</h2>
-      {/* Lateral izquierdo - samurai de perfil */}
-      <div className={styles.sideLeft}>
-        <div className={styles.sideImgFadeLeft} />
-      </div>
+      {!hideCharacters ? (
+        <>
+          {/* Lateral izquierdo - samurai de perfil */}
+          <div className={styles.sideLeft}>
+            <div className={styles.sideImgFadeLeft} />
+          </div>
+        </>
+      ) : null}
 
       {/* Contenido central */}
       <div className={styles.center}>
@@ -251,19 +259,23 @@ export default function Faqs() {
         </div>
       </div>
 
-      <div
-        ref={mobileFiguresRef}
-        className={styles.mobileFigures}
-        aria-hidden="true"
-      >
-        <div className={styles.mobileFigureLeft} />
-        <div className={styles.mobileFigureRight} />
-      </div>
+      {!hideCharacters ? (
+        <>
+          <div
+            ref={mobileFiguresRef}
+            className={styles.mobileFigures}
+            aria-hidden="true"
+          >
+            <div className={styles.mobileFigureLeft} />
+            <div className={styles.mobileFigureRight} />
+          </div>
 
-      {/* Lateral derecho - geisha de perfil */}
-      <div className={styles.sideRight}>
-        <div className={styles.sideImgFade} />
-      </div>
+          {/* Lateral derecho - geisha de perfil */}
+          <div className={styles.sideRight}>
+            <div className={styles.sideImgFade} />
+          </div>
+        </>
+      ) : null}
     </section>
   );
 }
