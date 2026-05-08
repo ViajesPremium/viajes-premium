@@ -29,7 +29,10 @@ function shouldRenderCardMedia(
 export default function Destinations({ embedded = false }: { embedded?: boolean }) {
   const pinRef = useRef<HTMLElement | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return window.matchMedia("(max-width: 900px)").matches;
+  });
   const activeIndexRef = useRef(0);
 
   useEffect(() => {
@@ -118,7 +121,11 @@ export default function Destinations({ embedded = false }: { embedded?: boolean 
           );
         }
 
-        timeline.to(dimLayers[i - 1], { opacity: 0.13, duration: 0.2 }, start);
+        timeline.to(
+          dimLayers[i - 1],
+          { opacity: isMobile ? 0.08 : 0.13, duration: 0.2 },
+          start,
+        );
         timeline.to(cards[i], { yPercent: 0, scale: 1, duration: 1 }, start);
         timeline.to(
           dimLayers[i - 1],
@@ -151,7 +158,15 @@ export default function Destinations({ embedded = false }: { embedded?: boolean 
       }
 
       const stepCount = cards.length - 1;
-      const scrollDistance = window.innerHeight * stepCount * 2.15;
+      const distanceFactor = isMobile
+        ? embedded
+          ? 1.28
+          : 1.42
+        : embedded
+          ? 1.68
+          : 1.9;
+      const viewportHeight = Math.max(pin.clientHeight, window.innerHeight);
+      const scrollDistance = viewportHeight * stepCount * distanceFactor;
 
       const trigger = ScrollTrigger.create({
         animation: timeline,
@@ -164,6 +179,9 @@ export default function Destinations({ embedded = false }: { embedded?: boolean 
         fastScrollEnd: true,
         refreshPriority: 1,
         invalidateOnRefresh: true,
+        onRefreshInit: () => {
+          gsap.set(dimLayers, { opacity: 0 });
+        },
         snap: embedded
           ? undefined
           : {
@@ -188,7 +206,7 @@ export default function Destinations({ embedded = false }: { embedded?: boolean 
         timeline.kill();
       };
     },
-    { scope: pinRef },
+    { scope: pinRef, dependencies: [embedded, isMobile] },
   );
 
   return (

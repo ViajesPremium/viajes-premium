@@ -169,9 +169,7 @@ export function GlobePolaroids({
     scene.add(globeGroup);
 
     const textureLoader = new THREE.TextureLoader();
-    const mapTexture = textureLoader.load(
-      "/images/globe/earth-texture-optimized.png",
-    );
+    const mapTexture = textureLoader.load("/images/globe/globe-texture.png");
     const bumpTexture = textureLoader.load(
       "https://unpkg.com/three-globe/example/img/earth-topology.png",
     );
@@ -210,16 +208,6 @@ export function GlobePolaroids({
       globeMat,
     );
     globeGroup.add(globeMesh);
-
-    const glowGeom = new THREE.SphereGeometry(1.05, 96, 96);
-    const glowMat = new THREE.MeshBasicMaterial({
-      color: new THREE.Color(glowColor[0], glowColor[1], glowColor[2]),
-      transparent: true,
-      opacity: 0.18,
-      side: THREE.BackSide,
-    });
-    const glow = new THREE.Mesh(glowGeom, glowMat);
-    globeGroup.add(glow);
 
     const markerMat = new THREE.MeshBasicMaterial({
       color: new THREE.Color(markerColor[0], markerColor[1], markerColor[2]),
@@ -339,8 +327,6 @@ export function GlobePolaroids({
       renderer.dispose();
       globeMesh.geometry.dispose();
       globeMat.dispose();
-      glowGeom.dispose();
-      glowMat.dispose();
       markerMat.dispose();
       mapTexture.dispose();
       bumpTexture.dispose();
@@ -387,4 +373,3 @@ export function GlobePolaroids({
     </div>
   );
 }
-

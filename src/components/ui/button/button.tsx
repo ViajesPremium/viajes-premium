@@ -2,13 +2,14 @@ import * as React from "react";
 import { ArrowUpRight } from "lucide-react";
 import "./button.css";
 
-type ButtonVariant = "primary" | "secondary";
+type ButtonVariant = "primary" | "secondary" | "outline";
 
 const BASE_CLASSNAME = "buttonBase";
 
 const VARIANT_CLASSNAMES: Record<ButtonVariant, string> = {
   primary: "buttonPrimary",
   secondary: "buttonSecondary",
+  outline: "buttonOutline",
 };
 
 export const buttonVariants = (variant: ButtonVariant = "primary") =>

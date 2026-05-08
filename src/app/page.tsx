@@ -2,7 +2,10 @@
 
 import "@/vision/vision.css";
 import styles from "./page.module.css";
-import HeroAboutUnified from "@/home/heroAboutUnified";
+import homeHorizontalStyles from "@/home/homeHorizontal.module.css";
+import HomeHero from "@/home/homeHero";
+import HomeGlobe from "@/home/homeGlobe";
+import HomeAbout from "@/home/homeAbout";
 import dynamic from "next/dynamic";
 import { useRef } from "react";
 import gsap from "gsap";
@@ -41,35 +44,45 @@ export default function Home() {
   useGSAP(
     () => {
       gsap.registerPlugin(ScrollTrigger);
+      const mm = gsap.matchMedia();
 
       const page = horizontalRef.current;
       const track = trackRef.current;
       if (!page || !track) return;
 
-      const getMaxHorizontalScroll = () =>
-        Math.max(0, track.scrollWidth - window.innerWidth);
+      const createHorizontalTween = (isMobileViewport: boolean) => {
+        const getMaxHorizontalScroll = () =>
+          Math.max(0, track.scrollWidth - window.innerWidth);
 
-      if (getMaxHorizontalScroll() <= 0) return;
+        if (getMaxHorizontalScroll() <= 0) return;
 
-      const tween = gsap.to(track, {
-        x: () => -getMaxHorizontalScroll(),
-        ease: "none",
-        scrollTrigger: {
-          trigger: page,
-          start: "top top",
-          end: () => `+=${getMaxHorizontalScroll() * 1.12}`,
-          scrub: 1.25,
-          pin: true,
-          anticipatePin: 0.4,
-          fastScrollEnd: true,
-          refreshPriority: 2,
-          invalidateOnRefresh: true,
-        },
-      });
+        const tween = gsap.to(track, {
+          x: () => -getMaxHorizontalScroll(),
+          ease: "none",
+          scrollTrigger: {
+            trigger: page,
+            start: "top top",
+            end: () => `+=${getMaxHorizontalScroll()}`,
+            scrub: isMobileViewport ? 1 : 1.25,
+            pin: true,
+            anticipatePin: isMobileViewport ? 0.25 : 0.4,
+            fastScrollEnd: true,
+            refreshPriority: 2,
+            invalidateOnRefresh: true,
+          },
+        });
+
+        return () => {
+          tween.scrollTrigger?.kill();
+          tween.kill();
+        };
+      };
+
+      mm.add("(min-width: 901px)", () => createHorizontalTween(false));
+      mm.add("(max-width: 900px)", () => createHorizontalTween(true));
 
       return () => {
-        tween.scrollTrigger?.kill();
-        tween.kill();
+        mm.revert();
       };
     },
     { scope: horizontalRef },
@@ -80,7 +93,14 @@ export default function Home() {
     <main className={styles.page}>
       <section ref={horizontalRef} className={styles.horizontalScene}>
         <div ref={trackRef} className={styles.track}>
-          <HeroAboutUnified />
+          <section
+            className={homeHorizontalStyles.container}
+            aria-label="Hero y About Us"
+          >
+            <HomeHero />
+            <HomeGlobe />
+            <HomeAbout />
+          </section>
         </div>
       </section>
 

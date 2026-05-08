@@ -1,0 +1,22 @@
+.container {
+  --hero-unified-height: 100dvh;
+  position: relative;
+  width: 300vw;
+  min-height: var(--hero-unified-height);
+  height: var(--hero-unified-height);
+  display: flex;
+  background: var(--black);
+  overflow: hidden;
+}
+
+@media (max-width: 900px) {
+  .container {
+    --hero-unified-height: 100svh;
+  }
+}
+
+@media (min-width: 901px) and (max-width: 1440px) and (max-height: 900px) {
+  .container {
+    --hero-unified-height: clamp(620px, 100dvh, 780px);
+  }
+}

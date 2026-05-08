@@ -88,9 +88,9 @@ export const barrancasPremiumLandingConfig: PremiumLandingConfig = {
     hero: {
       seoHeading: "Viaje a Barrancas del Cobre",
       title: {
-        line1Lead: "Viaja a",
-        line1Focus: "Barrancas",
-        line2Lead: "en Clase",
+        line1Lead: "Barrancas",
+        line1Focus: "en",
+        line2Lead: "Clase",
         line2Focus: "Premium",
       },
       mobileTitle: {
@@ -340,7 +340,7 @@ export const barrancasPremiumLandingConfig: PremiumLandingConfig = {
           label: "II",
           title: "Traslados y conexiones bien resueltos",
           description:
-            "Organizamos traslados, tiempos de conexión y desplazamientos clave para que el viaje fluya con claridad entre Chihuahua, El Fuerte, Creel, Divisadero y Barrancas del Cobre.",
+            "Organizamos traslados y desplazamientos clave para que el viaje fluya entre Chihuahua, El Fuerte, Creel, Divisadero y Barrancas del Cobre.",
           image: "/images/japon/6-traslados-mejor-coordinados.webp",
         },
         {
@@ -348,7 +348,7 @@ export const barrancasPremiumLandingConfig: PremiumLandingConfig = {
           label: "III",
           title: "Experiencias privadas o seleccionadas",
           description:
-            "Actividades elegidas con intención: miradores, teleférico, recorridos escénicos, cultura rarámuri, naturaleza y momentos diseñados para conectar mejor con el destino.",
+            "Actividades elegidas con intención: miradores, recorridos escénicos, naturaleza y momentos diseñados para conectar con el destino.",
           image: "/images/japon/6-experiencias-culturales-curadas.webp",
         },
         {

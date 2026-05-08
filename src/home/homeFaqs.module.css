@@ -23,55 +23,11 @@
   position: relative;
   overflow: hidden;
   isolation: isolate;
-  display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
-  align-items: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   box-sizing: border-box;
-}
-
-/* ── Laterales ───────────────────────────────────────────────────────── */
-.sideLeft {
-  position: absolute;
-  top: var(--faq-left-offset-y);
-  left: var(--faq-left-offset-x);
-  width: 25%;
-  height: 100%;
-  z-index: 0;
-  pointer-events: none;
-  background-image: url("/images/japon/samuraiPerfil.webp");
-  background-size: var(--faq-side-image-width) auto;
-  background-position: var(--faq-left-x) var(--faq-left-y);
-  background-repeat: no-repeat;
-  transform: translate3d(
-      calc((1 - var(--faq-motion-progress)) * var(--faq-left-out-x)),
-      0,
-      0
-    )
-    scale(var(--faq-side-scale));
-  transform-origin: right center;
-  will-change: transform;
-}
-
-.sideRight {
-  position: absolute;
-  top: var(--faq-right-offset-y);
-  left: calc(75% + var(--faq-right-offset-x));
-  width: 25%;
-  height: 100%;
-  z-index: 0;
-  pointer-events: none;
-  background-image: url("/images/japon/geishaPerfil.webp");
-  background-size: var(--faq-side-image-width) auto;
-  background-position: var(--faq-right-x) var(--faq-right-y);
-  background-repeat: no-repeat;
-  transform: translate3d(
-      calc((1 - var(--faq-motion-progress)) * var(--faq-right-out-x)),
-      0,
-      0
-    )
-    scale(var(--faq-side-scale));
-  transform-origin: left center;
-  will-change: transform;
 }
 
 /* ── Columna central ─────────────────────────────────────────────────── */
@@ -82,9 +38,12 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   gap: 3rem;
   padding: 2.5rem;
-  width: 100%;
+  text-align: center;
+  width: 80%;
+  max-width: 1200px;
   box-sizing: border-box;
 }
 

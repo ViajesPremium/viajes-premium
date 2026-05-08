@@ -48,3 +48,25 @@
   color: var(--black);
   letter-spacing: 0.02em;
 }
+
+@media (max-width: 900px) {
+  .polaroid {
+    padding: 4px 4px 16px;
+  }
+
+  .polaroidImage {
+    width: 68px;
+    height: 68px;
+  }
+
+  .polaroidCaption {
+    bottom: 3px;
+    font-size: 0.62rem;
+  }
+}
+
+@media (max-width: 560px) {
+  .polaroid {
+    display: none;
+  }
+}

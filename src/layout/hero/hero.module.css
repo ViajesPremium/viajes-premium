@@ -45,7 +45,6 @@
   padding-top: clamp(80px, 10vw, 100px);
   padding-inline: clamp(16px, 3vw, 56px);
   pointer-events: none;
-  --hero-title-column-width: clamp(220px, 20vw, 420px);
   --hero-title-center-gap: clamp(80px, 10vw, 80px);
 }
 

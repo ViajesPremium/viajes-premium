@@ -6,7 +6,7 @@
 
 .horizontalScene {
   position: relative;
-  height: 100vh;
+  height: 100%;
   overflow: hidden;
 }
 
@@ -71,4 +71,18 @@
 .footerScene {
   position: relative;
   width: 100%;
+}
+
+@media (max-width: 900px) {
+  .horizontalScene {
+    height: 100svh;
+    overflow: hidden;
+  }
+
+  .track {
+    width: max-content;
+    height: 100%;
+    display: flex;
+    overflow-y: hidden;
+  }
 }

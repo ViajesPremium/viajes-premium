@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { ChevronDownIcon } from "@radix-ui/react-icons";
-import Badge from "@/components/ui/badge/badge";
 import { BlurredStagger } from "@/components/ui/blurred-stagger-text/blurred-stagger-text";
 import styles from "./homeFaqs.module.css";
 import accordionStyles from "@/components/ui/accordion/accordion.module.css";
@@ -132,9 +131,11 @@ export default function HomeFaqs() {
 
       <div className={styles.center}>
         <div className={styles.header}>
-          <Badge text={HOME_FAQS.badgeText} variant="dark" align="center" />
           <h2 className={styles.title}>{HOME_FAQS.title}</h2>
-          <BlurredStagger text={HOME_FAQS.subtitle} className={styles.subtitle} />
+          <BlurredStagger
+            text={HOME_FAQS.subtitle}
+            className={styles.subtitle}
+          />
           <div className={styles.contactHint}>
             <p className={styles.contactLabel}>{HOME_FAQS.contactLabel}</p>
             <a
@@ -154,7 +155,11 @@ export default function HomeFaqs() {
               const contentId = `home-faq-content-${faq.id}`;
 
               return (
-                <div key={faq.id} className={accordionStyles.item} role="listitem">
+                <div
+                  key={faq.id}
+                  className={accordionStyles.item}
+                  role="listitem"
+                >
                   <h3 className={accordionStyles.header}>
                     <button
                       id={triggerId}
@@ -167,8 +172,14 @@ export default function HomeFaqs() {
                       {faq.question}
                       <motion.span
                         className={accordionStyles.chevron}
-                        animate={{ rotate: isOpen ? 180 : 0, opacity: isOpen ? 0.9 : 0.5 }}
-                        transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+                        animate={{
+                          rotate: isOpen ? 180 : 0,
+                          opacity: isOpen ? 0.9 : 0.5,
+                        }}
+                        transition={{
+                          duration: 0.28,
+                          ease: [0.22, 1, 0.36, 1],
+                        }}
                         aria-hidden="true"
                       >
                         <ChevronDownIcon width={16} height={16} />
@@ -192,7 +203,9 @@ export default function HomeFaqs() {
                         }}
                         style={{ overflow: "hidden" }}
                       >
-                        <div className={accordionStyles.contentInner}>{faq.answer}</div>
+                        <div className={accordionStyles.contentInner}>
+                          {faq.answer}
+                        </div>
                       </motion.div>
                     )}
                   </AnimatePresence>

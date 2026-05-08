@@ -44,6 +44,17 @@
   transition: all 3ms ease-in-out;
 }
 
+.buttonOutline {
+  padding: 0 1.2rem;
+  background-color: transparent;
+  border: 1px solid var(--white, #ffffff);
+}
+
+.buttonOutline:hover {
+  background-color: var(--white, #ffffff);
+  color: var(--black, #000000);
+}
+
 .buttonLabel {
   position: relative;
   z-index: 10;

@@ -34,14 +34,15 @@
   display: flex;
   margin: 0;
   width: 100%;
+  justify-content: center;
 }
 
 .trigger {
   display: flex;
   flex: 1;
   width: 100%;
-  align-items: start;
-  justify-content: space-between;
+  align-items: center;
+  justify-content: center;
   gap: 1rem;
   padding: 1.4rem 0;
   background: none;
@@ -62,8 +63,8 @@
 
 /* ── TEXTO DEL TRIGGER (La magia anti-desbordamiento) ────────────────── */
 .triggerText {
-  flex: 1 1 auto;
-  text-align: left;
+  flex: 0 1 auto;
+  text-align: center;
   min-width: 0;
   word-wrap: break-word;
   overflow-wrap: break-word;
@@ -109,6 +110,7 @@
   width: 100%;
   box-sizing: border-box;
   overflow-wrap: break-word;
+  text-align: center;
 }
 
 /* ── Mobile: tap targets más generosos ── */
@@ -116,10 +118,12 @@
   .trigger {
     padding: 1.25rem 0;
     white-space: normal;
-    text-align: left;
+    text-align: center;
     word-break: break-word;
     overflow-wrap: break-word;
     min-width: 0;
+    justify-content: center;
+    align-items: center;
   }
 
   .contentInner {
