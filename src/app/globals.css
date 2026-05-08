@@ -52,39 +52,6 @@ body {
   background-color: var(--black);
 }
 
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 2147483646;
-  pointer-events: none;
-  opacity: 0.4;
-
-  background: 
-    /* 1. Trama de puntos Cyan (desplazada) */
-    radial-gradient(circle at 1px 1px, rgba(0, 0, 0, 0.15) 1px, transparent 0) 0
-      0 / 4px 4px,
-    /* 2. Trama de puntos Magenta (desplazada y rotada visualmente) */
-    radial-gradient(
-        circle at 2px 2px,
-        rgba(255, 0, 255, 0.15) 1.1px,
-        transparent 0
-      )
-      1px 1px / 4px 4px,
-    /* 3. Trama de puntos Amarilla */
-    radial-gradient(
-        circle at 1px 1px,
-        rgba(255, 255, 0, 0.15) 1px,
-        transparent 0
-      )
-      2px 0px / 4px 4px,
-    /* 4. Textura de grano fino (Ruido de papel) */
-    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3F%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
-
-  /* El secreto: 'color-burn' o 'multiply' para que la tinta "manche" el fondo */
-  mix-blend-mode: color-burn;
-  filter: contrast(110%) brightness(105%) saturate(120%);
-}
 .srOnly {
   position: absolute;
   width: 1px;

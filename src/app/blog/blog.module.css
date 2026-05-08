@@ -1,0 +1,139 @@
+.page {
+  min-height: 100svh;
+  background: var(--bg, #f3f3f0);
+  color: var(--black, #16181b);
+  padding: clamp(5.8rem, 9vh, 8rem) clamp(1rem, 2.4vw, 2.4rem)
+    clamp(3rem, 5vh, 4.5rem);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.4rem, 2.5vh, 2.2rem);
+}
+
+.titleRow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.title {
+  margin: 0;
+  text-align: center;
+  font-family: var(--font-bigcaslon), serif;
+  font-size: clamp(2.6rem, 8.6vw, 10rem);
+  line-height: 0.9;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+}
+
+.topGrid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: clamp(0.7rem, 1vw, 1rem);
+}
+
+.blogCard {
+  grid-column: span 1;
+  border-top: 1px solid rgba(22, 24, 27, 0.28);
+  padding: 0.75rem 0.35rem 0.55rem;
+}
+
+.blogImageWrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  margin: 0 0 0.6rem;
+}
+
+.blogImage {
+  object-fit: cover;
+}
+
+.blogIndex {
+  margin: 0;
+  font-family: var(--font-nohemi), sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  color: rgba(22, 24, 27, 0.52);
+}
+
+.blogTitle {
+  margin: 0.5rem 0 0;
+  font-family: var(--font-nohemi), sans-serif;
+  font-size: clamp(1.05rem, 1.5vw, 1.3rem);
+  line-height: 1.18;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.blogSubtitle {
+  margin: 0.4rem 0 0;
+  font-family: var(--font-nohemi), sans-serif;
+  font-size: clamp(0.9rem, 1.1vw, 1rem);
+  line-height: 1.35;
+  color: rgba(22, 24, 27, 0.72);
+}
+
+.blogFile {
+  margin: 0.45rem 0 0;
+  font-family: var(--font-nohemi), sans-serif;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  color: rgba(22, 24, 27, 0.5);
+}
+
+.blogCta {
+  margin-top: 0.65rem;
+  width: 100%;
+  justify-content: center;
+  background-color: var(--black);
+}
+
+.questionsBlock {
+  width: 100%;
+  border-top: 1px solid rgba(22, 24, 27, 0.24);
+  padding-top: clamp(1rem, 2vh, 1.8rem);
+}
+
+.questionsTitle {
+  margin: 0;
+  font-family: var(--font-nohemi), sans-serif;
+  font-size: clamp(1.15rem, 1.6vw, 1.5rem);
+  letter-spacing: 0.01em;
+  font-weight: 500;
+}
+
+.questionsGrid {
+  margin-top: clamp(0.7rem, 1.6vh, 1rem);
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 0.6rem 1rem;
+}
+
+.questionItem {
+  grid-column: span 2;
+  margin: 0;
+  font-family: var(--font-nohemi), sans-serif;
+  font-size: clamp(0.92rem, 1.15vw, 1.02rem);
+  line-height: 1.45;
+  color: rgba(22, 24, 27, 0.8);
+}
+
+@media (max-width: 980px) {
+  .topGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .blogCard {
+    grid-column: span 1;
+  }
+
+  .questionsGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .questionItem {
+    grid-column: span 1;
+  }
+}
