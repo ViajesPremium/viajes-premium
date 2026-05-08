@@ -151,14 +151,15 @@ export default function Destinations({ embedded = false }: { embedded?: boolean 
       }
 
       const stepCount = cards.length - 1;
+      const scrollDistance = window.innerHeight * stepCount * 2.15;
 
       const trigger = ScrollTrigger.create({
         animation: timeline,
         trigger: pin,
         start: "top top",
-        end: () => `+=${window.innerHeight * stepCount * 2.15}`,
+        end: () => `+=${scrollDistance}`,
         scrub: 1.2,
-        pin: !embedded,
+        pin: true,
         anticipatePin: 0.35,
         fastScrollEnd: true,
         refreshPriority: 1,

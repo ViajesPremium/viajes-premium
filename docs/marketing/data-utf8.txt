@@ -1,0 +1,874 @@
+﻿ Plantilla para Marketing ┬╖ Landings Premium ┬╖ Basada en configuraci├│n t├⌐cnica
+PLANTILLA DE CONTENIDOS PARA LANDINGS PREMIUM
+Formato para Marketing basado en la configuraci├│n t├⌐cnica del sitio
+Objetivo: que Marketing rellene ├║nicamente los textos visibles de la landing, sin trabajar en JSON, c├│digo, rutas, im├ígenes, colores, IDs ni estructura t├⌐cnica.
+0. Instrucciones de uso
+Regla
+Qu├⌐ significa para Marketing
+Solo llenar campos de texto
+Completar los espacios marcados como "Texto a entregar". No modificar nombres t├⌐cnicos, rutas, im├ígenes, IDs, links internos, colores ni CTAs ya definidos.
+Mantener intenci├│n premium
+Textos claros, elegantes, concretos y orientados a conversi├│n. Evitar explicaciones largas, tono gen├⌐rico o frases demasiado promocionales.
+Respetar longitudes
+Cada campo incluye una gu├¡a de extensi├│n aproximada. Si el texto necesita variar, priorizar claridad y lectura natural.
+No duplicar informaci├│n
+Cada secci├│n debe aportar una funci├│n distinta: SEO atrae, Hero posiciona, Highlights convence, Itinerarios segmenta, FAQs resuelve dudas.
+Usar acentos y ortograf├¡a final
+El equipo puede escribir en espa├▒ol natural. Desarrollo se encargar├í de integrarlo en la configuraci├│n.
+
+
+1. SEO / Metadata
+Estos campos ayudan a posicionar la landing. Deben ser claros para Google y atractivos para el usuario.
+Campo visible
+Qu├⌐ debe escribir Marketing
+Gu├¡a de extensi├│n
+Texto a entregar
+Title SEO
+T├¡tulo que aparecer├í en buscadores y pesta├▒a del navegador.
+4 a 20 palabras
+Viaje a Barrancas del Cobre " Clase PREMIUM 
+Meta description
+Resumen persuasivo para buscadores. Debe explicar destino, tipo de experiencia y beneficio.
+16 a 36 palabras
+Descubre Barrancas del Cobre con recorridos en Chepe Express, naturaleza y experiencias dise├▒adas en Clase PREMIUM. 
+Keywords
+5 a 8 t├⌐rminos relevantes separados por coma. Incluir destino, tipo de viaje y variantes de b├║squeda.
+5 a 8 keywords
+Barrancas del Cobre,Chepe Express, tours Barrancas del Cobre, viaje a Barrancas del Cobre, tour por Barrancas del Cobre
+H1 / Encabezado SEO
+T├¡tulo principal sem├íntico de la p├ígina. Debe contener el destino o producto.
+3 a 12 palabras
+Viaje a Barrancas del Cobre 
+
+2. Men├║ de navegaci├│n
+Normalmente estas etiquetas no se editan. Solo llenar si la landing requiere nombres distintos.
+Campo visible
+Qu├⌐ debe escribir Marketing
+Gu├¡a de extensi├│n
+Texto a entregar
+Inicio
+Etiqueta visible del men├║.
+1 a 2 palabras
+Inicio
+Nosotros
+Etiqueta visible del men├║.
+1 a 2 palabras
+Nosotros
+Itinerarios
+Etiqueta visible del men├║.
+1 a 2 palabras
+Itinerarios
+Incluye
+Etiqueta visible del men├║.
+1 a 2 palabras
+Incluye
+Testimonios
+Etiqueta visible del men├║.
+1 a 2 palabras
+Testimonios
+Sobre ΓÇª
+Etiqueta visible del men├║.
+1 a 2 palabras
+Sobre ΓÇª
+Contacto
+Etiqueta visible del men├║.
+1 a 2 palabras
+Contacto
+
+
+3. Hero / Primera pantalla
+Debe explicar en segundos qu├⌐ se ofrece, para qui├⌐n y por qu├⌐ es premium.
+Campo visible
+Qu├⌐ debe escribir Marketing
+Gu├¡a de extensi├│n
+Texto a entregar
+T├¡tulo l├¡nea 1 
+Primera parte del t├¡tulo visual.
+1 a 4 palabras
+Viaja a
+T├¡tulo l├¡nea 1.1
+Palabra o frase protagonista de la primera l├¡nea.
+1 a 3 palabras
+Barrancas
+T├¡tulo l├¡nea 2
+Conector o complemento de la segunda l├¡nea.
+1 a 4 palabras
+en Clase
+T├¡tulo l├¡nea 2.2
+Palabra o frase protagonista de cierre.
+1 a 3 palabras
+Premium
+
+
+
+
+
+
+
+
+Descripci├│n 1
+Promesa central del viaje: destino, experiencia y beneficio.
+10 a 30 palabras
+Eleva tu Vida conociendo Barrancas del cobre con profundidad, comodidad y acompa├▒amiento real desde el primer contacto hasta su regreso.
+
+
+
+
+Descripci├│n 2
+Refuerzo emocional o de autoridad para cerrar el hero.
+6 a 22 palabras
+Atenci├│n personalizada, planeaci├│n detallada, Soporte antes, durante y despu├⌐s del viaje.
+
+4. Nosotros / Autoridad y resumen de itinerarios
+Secci├│n para demostrar autoridad y mostrar r├ípidamente las rutas/productos principales.
+Campo visible
+Qu├⌐ debe escribir Marketing
+Gu├¡a de extensi├│n
+Texto a entregar
+Badge
+Etiqueta peque├▒a de secci├│n.
+1 a 3 palabras
+Nosotros
+T├¡tulo de autoridad
+Frase que comunica experiencia, trayectoria o confianza.
+4 a 18 palabras
+M├ís de 21 a├▒os dise├▒ando experiencias PREMIUM
+
+Palabras a resaltar
+Palabras exactas del t├¡tulo que deben destacarse visualmente.
+2 a 5 palabras
+21 a├▒os, PREMIUM 
+Tarjeta 1 - Nombre
+Nombre corto del itinerario o experiencia.
+1 a 8 palabras
+El de Mayor Ranking
+Tarjeta 1 - Descriptores
+Atributos breves separados por punto medio.
+4 a 18 palabras
+5 d├¡as ┬╖ Chepe Express ┬╖ Miradores ┬╖ Naturaleza 
+Tarjeta 2 - Nombre
+Nombre corto del itinerario o experiencia.
+1 a 8 palabras
+Leyendas del Fuerte
+Tarjeta 2 - Descriptores
+Atributos breves separados por punto medio.
+4 a 18 palabras
+7 d├¡as ┬╖ Historia ┬╖ Paisajes ┬╖ Cultura norte├▒a 
+Tarjeta 3 - Nombre
+Nombre corto del itinerario o experiencia.
+1 a 8 palabras
+Sabores del Norte
+Tarjeta 3 - Descriptores
+Atributos breves separados por punto medio.
+4 a 18 palabras
+8 d├¡as ┬╖ Gastronom├¡a ┬╖ Cultura menonita ┬╖ Chepe 
+
+5. Primer formulario / Captura temprana
+No cambiar etiquetas de env├¡o, email o tel├⌐fono salvo que el equipo lo solicite.
+Campo visible
+Qu├⌐ debe escribir Marketing
+Gu├¡a de extensi├│n
+Texto a entregar
+T├¡tulo de secci├│n
+T├¡tulo breve orientado a conversi├│n.
+1 a 8 palabras
+Propuesta personalizada
+Palabra destacada
+Una palabra exacta del t├¡tulo para resaltar.
+1 a 3 palabras
+personalizada
+Subt├¡tulo
+Indicar qu├⌐ har├í el usuario y qu├⌐ recibir├í a cambio.
+10 a 30 palabras
+Cu├⌐ntanos c├│mo imaginas tu viaje a Barrancas del Cobre y descubriremos cu├íl de nuestros 3 itinerarios es perfecto para ti. 
+
+
+
+
+
+6. Highlights / Propuesta de valor
+Esta secci├│n debe convertir atributos del producto en razones de compra.
+Campo visible
+Qu├⌐ debe escribir Marketing
+Gu├¡a de extensi├│n
+Texto a entregar
+Badge
+Etiqueta corta de secci├│n.
+1 a 14 palabras
+┬┐Por qu├⌐ Barrancas PREMIUM┬«? 
+Kicker superior
+Frase corta que anticipa la promesa.
+1 a 14 palabras
+Trabajamos con marcas 
+Kicker inferior
+Frase corta que completa la idea anterior.
+1 a 13 palabras
+Cuidadosamente seleccionadas.
+Frase animada l├¡nea 1
+Primera l├¡nea de frase visual. Indicar palabra entre brackets si aplica.
+2 a 8 palabras
+Viaja por Chihuahua con Calma
+Frase animada l├¡nea 2
+Segunda l├¡nea de frase visual. Indicar palabra resaltada.
+2 a 8 palabras
+Mientras las Barrancas revelan su
+Frase animada l├¡nea 3
+Tercera l├¡nea de frase visual. Indicar palabra entre brackets si aplica.
+2 a 8 palabras
+Esencia y el Chepe redefine tu
+Frase animada l├¡nea 4
+Cierre de frase visual. Debe ser contundente.
+2 a 8 palabras
+Forma de viajar
+
+6.1 Bloque de valor 1
+Campo visible
+Qu├⌐ debe escribir Marketing
+Gu├¡a de extensi├│n
+Texto a entregar
+ID conceptual
+Nombre interno descriptivo para identificar el bloque. No necesita formato t├⌐cnico.
+1 a 5 palabras
+
+T├¡tulo
+Beneficio o atributo principal.
+1 a 16 palabras
+Respaldo 24/7
+Descripci├│n
+Explicaci├│n concreta del beneficio.
+1 a 21 palabras
+Soporte continuo para viajar con tranquilidad de principio a fin.
+Meta / categor├¡a
+Categor├¡a corta visible.
+1 a 3 palabras
+
+
+6.2 Bloque de valor 2
+Campo visible
+Qu├⌐ debe escribir Marketing
+Gu├¡a de extensi├│n
+Texto a entregar
+ID conceptual
+Nombre interno descriptivo para identificar el bloque. No necesita formato t├⌐cnico.
+1 a 5 palabras
+
+T├¡tulo
+Beneficio o atributo principal.
+1 a 16 palabras
+Estancias a la altura del viaje
+Descripci├│n
+Explicaci├│n concreta del beneficio.
+1 a 21 palabras
+Seleccionadas por su car├ícter, ubicaci├│n y nivel de servicio.
+Meta / categor├¡a
+Categor├¡a corta visible.
+1 a 3 palabras
+
+
+6.3 Bloque de valor 3
+Campo visible
+Qu├⌐ debe escribir Marketing
+Gu├¡a de extensi├│n
+Texto a entregar
+ID conceptual
+Nombre interno descriptivo para identificar el bloque. No necesita formato t├⌐cnico.
+1 a 5 palabras
+
+T├¡tulo
+Beneficio o atributo principal.
+1 a 16 palabras
+Expertos que hablan del destino
+Descripci├│n
+Explicaci├│n concreta del beneficio.
+1 a 21 palabras
+Gu├¡as expertos que conocen el destino con profundidad.
+Meta / categor├¡a
+Categor├¡a corta visible.
+1 a 3 palabras
+
+
+6.4 Bloque de valor 4
+Campo visible
+Qu├⌐ debe escribir Marketing
+Gu├¡a de extensi├│n
+Texto a entregar
+ID conceptual
+Nombre interno descriptivo para identificar el bloque. No necesita formato t├⌐cnico.
+1 a 5 palabras
+
+T├¡tulo
+Beneficio o atributo principal.
+1 a 16 palabras
+Tranquilidad de principio a fin
+Descripci├│n
+Explicaci├│n concreta del beneficio.
+1 a 21 palabras
+Cada detalle se cuida para que usted viaje con m├ís confianza y respaldo.
+Meta / categor├¡a
+Categor├¡a corta visible.
+1 a 3 palabras
+
+
+6.5 Bloque de valor 5
+Campo visible
+Qu├⌐ debe escribir Marketing
+Gu├¡a de extensi├│n
+Texto a entregar
+ID conceptual
+Nombre interno descriptivo para identificar el bloque. No necesita formato t├⌐cnico.
+1 a 5 palabras
+
+T├¡tulo
+Beneficio o atributo principal.
+1 a 16 palabras
+Recorridos dise├▒ados con m├ís criterio
+Descripci├│n
+Explicaci├│n concreta del beneficio.
+1 a 21 palabras
+Cada itinerario se estructura para dar m├ís sentido, ritmo y calidad al viaje.
+Meta / categor├¡a
+Categor├¡a corta visible.
+1 a 3 palabras
+
+
+6.6 Bloque de valor 6
+Campo visible
+Qu├⌐ debe escribir Marketing
+Gu├¡a de extensi├│n
+Texto a entregar
+ID conceptual
+Nombre interno descriptivo para identificar el bloque. No necesita formato t├⌐cnico.
+1 a 5 palabras
+
+T├¡tulo
+Beneficio o atributo principal.
+1 a 16 palabras
+Acompa├▒amiento personalizado
+Descripci├│n
+Explicaci├│n concreta del beneficio.
+1 a 21 palabras
+Atenci├│n cercana antes, durante y despu├⌐s de su experiencia en Jap├│n.
+Meta / categor├¡a
+Categor├¡a corta visible.
+1 a 3 palabras
+
+
+7. Itinerarios / Productos
+Rellenar cada itinerario como producto comercial independiente, pero mantener consistencia de tono entre los tres.
+Campo visible
+Qu├⌐ debe escribir Marketing
+Gu├¡a de extensi├│n
+Texto a entregar
+Texto superior de pesta├▒a
+Etiqueta com├║n para el m├│dulo de itinerarios.
+1 a 8 palabras
+Itinerario PREMIUM
+
+7.1 Itinerario 1
+Campo visible
+Qu├⌐ debe escribir Marketing
+Gu├¡a de extensi├│n
+Texto a entregar
+Nombre del itinerario
+Nombre comercial corto y memorable.
+1 a 8 palabras
+El de Mayor Ranking
+Badges / atributos
+Duraci├│n y atributos separados por punto medio.
+1 a 18 palabras
+5 D├ìAS ┬╖ CHEPE EXPRESS ┬╖ MIRADORES ┬╖ NATURALEZA ┬╖ BARRANCAS
+
+Descripci├│n
+Resumen del recorrido, experiencia y valor diferencial.
+10 a 30 palabras
+Un recorrido ideal para vivir Barrancas del Cobre por primera vez: miradores, naturaleza imponente y el Chepe Express en Clase PREMIUM.
+Ideal para
+Perfil del viajero recomendado.
+4 a 24 palabras
+Ideal para parejas, familias y viajeros que buscan descubrir lo m├ís ic├│nico de Barrancas del Cobre en pocos d├¡as.
+Precio en texto
+Formato comercial de precio. Puede dejarse con variable si no est├í definido.
+1 a 16 palabras
+
+
+7.2 Itinerario 2
+Campo visible
+Qu├⌐ debe escribir Marketing
+Gu├¡a de extensi├│n
+Texto a entregar
+Nombre del itinerario
+Nombre comercial corto y memorable.
+1 a 8 palabras
+Leyendas del Fuerte
+Badges / atributos
+Duraci├│n y atributos separados por punto medio.
+1 a 18 palabras
+7 D├ìAS ┬╖ EL FUERTE ┬╖ LEYENDAS ┬╖ HISTORIA ┬╖ BARRANCAS
+
+Descripci├│n
+Resumen del recorrido, experiencia y valor diferencial.
+10 a 30 palabras
+Un relato por el norte de M├⌐xico: Barrancas del Cobre, El Fuerte, y experiencias culturales que conectan la historia, la naturaleza y la Sierra Tarahumara.
+
+Ideal para
+Perfil del viajero recomendado.
+4 a 24 palabras
+Ideal para viajeros que buscan una experiencia con historia, cultura y escenarios memorables en Clase PREMIUM.
+
+Precio en texto
+Formato comercial de precio. Puede dejarse con variable si no est├í definido.
+1 a 16 palabras
+
+
+7.3 Itinerario 3
+Campo visible
+Qu├⌐ debe escribir Marketing
+Gu├¡a de extensi├│n
+Texto a entregar
+Nombre del itinerario
+Nombre comercial corto y memorable.
+1 a 8 palabras
+Sabores del Norte
+
+Badges / atributos
+Duraci├│n y atributos separados por punto medio.
+1 a 18 palabras
+8 D├ìAS ┬╖ GASTRONOM├ìA ┬╖ MENONITAS ┬╖ CHEPE EXPRESS ┬╖ BARRANCAS
+
+Descripci├│n
+Resumen del recorrido, experiencia y valor diferencial.
+10 a 30 palabras
+Una experiencia m├ís profunda por Barrancas del Cobre, donde el paisaje tambi├⌐n se vive a trav├⌐s de la cocina regional y los sabores del norte.
+
+Ideal para
+Perfil del viajero recomendado.
+4 a 24 palabras
+Ideal para viajeros que disfrutan conocer tradiciones locales y vivir un destino desde su cultura y sus sabores.
+
+Precio en texto
+Formato comercial de precio. Puede dejarse con variable si no est├í definido.
+1 a 16 palabras
+
+
+8. Qu├⌐ incluye / Componentes de experiencia
+No listar todo como inventario. Enfocar cada tarjeta en valor percibido.
+Campo visible
+Qu├⌐ debe escribir Marketing
+Gu├¡a de extensi├│n
+Texto a entregar
+Badge
+Etiqueta corta de secci├│n.
+1 a 8 palabras
+Lo esencial
+T├¡tulo de secci├│n
+Frase que comunica qu├⌐ sostiene la experiencia premium.
+1 a 18 palabras
+ Lo que da forma a tu experiencia premium
+
+Palabras a resaltar
+Palabras exactas del t├¡tulo que deben destacarse visualmente.
+1 a 5 palabras
+Da forma, premium
+
+8.1 Tarjeta incluye I
+Campo visible
+Qu├⌐ debe escribir Marketing
+Gu├¡a de extensi├│n
+Texto a entregar
+T├¡tulo
+Elemento incluido o resuelto.
+1 a 15 palabras
+Alojamiento seleccionado con criterio
+
+Descripci├│n
+Explicar el valor concreto para el viajero.
+4 a 24 palabras
+Hoteles y estancias elegidas por ubicaci├│n y comodidad, para descansar bien despu├⌐s de cada experiencia en la Sierra Tarahumara.
+
+
+8.2 Tarjeta incluye II
+Campo visible
+Qu├⌐ debe escribir Marketing
+Gu├¡a de extensi├│n
+Texto a entregar
+T├¡tulo
+Elemento incluido o resuelto.
+1 a 15 palabras
+Traslados y conexiones bien resueltos
+
+Descripci├│n
+Explicar el valor concreto para el viajero.
+4 a 24 palabras
+Organizamos traslados, tiempos de conexi├│n y desplazamientos clave para que el viaje fluya con claridad entre Chihuahua, El Fuerte, Creel, Divisadero y Barrancas del Cobre.
+
+
+8.3 Tarjeta incluye III
+Campo visible
+Qu├⌐ debe escribir Marketing
+Gu├¡a de extensi├│n
+Texto a entregar
+T├¡tulo
+Elemento incluido o resuelto.
+1 a 15 palabras
+Experiencias privadas o seleccionadas
+
+Descripci├│n
+Explicar el valor concreto para el viajero.
+4 a 24 palabras
+Actividades elegidas con intenci├│n: miradores, telef├⌐rico, recorridos esc├⌐nicos, cultura rar├ímuri, naturaleza y momentos dise├▒ados para conectar mejor con el destino.
+
+
+8.4 Tarjeta incluye IV
+Campo visible
+Qu├⌐ debe escribir Marketing
+Gu├¡a de extensi├│n
+Texto a entregar
+T├¡tulo
+Elemento incluido o resuelto.
+1 a 15 palabras
+Gastronom├¡a del norte
+
+Descripci├│n
+Explicar el valor concreto para el viajero.
+4 a 24 palabras
+Experiencias culinarias y sabores regionales que forman parte central del viaje: cocina local, productos menonitas y propuestas gastron├│micas seleccionadas.
+
+
+8.5 Tarjeta incluye V
+Campo visible
+Qu├⌐ debe escribir Marketing
+Gu├¡a de extensi├│n
+Texto a entregar
+T├¡tulo
+Elemento incluido o resuelto.
+1 a 15 palabras
+ Acompa├▒amiento en cada etapa
+
+Descripci├│n
+Explicar el valor concreto para el viajero.
+4 a 24 palabras
+Desde la planeaci├│n inicial hasta tu regreso, cuentas con seguimiento real, atenci├│n personalizada y soporte para vivir Barrancas del Cobre con tranquilidad.
+
+
+9. Testimonios
+Usar testimonios reales cuando existan. Si son placeholders, marcar como pendientes de validaci├│n.
+Campo visible
+Qu├⌐ debe escribir Marketing
+Gu├¡a de extensi├│n
+Texto a entregar
+Badge
+Etiqueta de secci├│n.
+1 a 15 palabras
+La voz del viajero premium 
+
+9.1 Testimonio 1
+Campo visible
+Qu├⌐ debe escribir Marketing
+Gu├¡a de extensi├│n
+Texto a entregar
+Frase principal
+Cita breve, natural y cre├¡ble.
+12 a 32 palabras
+El paquete estuvo s├║per padre. Queremos reconocer el trabajo de todos los gu├¡as; en verdad, todos 10 de 10.
+Nombre
+Nombre visible del viajero.
+1 a 8 palabras
+Anabel Gonz├ílez y Juan Hern├índez
+
+Ubicaci├│n / descriptor
+Ciudad, pa├¡s o descriptor de viajero.
+1 a 8 palabras
+Ciudad de M├⌐xico
+
+9.2 Testimonio 2
+Campo visible
+Qu├⌐ debe escribir Marketing
+Gu├¡a de extensi├│n
+Texto a entregar
+Frase principal
+Cita breve, natural y cre├¡ble.
+12 a 32 palabras
+Excelente servicio. El tour completo fue divino; nos sentimos c├│modos y seguros en todo momento.
+Nombre
+Nombre visible del viajero.
+1 a 8 palabras
+Patricia Vega
+
+Ubicaci├│n / descriptor
+Ciudad, pa├¡s o descriptor de viajero.
+1 a 8 palabras
+Yucat├ín
+
+9.3 Testimonio 3
+Campo visible
+Qu├⌐ debe escribir Marketing
+Gu├¡a de extensi├│n
+Texto a entregar
+Frase principal
+Cita breve, natural y cre├¡ble.
+12 a 32 palabras
+Servicio personalizado y de gran calidad. Gu├¡as atentos, excelente log├¡stica y experiencias incre├¡bles en Chepe y destinos.
+Nombre
+Nombre visible del viajero.
+1 a 8 palabras
+Javier y Tere Gonz├ílez
+
+Ubicaci├│n / descriptor
+Ciudad, pa├¡s o descriptor de viajero.
+1 a 8 palabras
+Guadalajara
+
+9.4 Testimonio 4
+Campo visible
+Qu├⌐ debe escribir Marketing
+Gu├¡a de extensi├│n
+Texto a entregar
+Frase principal
+Cita breve, natural y cre├¡ble.
+12 a 32 palabras
+Gracias por las atenciones; el viaje fue inolvidable. Paisajes incre├¡bles, actividades divertidas y mucho aprendizaje.
+Nombre
+Nombre visible del viajero.
+1 a 8 palabras
+Ing. Hern├ín Garc├¡a
+
+Ubicaci├│n / descriptor
+Ciudad, pa├¡s o descriptor de viajero.
+1 a 8 palabras
+Monterrey
+
+9.5 Testimonio 5
+Campo visible
+Qu├⌐ debe escribir Marketing
+Gu├¡a de extensi├│n
+Texto a entregar
+Frase principal
+Cita breve, natural y cre├¡ble.
+12 a 32 palabras
+Atenci├│n personalizada desde el inicio, gu├¡as muy amables y un viaje hermoso. Totalmente recomendable.
+Nombre
+Nombre visible del viajero.
+1 a 8 palabras
+F├⌐lix Romo
+
+Ubicaci├│n / descriptor
+Ciudad, pa├¡s o descriptor de viajero.
+1 a 8 palabras
+Ciudad de M├⌐xico
+
+10. Interlude / Mensaje de autoridad
+Secci├│n ├║til para humanizar la landing y reforzar confianza.
+Campo visible
+Qu├⌐ debe escribir Marketing
+Gu├¡a de extensi├│n
+Texto a entregar
+Fila visual 1
+Palabras cortas para marquesina o frase ambiental.
+2 a 5 palabras
+
+Fila visual 2
+Palabras cortas para marquesina o frase ambiental.
+2 a 5 palabras
+
+Fila visual 3
+Palabras cortas para marquesina o frase ambiental.
+2 a 5 palabras
+
+Cargo
+Rol de la persona que firma o respalda.
+1 a 5 palabras
+
+
+Nombre
+Nombre de la persona.
+1 a 5 palabras
+
+Quote
+Mensaje editorial de respaldo, c├ílido y premium.
+25 a 55 palabras
+
+Frase destacada del quote
+Fragmento exacto del quote a destacar.
+8 a 18 palabras
+
+
+11. FAQs / Preguntas frecuentes
+Crear entre 6 y 8 preguntas. Priorizar objeciones reales: temporada, duraci├│n, seguridad, tipo de viajero, precio, log├¡stica e inclusi├│n.
+Campo visible
+Qu├⌐ debe escribir Marketing
+Gu├¡a de extensi├│n
+Texto a entregar
+Badge
+Etiqueta corta.
+1 a 8 palabras
+Preguntas frecuentes 
+T├¡tulo FAQ
+T├¡tulo claro para la secci├│n.
+1 a 16 palabras
+Todo lo que necesitas saber
+
+Subt├¡tulo FAQ
+Explicar que aqu├¡ se resuelven dudas comunes.
+12 a 32 palabras
+Resolvemos las dudas m├ís comunes sobre nuestros viajes a Barrancas del Cobre. Si no encuentras lo que buscas, escr├¡benos directamente.
+Label de contacto
+Texto breve antes del email.
+1 a 8 palabras
+┬┐Otra pregunta?
+Email de contacto
+Correo visible de contacto.
+Email v├ílido
+reservaciones@viajespremium.com.mx
+
+11.1 FAQ 1
+Campo visible
+Qu├⌐ debe escribir Marketing
+Gu├¡a de extensi├│n
+Texto a entregar
+Pregunta
+Pregunta en lenguaje natural del cliente.
+1 a 19 palabras
+┬┐Cu├íl es la mejor temporada para viajar a Barrancas del Cobre? 
+Respuesta
+Respuesta clara, tranquilizadora y comercial sin sobreprometer.
+24 a 44 palabras
+Barrancas del Cobre puede disfrutarse pr├ícticamente todo el a├▒o. Primavera y oto├▒o ofrecen temperaturas agradables, mientras que invierno permite vivir paisajes espectaculares en la Sierra Tarahumara. 
+
+11.2 FAQ 2
+Campo visible
+Qu├⌐ debe escribir Marketing
+Gu├¡a de extensi├│n
+Texto a entregar
+Pregunta
+Pregunta en lenguaje natural del cliente.
+1 a 19 palabras
+┬┐Qu├⌐ es el Chepe Express? 
+Respuesta
+Respuesta clara, tranquilizadora y comercial sin sobreprometer.
+24 a 44 palabras
+El Chepe Express es uno de los recorridos ferroviarios m├ís espectaculares del mundo. Cruza la Sierra Tarahumara atravesando ca├▒ones, t├║neles y monta├▒as. 
+
+11.3 FAQ 3
+Campo visible
+Qu├⌐ debe escribir Marketing
+Gu├¡a de extensi├│n
+Texto a entregar
+Pregunta
+Pregunta en lenguaje natural del cliente.
+1 a 19 palabras
+┬┐Cu├íntos d├¡as se recomiendan para visitar Barrancas del Cobre? 
+Respuesta
+Respuesta clara, tranquilizadora y comercial sin sobreprometer.
+24 a 44 palabras
+Entre 5 y 8 d├¡as permiten disfrutar con mayor profundidad del destino, combinando naturaleza, gastronom├¡a y recorridos esc├⌐nicos.
+
+
+11.4 FAQ 4
+Campo visible
+Qu├⌐ debe escribir Marketing
+Gu├¡a de extensi├│n
+Texto a entregar
+Pregunta
+Pregunta en lenguaje natural del cliente.
+1 a 19 palabras
+┬┐Barrancas del Cobre es recomendable para viajar en pareja o familia? 
+Respuesta
+Respuesta clara, tranquilizadora y comercial sin sobreprometer.
+24 a 44 palabras
+S├¡. Es un destino ideal tanto para parejas como para familias que buscan experiencias diferentes dentro de M├⌐xico. 
+
+11.5 FAQ 5
+Campo visible
+Qu├⌐ debe escribir Marketing
+Gu├¡a de extensi├│n
+Texto a entregar
+Pregunta
+Pregunta en lenguaje natural del cliente.
+1 a 19 palabras
+┬┐Qu├⌐ actividades se pueden hacer? 
+Respuesta
+Respuesta clara, tranquilizadora y comercial sin sobreprometer.
+24 a 44 palabras
+Telef├⌐rico, miradores, caminatas, recorridos culturales, experiencias gastron├│micas, viajes en el Chepe Express y actividades de aventura. 
+
+11.6 FAQ 6
+Campo visible
+Qu├⌐ debe escribir Marketing
+Gu├¡a de extensi├│n
+Texto a entregar
+Pregunta
+Pregunta en lenguaje natural del cliente.
+1 a 19 palabras
+┬┐Qu├⌐ hace diferente una experiencia premium? 
+Respuesta
+Respuesta clara, tranquilizadora y comercial sin sobreprometer.
+24 a 44 palabras
+La diferencia est├í en la planeaci├│n, selecci├│n de hoteles, ritmo del recorrido, atenci├│n personalizada y calidad de las experiencias integradas. 
+
+11.7 FAQ 7 (opcional)
+Campo visible
+Qu├⌐ debe escribir Marketing
+Gu├¡a de extensi├│n
+Texto a entregar
+Pregunta
+Pregunta en lenguaje natural del cliente.
+1 a 19 palabras
+
+Respuesta
+Respuesta clara, tranquilizadora y comercial sin sobreprometer.
+24 a 44 palabras
+
+
+11.8 FAQ 8 (opcional)
+Campo visible
+Qu├⌐ debe escribir Marketing
+Gu├¡a de extensi├│n
+Texto a entregar
+Pregunta
+Pregunta en lenguaje natural del cliente.
+1 a 19 palabras
+
+Respuesta
+Respuesta clara, tranquilizadora y comercial sin sobreprometer.
+24 a 44 palabras
+
+
+12. Formulario final / Cierre
+El formulario final debe cerrar la intenci├│n del usuario sin repetir exactamente el primer formulario.
+Campo visible
+Qu├⌐ debe escribir Marketing
+Gu├¡a de extensi├│n
+Texto a entregar
+T├¡tulo
+Cierre corto de conversi├│n.
+1 a 8 palabras
+├Ültima oportunidad
+Palabra destacada
+Palabra exacta del t├¡tulo a resaltar.
+1 a 3 palabras
+oportunidad
+Subt├¡tulo
+├Ültimo argumento para solicitar propuesta.
+9 a 29 palabras
+Completa tus datos y da el primer paso hacia tu viaje a Barrancas del Cobre, dise├▒ado a tu medida por Barrancas PREMIUM ┬⌐ 
+
+13. Alianzas / Logos
+Las im├ígenes y archivos de logos no los llena Marketing. Solo validar nombres visibles o alt text si se solicita.
+Campo visible
+Qu├⌐ debe escribir Marketing
+Gu├¡a de extensi├│n
+Texto a entregar
+Badge
+Etiqueta de secci├│n.
+1 a 8 palabras
+
+Nombre alianza / logo 1
+Solo si Marketing debe proponer el nombre visible.
+1 a 8 palabras
+
+Nombre alianza / logo 2
+Solo si Marketing debe proponer el nombre visible.
+1 a 8 palabras
+
+
+

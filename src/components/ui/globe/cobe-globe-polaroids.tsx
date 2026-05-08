@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useMemo, useRef, type CSSProperties } from "react";
 import * as THREE from "three";
@@ -149,7 +149,7 @@ export function GlobePolaroids({
     camera.position.set(0, 0, 3.2);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 3));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 4));
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     wrapper.appendChild(renderer.domElement);
 
@@ -170,16 +170,16 @@ export function GlobePolaroids({
 
     const textureLoader = new THREE.TextureLoader();
     const mapTexture = textureLoader.load(
-      "https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg",
+      "/images/globe/earth-texture-optimized.png",
     );
     const bumpTexture = textureLoader.load(
       "https://unpkg.com/three-globe/example/img/earth-topology.png",
     );
 
     mapTexture.colorSpace = THREE.SRGBColorSpace;
-    mapTexture.minFilter = THREE.LinearMipmapLinearFilter;
+    mapTexture.minFilter = THREE.LinearFilter;
     mapTexture.magFilter = THREE.LinearFilter;
-    mapTexture.generateMipmaps = true;
+    mapTexture.generateMipmaps = false;
     mapTexture.anisotropy = renderer.capabilities.getMaxAnisotropy();
 
     bumpTexture.colorSpace = THREE.NoColorSpace;
@@ -263,52 +263,9 @@ export function GlobePolaroids({
       isDraggingRef.current = false;
     };
 
-    let lastScrollY = window.scrollY;
-    let lenisCleanup: (() => void) | null = null;
-
-    const pushScrollImpulse = (deltaY: number) => {
-      if (!deltaY) return;
-      scrollVelocityRef.current += deltaY * Math.max(0.004, rotationSpeed * 0.08);
-      scrollVelocityRef.current = Math.max(
-        -2.2,
-        Math.min(2.2, scrollVelocityRef.current),
-      );
-    };
-
-    const onScroll = () => {
-      const currentY = window.scrollY;
-      const deltaY = currentY - lastScrollY;
-      lastScrollY = currentY;
-      pushScrollImpulse(deltaY);
-    };
-
-    const onWheel = (event: WheelEvent) => {
-      pushScrollImpulse(event.deltaY);
-    };
-
     wrapper.addEventListener("pointerdown", onPointerDown);
     window.addEventListener("pointermove", onPointerMove);
     window.addEventListener("pointerup", onPointerUp);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("wheel", onWheel, { passive: true });
-
-    const lenis = (
-      window as unknown as {
-        __lenis?: {
-          on?: (event: string, cb: (payload: { velocity?: number }) => void) => void;
-          off?: (event: string, cb: (payload: { velocity?: number }) => void) => void;
-        };
-      }
-    ).__lenis;
-
-    if (lenis?.on) {
-      const onLenisScroll = (payload: { velocity?: number }) => {
-        const velocity = payload?.velocity ?? 0;
-        pushScrollImpulse(velocity * 24);
-      };
-      lenis.on("scroll", onLenisScroll);
-      lenisCleanup = () => lenis.off?.("scroll", onLenisScroll);
-    }
 
     const resize = () => {
       const size = wrapper.clientWidth;
@@ -325,6 +282,8 @@ export function GlobePolaroids({
     const animate = () => {
       const dt = clock.getDelta();
       if (!isDraggingRef.current) {
+        // Rotacion autonoma muy sutil, constante.
+        globeGroup.rotation.y += rotationSpeed * dt * 0.12;
         globeGroup.rotation.y +=
           scrollVelocityRef.current * dt + dragVelocityRef.current.x * dt * 8;
         globeGroup.rotation.x += dragVelocityRef.current.y * dt * 6;
@@ -377,9 +336,6 @@ export function GlobePolaroids({
       wrapper.removeEventListener("pointerdown", onPointerDown);
       window.removeEventListener("pointermove", onPointerMove);
       window.removeEventListener("pointerup", onPointerUp);
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("wheel", onWheel);
-      lenisCleanup?.();
       renderer.dispose();
       globeMesh.geometry.dispose();
       globeMat.dispose();
@@ -431,3 +387,4 @@ export function GlobePolaroids({
     </div>
   );
 }
+

@@ -5,6 +5,7 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import styles from "./nosotros.module.css";
+import HomeFooter from "@/home/homeFooter";
 
 type TimelineEntry = {
   year: string;
@@ -109,11 +110,11 @@ export default function NosotrosTimeline() {
         return;
       }
 
-      const rows = rowRefs.current.filter(
-        (row): row is HTMLLIElement => Boolean(row),
+      const rows = rowRefs.current.filter((row): row is HTMLLIElement =>
+        Boolean(row),
       );
-      const cards = cardRefs.current.filter(
-        (card): card is HTMLElement => Boolean(card),
+      const cards = cardRefs.current.filter((card): card is HTMLElement =>
+        Boolean(card),
       );
       const years = yearRefs.current.filter(
         (year): year is HTMLHeadingElement => Boolean(year),
@@ -152,9 +153,7 @@ export default function NosotrosTimeline() {
         const height = Math.max(920, Math.round(timeline.scrollHeight));
         const isMobile = window.matchMedia("(max-width: 959px)").matches;
         const centerX = isMobile ? 38 : width / 2;
-        const swing = isMobile
-          ? 16
-          : clamp(width * 0.115, 62, 112);
+        const swing = isMobile ? 16 : clamp(width * 0.115, 62, 112);
 
         const rowCenters = rows.map((row) => {
           const rowRect = row.getBoundingClientRect();
@@ -330,6 +329,7 @@ export default function NosotrosTimeline() {
           </ol>
         </div>
       </section>
+      <HomeFooter />
     </main>
   );
 }

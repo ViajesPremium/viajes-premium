@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import React, { useCallback, useLayoutEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import Image from "next/image";
@@ -41,6 +41,7 @@ export interface StaggeredMenuProps {
 const DEFAULT_MENU_ITEMS: StaggeredMenuItem[] = [
   { label: "Inicio", ariaLabel: "Ir a inicio", link: "/" },
   { label: "Nosotros", ariaLabel: "Ir a nosotros", link: "/nosotros" },
+  { label: "Blog", ariaLabel: "Ir a blog", link: "/blog" },
   {
     label: "Japón Premium",
     ariaLabel: "Ir a Japón Premium",
@@ -690,3 +691,5 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
 };
 
 export default StaggeredMenu;
+
+

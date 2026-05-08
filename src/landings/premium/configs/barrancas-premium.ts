@@ -1,4 +1,4 @@
-﻿import type { PremiumLandingConfig } from "@/landings/premium/types";
+import type { PremiumLandingConfig } from "@/landings/premium/types";
 
 const BARRANCAS_MENU_ITEMS = [
   { label: "Inicio", ariaLabel: "Ir al inicio", link: "#inicio" },
@@ -13,39 +13,39 @@ const BARRANCAS_MENU_ITEMS = [
 const BARRANCAS_FAQS = [
   {
     id: "1",
-    question: "Cual es la mejor temporada para viajar a Barrancas del Cobre?",
+    question: "¿Cuál es la mejor temporada para viajar a Barrancas del Cobre?",
     answer:
-      "Barrancas del Cobre puede disfrutarse practicamente todo el ano. Primavera y otono ofrecen temperaturas agradables, mientras que invierno permite vivir paisajes espectaculares en la Sierra Tarahumara.",
+      "Barrancas del Cobre puede disfrutarse prácticamente todo el año. Primavera y otoño ofrecen temperaturas agradables, mientras que invierno permite vivir paisajes espectaculares en la Sierra Tarahumara.",
   },
   {
     id: "2",
-    question: "Que es el Chepe Express?",
+    question: "¿Qué es el Chepe Express?",
     answer:
-      "El Chepe Express es uno de los recorridos ferroviarios mas espectaculares del mundo. Cruza la Sierra Tarahumara atravesando canones, tuneles y montanas.",
+      "El Chepe Express es uno de los recorridos ferroviarios más espectaculares del mundo. Cruza la Sierra Tarahumara atravesando cañones, túneles y montañas.",
   },
   {
     id: "3",
-    question: "Cuantos dias se recomiendan para visitar Barrancas del Cobre?",
+    question: "¿Cuántos días se recomiendan para visitar Barrancas del Cobre?",
     answer:
-      "Entre 5 y 8 dias permiten disfrutar con mayor profundidad del destino, combinando naturaleza, gastronomia y recorridos escenicos.",
+      "Entre 5 y 8 días permiten disfrutar con mayor profundidad del destino, combinando naturaleza, gastronomía y recorridos escénicos.",
   },
   {
     id: "4",
-    question: "Barrancas del Cobre es recomendable para viajar en pareja o familia?",
+    question: "¿Barrancas del Cobre es recomendable para viajar en pareja o familia?",
     answer:
-      "Si. Es un destino ideal tanto para parejas como para familias que buscan experiencias diferentes dentro de Mexico.",
+      "Sí. Es un destino ideal tanto para parejas como para familias que buscan experiencias diferentes dentro de México.",
   },
   {
     id: "5",
-    question: "Que actividades se pueden hacer?",
+    question: "¿Qué actividades se pueden hacer?",
     answer:
-      "Teleferico, miradores, caminatas, recorridos culturales, experiencias gastronomicas, viajes en el Chepe Express y actividades de aventura.",
+      "Teleférico, miradores, caminatas, recorridos culturales, experiencias gastronómicas, viajes en el Chepe Express y actividades de aventura.",
   },
   {
     id: "6",
-    question: "Que hace diferente una experiencia premium?",
+    question: "¿Qué hace diferente una experiencia premium?",
     answer:
-      "La diferencia esta en la planeacion, seleccion de hoteles, ritmo del recorrido, atencion personalizada y calidad de las experiencias integradas.",
+      "La diferencia está en la planeación, selección de hoteles, ritmo del recorrido, atención personalizada y calidad de las experiencias integradas.",
   },
 ] as const;
 
@@ -53,9 +53,9 @@ export const barrancasPremiumLandingConfig: PremiumLandingConfig = {
   id: "barrancas-premium",
   routePath: "/barrancas-premium",
   metadata: {
-    title: "Viaje a Barrancas del Cobre | Barrancas del Cobre en Clase PREMIUM",
+    title: "Viaje a Barrancas del Cobre | Clase PREMIUM",
     description:
-      "Disenamos viajes a Barrancas del Cobre con experiencias de naturaleza, gastronomia y aventura en Clase PREMIUM.",
+      "Descubre Barrancas del Cobre con recorridos en Chepe Express, naturaleza y experiencias diseñadas en Clase PREMIUM.",
     keywords: [
       "Barrancas del Cobre",
       "Chepe Express",
@@ -88,25 +88,25 @@ export const barrancasPremiumLandingConfig: PremiumLandingConfig = {
     hero: {
       seoHeading: "Viaje a Barrancas del Cobre",
       title: {
-        line1Lead: "Viaje a",
+        line1Lead: "Viaja a",
         line1Focus: "Barrancas",
-        line2Lead: "del",
-        line2Focus: "Cobre",
+        line2Lead: "en Clase",
+        line2Focus: "Premium",
       },
       mobileTitle: {
-        line1Lead: "Viaje a",
+        line1Lead: "Viaja a",
         line1Focus: "Barrancas",
-        line2Lead: "del",
-        line2Focus: "Cobre",
+        line2Lead: "en Clase",
+        line2Focus: "Premium",
       },
       descriptionLines: [
         {
-          highlight: "Descubre Barrancas del Cobre",
-          text: "con experiencias cuidadosamente disenadas, recorridos escenicos en el Chepe Express y una forma premium de conocer el norte de Mexico.",
+          highlight: "Eleva tu Vida",
+          text: "conociendo Barrancas del cobre con profundidad, comodidad y acompañamiento real desde el primer contacto hasta su regreso.",
         },
         {
-          highlight: "Eleva tu vida",
-          text: "recorriendo uno de los paisajes mas impresionantes de Mexico con naturaleza, gastronomia y aventura en Clase PREMIUM.",
+          highlight: "Atención personalizada",
+          text: "planeación detallada, Soporte antes, durante y después del viaje.",
         },
       ],
       ctaPrimary: {
@@ -121,26 +121,26 @@ export const barrancasPremiumLandingConfig: PremiumLandingConfig = {
     },
     snapshot: {
       srHeading: "Snapshot de Barrancas Premium",
-      badgeText: "Snapshot",
-      titleText: "Mas de 21 anos disenando experiencias PREMIUM.",
-      titleHighlightWords: ["21", "anos", "PREMIUM"],
+      badgeText: "Nosotros",
+      titleText: "Más de 21 años diseñando experiencias PREMIUM",
+      titleHighlightWords: ["21 años", "PREMIUM"],
       cards: [
         {
           image: "/images/peru/1-machu-pichu.webp",
           text: "El de Mayor Ranking",
-          experiences: "5 DIAS · CHEPE EXPRESS · MIRADORES · NATURALEZA · BARRANCAS",
+          experiences: "5 días · Chepe Express · Miradores · Naturaleza",
           wide: false,
         },
         {
           image: "/images/peru/1-gastronomia-autentica.webp",
-          text: "Las Leyendas del Fuerte",
-          experiences: "6 DIAS · EL FUERTE · LEYENDAS · HISTORIA · BARRANCAS",
+          text: "Leyendas del Fuerte",
+          experiences: "7 días · Historia · Paisajes · Cultura norteña",
           wide: false,
         },
         {
           image: "/images/japon/1-alojamiento-de-lujo.webp",
           text: "Sabores del Norte",
-          experiences: "8 DIAS · GASTRONOMIA · CULTURA MENONITA · CHEPE EXPRESS · BARRANCAS",
+          experiences: "8 días · Gastronomía · Cultura menonita · Chepe",
           wide: false,
         },
       ],
@@ -148,11 +148,11 @@ export const barrancasPremiumLandingConfig: PremiumLandingConfig = {
       cardButtonTarget: "#itinerarios",
     },
     firstForm: {
-      srHeading: "Cuentanos como imaginas tu viaje a Barrancas del Cobre",
+      srHeading: "Cuéntanos cómo imaginas tu viaje a Barrancas del Cobre",
       sectionTitle: "Propuesta personalizada",
       sectionTitleHighlightWord: "personalizada",
       sectionSubtitle:
-        "Cuentanos como imaginas tu viaje a Barrancas del Cobre y descubriremos cual de nuestros 3 itinerarios es perfecto para ti.",
+        "Cuéntanos cómo imaginas tu viaje a Barrancas del Cobre y descubriremos cuál de nuestros 3 itinerarios es perfecto para ti.",
       backgroundImage: "/images/japon/geishaForm.webp",
       mobileImage: {
         src: "/images/japon/geishaFormSola.webp",
@@ -170,96 +170,90 @@ export const barrancasPremiumLandingConfig: PremiumLandingConfig = {
     },
     highlights: {
       srHeading: "Highlights de Barrancas Premium",
-      badgeText: "Por que Barrancas Premium?",
-      kickerTop: "Trabajamos con experiencias",
+      badgeText: "¿Por qué Barrancas PREMIUM?",
+      kickerTop: "Trabajamos con marcas",
       kickerBottom: "cuidadosamente seleccionadas.",
       line1: {
-        lead: "TE LLEVAMOS",
+        lead: "Viaja por",
         bracket: {
-          label: "CHEPE",
+          label: "CHIHUAHUA",
           imageSrc: "/images/japon/1-kyoto-nara.webp",
           imageAlt: "Recorrido escenico en Chepe Express",
           textTone: "ot",
         },
-        tail: "A",
+        tail: "con Calma",
       },
       line2: {
-        text: "VIVIR BARRANCAS",
+        text: "Mientras",
         highlightWord: "BARRANCAS",
         bracket: {
-          label: "SIERRA",
+          label: "BARRANCAS",
           imageSrc: "/images/japon/1-kyoto-nara.webp",
           imageAlt: "Paisaje de la Sierra Tarahumara",
           textTone: "epochal",
         },
-        tail: "CON",
+        tail: "revelan su",
       },
       line3: {
-        lead: "EL RESPALDO",
+        lead: "Esencia y el",
         bracket: {
-          label: "MEXICO",
+          label: "CHEPE",
           imageSrc: "/images/japon/1-kyoto-nara.webp",
           imageAlt: "Norte de Mexico",
           textTone: "ot",
         },
-        tail: "Y LA",
+        tail: "redefine tu",
       },
       line4: {
-        text: "ATENCION QUE MERECES",
-        highlightWord: "MERECES",
+        text: "Forma de viajar",
+        highlightWord: "viajar",
       },
       focusRailItems: [
         {
-          id: "hospedaje-seleccionado",
-          title: "Hospedaje seleccionado",
-          description:
-            "Hoteles cuidadosamente elegidos por ubicacion, comodidad y estilo para descansar bien despues de cada recorrido.",
+          id: "respaldo-24-7",
+          title: "Respaldo 24/7",
+          description: "Soporte continuo para viajar con tranquilidad de principio a fin.",
+          meta: "Respaldo",
+          imageSrc: "/images/japon/2-recorridos-diseñados-con-mas-criterio.webp",
+          href: "#form",
+        },
+        {
+          id: "estancias",
+          title: "Estancias a la altura del viaje",
+          description: "Seleccionadas por su carácter, ubicación y nivel de servicio.",
           meta: "Estancias",
-          imageSrc: "/images/japon/2-recorridos-diseÃ±ados-con-mas-criterio.webp",
+          imageSrc: "/images/japon/2-acompañamiento-personalizado.webp",
           href: "#form",
         },
         {
-          id: "chepe-express",
-          title: "Chepe Express",
-          description:
-            "Recorridos en el tren mas emblematico del norte de Mexico, entre montanas, tuneles, puentes y paisajes unicos.",
-          meta: "Chepe",
-          imageSrc: "/images/japon/2-acompaÃ±amiento-personalizado.webp",
-          href: "#form",
-        },
-        {
-          id: "traslados-organizados",
-          title: "Traslados organizados",
-          description:
-            "Coordinamos conexiones, tiempos y movimientos para que cada tramo del viaje fluya con claridad.",
-          meta: "Logistica",
+          id: "expertos",
+          title: "Expertos que hablan del destino",
+          description: "Guías expertos que conocen el destino con profundidad.",
+          meta: "Expertos",
           imageSrc: "/images/japon/2-respaldo-24-7.webp",
           href: "#form",
         },
         {
-          id: "experiencias-escenicas",
-          title: "Experiencias escenicas",
-          description:
-            "Miradores, teleferico, recorridos naturales y visitas seleccionadas para vivir la grandeza de Barrancas del Cobre.",
-          meta: "Naturaleza",
+          id: "tranquilidad",
+          title: "Tranquilidad de principio a fin",
+          description: "Cada detalle se cuida para que usted viaje con más confianza y respaldo.",
+          meta: "Tranquilidad",
           imageSrc: "/images/japon/2-estancia-a-la-altura-del-viaje.webp",
           href: "#form",
         },
         {
-          id: "cultura-tradicion",
-          title: "Cultura y tradicion",
-          description:
-            "Acercamientos a la Sierra Tarahumara, su historia, sus comunidades y su caracter cultural.",
-          meta: "Cultura",
+          id: "criterio",
+          title: "Recorridos diseñados con más criterio",
+          description: "Cada itinerario se estructura para dar más sentido, ritmo y calidad al viaje.",
+          meta: "Diseño",
           imageSrc: "/images/japon/2-expertos-que-hablan-su-idioma.webp",
           href: "#form",
         },
         {
-          id: "gastronomia-norte",
-          title: "Gastronomia del norte",
-          description:
-            "Sabores regionales, cocina local, productos menonitas y experiencias culinarias conectadas con la identidad del norte.",
-          meta: "Gastronomia",
+          id: "acompanamiento",
+          title: "Acompañamiento personalizado",
+          description: "Atención cercana antes, durante y después de su experiencia.",
+          meta: "Servicio",
           imageSrc: "/images/japon/2-tranquilidad-de-principio-a-fin.webp",
           href: "#form",
         },
@@ -279,36 +273,36 @@ export const barrancasPremiumLandingConfig: PremiumLandingConfig = {
       items: [
         {
           id: 1,
-          day: "5 DIAS · CHEPE EXPRESS · MIRADORES · NATURALEZA · BARRANCAS",
+          day: "5 DÍAS · CHEPE EXPRESS · MIRADORES · NATURALEZA · BARRANCAS",
           title: "El de Mayor Ranking",
           description:
-            "Un recorrido ideal para vivir Barrancas del Cobre por primera vez: paisajes monumentales, miradores inolvidables, naturaleza imponente y la experiencia del Chepe Express en Clase PREMIUM.",
+            "Un recorrido ideal para vivir Barrancas del Cobre por primera vez: miradores, naturaleza imponente y el Chepe Express en Clase PREMIUM.",
           ideal:
-            "Ideal para parejas, familias y viajeros que buscan descubrir lo mas iconico de Barrancas del Cobre en una experiencia comoda, bien disenada y memorable.",
+            "Ideal para parejas, familias y viajeros que buscan descubrir lo más icónico de Barrancas del Cobre en pocos días.",
           image1: "/images/japon/3-alma-de-japon-izq.webp",
           image2: "/images/japon/3-alma-de-japon-der.webp",
           price: "Desde $____ MXN base doble",
         },
         {
           id: 2,
-          day: "6 DIAS · EL FUERTE · LEYENDAS · HISTORIA · BARRANCAS",
-          title: "Las Leyendas del Fuerte",
+          day: "7 DÍAS · EL FUERTE · LEYENDAS · HISTORIA · BARRANCAS",
+          title: "Leyendas del Fuerte",
           description:
-            "Un viaje con alma de relato por el norte de Mexico: Barrancas del Cobre, El Fuerte, paisajes escenicos y experiencias culturales que conectan historia, naturaleza y el caracter de la Sierra Tarahumara.",
+            "Un relato por el norte de México: Barrancas del Cobre, El Fuerte, y experiencias culturales que conectan la historia, la naturaleza y la Sierra Tarahumara.",
           ideal:
-            "Ideal para viajeros que buscan una experiencia con mas historia, identidad cultural y escenarios memorables, sin renunciar a la comodidad de una ruta en Clase PREMIUM.",
+            "Ideal para viajeros que buscan una experiencia con historia, cultura y escenarios memorables en Clase PREMIUM.",
           image1: "/images/japon/4-japon-pop-izq.webp",
           image2: "/images/japon/4-japon-pop-der.webp",
           price: "Desde $____ MXN base doble",
         },
         {
           id: 3,
-          day: "8 DIAS · GASTRONOMIA · CULTURA MENONITA · CHEPE EXPRESS · BARRANCAS",
+          day: "8 DÍAS · GASTRONOMÍA · MENONITAS · CHEPE EXPRESS · BARRANCAS",
           title: "Sabores del Norte",
           description:
-            "Una experiencia mas profunda por Barrancas del Cobre, donde el paisaje tambien se vive a traves de la cocina regional, los sabores del norte, la cultura menonita y los recorridos escenicos del Chepe Express.",
+            "Una experiencia más profunda por Barrancas del Cobre, donde el paisaje también se vive a través de la cocina regional y los sabores del norte.",
           ideal:
-            "Ideal para viajeros que disfrutan comer bien, conocer tradiciones locales y vivir un destino desde sus paisajes, su cultura y sus sabores mas autenticos.",
+            "Ideal para viajeros que disfrutan conocer tradiciones locales y vivir un destino desde su cultura y sus sabores.",
           image1: "/images/japon/5-el-camino-del-shogun-izq.webp",
           image2: "/images/japon/5-el-camino-del-shogun-der.webp",
           price: "Desde $____ MXN base doble",
@@ -322,9 +316,9 @@ export const barrancasPremiumLandingConfig: PremiumLandingConfig = {
     },
     includes: {
       srHeading: "Lo esencial de la experiencia premium",
-      badgeText: "LO ESCENCIAL",
-      titleText: "Lo que da forma a tu experiencia en Barrancas del Cobre",
-      titleHighlightWords: ["experiencia", "forma", "Barrancas"],
+      badgeText: "Lo esencial",
+      titleText: "Lo que da forma a tu experiencia premium",
+      titleHighlightWords: ["Da forma", "premium"],
       cta: {
         label: "Solicita tu propuesta",
         target: "#form",
@@ -336,9 +330,9 @@ export const barrancasPremiumLandingConfig: PremiumLandingConfig = {
         {
           id: "stays",
           label: "I",
-          title: "Alojamientos seleccionados con criterio",
+          title: "Alojamiento seleccionado con criterio",
           description:
-            "Hoteles y estancias elegidas por ubicacion, comodidad y coherencia con el recorrido, para descansar bien despues de cada experiencia.",
+            "Hoteles y estancias elegidas por ubicación y comodidad, para descansar bien después de cada experiencia en la Sierra Tarahumara.",
           image: "/images/japon/6-estancias-con-caracter.webp",
         },
         {
@@ -346,7 +340,7 @@ export const barrancasPremiumLandingConfig: PremiumLandingConfig = {
           label: "II",
           title: "Traslados y conexiones bien resueltos",
           description:
-            "Organizamos traslados, tiempos de conexion y desplazamientos clave para que el viaje fluya con claridad.",
+            "Organizamos traslados, tiempos de conexión y desplazamientos clave para que el viaje fluya con claridad entre Chihuahua, El Fuerte, Creel, Divisadero y Barrancas del Cobre.",
           image: "/images/japon/6-traslados-mejor-coordinados.webp",
         },
         {
@@ -354,24 +348,24 @@ export const barrancasPremiumLandingConfig: PremiumLandingConfig = {
           label: "III",
           title: "Experiencias privadas o seleccionadas",
           description:
-            "Actividades elegidas con intencion: miradores, teleferico, recorridos escenicos, cultura raramuri y naturaleza.",
+            "Actividades elegidas con intención: miradores, teleférico, recorridos escénicos, cultura rarámuri, naturaleza y momentos diseñados para conectar mejor con el destino.",
           image: "/images/japon/6-experiencias-culturales-curadas.webp",
         },
         {
           id: "gastronomy",
           label: "IV",
-          title: "Gastronomia del norte",
+          title: "Gastronomía del norte",
           description:
-            "Experiencias culinarias y sabores regionales que forman parte central del viaje: cocina local, productos menonitas y propuestas seleccionadas.",
+            "Experiencias culinarias y sabores regionales que forman parte central del viaje: cocina local, productos menonitas y propuestas gastronómicas seleccionadas.",
           image: "/images/japon/6-escenas-gastronomicas-seleccionadas.webp",
         },
         {
           id: "support",
           label: "V",
-          title: "Acompanamiento en cada etapa",
+          title: "Acompañamiento en cada etapa",
           description:
-            "Desde la planeacion inicial hasta tu regreso, cuentas con seguimiento real, atencion personalizada y soporte para viajar con tranquilidad.",
-          image: "/images/japon/6-acompaÃ±amiento-en-cada-etapa.webp",
+            "Desde la planeación inicial hasta tu regreso, cuentas con seguimiento real, atención personalizada y soporte para vivir Barrancas del Cobre con tranquilidad.",
+          image: "/images/japon/6-acompañamiento-en-cada-etapa.webp",
         },
       ],
     },
@@ -382,41 +376,41 @@ export const barrancasPremiumLandingConfig: PremiumLandingConfig = {
         {
           id: 1,
           quote:
-            "El paquete estuvo super padre. Queremos reconocer el trabajo de todos los guias; en verdad, todos 10 de 10.",
-          name: "Anabel Gonzalez y Juan Hernandez",
-          location: "Viajeros Barrancas PREMIUM",
+            "El paquete estuvo súper padre. Queremos reconocer el trabajo de todos los guías; en verdad, todos 10 de 10.",
+          name: "Anabel González y Juan Hernández",
+          location: "Ciudad de México",
           avatar: "/images/stock/avatar-1.svg",
         },
         {
           id: 2,
           quote:
-            "Excelente servicio. El tour completo fue divino; nos sentimos comodos y seguros en todo momento.",
+            "Excelente servicio. El tour completo fue divino; nos sentimos cómodos y seguros en todo momento.",
           name: "Patricia Vega",
-          location: "Viajera Barrancas PREMIUM",
+          location: "Yucatán",
           avatar: "/images/stock/avatar-2.svg",
         },
         {
           id: 3,
           quote:
-            "Servicio personalizado y de gran calidad. Guias atentos, excelente logistica y experiencias increibles en Chepe y destinos.",
-          name: "Javier y Tere Gonzalez",
-          location: "Viajeros Barrancas PREMIUM",
+            "Servicio personalizado y de gran calidad. Guías atentos, excelente logística y experiencias increíbles en Chepe y destinos.",
+          name: "Javier y Tere González",
+          location: "Guadalajara",
           avatar: "/images/stock/avatar-3.svg",
         },
         {
           id: 4,
           quote:
-            "Gracias por las atenciones; el viaje fue inolvidable. Paisajes increibles, actividades divertidas y mucho aprendizaje.",
-          name: "Ing. Hernan Garcia y Aurelia Patricia Govea",
-          location: "Viajeros Barrancas PREMIUM",
+            "Gracias por las atenciones; el viaje fue inolvidable. Paisajes increíbles, actividades divertidas y mucho aprendizaje.",
+          name: "Ing. Hernán García",
+          location: "Monterrey",
           avatar: "/images/stock/avatar-4.svg",
         },
         {
           id: 5,
           quote:
-            "Atencion personalizada desde el inicio, guias muy amables y un viaje hermoso. Totalmente recomendable.",
-          name: "Felix Romo",
-          location: "Viajero Barrancas PREMIUM",
+            "Atención personalizada desde el inicio, guías muy amables y un viaje hermoso. Totalmente recomendable.",
+          name: "Félix Romo",
+          location: "Ciudad de México",
           avatar: "/images/stock/avatar-5.svg",
         },
       ],
@@ -449,8 +443,8 @@ export const barrancasPremiumLandingConfig: PremiumLandingConfig = {
       badgeText: "Preguntas frecuentes",
       title: "Todo lo que necesitas saber",
       subtitle:
-        "Resolvemos las dudas mas comunes sobre nuestros viajes a Barrancas del Cobre. Si no encuentras lo que buscas, escribenos directamente.",
-      contactLabel: "Otra pregunta?",
+        "Resolvemos las dudas más comunes sobre nuestros viajes a Barrancas del Cobre. Si no encuentras lo que buscas, escríbenos directamente.",
+      contactLabel: "¿Otra pregunta?",
       contactEmail: "reservaciones@viajespremium.com.mx",
       items: [...BARRANCAS_FAQS],
     },
@@ -538,7 +532,7 @@ export const barrancasPremiumLandingConfig: PremiumLandingConfig = {
         { label: "YOUTUBE", href: "#" },
       ],
       copyrightText:
-        "© 2026 Viaje a Barrancas Premium. Todos los derechos reservados.",
+    "© 2026 Viaje a Barrancas Premium. Todos los derechos reservados.",
       backToTopLabel: "Volver al inicio",
       legalLinks: [
         { label: "PRIVACIDAD", href: "#" },
@@ -547,3 +541,4 @@ export const barrancasPremiumLandingConfig: PremiumLandingConfig = {
     },
   },
 };
+

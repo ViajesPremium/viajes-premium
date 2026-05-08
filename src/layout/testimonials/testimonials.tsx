@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import {
   useState,
@@ -176,8 +176,13 @@ const round = (value: number, precision = 3) => {
 const clamp = (value: number, min: number, max: number) =>
   Math.min(Math.max(value, min), max);
 
-export default function Testimonials() {
+type TestimonialsProps = {
+  disableSakura?: boolean;
+};
+
+export default function Testimonials({ disableSakura = false }: TestimonialsProps) {
   const {
+    id,
     sections: { testimonials },
   } = usePremiumLandingConfig();
 
@@ -300,7 +305,7 @@ export default function Testimonials() {
   }, []);
 
   const sakuraConfig = useMemo<SakuraSettings>(() => {
-    if (prefersReducedMotion) {
+    if (disableSakura || prefersReducedMotion || id !== "japon-premium") {
       return {
         petalCount: 0,
         duration: 0,
@@ -311,7 +316,7 @@ export default function Testimonials() {
       };
     }
     return isMobileViewport ? SAKURA_MOBILE_CONFIG : SAKURA_DESKTOP_CONFIG;
-  }, [isMobileViewport, prefersReducedMotion]);
+  }, [disableSakura, isMobileViewport, prefersReducedMotion, id]);
 
   const prev = () => {
     if (testimonialCount === 0) return;

@@ -68,7 +68,7 @@
     0.95rem
   ); /* Small viewport height for mobile stability */
   align-items: center;
-  width: fit-content;
+  width: 100%;
   margin-inline: auto;
 }
 
@@ -194,7 +194,7 @@
 }
 
 .epochal {
-  font-size: clamp(1.7rem, 2.5vw, 2.45rem);
+  font-size: clamp(1.7rem, 2.5vw, 1rem);
   font-weight: 500;
   letter-spacing: -0.03em;
   color: var(--white);
@@ -203,7 +203,7 @@
 }
 
 .ot {
-  font-size: clamp(3rem, 3.5vw, 3.2rem);
+  font-size: clamp(0.9rem, 2vw, 1.3rem);
   font-weight: 500;
   letter-spacing: -0.03em;
 }

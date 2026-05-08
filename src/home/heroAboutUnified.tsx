@@ -11,7 +11,9 @@ const GlobePolaroids = dynamic(
     ),
   {
     ssr: false,
-    loading: () => <div className={styles.bridgeGlobePlaceholder} aria-hidden="true" />,
+    loading: () => (
+      <div className={styles.bridgeGlobePlaceholder} aria-hidden="true" />
+    ),
   },
 );
 
@@ -79,17 +81,18 @@ export default function HeroAboutUnified() {
 
         <div className={styles.titleWrap}>
           <BlurredStagger
-            text="Viajes PREMIUM"
+            text="Viajes diseñados"
             className={styles.titleFirst}
-            highlights={[
-              { word: "Viajes", className: styles.viajesWord },
-              { word: "PREMIUM", useGradient: true },
-            ]}
           />
-          <p className={styles.subtitle}>
-            Eleva tu vida con el maximo confort y lujo que Viajes PREMIUM tiene
-            para ti en cualquiera de nuestros destinos altamente especializados.
-          </p>
+          <BlurredStagger
+            text="con intencion,"
+            className={styles.titleSecond}
+          />
+          <BlurredStagger
+            text="no improvisados."
+            className={styles.titleThird}
+          />
+
           <div className={styles.buttonRow}>
             <Button type="button" variant="secondary">
               Hablar con un asesor
@@ -103,9 +106,20 @@ export default function HeroAboutUnified() {
 
       <section className={styles.aboutPane} aria-labelledby="about-us-title">
         <div className={styles.aboutContent}>
-          <h2 id="about-us-title" className={styles.aboutTitle}>
-            Diseñamos viajes premium con detalle humano
-          </h2>
+          <div id="about-us-title" className={styles.aboutTitleWrap}>
+            <BlurredStagger
+              text="Más de 21 años"
+              className={styles.aboutTitleFirst}
+            />
+            <BlurredStagger
+              text="creando experiencias"
+              className={styles.aboutTitleSecond}
+            />
+            <BlurredStagger
+              text="premium."
+              className={styles.aboutTitleThird}
+            />
+          </div>
         </div>
       </section>
 

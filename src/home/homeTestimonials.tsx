@@ -7,7 +7,7 @@ import { japonPremiumLandingConfig } from "@/landings/premium/configs/japon-prem
 export default function HomeTestimonials() {
   return (
     <PremiumLandingProvider config={japonPremiumLandingConfig}>
-      <Testimonials />
+      <Testimonials disableSakura />
     </PremiumLandingProvider>
   );
 }

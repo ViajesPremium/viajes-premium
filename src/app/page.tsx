@@ -4,11 +4,10 @@ import "@/vision/vision.css";
 import styles from "./page.module.css";
 import HeroAboutUnified from "@/home/heroAboutUnified";
 import dynamic from "next/dynamic";
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
-import { destinationCardsData } from "@/home/destinations.data";
 
 const Destinations = dynamic(() => import("@/home/destinations"), {
   ssr: false,
@@ -26,31 +25,18 @@ const HomeFooter = dynamic(() => import("@/home/homeFooter"), {
   ssr: false,
   loading: () => <div className={styles.footerFallback} aria-hidden="true" />,
 });
+const HomeCtaForm = dynamic(() => import("@/home/homeCtaForm"), {
+  ssr: false,
+  loading: () => <div className={styles.sectionFallback} aria-hidden="true" />,
+});
+const HomeMarquee = dynamic(() => import("@/home/homeMarquee"), {
+  ssr: false,
+  loading: () => <div className={styles.sectionFallback} aria-hidden="true" />,
+});
 
 export default function Home() {
   const horizontalRef = useRef<HTMLElement | null>(null);
   const trackRef = useRef<HTMLDivElement | null>(null);
-  const dualSceneRef = useRef<HTMLElement | null>(null);
-  const dualTrackRef = useRef<HTMLDivElement | null>(null);
-  const [shouldLoadDestinations, setShouldLoadDestinations] = useState(false);
-
-  useEffect(() => {
-    if (shouldLoadDestinations) return;
-    const target = dualSceneRef.current;
-    if (!target) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (!entries[0]?.isIntersecting) return;
-        setShouldLoadDestinations(true);
-        observer.disconnect();
-      },
-      { root: null, rootMargin: "1200px 0px" },
-    );
-
-    observer.observe(target);
-    return () => observer.disconnect();
-  }, [shouldLoadDestinations]);
 
   useGSAP(
     () => {
@@ -89,71 +75,6 @@ export default function Home() {
     { scope: horizontalRef },
   );
 
-  useGSAP(
-    () => {
-      gsap.registerPlugin(ScrollTrigger);
-
-      const scene = dualSceneRef.current;
-      const track = dualTrackRef.current;
-      if (!scene || !track) return;
-
-      const stepCount = Math.max(1, destinationCardsData.length - 1);
-      const cardsScrollDistance = window.innerHeight * stepCount * 1.9;
-      const faqHorizontalDistance = window.innerWidth;
-      const totalDistance = cardsScrollDistance + faqHorizontalDistance;
-
-      gsap.set(track, { x: () => -window.innerWidth });
-
-      const timeline = gsap.timeline({
-        defaults: { ease: "none" },
-        scrollTrigger: {
-          trigger: scene,
-          start: "top top",
-          end: () => `+=${totalDistance * 1.08}`,
-          scrub: 1.2,
-          pin: true,
-          anticipatePin: 0.35,
-          fastScrollEnd: true,
-          invalidateOnRefresh: true,
-        },
-      });
-
-      timeline
-        .to(track, { x: () => -window.innerWidth, duration: cardsScrollDistance })
-        .to(track, { x: 0, duration: faqHorizontalDistance });
-
-      return () => {
-        timeline.scrollTrigger?.kill();
-        timeline.kill();
-      };
-    },
-    { scope: dualSceneRef },
-  );
-
-  useGSAP(
-    () => {
-      gsap.registerPlugin(ScrollTrigger);
-
-      const scene = dualSceneRef.current;
-      if (!scene) return;
-
-      const onRefresh = () => {
-        const lenis = (
-          window as unknown as {
-            __lenis?: { resize: () => void };
-          }
-        ).__lenis;
-        lenis?.resize();
-      };
-
-      ScrollTrigger.addEventListener("refresh", onRefresh);
-      return () => {
-        ScrollTrigger.removeEventListener("refresh", onRefresh);
-      };
-    },
-    { scope: dualSceneRef },
-  );
-
   // return <VisionLandingPage />;
   return (
     <main className={styles.page}>
@@ -163,26 +84,24 @@ export default function Home() {
         </div>
       </section>
 
-      <section ref={dualSceneRef} className={styles.dualScene}>
-        <div ref={dualTrackRef} className={styles.dualTrack}>
-          <div className={styles.dualPanelFaq}>
-            <HomeFaqs />
-          </div>
-          <div className={styles.dualPanelDest}>
-            {shouldLoadDestinations ? (
-              <Destinations embedded />
-            ) : (
-              <div
-                className={styles.destinationsFallback}
-                aria-hidden="true"
-              />
-            )}
-          </div>
-        </div>
+      <section className={styles.destinationsScene}>
+        <Destinations embedded />
       </section>
 
       <section className={styles.testimonialsScene}>
         <HomeTestimonials />
+      </section>
+
+      <section className={styles.faqScene}>
+        <HomeFaqs />
+      </section>
+
+      <section className={styles.ctaFormScene}>
+        <HomeCtaForm />
+      </section>
+
+      <section className={styles.marqueeScene}>
+        <HomeMarquee />
       </section>
 
       <section className={styles.footerScene}>
