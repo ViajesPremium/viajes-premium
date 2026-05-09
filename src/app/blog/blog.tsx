@@ -1,8 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button/button";
+import { useBlogTransition } from "@/components/page-transition/BlogTransitionProvider";
 import styles from "./blog.module.css";
 
 const BLOG_ITEMS = [
@@ -60,7 +60,7 @@ const QUESTIONS = [
 ];
 
 export default function BlogSection() {
-  const router = useRouter();
+  const { triggerTransition } = useBlogTransition();
 
   return (
     <main className={styles.page}>
@@ -84,7 +84,7 @@ export default function BlogSection() {
               variant="outline"
               className={styles.blogCta}
               onClick={() =>
-                router.push(`/blog/${item.slug.replace(".txt", "")}`)
+                triggerTransition(`/blog/${item.slug.replace(".txt", "")}`)
               }
             >
               Leer blog
