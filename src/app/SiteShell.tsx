@@ -4,6 +4,7 @@ import { type CSSProperties, useMemo, type ReactNode } from "react";
 import { usePathname } from "next/navigation";
 import CursorEffect from "@/components/ui/cursor/cursorEffect";
 import SmoothScrollProvider from "@/components/smooth-scroll/SmoothScrollProvider";
+import { BlogTransitionProvider } from "@/components/page-transition/BlogTransitionProvider";
 import Navbar from "@/layout/navbar/navbar";
 import { premiumLandingConfigs } from "@/landings/premium/configs";
 import type { PremiumLandingConfig } from "@/landings/premium/types";
@@ -48,6 +49,7 @@ export default function SiteShell({ children }: SiteShellProps) {
 
   return (
     <div style={premiumConfig ? getThemeStyle(premiumConfig) : undefined}>
+      <BlogTransitionProvider>
       <SmoothScrollProvider>
         <CursorEffect>
           {premiumConfig ? (
@@ -78,6 +80,7 @@ export default function SiteShell({ children }: SiteShellProps) {
           </div>
         </CursorEffect>
       </SmoothScrollProvider>
+      </BlogTransitionProvider>
     </div>
   );
 }
