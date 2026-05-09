@@ -1,8 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { Button } from "@/components/ui/button/button";
+import { useBlogTransition } from "@/components/page-transition/BlogTransitionProvider";
 import styles from "./blog.module.css";
 
 const BLOG_ITEMS = [
@@ -51,16 +52,34 @@ const BLOG_ITEMS = [
 ];
 
 const QUESTIONS = [
-  "Como elegimos el itinerario correcto para cada perfil de viajero?",
-  "Que incluye realmente una experiencia premium bien disenada?",
-  "Cuando conviene viajar para aprovechar mejor cada destino?",
-  "Como equilibrar descanso, cultura y ritmo durante el recorrido?",
-  "Que errores cuestan mas dinero y energia en un viaje internacional?",
-  "Como lograr que un viaje en familia sea comodo para todos?",
+  {
+    question: "Como se diseña un viaje a Japon con proposito y no solo con checklist?",
+    slug: "blog-01-japon-premium",
+  },
+  {
+    question: "Como planear un viaje premium en familia sin estres ni sobrecarga?",
+    slug: "blog-02-viajes-familia-premium",
+  },
+  {
+    question: "Como pasar de turista a viajero consciente y elegir experiencias que transformen?",
+    slug: "blog-03-viajero-consciente",
+  },
+  {
+    question: "Que estructura debe tener un itinerario premium para cuidar ritmo y energia?",
+    slug: "blog-04-arte-itinerarios-premium",
+  },
+  {
+    question: "Como elegir hospedajes con identidad que si mejoren la experiencia del viaje?",
+    slug: "blog-05-hospedaje-con-identidad",
+  },
+  {
+    question: "Como curar experiencias culturales profundas sin perder comodidad?",
+    slug: "blog-06-experiencias-culturales-curadas",
+  },
 ];
 
 export default function BlogSection() {
-  const router = useRouter();
+  const { triggerTransition } = useBlogTransition();
 
   return (
     <main className={styles.page}>
@@ -84,7 +103,7 @@ export default function BlogSection() {
               variant="outline"
               className={styles.blogCta}
               onClick={() =>
-                router.push(`/blog/${item.slug.replace(".txt", "")}`)
+                triggerTransition(`/blog/${item.slug.replace(".txt", "")}`)
               }
             >
               Leer blog
@@ -95,6 +114,7 @@ export default function BlogSection() {
 
       <section className={styles.titleRow} aria-label="Encabezado de blogs">
         <h1 className={styles.title}>BLOGS PREMIUM</h1>
+        <p className={styles.subtitle}>Recorridos que inspiran y transforman</p>
       </section>
 
       <section
@@ -103,9 +123,11 @@ export default function BlogSection() {
       >
         <h3 className={styles.questionsTitle}>Preguntas para planear mejor</h3>
         <div className={styles.questionsGrid}>
-          {QUESTIONS.map((question, index) => (
-            <p key={question} className={styles.questionItem}>
-              {index + 1}. {question}
+          {QUESTIONS.map((item, index) => (
+            <p key={item.question} className={styles.questionItem}>
+              <Link href={`/blog/${item.slug}`} className={styles.questionLink}>
+                {index + 1}. {item.question}
+              </Link>
             </p>
           ))}
         </div>
