@@ -2,7 +2,7 @@
 *::before,
 *::after {
   box-sizing: border-box;
-  --sm-accent: var(--secondary-japon);
+  --sm-accent: var(--secondary);
 }
 
 html,

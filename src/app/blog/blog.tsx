@@ -3,7 +3,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button/button";
-import { useBlogTransition } from "@/components/page-transition/BlogTransitionProvider";
+import { usePageTransition } from "@/components/page-transition/TransitionProvider";
+import Footer from "@/layout/footer/footer";
+import { DEFAULT_SITE_CONFIG } from "@/config/default-site-config";
 import styles from "./blog.module.css";
 
 const BLOG_ITEMS = [
@@ -79,9 +81,10 @@ const QUESTIONS = [
 ];
 
 export default function BlogSection() {
-  const { triggerTransition } = useBlogTransition();
+  const { triggerTransition } = usePageTransition();
 
   return (
+    <>
     <main className={styles.page}>
       <section className={styles.topGrid} aria-label="Blogs disponibles">
         {BLOG_ITEMS.map((item) => (
@@ -133,5 +136,7 @@ export default function BlogSection() {
         </div>
       </section>
     </main>
+    <Footer config={DEFAULT_SITE_CONFIG.footer} />
+    </>
   );
 }

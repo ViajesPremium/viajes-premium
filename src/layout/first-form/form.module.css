@@ -1,4 +1,4 @@
-.formContainer {
+﻿.formContainer {
   pointer-events: auto;
   position: relative;
   width: 100%;
@@ -196,7 +196,7 @@
 }
 
 .formInput:focus {
-  border-color: var(--primary-japon);
+  border-color: var(--primary);
   box-shadow: 0 0 0 2px rgba(219, 47, 33, 0.25);
   background: rgba(243, 243, 240, 0.12);
 }
@@ -229,7 +229,7 @@
 }
 
 .travelDatePickerControl:focus-within {
-  border-color: var(--primary-japon);
+  border-color: var(--primary);
   box-shadow: 0 0 0 2px rgba(219, 47, 33, 0.25);
   background: rgba(243, 243, 240, 0.12);
 }
@@ -471,9 +471,9 @@
 
 .travelDatePickerDayCellTrigger[data-selected],
 .travelDatePickerMonthYearCellTrigger[data-selected] {
-  background: var(--primary-japon);
+  background: var(--primary);
   color: var(--bg);
-  border-color: var(--primary-japon);
+  border-color: var(--primary);
 }
 
 .travelDatePickerDayCellTrigger[data-focus],
@@ -622,7 +622,7 @@
   border-radius: var(--radius);
   padding: 0.65rem 1.12rem;
   color: var(--bg);
-  background: var(--primary-japon);
+  background: var(--primary);
   font-weight: 600;
   letter-spacing: 0.01em;
 }
@@ -861,8 +861,8 @@
 }
 
 .experienceChipSelected {
-  background: var(--primary-japon) !important;
-  border-color: var(--primary-japon) !important;
+  background: var(--primary) !important;
+  border-color: var(--primary) !important;
   color: #fff !important;
   box-shadow: 0 2px 10px rgba(191, 149, 63, 0.22);
 }

@@ -13,52 +13,51 @@ const PERU_MENU_ITEMS = [
 const PERU_FAQS = [
   {
     id: "1",
-    question: "¿Peru es un destino complicado para viajar?",
+    question: "¿Cuál es la mejor época para viajar a Perú?",
     answer:
-      "No, Peru no es un destino complicado si esta bien planificado. Aunque el idioma y la logistica pueden parecer desafiantes al inicio, el pais es seguro, ordenado y facil de recorrer. Cuando el viaje esta bien estructurado, todo fluye con mayor claridad. En Peru Premium cuidamos ese proceso para que la experiencia se viva sin friccion.",
+      "La mejor época para viajar a Perú depende de las regiones que quieras visitar y del tipo de experiencia que buscas. Temporadas secas suelen ser ideales para recorrer destinos como Cusco y Machu Picchu con mayor comodidad.",
   },
   {
     id: "2",
-    question: "¿Se puede viajar a Peru sin hablar espanol?",
+    question: "¿Cuántos días se recomiendan para conocer Perú?",
     answer:
-      "Si, es posible viajar a Peru sin hablar espanol. En ciudades como Lima o Cusco hay senalizacion clara y servicios pensados para viajeros internacionales. Aun asi, saber como moverse y que decisiones tomar marca la diferencia en la experiencia por eso nuestros guias hablan espanol para que no te preocupes por el idioma.",
+      "Se recomienda viajar entre 8 y 15 días para conocer Perú con mayor profundidad. Esto permite combinar ciudades, sitios arqueológicos, gastronomía y paisajes naturales en una experiencia más completa.",
   },
   {
     id: "3",
-    question: "¿Cuantos dias se recomiendan para viajar a Japon?",
+    question: "¿Es complicado viajar a Machu Picchu?",
     answer:
-      "Se recomienda viajar entre 10 y 15 dias para conocer Japon con mayor profundidad. Este tiempo permite recorrer varias ciudades y equilibrar cultura, gastronomia y experiencias. La duracion ideal depende del ritmo del viajero y del tipo de experiencia que quiera construir.",
+      "No, viajar a Machu Picchu no es complicado cuando el recorrido está bien organizado. La experiencia requiere coordinación de accesos, horarios y traslados, por lo que una buena planeación hace toda la diferencia.",
   },
   {
     id: "4",
-    question: "¿Cual es la mejor temporada para viajar a Japon?",
+    question: "¿Qué destinos se pueden visitar en Perú?",
     answer:
-      "No hay una unica mejor temporada, depende del tipo de experiencia que buscas. Primavera (Sakuras) y otono (Momiji) son muy populares por sus paisajes, pero tambien hay epocas con menos afluencia que permiten disfrutar Japon con mayor tranquilidad.",
+      "Perú combina historia, gastronomía, naturaleza y cultura en un mismo viaje. Destinos como Lima, Cusco, Valle Sagrado y Machu Picchu suelen formar parte de las rutas más buscadas.",
   },
   {
     id: "5",
-    question: "¿Es seguro viajar a Japon?",
+    question: "¿Es seguro viajar a Perú?",
     answer:
-      "Si, Japon es uno de los paises mas seguros del mundo. Se puede viajar con tranquilidad tanto en grandes ciudades como en zonas mas tradicionales. Esa seguridad se aprovecha mucho mas cuando el viaje esta bien organizado y cada detalle esta pensado.",
+      "Sí, Perú es un destino muy visitado por viajeros de todo el mundo. Como en cualquier viaje internacional, una buena organización y recorridos bien planeados permiten disfrutar la experiencia con mayor tranquilidad.",
   },
   {
     id: "6",
-    question: "¿Que tipo de experiencias se pueden vivir en Japon?",
+    question: "¿Qué tipo de experiencias gastronómicas ofrece Perú?",
     answer:
-      "Japon ofrece una combinacion unica de cultura, gastronomia, tradicion, tecnologia y naturaleza. Se pueden recorrer ciudades modernas, templos historicos y paisajes muy distintos en un mismo viaje. En Japon Premium disenamos cada proyecto para integrar estos contrastes de forma coherente.",
+      "Perú es uno de los destinos gastronómicos más importantes del mundo. Desde cocina tradicional hasta propuestas contemporáneas, la experiencia culinaria forma parte esencial del viaje.",
   },
   {
     id: "7",
-    question: "¿Es facil moverse dentro de Japon?",
+    question: "¿Es recomendable viajar a Perú en pareja o en familia?",
     answer:
-      "Si, moverse dentro de Japon es facil gracias a su sistema de transporte eficiente y puntual. Los trenes y conexiones permiten recorrer el pais de forma organizada y comoda.",
+      "Sí, Perú es un destino muy versátil que puede disfrutarse tanto en pareja como en familia. Todo depende de cómo se diseñe el recorrido y del tipo de experiencias que se quieran vivir.",
   },
   {
     id: "8",
-    question:
-      "¿Japon es un destino recomendable para viajar en pareja o en familia?",
+    question: "¿Qué tan exigente es la altura en Cusco?",
     answer:
-      "Si, Japon es un destino ideal tanto para viajar en pareja como en familia ya que hay diversos parques de diversiones y experiencias que se disfrutan en compania. La clave esta en disenar el recorrido segun el tipo de experiencia que se quiere vivir.",
+      "La altura puede sentirse durante los primeros días, especialmente en Cusco y zonas cercanas. Por eso es importante llevar un ritmo adecuado y planear correctamente el inicio del viaje.",
   },
 ] as const;
 
@@ -66,11 +65,18 @@ export const peruPremiumLandingConfig: PremiumLandingConfig = {
   id: "peru-premium",
   routePath: "/peru-premium",
   metadata: {
-    title: "Peru Premium",
-    description: "Peru Premium",
-    keywords: ["Japon Premium", "Viajes Premium"],
-    canonicalPath: "/japon-premium",
-    ogImagePath: "/japon-premium/og-image.jpg",
+    title: "Viajes a Perú | Clase PREMIUM",
+    description:
+      "Descubre Perú con profundidad: Machu Picchu, Cusco, el Amazonas y experiencias únicas diseñadas en Clase PREMIUM.",
+    keywords: [
+      "Viajes a Perú",
+      "Tour por Perú",
+      "Viaje a Perú desde México",
+      "Viajar a Perú",
+      "Perú Premium",
+    ],
+    canonicalPath: "/peru-premium",
+    ogImagePath: "/peru-premium/og-image.jpg",
     locale: "es_MX",
   },
   theme: {
@@ -92,7 +98,7 @@ export const peruPremiumLandingConfig: PremiumLandingConfig = {
   },
   sections: {
     hero: {
-      seoHeading: "Viaja a Peru desde Mexico",
+      seoHeading: "Viaje a Perú desde México",
       title: {
         line1Lead: "Viaja a",
         line1Focus: "Peru",
@@ -108,11 +114,11 @@ export const peruPremiumLandingConfig: PremiumLandingConfig = {
       descriptionLines: [
         {
           highlight: "Eleva tu vida",
-          text: "con una forma mas cuidada de vivir Japon.",
+          text: "conociendo Perú con profundidad: desde Machu Picchu hasta la Amazonía, con comodidad y acompañamiento real desde el primer contacto hasta tu regreso.",
         },
         {
-          highlight: "Disenamos experiencias",
-          text: "para quienes valoran atencion personal, criterio y una forma mas cuidada de vivir Japon.",
+          highlight: "Atención personalizada",
+          text: "planeación detallada, soporte antes, durante y después del viaje.",
         },
       ],
       ctaPrimary: {
@@ -126,29 +132,31 @@ export const peruPremiumLandingConfig: PremiumLandingConfig = {
       backgroundImage: "/images/japon/hero/japanHero.jpg",
     },
     snapshot: {
-      srHeading: "Snapshot de Japon Premium",
-      badgeText: "Snapshot",
-      titleText: "Más de 21 años diseñando experiencias premium.",
+      srHeading: "Nosotros Perú Premium",
+      badgeText: "Nosotros",
+      titleText: "Más de 21 años diseñando experiencias PREMIUM",
       titleHighlightWords: ["21", "años", "premium"],
       cards: [
         {
           image: "/images/peru/1-machu-pichu.webp",
-          text: "Machu Picchu",
-                    experiences: "14 DIAS · ANIME · PARQUES TEMATICOS · TECNOLOGIA · CULTURA POP",
+          text: "Montaña de Colores",
+          experiences:
+            "8 días · Cultura andina · Machu Picchu · Paisajes sagrados",
 
           wide: false,
         },
         {
           image: "/images/peru/1-gastronomia-autentica.webp",
-          text: "Gastronomia autentica",
-                    experiences: "14 DIAS · ANIME · PARQUES TEMATICOS · TECNOLOGIA · CULTURA POP",
+          text: "Dunas Dakar",
+          experiences:
+            "9 días · Desierto peruano · Misterios ancestrales · Aventura",
 
           wide: false,
         },
         {
           image: "/images/japon/1-alojamiento-de-lujo.webp",
-          text: "Hospedaje de lujo",
-                    experiences: "14 DIAS · ANIME · PARQUES TEMATICOS · TECNOLOGIA · CULTURA POP",
+          text: "Sky Fall",
+          experiences: "11 días · Andes · Titicaca · Paisajes extremos · Uyuni",
 
           wide: false,
         },
@@ -157,117 +165,117 @@ export const peruPremiumLandingConfig: PremiumLandingConfig = {
       cardButtonTarget: "#itinerarios",
     },
     firstForm: {
-      srHeading: "Cuentanos como imaginas tu viaje a Japon",
+      srHeading: "Cuéntanos cómo imaginas tu viaje a Perú",
       sectionTitle: "Propuesta personalizada",
       sectionTitleHighlightWord: "personalizada",
       sectionSubtitle:
-        "Cuentanos como imaginas tu viaje a Japon, compartenos tus intereses y te ayudaremos a identificar cual de nuestros 3 itinerarios se adapta mejor a tu estilo de viaje.",
+        "Cuéntanos cómo imaginas tu viaje a Perú y descubriremos cuál de nuestros 3 itinerarios es perfecto para ti.",
       backgroundImage: "/images/japon/geishaForm.webp",
       mobileImage: {
         src: "/images/japon/geishaFormSola.webp",
-        alt: "Geisha en Japon",
+        alt: "Viaje a Perú Premium",
       },
       formConfig: {
         eyebrow: "Asesoria Privada",
         title: "",
         subtitle: "",
         submitLabel: "Solicita tu propuesta",
-        contactEmail: "hola@japonpremium.com",
+        contactEmail: "reservaciones@viajespremium.com.mx",
         contactPhoneDisplay: "+52 55 1234 5678",
         contactPhoneLink: "+525512345678",
       },
     },
     highlights: {
-      srHeading: "Highlights de Japon Premium",
-      badgeText: "¿Por que Japon Premium?",
+      srHeading: "Highlights de Perú Premium",
+      badgeText: "¿Por qué Perú PREMIUM®?",
       kickerTop: "Trabajamos con marcas",
       kickerBottom: "Cuidadosamente seleccionadas.",
       line1: {
-        lead: "TE LLEVAMOS",
+        lead: "VIAJA POR CUSCO",
         bracket: {
           label: "OSAKA",
           imageSrc: "/images/japon/1-kyoto-nara.webp",
           imageAlt: "Vista urbana de Osaka",
           textTone: "ot",
         },
-        tail: "A",
+        tail: "CON CALMA",
       },
       line2: {
-        text: "VIVIR JAPON",
-        highlightWord: "JAPON",
+        text: "MIENTRAS LOS ANDES REVELAN SU",
+        highlightWord: "ANDES",
         bracket: {
           label: "KIOTO",
           imageSrc: "/images/japon/1-kyoto-nara.webp",
           imageAlt: "Escena tradicional de Kioto",
           textTone: "epochal",
         },
-        tail: "CON",
+        tail: "",
       },
       line3: {
-        lead: "EL RESPALDO",
+        lead: "ESENCIA Y PERÚ REDEFINE TU",
         bracket: {
           label: "TOKIO",
           imageSrc: "/images/japon/1-kyoto-nara.webp",
           imageAlt: "Paisaje iconico de Tokio",
           textTone: "ot",
         },
-        tail: "Y LA",
+        tail: "",
       },
       line4: {
-        text: "ATENCION QUE MERECES",
-        highlightWord: "MERECES",
+        text: "FORMA DE VIAJAR",
+        highlightWord: "VIAJAR",
       },
       focusRailItems: [
         {
           id: "kyoto-privado",
-          title: "Recorridos disenados con mas criterio",
+          title: "Respaldo 24/7",
           description:
-            "Cada itinerario se estructura para dar mas sentido, ritmo y calidad al viaje.",
+            "Soporte continuo para viajar con tranquilidad de principio a fin.",
           meta: "Cultura",
           imageSrc: "/images/japon/2-recorridos-diseñados-con-mas-criterio.webp",
           href: "#form",
         },
         {
           id: "tokyo-nocturno",
-          title: "Acompanamiento personalizado",
+          title: "Estancias a la altura del viaje",
           description:
-            "Atencion cercana antes, durante y despues de su experiencia en Japon.",
+            "Seleccionadas por su carácter, ubicación y nivel de servicio.",
           meta: "Urbano",
           imageSrc: "/images/japon/2-acompañamiento-personalizado.webp",
           href: "#form",
         },
         {
           id: "sabores-omakase",
-          title: "Respaldo 24/7",
+          title: "Expertos que hablan del destino",
           description:
-            "Soporte continuo para viajar con tranquilidad de principio a fin.",
+            "Guías expertos que conocen el destino con profundidad.",
           meta: "Gastronomia",
           imageSrc: "/images/japon/2-respaldo-24-7.webp",
           href: "#form",
         },
         {
           id: "onsen-premium",
-          title: "Estancias a la altura del viaje",
+          title: "Tranquilidad de principio a fin",
           description:
-            "Seleccionadas por su caracter, ubicacion y nivel de servicio.",
+            "Cada detalle se cuida para que usted viaje con más confianza y respaldo.",
           meta: "Bienestar",
           imageSrc: "/images/japon/2-estancia-a-la-altura-del-viaje.webp",
           href: "#form",
         },
         {
           id: "paisajes-iconicos",
-          title: "Expertos que hablan su idioma",
+          title: "Recorridos diseñados con más criterio",
           description:
-            "Guias en espanol para vivir Japon con mas claridad y profundidad.",
+            "Cada itinerario se estructura para dar más sentido, ritmo y calidad al viaje.",
           meta: "Naturaleza",
           imageSrc: "/images/japon/2-expertos-que-hablan-su-idioma.webp",
           href: "#form",
         },
         {
           id: "experiencia-ryokan",
-          title: "Tranquilidad de principio a fin",
+          title: "Acompañamiento personalizado",
           description:
-            "Cada detalle se cuida para que usted viaje con mas confianza y respaldo.",
+            "Atención cercana antes, durante y después de su experiencia en Perú.",
           meta: "Tradicion",
           imageSrc: "/images/japon/2-tranquilidad-de-principio-a-fin.webp",
           href: "#form",
@@ -283,44 +291,44 @@ export const peruPremiumLandingConfig: PremiumLandingConfig = {
       },
     },
     itineraries: {
-      srHeading: "Itinerarios de Japon Premium",
+      srHeading: "Itinerarios de Perú Premium",
       topTabText: "Itinerario Premium",
       items: [
         {
           id: 1,
-          day: "14 DIAS · ESPIRITUALIDAD · TRADICION · BIENESTAR · CULTURA",
-          title: "Alma de Japon",
+          day: "8 días · Cultura andina · Machu Picchu · Paisajes sagrados",
+          title: "Montaña de Colores",
           description:
-            "Un recorrido por el Japon mas espiritual y profundo: templos milenarios, rutas sagradas, ryokans, onsen y experiencias que transforman el viaje.",
+            "Un recorrido diseñado para descubrir Perú entre ciudades históricas, cultura andina y paisajes icónicos como Machu Picchu y la Montaña de Colores.",
           ideal:
-            "Ideal para parejas, familias, lunas de miel y viajeros que buscan desconexion profunda.",
+            "Ideal para viajeros que buscan conocer la esencia de Perú por primera vez.",
           image1: "/images/japon/3-alma-de-japon-izq.webp",
           image2: "/images/japon/3-alma-de-japon-der.webp",
-          price: "Desde $4,990 USD base doble",
+          price: "",
         },
         {
           id: 2,
-          day: "14 DIAS · ANIME · PARQUES TEMATICOS · TECNOLOGIA · CULTURA POP",
-          title: "Japon Pop",
+          day: "9 días · Desierto peruano · Misterios ancestrales · Aventura",
+          title: "Dunas Dakar",
           description:
-            "Un recorrido por el Japon mas vibrante y fantastico: anime, parques tematicos, tecnologia, neon, tradicion y experiencias que transforman el viaje.",
+            "Una experiencia que combina desiertos, culturas ancestrales, recorridos escénicos y algunos de los paisajes más sorprendentes de Perú.",
           ideal:
-            "Ideal para familias, amigos, parejas jovenes, fans del anime, manga y la tecnologia.",
+            "Ideal para Viajeros que buscan aventura, naturaleza y experiencias diferentes en Perú.",
           image1: "/images/japon/4-japon-pop-izq.webp",
           image2: "/images/japon/4-japon-pop-der.webp",
-          price: "Desde $4,590 USD base doble",
+          price: "",
         },
         {
           id: 3,
-          day: "15 DIAS · SAMURAIS · GEISHAS · SUMO · ALPES JAPONESES",
-          title: "El Camino del Shogun",
+          day: "11 días  · Andes · Titicaca · Paisajes extremos ·  Uyuni",
+          title: "Sky Fall",
           description:
-            "Un recorrido por el Japon mas autentico y menos transitado: alpes japoneses, templos zen, ryokans y santuarios sagrados que transforman el viaje.",
+            "Un recorrido por Perú y Bolivia que conecta cultura andina, paisajes extraordinarios y experiencias únicas como el Salar de Uyuni y Lago Titicaca.",
           ideal:
-            "Ideal para parejas aventureras, viajeros con mirada cultural y quienes prefieren el Japon que pocos conocen.",
+            "Ideal para viajeros que buscan una experiencia más profunda y visualmente inolvidable.",
           image1: "/images/japon/5-el-camino-del-shogun-izq.webp",
           image2: "/images/japon/5-el-camino-del-shogun-der.webp",
-          price: "Desde $5,290 USD base doble",
+          price: "",
         },
       ],
       secondaryCtaLabel: "Descargar PDF",
@@ -330,10 +338,10 @@ export const peruPremiumLandingConfig: PremiumLandingConfig = {
       },
     },
     includes: {
-      srHeading: "Lo esencial de la experiencia premium",
-      badgeText: "LO ESCENCIAL",
+      srHeading: "Lo esencial de la experiencia premium en Perú",
+      badgeText: "Lo esencial",
       titleText: "Lo que da forma a tu experiencia premium",
-      titleHighlightWords: ["premium", "forma", "da"],
+      titleHighlightWords: ["da", "forma", "premium"],
       cta: {
         label: "Solicita tu propuesta",
         target: "#form",
@@ -345,41 +353,41 @@ export const peruPremiumLandingConfig: PremiumLandingConfig = {
         {
           id: "stays",
           label: "I",
-          title: "Estancias con caracter",
+          title: "Alojamiento seleccionado con criterio",
           description:
-            "Espacios cuidadosamente seleccionados por ubicacion, servicio y la experiencia que aportan al viaje.",
+            "Hoteles y estancias elegidas por ubicación y comodidad, para descansar bien después de cada experiencia en los Andes y la Amazonía peruana.",
           image: "/images/japon/6-estancias-con-caracter.webp",
         },
         {
           id: "transport",
           label: "II",
-          title: "Traslados mejor coordinados",
+          title: "Traslados y conexiones bien resueltos",
           description:
-            "Shinkansen, traslados privados y tiempos pensados para que el viaje fluya con mas orden y comodidad.",
+            "Logística planeada para optimizar tiempos y conectar cada experiencia con fluidez y comodidad.",
           image: "/images/japon/6-traslados-mejor-coordinados.webp",
         },
         {
           id: "culture",
           label: "III",
-          title: "Experiencias culturales curadas",
+          title: "Experiencias privadas o seleccionadas",
           description:
-            "Templos, barrios historicos y actividades elegidas para conectar con el Japon mas autentico.",
+            "Actividades elegidas con intención: Camino Inca, Valle Sagrado, comunidades quechuas, Lago Titicaca y momentos diseñados para conectar con la esencia del Perú profundo.",
           image: "/images/japon/6-experiencias-culturales-curadas.webp",
         },
         {
           id: "gastronomy",
           label: "IV",
-          title: "Escenas gastronomicas seleccionadas",
+          title: "Gastronomía peruana",
           description:
-            "Reservas y momentos en la mesa pensados para descubrir Japon con mas detalle y autenticidad.",
+            "Experiencias culinarias que forman parte central del viaje: cocina andina, restaurantes seleccionados en Lima y sabores regionales que definen la identidad gastronómica del Perú.",
           image: "/images/japon/6-escenas-gastronomicas-seleccionadas.webp",
         },
         {
           id: "support",
           label: "V",
-          title: "Acompanamiento en cada etapa",
+          title: "Acompañamiento en cada etapa",
           description:
-            "Atencion en espanol antes y durante el viaje para acompanarle con claridad y resolver cada detalle.",
+            "Atención cercana antes, durante y después del viaje para acompañarte con claridad en cada decisión.",
           image: "/images/japon/6-acompañamiento-en-cada-etapa.webp",
         },
       ],
@@ -391,7 +399,7 @@ export const peruPremiumLandingConfig: PremiumLandingConfig = {
         {
           id: 1,
           quote:
-            "Japon nos parecia un viaje complejo, pero aqui todo se sintio claro, cuidado y bien acompanado desde el principio.",
+            "Perú nos parecía un viaje complejo, pero aquí todo se sintió claro, cuidado y bien acompañado desde el principio.",
           name: "Mariana Gutierrez",
           location: "Ciudad de Mexico",
           avatar: "/images/stock/avatar-1.svg",
@@ -435,7 +443,7 @@ export const peruPremiumLandingConfig: PremiumLandingConfig = {
       },
     },
     interlude: {
-      srHeading: "Mensaje del equipo Japon Premium",
+      srHeading: "Mensaje del equipo Perú Premium",
       rows: [
         "japon premium experience",
         "curaduria atencion precision",
@@ -449,18 +457,18 @@ export const peruPremiumLandingConfig: PremiumLandingConfig = {
         "viajar va mas alla de acumular destinos; se trata de crear vinculos reales con cada lugar.",
       image: {
         src: "/images/japon/karinaSanchezJapon.webp",
-        alt: "Asesora de viaje Japon Premium",
+        alt: "Asesora de viaje Perú Premium",
       },
     },
     faqs: {
-      srHeading: "Preguntas frecuentes sobre Japon Premium",
+      srHeading: "Preguntas frecuentes sobre Perú Premium",
       accordionAriaLabel: "Preguntas frecuentes",
       badgeText: "Preguntas frecuentes",
       title: "Todo lo que necesitas saber",
       subtitle:
-        "Resolvemos las dudas mas comunes sobre nuestros viajes a Peru. Si no encuentras lo que buscas, escribenos directamente.",
+        "Resolvemos las dudas más comunes sobre nuestros viajes a Perú. Si no encuentras lo que buscas, escríbenos directamente.",
       contactLabel: "¿Otra pregunta?",
-      contactEmail: "hola@perupremium.com",
+      contactEmail: "reservaciones@viajespremium.com.mx",
       items: [...PERU_FAQS],
     },
     ctaForm: {
@@ -472,20 +480,21 @@ export const peruPremiumLandingConfig: PremiumLandingConfig = {
       formTheme: "light",
       formConfig: {
         eyebrow: "",
-        title: "",
-        subtitle: "",
-        submitLabel: "",
-        contactEmail: "hola@japonpremium.com",
+        title: "Última oportunidad",
+        subtitle:
+          "Completa tus datos y da el primer paso hacia tu viaje a Perú, diseñado a tu medida por Perú PREMIUM ©",
+        submitLabel: "Solicita tu propuesta",
+        contactEmail: "reservaciones@viajespremium.com.mx",
         contactPhoneDisplay: "+52 55 1234 5678",
         contactPhoneLink: "+525512345678",
       },
     },
     marquee: {
-      srHeading: "Alianzas de Japon Premium",
+      srHeading: "Alianzas de Perú Premium",
       badgeText: "Nuestras alianzas",
       introLeftLogo: {
         src: "/logos/japon/jp-negro.svg",
-        alt: "Japon Premium",
+        alt: "Perú Premium",
         width: 460,
         height: 96,
       },
@@ -498,7 +507,7 @@ export const peruPremiumLandingConfig: PremiumLandingConfig = {
       logos: [
         {
           src: "/logos/japon-grande-logo.png",
-          alt: "Japon Premium",
+          alt: "Perú Premium",
           width: 420,
           height: 90,
         },
@@ -510,26 +519,27 @@ export const peruPremiumLandingConfig: PremiumLandingConfig = {
         },
         {
           src: "/logos/japon-grande-logo.png",
-          alt: "Japon Grande",
+          alt: "Perú Grande",
           width: 540,
           height: 120,
         },
         {
           src: "/logos/japon-grande-logo.png",
-          alt: "Logo Japon",
+          alt: "Logo Perú",
           width: 380,
           height: 110,
         },
       ],
     },
     footer: {
-      srHeading: "Footer Japon Premium",
+      srHeading: "Footer Perú Premium",
+      logoWord: "PERÚ",
       samuraiImage: "/images/japon/hero/samuraiHero.webp",
-      brandLogo: "/logos/japon/japon-grande-logo.png",
+      brandLogo: "/logos/peru/peru-grande-logo.png",
       address:
         "Cda. de Omega 306, Romero de Terreros, Coyoacan, 04310 Ciudad de Mexico, CDMX",
-      mapEmbedTitle: "Ubicacion Japon Premium",
-      contactEmail: "hola@japonpremium.com",
+      mapEmbedTitle: "Ubicación Perú Premium",
+      contactEmail: "reservaciones@viajespremium.com.mx",
       contactPhoneDisplay: "+52 55 1234 5678",
       contactPhoneLink: "+525512345678",
       pageLinks: [
@@ -547,7 +557,7 @@ export const peruPremiumLandingConfig: PremiumLandingConfig = {
         { label: "YOUTUBE", href: "#" },
       ],
       copyrightText:
-        "© 2026 Viaja a Japon Premium. Todos los derechos reservados.",
+        "© 2026 Viaja a Perú Premium. Todos los derechos reservados.",
       backToTopLabel: "Volver al inicio",
       legalLinks: [
         { label: "PRIVACIDAD", href: "#" },

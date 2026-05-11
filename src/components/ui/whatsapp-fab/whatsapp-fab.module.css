@@ -10,7 +10,7 @@
 }
 
 .panel {
-  --wa-focus: var(--primary-japon);
+  --wa-focus: var(--primary);
   --wa-bg: #ffffff;
   --wa-title: #0f172a;
   --wa-label: #334155;
@@ -108,7 +108,7 @@
 }
 
 .submit {
-  background: var(--wa-submit-bg, var(--primary-japon));
+  background: var(--wa-submit-bg, var(--primary));
   color: var(--wa-submit-color, #fff);
 }
 

@@ -42,25 +42,6 @@ const DEFAULT_MENU_ITEMS: StaggeredMenuItem[] = [
   { label: "Inicio", ariaLabel: "Ir a inicio", link: "/" },
   { label: "Nosotros", ariaLabel: "Ir a nosotros", link: "/nosotros" },
   { label: "Blog", ariaLabel: "Ir a blog", link: "/blog" },
-  {
-    label: "Japón Premium",
-    ariaLabel: "Ir a Japón Premium",
-    link: "/japon-premium",
-  },
-];
-
-const JAPAN_SECTION_MENU_ITEMS: StaggeredMenuItem[] = [
-  { label: "Inicio", ariaLabel: "Ir al inicio", link: "#inicio" },
-  { label: "Highlights", ariaLabel: "Ir a highlights", link: "#highlights" },
-  { label: "Itinerarios", ariaLabel: "Ir a itinerarios", link: "#itinerarios" },
-  { label: "Incluye", ariaLabel: "Ir a lo que incluye", link: "#includes" },
-  {
-    label: "Testimonios",
-    ariaLabel: "Ir a testimonios",
-    link: "#testimonials",
-  },
-  { label: "FAQs", ariaLabel: "Ir a preguntas frecuentes", link: "#faqs" },
-  { label: "Contacto", ariaLabel: "Ir al formulario", link: "#form" },
 ];
 
 const NOSOTROS_MENU_ITEM: StaggeredMenuItem = {
@@ -103,7 +84,7 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
   displaySocials = true,
   displayItemNumbering = true,
   className,
-  logoUrl = "/logos/jp-negro.svg",
+  logoUrl = "/principal-logo.svg",
   menuButtonColor = "#ffffff",
   openMenuButtonColor = "#111111",
   changeMenuColorOnOpen = true,
@@ -115,18 +96,11 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
 }: StaggeredMenuProps) => {
   const pathname = usePathname();
   const items = React.useMemo<StaggeredMenuItem[]>(() => {
-    let resolvedItems: StaggeredMenuItem[];
-
-    if (providedItems && providedItems.length > 0) {
-      resolvedItems = providedItems;
-    } else if (pathname?.startsWith("/japon-premium")) {
-      resolvedItems = JAPAN_SECTION_MENU_ITEMS;
-    } else {
-      resolvedItems = DEFAULT_MENU_ITEMS;
-    }
-
-    return withNosotrosItem(resolvedItems);
-  }, [providedItems, pathname]);
+    // Landing pages provide their own items (anchor links) — use as-is
+    if (providedItems && providedItems.length > 0) return providedItems;
+    // General site: use defaults, ensuring Nosotros is present
+    return withNosotrosItem(DEFAULT_MENU_ITEMS);
+  }, [providedItems]);
 
   const [open, setOpen] = useState(false);
   const openRef = useRef(false);
@@ -584,10 +558,7 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
         aria-label="Main navigation header"
       >
         <div className="sm-logo" aria-label="Logo">
-          <a
-            href="#inicio"
-            onClick={handleLogoClick}
-          >
+          <a href="#inicio" onClick={handleLogoClick}>
             <Image
               src={logoUrl || "/logos/reactbits-gh-white.svg"}
               alt="Logo"
@@ -691,5 +662,3 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
 };
 
 export default StaggeredMenu;
-
-

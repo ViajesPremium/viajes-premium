@@ -11,6 +11,7 @@ import { useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import { DEFAULT_SITE_CONFIG } from "@/config/default-site-config";
 
 const Destinations = dynamic(() => import("@/home/destinations"), {
   ssr: false,
@@ -24,7 +25,7 @@ const HomeTestimonials = dynamic(() => import("@/home/homeTestimonials"), {
   ssr: false,
   loading: () => <div className={styles.sectionFallback} aria-hidden="true" />,
 });
-const HomeFooter = dynamic(() => import("@/home/homeFooter"), {
+const Footer = dynamic(() => import("@/layout/footer/footer"), {
   ssr: false,
   loading: () => <div className={styles.footerFallback} aria-hidden="true" />,
 });
@@ -125,7 +126,7 @@ export default function Home() {
       </section>
 
       <section className={styles.footerScene}>
-        <HomeFooter />
+        <Footer config={DEFAULT_SITE_CONFIG.footer} />
       </section>
     </main>
   );

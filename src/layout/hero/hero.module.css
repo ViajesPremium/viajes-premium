@@ -127,7 +127,7 @@
   transform: translate(-50%, -50%);
   width: clamp(250px, 30vw, 400px);
   height: clamp(250px, 30vw, 400px);
-  background-color: var(--primary-japon);
+  background-color: var(--primary);
   border-radius: 50%;
   z-index: 1;
   pointer-events: none;

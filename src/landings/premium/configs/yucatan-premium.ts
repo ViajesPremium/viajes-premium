@@ -523,9 +523,10 @@ export const yucatanPremiumLandingConfig: PremiumLandingConfig = {
       ],
     },
     footer: {
-      srHeading: "Footer Japon Premium",
+      srHeading: "Footer Yucatán Premium",
+      logoWord: "YUCATÁN",
       samuraiImage: "/images/japon/hero/samuraiHero.webp",
-      brandLogo: "/logos/japon/japon-grande-logo.png",
+      
       address:
         "Cda. de Omega 306, Romero de Terreros, Coyoacan, 04310 Ciudad de Mexico, CDMX",
       mapEmbedTitle: "Ubicacion Japon Premium",

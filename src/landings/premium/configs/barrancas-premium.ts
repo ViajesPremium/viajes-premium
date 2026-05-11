@@ -1,4 +1,4 @@
-import type { PremiumLandingConfig } from "@/landings/premium/types";
+﻿import type { PremiumLandingConfig } from "@/landings/premium/types";
 
 const BARRANCAS_MENU_ITEMS = [
   { label: "Inicio", ariaLabel: "Ir al inicio", link: "#inicio" },
@@ -509,8 +509,9 @@ export const barrancasPremiumLandingConfig: PremiumLandingConfig = {
     },
     footer: {
       srHeading: "Footer Barrancas Premium",
+      logoWord: "BARRANCAS",
       samuraiImage: "/images/japon/hero/samuraiHero.webp",
-      brandLogo: "/logos/japon/japon-grande-logo.png",
+      brandLogo: "/logos/barrancas/barrancas-grande-logo.png",
       address:
         "Cda. de Omega 306, Romero de Terreros, Coyoacan, 04310 Ciudad de Mexico, CDMX",
       mapEmbedTitle: "Ubicacion Barrancas Premium",

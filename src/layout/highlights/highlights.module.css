@@ -45,7 +45,7 @@
 .kickerBottom {
   margin: 0;
   font-family: var(--font-bigcaslon), sans-serif;
-  color: var(--secondary-japon);
+  color: var(--secondary);
   font-style: italic;
   line-height: 0.95;
   font-size: clamp(1rem, 1.6vw, 1.85rem);
@@ -186,7 +186,7 @@
 .ot,
 .epochal {
   margin: 0;
-  color: var(--secondary-japon);
+  color: var(--secondary);
   font-family: var(--font-bigcaslon), sans-serif;
   line-height: 1;
   display: flex;
@@ -198,7 +198,7 @@
   font-weight: 500;
   letter-spacing: -0.03em;
   color: var(--white);
-  background-color: var(--secondary-japon);
+  background-color: var(--secondary);
   padding: 8px 5px 4px 5px; /* Ajuste fino de padding */
 }
 
@@ -248,7 +248,7 @@
 
 .secondaryUnderline {
   text-decoration-line: underline;
-  text-decoration-color: var(--secondary-japon);
+  text-decoration-color: var(--secondary);
   text-decoration-thickness: 0.08em;
   text-underline-offset: 0.11em;
 }

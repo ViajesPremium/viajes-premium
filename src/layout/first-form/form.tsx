@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { DatePicker, type DateValue } from "@ark-ui/react/date-picker";
 import { Portal } from "@ark-ui/react/portal";
@@ -1453,15 +1453,15 @@ function StepIndicator({
           },
           active: {
             scale: 1,
-            backgroundColor: "var(--primary-japon)",
+            backgroundColor: "var(--primary)",
             color: "var(--bg)",
-            borderColor: "var(--primary-japon)",
+            borderColor: "var(--primary)",
           },
           complete: {
             scale: 1,
-            backgroundColor: "var(--primary-japon)",
+            backgroundColor: "var(--primary)",
             color: "var(--bg)",
-            borderColor: "var(--primary-japon)",
+            borderColor: "var(--primary)",
           },
         }}
         transition={{ duration: 0.28 }}
@@ -1490,7 +1490,7 @@ function StepConnector({ isComplete }: StepConnectorProps) {
         className={styles.stepConnectorInner}
         variants={{
           incomplete: { width: 0, backgroundColor: "transparent" },
-          complete: { width: "100%", backgroundColor: "var(--primary-japon)" },
+          complete: { width: "100%", backgroundColor: "var(--primary)" },
         }}
         initial={false}
         animate={isComplete ? "complete" : "incomplete"}

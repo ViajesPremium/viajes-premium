@@ -1,4 +1,4 @@
-.page {
+﻿.page {
   background: var(--black);
   color: var(--white);
   min-height: 100vh;
@@ -16,7 +16,7 @@
   margin: 0;
   font-size: clamp(1.9rem, 4vw, 3rem);
   line-height: 1.05;
-  color: var(--primary-japon);
+  color: var(--primary);
   text-transform: uppercase;
 }
 

@@ -12,6 +12,32 @@ import {
   type DestinationDataCard,
 } from "./destinations.data";
 import styles from "./destinations.module.css";
+import { usePageTransition } from "@/components/page-transition/TransitionProvider";
+
+const DESTINATION_TRANSITION_VISUALS: Record<
+  string,
+  { logoSrc?: string; overlayImageSrc?: string }
+> = {
+  "/japon-premium": {
+    logoSrc: "/logos/japon/jp-blanco.svg",
+    overlayImageSrc: "/images/japon/hero/japanHero.jpg",
+  },
+  "/europa-premium": {
+    logoSrc: "/logos/europa/europa-grande-logo.png",
+  },
+  "/corea-premium": {
+    logoSrc: "/logos/corea/corea-grande-logo.png",
+  },
+  "/canada-premium": {
+    logoSrc: "/logos/canada/canada-grande-logo.png",
+  },
+  "/peru-premium": {
+    logoSrc: "/logos/peru/peru-grande-logo.png",
+  },
+  "/barrancas-premium": {
+    logoSrc: "/logos/barrancas/barrancas-grande-logo.png",
+  },
+};
 
 function shouldRenderCardMedia(
   index: number,
@@ -27,6 +53,7 @@ function shouldRenderCardMedia(
 }
 
 export default function Destinations({ embedded = false }: { embedded?: boolean }) {
+  const { triggerTransition } = usePageTransition();
   const pinRef = useRef<HTMLElement | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(() => {
@@ -292,7 +319,10 @@ export default function Destinations({ embedded = false }: { embedded?: boolean 
                   type="button"
                   className={styles.primaryButton}
                   onClick={() => {
-                    window.location.href = card.route;
+                    triggerTransition(
+                      card.route,
+                      DESTINATION_TRANSITION_VISUALS[card.route],
+                    );
                   }}
                 >
                   Ver Destino

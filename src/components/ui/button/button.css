@@ -1,4 +1,4 @@
-.buttonBase {
+﻿.buttonBase {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -25,13 +25,13 @@
 
 .buttonPrimary {
   padding: 0.15rem 4.2rem 0.15rem 2rem;
-  background-color: var(--primary-japon);
+  background-color: var(--primary);
 }
 
 .buttonPrimary:hover {
   padding-left: 3rem;
   padding-right: 1rem;
-  background-color: var(--secondary-japon);
+  background-color: var(--secondary);
 }
 
 .buttonSecondary {
@@ -40,7 +40,7 @@
 }
 
 .buttonSecondary:hover {
-  background-color: var(--complementary-japon);
+  background-color: var(--complementary);
   transition: all 3ms ease-in-out;
 }
 

@@ -262,7 +262,7 @@ export default function PremiumLandingClient({
             <MarqueeSection />
           </section>
           <section id="footer" className={styles.footerBlock}>
-            <Footer />
+            <Footer config={config.sections.footer} />
           </section>
         </DeferredSection>
       </main>

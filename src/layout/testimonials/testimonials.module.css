@@ -377,11 +377,11 @@
 }
 
 .googleBadgeLink:hover .googleBadge {
-  border-color: var(--primary-japon);
+  border-color: var(--primary);
 }
 
 .googleBadgeLink:focus-visible {
-  outline: 2px solid var(--primary-japon);
+  outline: 2px solid var(--primary);
   outline-offset: 3px;
 }
 
@@ -404,7 +404,7 @@
   font-size: 0.66rem;
   font-weight: 600;
   letter-spacing: 0.04em;
-  color: var(--primary-japon);
+  color: var(--primary);
 }
 
 .stars {

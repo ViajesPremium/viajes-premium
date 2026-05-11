@@ -523,9 +523,10 @@ export const europaPremiumLandingConfig: PremiumLandingConfig = {
       ],
     },
     footer: {
-      srHeading: "Footer Japon Premium",
+      srHeading: "Footer Europa Premium",
+      logoWord: "EUROPA",
       samuraiImage: "/images/japon/hero/samuraiHero.webp",
-      brandLogo: "/logos/japon/japon-grande-logo.png",
+      brandLogo: "/logos/europa/europa-grande-logo.png",
       address:
         "Cda. de Omega 306, Romero de Terreros, Coyoacan, 04310 Ciudad de Mexico, CDMX",
       mapEmbedTitle: "Ubicacion Japon Premium",

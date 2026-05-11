@@ -1,91 +1,73 @@
-"use client";
+﻿"use client";
 
 import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import styles from "./nosotros.module.css";
-import HomeFooter from "@/home/homeFooter";
+import Footer from "@/layout/footer/footer";
+import { DEFAULT_SITE_CONFIG } from "@/config/default-site-config";
+import Founders from "@/components/fouders/founders";
+import Hero from "@/components/nosotros-hero/nosotros-hero";
+import { BlurredStagger } from "@/components/ui/blurred-stagger-text/blurred-stagger-text";
 
 type TimelineEntry = {
   year: string;
   copy: string;
+  image: string;
 };
 
 const TIMELINE_ENTRIES: TimelineEntry[] = [
   {
     year: "2005",
     copy: "Nacimos como Viajes Liberacion, iniciando operaciones con entusiasmo y dedicacion al servicio del viajero.",
+    image: "/images/japon/1-alma-de-japon.webp",
   },
   {
     year: "2006",
     copy: "Abrimos nuestra primera sucursal oficial en el centro de la Ciudad de Mexico, dando el primer paso hacia la expansion.",
+    image: "/images/japon/1-camino-del-shogun.webp",
   },
   {
     year: "2007",
     copy: "Consolidamos una red de atencion mas amplia, manteniendo la cercania y confianza con nuestros viajeros frecuentes.",
+    image: "/images/japon/1-japon-pop.webp",
   },
   {
     year: "2008",
     copy: "Incorporamos nuevos destinos internacionales a nuestro catalogo, elevando la experiencia de viaje a otro nivel.",
+    image: "/images/japon/4.2-japon-pop-izq.webp",
   },
   {
     year: "2009",
     copy: "Fortalecimos alianzas estrategicas con proveedores clave para ofrecer una experiencia aun mas premium.",
+    image: "/images/japon/4.3-japon-pop-der.webp",
   },
   {
     year: "2010",
     copy: "Renacimos como Turismo Santa Fe, reflejando nuestra evolucion y compromiso con la excelencia operativa.",
+    image: "/images/japon/5.2-el-camino-del-shogun-izq.webp",
   },
   {
     year: "2012",
     copy: "Oficializamos el nombre Viajes PREMIUM, marcando una nueva etapa como operador turistico especializado.",
+    image: "/images/japon/5.1-el-camino-del-shogun-der.webp",
   },
   {
     year: "2020",
     copy: "Nos adaptamos a los retos de la pandemia, manteniendo el compromiso con nuestros clientes a traves de atencion personalizada y cambios flexibles.",
+    image: "/images/japon/6.1-acompañamiento-en-cada-etapa.webp",
   },
   {
     year: "2026",
-    copy: "Celebramos 21 anos de trayectoria con nuevos destinos, alianzas internacionales y una vision mas global que nunca.",
+    copy: "Celebramos 21 años de trayectoria con nuevos destinos, alianzas internacionales y una vision mas global que nunca.",
+    image: "/images/japon/6.1-experiencias-culturales-curadas.webp",
   },
 ];
 
-type PathPoint = {
-  x: number;
-  y: number;
-};
-
-function clamp(value: number, min: number, max: number): number {
-  return Math.min(max, Math.max(min, value));
-}
-
-function buildSmoothPath(points: PathPoint[]): string {
-  if (!points.length) return "";
-  if (points.length === 1) return `M ${points[0].x} ${points[0].y}`;
-
-  let d = `M ${points[0].x} ${points[0].y}`;
-
-  for (let i = 1; i < points.length; i += 1) {
-    const prev = points[i - 1];
-    const curr = points[i];
-    const dy = curr.y - prev.y;
-    const controlOffset = Math.max(40, Math.abs(dy) * 0.52);
-
-    d += ` C ${prev.x} ${prev.y + controlOffset}, ${curr.x} ${curr.y - controlOffset}, ${curr.x} ${curr.y}`;
-  }
-
-  return d;
-}
-
 export default function NosotrosTimeline() {
+  const heroPinRef = useRef<HTMLDivElement | null>(null);
   const sectionRef = useRef<HTMLElement | null>(null);
-  const timelineRef = useRef<HTMLDivElement | null>(null);
-  const spineSvgRef = useRef<SVGSVGElement | null>(null);
-  const spineBasePathRef = useRef<SVGPathElement | null>(null);
-  const spineProgressPathRef = useRef<SVGPathElement | null>(null);
-  const spineDotRef = useRef<SVGCircleElement | null>(null);
-  const rowRefs = useRef<Array<HTMLLIElement | null>>([]);
   const cardRefs = useRef<Array<HTMLElement | null>>([]);
   const yearRefs = useRef<Array<HTMLHeadingElement | null>>([]);
 
@@ -94,25 +76,22 @@ export default function NosotrosTimeline() {
       gsap.registerPlugin(ScrollTrigger);
 
       const section = sectionRef.current;
-      const timeline = timelineRef.current;
-      const spineSvg = spineSvgRef.current;
-      const spineBasePath = spineBasePathRef.current;
-      const spineProgressPath = spineProgressPathRef.current;
-      const spineDot = spineDotRef.current;
-      if (
-        !section ||
-        !timeline ||
-        !spineSvg ||
-        !spineBasePath ||
-        !spineProgressPath ||
-        !spineDot
-      ) {
+      const heroPin = heroPinRef.current;
+      if (!section || !heroPin) {
         return;
       }
 
-      const rows = rowRefs.current.filter((row): row is HTMLLIElement =>
-        Boolean(row),
-      );
+      const heroCoverTrigger = ScrollTrigger.create({
+        trigger: section,
+        start: "top bottom",
+        end: "top top",
+        pin: heroPin,
+        pinSpacing: false,
+        anticipatePin: 1,
+        fastScrollEnd: true,
+        invalidateOnRefresh: true,
+      });
+
       const cards = cardRefs.current.filter((card): card is HTMLElement =>
         Boolean(card),
       );
@@ -120,155 +99,67 @@ export default function NosotrosTimeline() {
         (year): year is HTMLHeadingElement => Boolean(year),
       );
 
-      if (!rows.length || !cards.length) return;
+      if (!cards.length) return;
 
-      const drawTracker = { progress: 0 };
-      let totalPathLength = 0;
-      let refreshFrame = 0;
-
-      const syncLineDraw = () => {
-        if (!totalPathLength) return;
-
-        const drawLength = totalPathLength * drawTracker.progress;
-        const boundedDrawLength = clamp(drawLength, 0, totalPathLength);
-        const point = spineProgressPath.getPointAtLength(boundedDrawLength);
-
-        gsap.set(spineProgressPath, {
-          strokeDasharray: totalPathLength,
-          strokeDashoffset: totalPathLength - boundedDrawLength,
-        });
-
-        gsap.set(spineDot, {
-          autoAlpha: drawTracker.progress > 0.003 ? 1 : 0,
-          attr: {
-            cx: point.x,
-            cy: point.y,
-          },
-        });
-      };
-
-      const updateSpineLayout = () => {
-        const timelineRect = timeline.getBoundingClientRect();
-        const width = Math.max(320, Math.round(timeline.clientWidth));
-        const height = Math.max(920, Math.round(timeline.scrollHeight));
-        const isMobile = window.matchMedia("(max-width: 959px)").matches;
-        const centerX = isMobile ? 38 : width / 2;
-        const swing = isMobile ? 16 : clamp(width * 0.115, 62, 112);
-
-        const rowCenters = rows.map((row) => {
-          const rowRect = row.getBoundingClientRect();
-          return rowRect.top - timelineRect.top + rowRect.height / 2;
-        });
-
-        if (!rowCenters.length) return;
-
-        const startY = Math.max(24, rowCenters[0] - (isMobile ? 58 : 84));
-        const endY = Math.min(
-          height - 24,
-          rowCenters[rowCenters.length - 1] + (isMobile ? 116 : 156),
-        );
-
-        const pathPoints: PathPoint[] = [{ x: centerX, y: startY }];
-
-        rowCenters.forEach((y, index) => {
-          const direction = index % 2 === 0 ? -1 : 1;
-          pathPoints.push({ x: centerX + direction * swing, y });
-        });
-
-        pathPoints.push({ x: centerX, y: endY });
-
-        const d = buildSmoothPath(pathPoints);
-        spineSvg.setAttribute("viewBox", `0 0 ${width} ${height}`);
-        spineBasePath.setAttribute("d", d);
-        spineProgressPath.setAttribute("d", d);
-
-        totalPathLength = spineProgressPath.getTotalLength();
-        syncLineDraw();
-      };
-
-      const queueRefresh = () => {
-        cancelAnimationFrame(refreshFrame);
-        refreshFrame = requestAnimationFrame(() => {
-          updateSpineLayout();
-          ScrollTrigger.refresh();
-        });
-      };
-
-      gsap.set(cards, { autoAlpha: 0, y: 28 });
-      gsap.set(spineDot, { autoAlpha: 0 });
+      gsap.set(cards, {
+        autoAlpha: 0,
+        y: 72,
+        scale: 0.92,
+        rotateX: 8,
+        rotateZ: -1.6,
+        filter: "blur(10px)",
+        transformOrigin: "50% 80%",
+      });
 
       const cardReveals = cards.map((card, index) => {
         const year = years[index];
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: card,
-            start: "top 86%",
-            end: "top 58%",
+            start: "top 88%",
+            end: "top 48%",
             toggleActions: "play none none reverse",
             invalidateOnRefresh: true,
           },
         });
 
-        tl.to(
-          card,
-          {
-            autoAlpha: 1,
-            y: 0,
-            duration: 0.72,
-            ease: "power3.out",
-          },
-          0,
-        );
+        tl.to(card, {
+          autoAlpha: 1,
+          y: 0,
+          scale: 1,
+          rotateX: 0,
+          rotateZ: index % 2 === 0 ? 0.15 : -0.15,
+          filter: "blur(0px)",
+          duration: 1.1,
+          ease: "expo.out",
+        });
 
         if (year) {
-          tl.to(
+          tl.fromTo(
             year,
+            { letterSpacing: "0.08em", y: 14, autoAlpha: 0.25 },
             {
-              color: "#95231c",
-              duration: 0.5,
-              ease: "power2.out",
+              letterSpacing: "0em",
+              y: 0,
+              autoAlpha: 1,
+              color: "var(--primary)",
+              duration: 0.76,
+              ease: "power3.out",
             },
-            0.06,
+            0.1,
           );
         }
 
         return tl;
       });
 
-      updateSpineLayout();
-
-      const lineTween = gsap.to(drawTracker, {
-        progress: 1,
-        ease: "none",
-        scrollTrigger: {
-          trigger: section,
-          start: "top top",
-          end: "bottom bottom",
-          scrub: 0.9,
-          invalidateOnRefresh: true,
-          onRefreshInit: updateSpineLayout,
-        },
-        onUpdate: syncLineDraw,
-      });
-
-      const resizeObserver = new ResizeObserver(queueRefresh);
-      resizeObserver.observe(timeline);
-      window.addEventListener("orientationchange", queueRefresh);
-      window.addEventListener("resize", queueRefresh);
-
       return () => {
-        cancelAnimationFrame(refreshFrame);
-        resizeObserver.disconnect();
-        window.removeEventListener("orientationchange", queueRefresh);
-        window.removeEventListener("resize", queueRefresh);
+        heroCoverTrigger.kill();
 
         cardReveals.forEach((tl) => {
           tl.scrollTrigger?.kill();
           tl.kill();
         });
-
-        lineTween.scrollTrigger?.kill();
-        lineTween.kill();
       };
     },
     { scope: sectionRef },
@@ -276,60 +167,57 @@ export default function NosotrosTimeline() {
 
   return (
     <main className={styles.page}>
+      <div ref={heroPinRef} className={styles.heroPinned}>
+        <Hero />
+      </div>
+
       <section ref={sectionRef} className={styles.section}>
         <header className={styles.header}>
-          <p className={styles.kicker}>NOSOTROS</p>
-          <h1 className={styles.title}>Nuestra Historia</h1>
+          <BlurredStagger text="Nuestra Historia" className={styles.title} />
           <p className={styles.subtitle}>
             Desde 2005 construimos una historia de evolucion continua, servicio
             y vision premium.
           </p>
         </header>
 
-        <div ref={timelineRef} className={styles.timelineTrack}>
-          <svg ref={spineSvgRef} className={styles.spineSvg} aria-hidden="true">
-            <path ref={spineBasePathRef} className={styles.spineBase} />
-            <path ref={spineProgressPathRef} className={styles.spineProgress} />
-            <circle ref={spineDotRef} className={styles.spineDot} r="8" />
-          </svg>
-
+        <div className={styles.timelineTrack}>
           <ol className={styles.list}>
             {TIMELINE_ENTRIES.map((entry, index) => {
-              const sideClass =
-                index % 2 === 0 ? styles.rowLeft : styles.rowRight;
               return (
-                <li
-                  key={entry.year}
-                  className={`${styles.row} ${sideClass}`}
-                  ref={(row) => {
-                    rowRefs.current[index] = row;
-                  }}
-                >
-                  <span className={styles.centerCol} aria-hidden="true" />
-
+                <li key={entry.year} className={styles.row}>
                   <article
                     className={styles.card}
                     ref={(card) => {
                       cardRefs.current[index] = card;
                     }}
                   >
-                    <h2
-                      className={styles.year}
-                      ref={(year) => {
-                        yearRefs.current[index] = year;
-                      }}
-                    >
-                      {entry.year}
-                    </h2>
-                    <p className={styles.copy}>{entry.copy}</p>
+                    <div className={styles.cardContent}>
+                      <h2
+                        className={styles.year}
+                        ref={(year) => {
+                          yearRefs.current[index] = year;
+                        }}
+                      >
+                        {entry.year}
+                      </h2>
+                      <p className={styles.copy}>{entry.copy}</p>
+                    </div>
+                    <div
+                      className={styles.cardMedia}
+                      style={{ backgroundImage: `url("${entry.image}")` }}
+                      role="img"
+                      aria-label={`Fotografia de ${entry.year}`}
+                    />
                   </article>
                 </li>
               );
             })}
           </ol>
         </div>
+
+        <Founders />
       </section>
-      <HomeFooter />
+      <Footer config={DEFAULT_SITE_CONFIG.footer} />
     </main>
   );
 }

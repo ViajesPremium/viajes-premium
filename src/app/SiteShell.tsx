@@ -4,21 +4,21 @@ import { type CSSProperties, useMemo, type ReactNode } from "react";
 import { usePathname } from "next/navigation";
 import CursorEffect from "@/components/ui/cursor/cursorEffect";
 import SmoothScrollProvider from "@/components/smooth-scroll/SmoothScrollProvider";
-import { BlogTransitionProvider } from "@/components/page-transition/BlogTransitionProvider";
+import { TransitionProvider } from "@/components/page-transition/TransitionProvider";
 import Navbar from "@/layout/navbar/navbar";
 import { premiumLandingConfigs } from "@/landings/premium/configs";
-import type { PremiumLandingConfig } from "@/landings/premium/types";
+import type { PremiumLandingConfig, PremiumLandingTheme } from "@/landings/premium/types";
+import { DEFAULT_SITE_CONFIG } from "@/config/default-site-config";
 
-function getThemeStyle(config: PremiumLandingConfig): CSSProperties {
+function getThemeStyle(theme: PremiumLandingTheme): CSSProperties {
   return {
-    "--primary-japon": config.theme.primary,
-    "--secondary-japon": config.theme.secondary,
-    "--complementary-japon":
-      config.theme.complementary ?? "var(--complementary-japon)",
-    "--yellow-japon": config.theme.yellow ?? "var(--yellow-japon)",
-    "--bg": config.theme.background ?? "var(--bg)",
-    "--black": config.theme.black ?? "var(--black)",
-    "--white": config.theme.white ?? "var(--white)",
+    "--primary": theme.primary,
+    "--secondary": theme.secondary,
+    "--complementary": theme.complementary ?? "var(--complementary)",
+    "--yellow": theme.yellow ?? "var(--yellow)",
+    "--bg": theme.background ?? "var(--bg)",
+    "--black": theme.black ?? "var(--black)",
+    "--white": theme.white ?? "var(--white)",
   } as CSSProperties;
 }
 
@@ -47,42 +47,41 @@ export default function SiteShell({ children }: SiteShellProps) {
   );
   const navbarKey = `navbar-${pathname ?? "root"}`;
 
-  return (
-    <div style={premiumConfig ? getThemeStyle(premiumConfig) : undefined}>
-      <BlogTransitionProvider>
-      <SmoothScrollProvider>
-        <CursorEffect>
-          {premiumConfig ? (
-            <Navbar
-              key={navbarKey}
-              items={premiumConfig.navbar.menuItems}
-              logoUrl={premiumConfig.navbar.logoUrl}
-              colors={premiumConfig.navbar.colors}
-              accentColor={premiumConfig.navbar.accentColor}
-              menuButtonColor={premiumConfig.navbar.menuButtonColor}
-              openMenuButtonColor={premiumConfig.navbar.openMenuButtonColor}
-              socialItems={premiumConfig.sections.footer.socialLinks.map(
-                (s) => ({
-                  label: s.label,
-                  link: s.href,
-                }),
-              )}
-              displaySocials={true}
-            />
-          ) : (
-            <Navbar key={navbarKey} />
-          )}
+  const activeTheme = premiumConfig?.theme ?? DEFAULT_SITE_CONFIG.theme;
 
-          {/* LA MAGIA: Al cambiar el pathname, React destruye y recrea esto.
-              GSAP obtiene un DOM limpio y sin bugs */}
-          <div key={pathname} className="w-full">
-            {children}
-          </div>
-        </CursorEffect>
-      </SmoothScrollProvider>
-      </BlogTransitionProvider>
+  const navbarProps = useMemo(() => {
+    if (premiumConfig) {
+      return {
+        items: premiumConfig.navbar.menuItems,
+        logoUrl: premiumConfig.navbar.logoUrl ?? DEFAULT_SITE_CONFIG.navbar.logoUrl,
+        colors: premiumConfig.navbar.colors,
+        accentColor: premiumConfig.navbar.accentColor,
+        menuButtonColor: premiumConfig.navbar.menuButtonColor,
+        openMenuButtonColor: premiumConfig.navbar.openMenuButtonColor,
+        socialItems: premiumConfig.sections.footer.socialLinks.map((s) => ({
+          label: s.label,
+          link: s.href,
+        })),
+      };
+    }
+    return DEFAULT_SITE_CONFIG.navbar;
+  }, [premiumConfig]);
+
+  return (
+    <div style={getThemeStyle(activeTheme)}>
+      <TransitionProvider>
+        <SmoothScrollProvider>
+          <CursorEffect>
+            <Navbar key={navbarKey} displaySocials {...navbarProps} />
+
+            {/* Al cambiar el pathname, React destruye y recrea esto.
+                GSAP obtiene un DOM limpio y sin bugs */}
+            <div key={pathname} className="w-full">
+              {children}
+            </div>
+          </CursorEffect>
+        </SmoothScrollProvider>
+      </TransitionProvider>
     </div>
   );
 }
-
-

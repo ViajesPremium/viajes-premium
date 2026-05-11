@@ -1,0 +1,83 @@
+.container {
+  width: 100%;
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: clamp(1rem, 2vw, 2rem);
+  background-color: var(--secondary);
+  background-image:
+    url("/images/japon/frase_kioto.webp"),
+    url("/images/japon/frase_kioto.webp"),
+    url("/images/japon/frase_kioto.webp"),
+    url("/images/japon/frase_kioto.webp"), url("/images/japon/frase_kioto.webp");
+  background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, no-repeat;
+  background-size:
+    min(26vw, 20rem), min(22vw, 17rem), min(24vw, 18rem), min(34vw, 28rem),
+    min(30vw, 22rem);
+  background-position:
+    18% 8%,
+    88% 12%,
+    12% 92%,
+    92% 90%,
+    2% 52%;
+}
+
+.highlight {
+  font-style: italic;
+  font-family: var(--font-bigcaslon);
+}
+
+.eyebrow {
+  margin: 0;
+  text-align: center;
+  color: var(--black);
+  font-size: clamp(1.5rem, 3.5vw, 3rem);
+  line-height: 1;
+  font-weight: 200;
+}
+
+.logoMask {
+  width: min(92vw, 78rem);
+  aspect-ratio: 3.2 / 1;
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)),
+    url("/images/japon/hero/japanHero.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  -webkit-mask-image: url("/principal-logo.svg");
+  mask-image: url("/principal-logo.svg");
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
+@media (max-width: 959px) {
+  .container {
+    background-size:
+      min(42vw, 11rem), min(36vw, 9rem), min(40vw, 10rem), min(48vw, 15rem),
+      min(46vw, 14rem);
+    background-position:
+      5% 9%,
+      96% 14%,
+      6% 90%,
+      96% 84%,
+      -8% 56%;
+  }
+
+  .logoMask {
+    width: min(96vw, 38rem);
+    aspect-ratio: 2.4 / 1;
+    background-image: url("/principal-logo.svg");
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: transparent;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+}

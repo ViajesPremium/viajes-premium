@@ -1,6 +1,13 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type CSSProperties,
+} from "react";
 import dynamic from "next/dynamic";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
@@ -8,8 +15,8 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import type { IconType } from "react-icons";
 import { FaFacebookF, FaInstagram, FaTiktok, FaYoutube } from "react-icons/fa6";
 import { scrollToSection } from "@/lib/scroll-to-section";
+import type { FooterSectionConfig } from "@/landings/premium/types";
 import styles from "./footer.module.css";
-import { usePremiumLandingConfig } from "@/landings/premium/context";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -32,57 +39,30 @@ function getSocialBrandIcon(label: string): IconType | null {
   return null;
 }
 
-export default function Footer() {
-  const {
-    sections: { footer },
-  } = usePremiumLandingConfig();
+type FooterProps = {
+  config: FooterSectionConfig;
+};
 
+export default function Footer({ config }: FooterProps) {
   const footerRef = useRef<HTMLElement>(null);
   const logoBandRef = useRef<HTMLDivElement>(null);
   const pressureWordRef = useRef<HTMLDivElement>(null);
-  const [logoSvgMarkup, setLogoSvgMarkup] = useState("");
   const [isMobileViewport, setIsMobileViewport] = useState(false);
+
+  const logoWord = config.logoWord ?? "VIAJES";
+  const isMainBrandFooter = logoWord.trim().toUpperCase() === "VIAJES";
+  const logoColor =
+    config.logoWordColor ?? (isMainBrandFooter ? "#ffffff" : "var(--primary)");
+  const logoBandStyle = {
+    "--footer-logo-line-color": logoColor,
+  } as CSSProperties;
 
   useEffect(() => {
     const media = window.matchMedia("(max-width: 768px)");
     const sync = () => setIsMobileViewport(media.matches);
     sync();
-
     media.addEventListener("change", sync);
     return () => media.removeEventListener("change", sync);
-  }, []);
-
-  useEffect(() => {
-    let cancelled = false;
-
-    const loadLogoSvg = async () => {
-      try {
-        const response = await fetch("/logos/japon/jp-blanco2.svg", {
-          cache: "force-cache",
-        });
-        if (!response.ok) return;
-
-        const raw = await response.text();
-        const cleaned = raw
-          .replace(/<\?xml[\s\S]*?\?>/i, "")
-          .replace(/fill:\s*#fff\s*;/gi, "fill: currentColor;")
-          .replace(/stroke:\s*#fff\s*;/gi, "stroke: currentColor;")
-          .replace(/viewBox="0 0 900 300"/i, 'viewBox="0 0 900 82"')
-          .trim();
-
-        if (!cancelled) {
-          setLogoSvgMarkup(cleaned);
-        }
-      } catch {
-        // No-op fallback handled in render.
-      }
-    };
-
-    void loadLogoSvg();
-
-    return () => {
-      cancelled = true;
-    };
   }, []);
 
   useGSAP(
@@ -90,23 +70,15 @@ export default function Footer() {
       const footerEl = footerRef.current;
       const logoBand = logoBandRef.current;
       const pressureWord = pressureWordRef.current;
-      if (!footerEl || !logoBand || !logoSvgMarkup) return;
+      if (!footerEl || !logoBand) return;
 
-      const svgEl = logoBand.querySelector("svg");
-      if (!svgEl) return;
-
-      const topLogoShapes = Array.from(
-        svgEl.querySelectorAll<SVGPathElement>("path.cls-1, path.cls-3"),
+      const viajesWord = logoBand.querySelector<HTMLElement>(
+        `.${styles.logoViajesWord}`,
       );
-
-      if (topLogoShapes.length === 0) return;
+      if (!viajesWord) return;
 
       const resetState = () => {
-        gsap.set(topLogoShapes, {
-          y: 8,
-          autoAlpha: 0.001,
-          filter: "blur(1px)",
-        });
+        gsap.set(viajesWord, { y: 8, autoAlpha: 0.001, filter: "blur(1px)" });
         if (pressureWord) {
           gsap.set(pressureWord, {
             y: 14,
@@ -119,18 +91,13 @@ export default function Footer() {
       };
 
       resetState();
-
       const revealTl = gsap.timeline({ paused: true });
-      revealTl.to(topLogoShapes, {
+      revealTl.to(viajesWord, {
         y: 0,
         autoAlpha: 1,
         filter: "blur(0px)",
         duration: 0.72,
         ease: "power2.out",
-        stagger: {
-          each: 0.018,
-          from: "start",
-        },
       });
       if (pressureWord) {
         revealTl.to(
@@ -159,20 +126,16 @@ export default function Footer() {
           resetState();
           revealTl.restart();
         },
-        onLeave: () => {
-          resetState();
-        },
-        onLeaveBack: () => {
-          resetState();
-        },
+        onLeave: resetState,
+        onLeaveBack: resetState,
       });
     },
-    { scope: footerRef, dependencies: [logoSvgMarkup] },
+    { scope: footerRef },
   );
 
   const mapQuery = useMemo(
-    () => encodeURIComponent(footer.address),
-    [footer.address],
+    () => encodeURIComponent(config.address),
+    [config.address],
   );
   const googleMapsEmbedUrl = `https://www.google.com/maps?q=${mapQuery}&output=embed`;
   const googleMapsOpenUrl = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
@@ -224,7 +187,7 @@ export default function Footer() {
 
   return (
     <footer ref={footerRef} className={styles.footer}>
-      <h2 className="srOnly">{footer.srHeading}</h2>
+      <h2 className="srOnly">{config.srHeading}</h2>
 
       <div className={styles.topSection}>
         <div className={styles.topLeft}>
@@ -232,7 +195,7 @@ export default function Footer() {
             <div className={styles.navSection}>
               <span className={styles.sectionLabel}>PÁGINAS</span>
               <nav className={styles.navLinks}>
-                {footer.pageLinks.map((item) => (
+                {config.pageLinks.map((item) => (
                   <a
                     key={item.label}
                     href={item.href}
@@ -248,10 +211,9 @@ export default function Footer() {
             <div className={styles.navSection}>
               <span className={styles.sectionLabel}>SÍGUENOS</span>
               <nav className={styles.socialNav} aria-label="Redes sociales">
-                {footer.socialLinks.map((item) => {
+                {config.socialLinks.map((item) => {
                   const Icon = getSocialBrandIcon(item.label);
                   if (!Icon) return null;
-
                   return (
                     <a
                       key={item.label}
@@ -273,16 +235,16 @@ export default function Footer() {
               <span className={styles.sectionLabel}>CONTACTO</span>
               <nav className={styles.navLinks}>
                 <a
-                  href={`mailto:${footer.contactEmail}`}
+                  href={`mailto:${config.contactEmail}`}
                   className={styles.navLink}
                 >
-                  {footer.contactEmail}
+                  {config.contactEmail}
                 </a>
                 <a
-                  href={`tel:${footer.contactPhoneLink}`}
+                  href={`tel:${config.contactPhoneLink}`}
                   className={styles.navLink}
                 >
-                  {footer.contactPhoneDisplay}
+                  {config.contactPhoneDisplay}
                 </a>
               </nav>
             </div>
@@ -292,7 +254,7 @@ export default function Footer() {
                 type="button"
                 onClick={handleBackToTop}
                 className={styles.backToTopIcon}
-                aria-label={footer.backToTopLabel || "Volver al inicio"}
+                aria-label={config.backToTopLabel || "Volver al inicio"}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -313,10 +275,10 @@ export default function Footer() {
 
         <div className={styles.topRight}>
           <div className={styles.mapCard}>
-            <p className={styles.mapAddress}>{footer.address}</p>
+            <p className={styles.mapAddress}>{config.address}</p>
             <div className={styles.mapFrameWrap}>
               <iframe
-                title={footer.mapEmbedTitle}
+                title={config.mapEmbedTitle}
                 src={googleMapsEmbedUrl}
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
@@ -334,16 +296,19 @@ export default function Footer() {
         </div>
       </div>
 
-      <div ref={logoBandRef} className={styles.logoBand} aria-hidden="true">
+      <div
+        ref={logoBandRef}
+        className={styles.logoBand}
+        style={logoBandStyle}
+        aria-hidden="true"
+      >
         <div className={styles.logoBandTop}>
-          {logoSvgMarkup ? (
-            <div
-              className={styles.logoBandSvg}
-              dangerouslySetInnerHTML={{ __html: logoSvgMarkup }}
-            />
-          ) : (
-            <div className={styles.logoFallback}>JP</div>
-          )}
+          <div className={styles.logoTopRow}>
+            <div className={styles.logoViajesWord} style={{ color: logoColor }}>
+              {logoWord}
+            </div>
+            <div className={styles.logoTopLine} />
+          </div>
         </div>
 
         <div ref={pressureWordRef} className={styles.logoPremiumPressure}>
@@ -352,7 +317,7 @@ export default function Footer() {
             className={styles.logoPressureText}
             fontFamily="Nohemi"
             fontUrl={pressureFont}
-            fontWeight={900}
+            fontWeight={700}
             fontStyle="normal"
             fontSize="var(--footer-premium-font-size)"
             minFontSize={48}
@@ -367,15 +332,15 @@ export default function Footer() {
             scaleFrom={1}
             scaleTo={1}
             animate={!isMobileViewport}
-            textColor="var(--primary-japon)"
+            textColor={logoColor}
           />
         </div>
       </div>
 
       <div className={styles.bottomBar}>
-        <p className={styles.copy}>{footer.copyrightText}</p>
+        <p className={styles.copy}>{config.copyrightText}</p>
         <div className={styles.legalLinks}>
-          {footer.legalLinks.map((legalLink) => (
+          {config.legalLinks.map((legalLink) => (
             <a key={legalLink.label} href={legalLink.href}>
               {legalLink.label}
             </a>

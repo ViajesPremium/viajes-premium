@@ -11,5 +11,9 @@ export const metadata: Metadata = {
 };
 
 export default function NosotrosPage() {
-  return <NosotrosTimeline />;
+  return (
+    <>
+      <NosotrosTimeline />
+    </>
+  );
 }

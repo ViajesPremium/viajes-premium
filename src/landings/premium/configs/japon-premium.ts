@@ -1,4 +1,4 @@
-import type { PremiumLandingConfig } from "@/landings/premium/types";
+﻿import type { PremiumLandingConfig } from "@/landings/premium/types";
 
 const JAPAN_MENU_ITEMS = [
   { label: "Inicio", ariaLabel: "Ir al inicio", link: "#inicio" },
@@ -85,8 +85,8 @@ export const japonPremiumLandingConfig: PremiumLandingConfig = {
   navbar: {
     logoUrl: "/logos/jp-negro.svg",
     menuItems: [...JAPAN_MENU_ITEMS],
-    colors: ["var(--primary-japon)", "var(--secondary-japon)"],
-    accentColor: "var(--primary-japon)",
+    colors: ["var(--primary)", "var(--secondary)"],
+    accentColor: "var(--primary)",
     menuButtonColor: "#ffffff",
     openMenuButtonColor: "#16181b",
   },
@@ -551,6 +551,7 @@ export const japonPremiumLandingConfig: PremiumLandingConfig = {
     },
     footer: {
       srHeading: "Footer Japón Premium",
+      logoWord: "JAPÓN",
       samuraiImage: "/images/japon/hero/samuraiHero.webp",
       brandLogo: "/logos/japon/japon-grande-logo.png",
       address:

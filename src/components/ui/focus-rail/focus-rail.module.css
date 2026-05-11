@@ -1,4 +1,4 @@
-/* Background effects */
+﻿/* Background effects */
 .bgContainer {
   pointer-events: none;
   position: absolute;
@@ -147,7 +147,7 @@
 
 .title {
   font-size: 2rem;
-  color: var(--secondary-japon);
+  color: var(--secondary);
   font-family: var(--font-bigcaslon);
   margin: 0.5rem 0;
   font-style: italic;

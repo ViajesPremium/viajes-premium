@@ -24,7 +24,7 @@ export type PremiumLandingTheme = {
 };
 
 export type PremiumLandingNavbar = {
-  logoUrl: string;
+  logoUrl?: string;
   menuItems: StaggeredMenuItem[];
   colors: [string, string];
   accentColor: string;
@@ -275,8 +275,10 @@ export type MarqueeSectionConfig = {
 
 export type FooterSectionConfig = {
   srHeading: string;
-  samuraiImage: string;
-  brandLogo: string;
+  logoWord?: string;
+  logoWordColor?: string;
+  samuraiImage?: string;
+  brandLogo?: string;
   address: string;
   mapEmbedTitle: string;
   contactEmail: string;

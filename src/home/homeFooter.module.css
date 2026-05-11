@@ -1,4 +1,4 @@
-.footer {
+﻿.footer {
   --footer-logo-inline-pad: clamp(0.5rem, 2.2vw, 2rem);
   --footer-logo-max-width: 1920px;
   --footer-logo-content-width: min(
@@ -99,7 +99,7 @@
 }
 
 .navLink:hover {
-  color: var(--primary-japon);
+  color: var(--primary);
 }
 
 .mapCard {

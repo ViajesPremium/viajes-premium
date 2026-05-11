@@ -1,4 +1,4 @@
-import type { CSSProperties, ReactNode } from "react";
+﻿import type { CSSProperties, ReactNode } from "react";
 import type { PremiumLandingConfig } from "@/landings/premium/types";
 
 type PremiumLandingLayoutProps = {
@@ -8,11 +8,11 @@ type PremiumLandingLayoutProps = {
 
 function getThemeStyle(config: PremiumLandingConfig): CSSProperties {
   return {
-    "--primary-japon": config.theme.primary,
-    "--secondary-japon": config.theme.secondary,
-    "--complementary-japon":
-      config.theme.complementary ?? "var(--complementary-japon)",
-    "--yellow-japon": config.theme.yellow ?? "var(--yellow-japon)",
+    "--primary": config.theme.primary,
+    "--secondary": config.theme.secondary,
+    "--complementary":
+      config.theme.complementary ?? "var(--complementary)",
+    "--yellow": config.theme.yellow ?? "var(--yellow)",
     "--bg": config.theme.background ?? "var(--bg)",
     "--black": config.theme.black ?? "var(--black)",
     "--white": config.theme.white ?? "var(--white)",

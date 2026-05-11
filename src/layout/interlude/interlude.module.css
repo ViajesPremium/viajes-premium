@@ -6,7 +6,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--yellow-japon);
+  background-color: var(--yellow);
   isolation: isolate;
 }
 
@@ -103,7 +103,7 @@
   margin: 0;
   font-family: var(--font-nohemi), sans-serif;
   font-size: clamp(0.5rem, 0.9vw, 0.78rem);
-  color: var(--yellow-japon);
+  color: var(--yellow);
   padding: 3px 5px;
   padding-top: 5px;
   width: fit-content;

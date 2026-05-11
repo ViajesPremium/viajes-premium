@@ -1,0 +1,90 @@
+﻿.container {
+  width: 100%;
+  margin-top: 8rem;
+  padding: 1rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(14rem, 22rem) minmax(0, 1fr);
+  gap: 3rem;
+  align-items: stretch;
+}
+
+.centerContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.centerTitle {
+  margin: 0;
+  text-align: center;
+  font-size: clamp(2.5rem, 4vw, 4.2rem);
+  line-height: 0.92;
+  color: var(--primary);
+  font-family: var(--font-bigcaslon);
+}
+
+.founderCard {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0;
+  border-top: 1px solid var(--primary);
+  background: color-mix(in srgb, var(--bg) 92%, white 8%);
+}
+
+.founderInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.founderImageContainer {
+  margin: 1rem 0;
+  border-radius: var(--radius);
+  overflow: hidden;
+  min-height: 18rem;
+}
+
+.founderImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.founderPosition {
+  font-size: clamp(0.78rem, 1.1vw, 0.92rem);
+  font-weight: 300;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding-top: 1rem;
+}
+
+.founderName {
+  margin: 0;
+  font-size: clamp(2rem, 2vw, 2.4rem);
+}
+
+.founderText {
+  margin: 0;
+  font-size: clamp(1.2rem, 1.22vw, 1.1rem);
+  font-weight: 300;
+  line-height: 1.65;
+}
+
+@media (max-width: 1024px) {
+  .container {
+    grid-template-columns: 1fr;
+    margin-top: 5rem;
+  }
+
+  .centerContainer {
+    order: -1;
+    padding: 0;
+  }
+
+  .founderImageContainer {
+    min-height: 14rem;
+  }
+}
