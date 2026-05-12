@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import NosotrosTimeline from "./nosotros";
+import NosotrosTimeline from "@/nosotros/nosotros";
 
 export const metadata: Metadata = {
   title: "Nosotros | Viajes Premium",

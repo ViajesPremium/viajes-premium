@@ -326,31 +326,27 @@ export default function Itinerary() {
             }
           },
           onLeave: () => {
-            if (!isExiting) {
-              captureFromTop();
-              return;
-            }
-            // Pin naturally ended (edge case — normally exit is via doExit).
+            // NUNCA mover el scroll aquí — hacerlo dispara onEnterBack/onEnter
+            // en cascada y causa el reset al primer card.
+            // Solo limpiar el estado en memoria; el siguiente onEnter reinicia
+            // la captura desde cero correctamente.
             exitInteractive();
             isExiting = false;
+            // Resetear estado visual para la próxima entrada
+            currentStepRef.current = 0;
+            setActiveStep(0);
+            setVisualState(0);
           },
           onLeaveBack: () => {
-            if (!isExiting) {
-              if (lastCaptureDirection < 0) {
-                captureFromBottom();
-              } else {
-                captureFromTop();
-              }
-              return;
-            }
-            // User scrolled back above the pin start (past Highlights into top).
+            // Igual que onLeave: solo limpiar, sin tocar el scroll.
             exitInteractive();
             isExiting = false;
+            currentStepRef.current = 0;
+            setActiveStep(0);
+            setVisualState(0);
           },
           onEnterBack: () => {
             // Guard: scroll programático activo (p.ej. botón back-to-top).
-            // Comprobación 1 — flag global puesto por el botón del footer.
-            // Comprobación 2 — Lenis.targetScroll por encima del pin start.
             const lenis = getLenis();
             const bypassDirection = getBypassDirection();
             const isPassthrough =
