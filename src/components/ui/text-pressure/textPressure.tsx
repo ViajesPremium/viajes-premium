@@ -61,7 +61,7 @@ const debounce = <Args extends unknown[]>(
 export default function TextPressure({
   text = "Compressa",
   fontFamily = "Nohemi Pressure",
-  fontUrl = "/fonts/nohemi-font-family/Nohemi-VF-BF6438cc58ad63d.ttf",
+  fontUrl = "/fonts/nohemi-font-family/Nohemi-VF.woff2",
   width = true,
   weight = true,
   italic = true,

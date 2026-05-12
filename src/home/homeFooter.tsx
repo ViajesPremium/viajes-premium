@@ -20,7 +20,7 @@ const TextPressure = dynamic(
   },
 );
 
-const pressureFont = "/fonts/nohemi-font-family/Nohemi-VF-BF6438cc58ad63d.ttf";
+const pressureFont = "/fonts/nohemi-font-family/Nohemi-VF.woff2";
 
 const HOME_FOOTER = {
   srHeading: "Footer Home",

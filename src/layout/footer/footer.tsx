@@ -28,7 +28,7 @@ const TextPressure = dynamic(
   },
 );
 
-const pressureFont = "/fonts/nohemi-font-family/Nohemi-VF-BF6438cc58ad63d.ttf";
+const pressureFont = "/fonts/nohemi-font-family/Nohemi-VF.woff2";
 
 function getSocialBrandIcon(label: string): IconType | null {
   const normalized = label.toLowerCase();
