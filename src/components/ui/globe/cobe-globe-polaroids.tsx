@@ -31,6 +31,16 @@ export interface GlobePolaroidsProps {
   opacity?: number;
   markerSize?: number;
   markerElevation?: number;
+  /** Límite del devicePixelRatio. Reducir en mobile para aliviar la GPU. */
+  maxPixelRatio?: number;
+  /** Desactivar antialiasing. Recomendado en mobile (ahorra ~2× GPU). */
+  antialias?: boolean;
+  /** Omitir bump map. Ahorra una texture fetch por fragmento + memoria. */
+  disableBumpMap?: boolean;
+  /** Segmentos máximos de la esfera. En mobile usar 48. */
+  maxGeometryDetail?: number;
+  /** Hint al driver WebGL para usar GPU eficiente. */
+  powerPreference?: "default" | "high-performance" | "low-power";
 }
 
 const defaultMarkers: PolaroidMarker[] = [
@@ -123,6 +133,11 @@ export function GlobePolaroids({
   opacity = 0.96,
   markerSize = 0.016,
   markerElevation = 0,
+  maxPixelRatio = 2,
+  antialias = true,
+  disableBumpMap = false,
+  maxGeometryDetail = 256,
+  powerPreference = "default",
 }: GlobePolaroidsProps) {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const overlayRefs = useRef<Record<string, HTMLAnchorElement | null>>({});
@@ -148,8 +163,8 @@ export function GlobePolaroids({
     const camera = new THREE.PerspectiveCamera(40, 1, 0.1, 100);
     camera.position.set(0, 0, 3.2);
 
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 4));
+    const renderer = new THREE.WebGLRenderer({ antialias, alpha: true, powerPreference });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, maxPixelRatio));
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     wrapper.appendChild(renderer.domElement);
 
@@ -170,32 +185,35 @@ export function GlobePolaroids({
 
     const textureLoader = new THREE.TextureLoader();
     const mapTexture = textureLoader.load("/images/globe/globe-texture.png");
-    const bumpTexture = textureLoader.load(
-      "https://unpkg.com/three-globe/example/img/earth-topology.png",
-    );
 
     mapTexture.colorSpace = THREE.SRGBColorSpace;
     mapTexture.minFilter = THREE.LinearFilter;
     mapTexture.magFilter = THREE.LinearFilter;
     mapTexture.generateMipmaps = false;
-    mapTexture.anisotropy = renderer.capabilities.getMaxAnisotropy();
-
-    bumpTexture.colorSpace = THREE.NoColorSpace;
-    bumpTexture.minFilter = THREE.LinearMipmapLinearFilter;
-    bumpTexture.magFilter = THREE.LinearFilter;
-    bumpTexture.generateMipmaps = true;
-    bumpTexture.anisotropy = renderer.capabilities.getMaxAnisotropy();
+    // En mobile limitamos anisotropía a 1 para ahorrar GPU; en desktop máxima calidad
+    mapTexture.anisotropy = disableBumpMap ? 1 : renderer.capabilities.getMaxAnisotropy();
 
     const [r, g, b] = baseColor;
     const detail = Math.max(
-      64,
-      Math.min(256, Math.floor(Math.sqrt(mapSamples) * 1.5)),
+      32,
+      Math.min(maxGeometryDetail, Math.floor(Math.sqrt(mapSamples) * 1.5)),
     );
+
+    let bumpTexture: THREE.Texture | null = null;
+    if (!disableBumpMap) {
+      bumpTexture = textureLoader.load(
+        "https://unpkg.com/three-globe/example/img/earth-topology.png",
+      );
+      bumpTexture.colorSpace = THREE.NoColorSpace;
+      bumpTexture.minFilter = THREE.LinearMipmapLinearFilter;
+      bumpTexture.magFilter = THREE.LinearFilter;
+      bumpTexture.generateMipmaps = true;
+      bumpTexture.anisotropy = renderer.capabilities.getMaxAnisotropy();
+    }
 
     const globeMat = new THREE.MeshStandardMaterial({
       map: mapTexture,
-      bumpMap: bumpTexture,
-      bumpScale: 0.025,
+      ...(bumpTexture ? { bumpMap: bumpTexture, bumpScale: 0.025 } : {}),
       color: new THREE.Color(r, g, b),
       roughness: 0.9 - Math.min(0.55, mapBrightness * 0.35),
       metalness: 0.02,
@@ -257,7 +275,10 @@ export function GlobePolaroids({
 
     const resize = () => {
       const size = wrapper.clientWidth;
-      renderer.setSize(size, size, false);
+      // true → Three.js también actualiza canvas.style.width/height al tamaño
+      // lógico (size px), mientras el buffer interno usa size × dpr para nitidez.
+      // Con false el canvas se mostraba a size×dpr px y se desbordaba del contenedor.
+      renderer.setSize(size, size, true);
       camera.aspect = 1;
       camera.updateProjectionMatrix();
     };
@@ -266,8 +287,18 @@ export function GlobePolaroids({
 
     const clock = new THREE.Clock();
     let frame = 0;
+    let visible = true;
+
+    // Pausar render cuando el globo sale de la viewport (ahorra batería en mobile)
+    const io = new IntersectionObserver(
+      ([entry]) => { visible = entry.isIntersecting; },
+      { threshold: 0 },
+    );
+    io.observe(wrapper);
 
     const animate = () => {
+      frame = requestAnimationFrame(animate);
+      if (!visible) return;
       const dt = clock.getDelta();
       if (!isDraggingRef.current) {
         // Rotacion autonoma muy sutil, constante.
@@ -285,7 +316,6 @@ export function GlobePolaroids({
       }
 
       renderer.render(scene, camera);
-
       markerVectors.forEach((m) => {
         const el = overlayRefs.current[m.id];
         if (!el) return;
@@ -309,7 +339,6 @@ export function GlobePolaroids({
         el.style.top = `${y}px`;
       });
 
-      frame = requestAnimationFrame(animate);
     };
 
     frame = requestAnimationFrame(animate);
@@ -321,6 +350,7 @@ export function GlobePolaroids({
     return () => {
       cancelAnimationFrame(frame);
       ro.disconnect();
+      io.disconnect();
       wrapper.removeEventListener("pointerdown", onPointerDown);
       window.removeEventListener("pointermove", onPointerMove);
       window.removeEventListener("pointerup", onPointerUp);
@@ -329,7 +359,7 @@ export function GlobePolaroids({
       globeMat.dispose();
       markerMat.dispose();
       mapTexture.dispose();
-      bumpTexture.dispose();
+      bumpTexture?.dispose();
       wrapper.removeChild(renderer.domElement);
     };
   }, [

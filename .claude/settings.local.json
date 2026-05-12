@@ -8,7 +8,8 @@
       "Bash(npm install *)",
       "Bash(node -e ' *)",
       "Bash(node -e \"const m = require\\('ttf2woff2'\\); console.log\\(typeof m, Object.keys\\(m\\)\\)\")",
-      "Bash(npm uninstall *)"
+      "Bash(npm uninstall *)",
+      "Bash(node -e \"const pkg = require\\('./package.json'\\); console.log\\(pkg.dependencies?.cobe || pkg.devDependencies?.cobe || 'not found'\\)\")"
     ]
   }
 }

@@ -123,13 +123,20 @@
     flex: none;
     width: 100%;
     height: auto;
-    min-height: 100svh;
+    min-height: 80svh;
   }
 
   .aboutBackdropGrid {
     width: 100%;
     height: 100%;
     gap: clamp(0.25rem, 1vw, 0.55rem);
+    /* 4 columnas en lugar de 8 */
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  /* Ocultar las últimas 4 imágenes — solo mostrar las primeras 4 */
+  .gridTile:nth-child(n + 5) {
+    display: none;
   }
 
   .aboutContent {

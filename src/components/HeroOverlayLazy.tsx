@@ -51,6 +51,20 @@ function HeroOverlayStatic() {
 function HeroOverlayMobileLite({ images }: { images: HeroOverlayImages }) {
   return (
     <div className={styles.heroOverlay} aria-hidden="true">
+      {/* Geisha — imagen base, siempre visible en mobile */}
+      <div className={styles.geishaParallaxLayer}>
+        <Image
+          src={images.baseImage}
+          alt={images.baseAlt}
+          width={745}
+          height={745}
+          sizes={HERO_BASE_IMAGE_SIZES}
+          loading="eager"
+          quality={85}
+          className={styles.geishaHero}
+        />
+      </div>
+
       <div className={styles.mobileLiteSamuraiMask}>
         <Image
           src={images.samuraiImage}

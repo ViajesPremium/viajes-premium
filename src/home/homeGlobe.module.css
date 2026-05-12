@@ -67,29 +67,26 @@
 
 @media (max-width: 900px) {
   .planetPane {
-    /* Sale del carril horizontal: ocupa su propio bloque vertical */
     flex: none;
     width: 100%;
-    height: auto;
-    min-height: 100svh;
+    height: 100svh;
+    padding: 0;
+  }
 
-    --bridge-globe-size: clamp(220px, 68vw, 380px);
-    --planet-inline-pad: clamp(10px, 4vw, 18px);
-    --planet-vertical-pad: clamp(10px, 2.4vh, 18px);
-    padding-top: max(var(--planet-vertical-pad), env(safe-area-inset-top));
-    padding-bottom: max(
-      var(--planet-vertical-pad),
-      env(safe-area-inset-bottom)
-    );
+  /* Texto de fondo visible en mobile */
+  .textContainer {
+    display: flex;
+  }
+
+  .text {
+    font-size: clamp(1.6rem, 13vw, 3.5rem);
+    letter-spacing: 0.2rem;
+    opacity: 0.2;
   }
 
   .bridgeGlobe {
-    width: min(
-      var(--bridge-globe-size),
-      calc(100vw - (var(--planet-inline-pad) * 2)),
-      calc(100svh - (var(--planet-vertical-pad) * 2) - 48px)
-    );
-    max-width: 330px;
+    width: min(72vw, 58svh, 340px);
+    max-width: unset;
   }
 }
 
