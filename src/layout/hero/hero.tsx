@@ -1,6 +1,6 @@
 "use client";
 
-import { type CSSProperties, useCallback } from "react";
+import { useCallback } from "react";
 import dynamic from "next/dynamic";
 import styles from "./hero.module.css";
 import HeroOverlayLazy from "@/components/HeroOverlayLazy";
@@ -60,9 +60,11 @@ function PressureWord({
 }
 
 export default function Hero() {
+  const config = usePremiumLandingConfig();
   const {
     sections: { hero },
-  } = usePremiumLandingConfig();
+  } = config;
+  const showCircle = config.id === "japon-premium";
 
   const mobileTitle = hero.mobileTitle ?? {
     line1Lead: hero.title.line1Lead,
@@ -87,12 +89,8 @@ export default function Hero() {
     goToTarget(hero.ctaSecondary.target);
   }, [goToTarget, hero.ctaSecondary.target]);
 
-  const heroStyle = {
-    "--hero-bg-image": `url("${hero.backgroundImage}")`,
-  } as CSSProperties;
-
   return (
-    <div className={styles.hero} style={heroStyle}>
+    <div className={styles.hero}>
       <div className={styles.titleContainer}>
         <h1 className={styles.srOnly}>{hero.seoHeading}</h1>
 
@@ -161,10 +159,7 @@ export default function Hero() {
       <div className={styles.contentContainer}>
         <div className={styles.description}>
           {hero.descriptionLines.map((line, index) => (
-            <p key={`${line.highlight}-${index}`}>
-              <span className={styles.highlightedText}>{line.highlight}</span>{" "}
-              {line.text}
-            </p>
+            <p key={index}>{line.text}</p>
           ))}
         </div>
 
@@ -184,7 +179,7 @@ export default function Hero() {
         </div>
       </div>
 
-      <div className={styles.circle} aria-hidden="true" />
+      {showCircle ? <div className={styles.circle} aria-hidden="true" /> : null}
 
       <HeroOverlayLazy overlayImages={hero.heroOverlay} />
     </div>

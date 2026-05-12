@@ -87,7 +87,7 @@ function DeferredSection({
   className,
   minHeight,
   bg,
-  rootMargin = "800px 0px",
+  rootMargin = "1500px 0px",
 }: DeferredSectionProps) {
   const ref = useRef<HTMLElement | null>(null);
   const [mounted, setMounted] = useState(
@@ -167,7 +167,6 @@ export default function PremiumLandingClient({
           id="nosotros"
           minHeight="90svh"
           bg="var(--black)"
-          rootMargin="250px 0px"
         >
           <Snapshot />
         </DeferredSection>
@@ -175,7 +174,6 @@ export default function PremiumLandingClient({
           id="first-form"
           minHeight="90svh"
           bg="var(--bg)"
-          rootMargin="200px 0px"
         >
           <FirstForm />
         </DeferredSection>
@@ -194,7 +192,6 @@ export default function PremiumLandingClient({
           className={styles.itinerariesLayer}
           minHeight="110svh"
           bg="var(--black)"
-          rootMargin="400px 0px"
         >
           <Itineraries />
         </DeferredSection>
@@ -204,7 +201,6 @@ export default function PremiumLandingClient({
           className={styles.includesLayer}
           minHeight="100svh"
           bg="var(--black)"
-          rootMargin="350px 0px"
         >
           <Includes />
         </DeferredSection>
@@ -227,7 +223,6 @@ export default function PremiumLandingClient({
           className={styles.faqsLayer}
           minHeight="100svh"
           bg="var(--bg)"
-          rootMargin="320px 0px"
         >
           <Faqs />
         </DeferredSection>
@@ -237,7 +232,6 @@ export default function PremiumLandingClient({
           className={styles.ctaMapMobileLayer}
           minHeight="80svh"
           bg="var(--black)"
-          rootMargin="320px 0px"
         >
           <CtaMapMobile />
         </DeferredSection>
@@ -247,7 +241,6 @@ export default function PremiumLandingClient({
           className={styles.formWrapper}
           minHeight="90svh"
           bg="var(--bg)"
-          rootMargin="280px 0px"
         >
           <CTAForm />
         </DeferredSection>

@@ -107,11 +107,9 @@ export const coreaPremiumLandingConfig: PremiumLandingConfig = {
       },
       descriptionLines: [
         {
-          highlight: "Eleva tu vida",
           text: "con una forma mas cuidada de vivir Japon.",
         },
         {
-          highlight: "Disenamos experiencias",
           text: "para quienes valoran atencion personal, criterio y una forma mas cuidada de vivir Japon.",
         },
       ],
@@ -125,11 +123,11 @@ export const coreaPremiumLandingConfig: PremiumLandingConfig = {
       },
       backgroundImage: "/images/japon/hero/japanHero.jpg",
     },
-    snapshot: {
+    aboutUs: {
       srHeading: "Snapshot de Japon Premium",
       badgeText: "Snapshot",
-      titleText: "Más de 21 años diseñando experiencias premium.",
-      titleHighlightWords: ["21", "años", "premium"],
+      titleText: "Más de 21 años diseñando experiencias PREMIUM.",
+      titleHighlightWords: ["21 años", "PREMIUM"],
       cards: [
         {
           image: "/images/peru/1-machu-pichu.webp",
@@ -177,7 +175,7 @@ export const coreaPremiumLandingConfig: PremiumLandingConfig = {
         contactPhoneLink: "+525512345678",
       },
     },
-    highlights: {
+    choose: {
       srHeading: "Highlights de Japon Premium",
       badgeText: "¿Por que Japon Premium?",
       kickerTop: "Trabajamos con marcas",

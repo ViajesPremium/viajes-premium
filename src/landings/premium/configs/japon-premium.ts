@@ -107,12 +107,10 @@ export const japonPremiumLandingConfig: PremiumLandingConfig = {
       },
       descriptionLines: [
         {
-          highlight: "Eleva tu vida",
           text: "conociendo Japón con profundidad, comodidad y acompañamiento real desde el primer contacto hasta su regreso.",
         },
         {
-          highlight: "Atención en español",
-          text: " · Planeación personalizada · Soporte antes, durante y después del viaje",
+          text: "Atención en español · Planeación personalizada · Soporte antes, durante y después del viaje",
         },
       ],
       ctaPrimary: {
@@ -131,11 +129,11 @@ export const japonPremiumLandingConfig: PremiumLandingConfig = {
         samuraiAlt: "Samurai Japón Premium",
       },
     },
-    snapshot: {
+    aboutUs: {
       srHeading: "Snapshot de Japón Premium",
       badgeText: "Nosotros",
-      titleText: "Más de 21 años diseñando experiencias premium.",
-      titleHighlightWords: ["21", "años", "premium"],
+      titleText: "Más de 21 años diseñando experiencias PREMIUM.",
+      titleHighlightWords: ["21 años", "PREMIUM"],
       cards: [
         {
           image: "/images/japon/1-alma-de-japon.webp",
@@ -190,7 +188,7 @@ export const japonPremiumLandingConfig: PremiumLandingConfig = {
         ],
       },
     },
-    highlights: {
+    choose: {
       srHeading: "Highlights de Japón Premium",
       badgeText: "¿Por qué Japón Premium?",
       kickerTop: "Trabajamos con marcas",

@@ -33,7 +33,7 @@ function splitByHighlight(text: string, highlight: string) {
 
 export default function Highlights() {
   const {
-    sections: { highlights },
+    sections: { choose: highlights },
   } = usePremiumLandingConfig();
 
   const goToTarget = useCallback((target: string) => {

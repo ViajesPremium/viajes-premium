@@ -33,7 +33,6 @@ export type PremiumLandingNavbar = {
 };
 
 export type HeroDescriptionLine = {
-  highlight: string;
   text: string;
 };
 
@@ -71,19 +70,19 @@ export type HeroSectionConfig = {
   heroOverlay?: HeroOverlayConfig;
 };
 
-export type SnapshotCardConfig = {
+export type AboutUsCardConfig = {
   image: string;
   text: string;
   experiences: string;
   wide?: boolean;
 };
 
-export type SnapshotSectionConfig = {
+export type AboutUsSectionConfig = {
   srHeading: string;
   badgeText: string;
   titleText: string;
   titleHighlightWords: string[];
-  cards: SnapshotCardConfig[];
+  cards: AboutUsCardConfig[];
   cardButtonLabel: string;
   cardButtonTarget: string;
 };
@@ -101,32 +100,32 @@ export type FirstFormSectionConfig = {
   formConfig: ImageSectionFormConfig;
 };
 
-export type HighlightsBracketConfig = {
+export type ChooseBracketConfig = {
   label: string;
   imageSrc: string;
   imageAlt: string;
   textTone?: "ot" | "epochal";
 };
 
-export type HighlightsSectionConfig = {
+export type ChooseSectionConfig = {
   srHeading: string;
   badgeText: string;
   kickerTop: string;
   kickerBottom: string;
   line1: {
     lead: string;
-    bracket: HighlightsBracketConfig;
+    bracket: ChooseBracketConfig;
     tail: string;
   };
   line2: {
     text: string;
     highlightWord: string;
-    bracket: HighlightsBracketConfig;
+    bracket: ChooseBracketConfig;
     tail: string;
   };
   line3: {
     lead: string;
-    bracket: HighlightsBracketConfig;
+    bracket: ChooseBracketConfig;
     tail: string;
   };
   line4: {
@@ -293,9 +292,9 @@ export type FooterSectionConfig = {
 
 export type PremiumLandingSections = {
   hero: HeroSectionConfig;
-  snapshot: SnapshotSectionConfig;
+  aboutUs: AboutUsSectionConfig;
   firstForm: FirstFormSectionConfig;
-  highlights: HighlightsSectionConfig;
+  choose: ChooseSectionConfig;
   itineraries: ItinerariesSectionConfig;
   includes: IncludesSectionConfig;
   testimonials: TestimonialsSectionConfig;

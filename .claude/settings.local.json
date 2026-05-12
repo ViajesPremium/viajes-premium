@@ -11,7 +11,10 @@
       "Read(//tmp/**)",
       "Bash(git add *)",
       "Bash(git commit -m ' *)",
-      "Bash(Remove-Item \"C:\\\\Users\\\\apps1\\\\Documents\\\\viajes-premium\\\\viajes-premium\\\\src\\\\layout\\\\navbar\\\\navbar.module.css\")"
+      "Bash(Remove-Item \"C:\\\\Users\\\\apps1\\\\Documents\\\\viajes-premium\\\\viajes-premium\\\\src\\\\layout\\\\navbar\\\\navbar.module.css\")",
+      "Bash(cat \"/mnt/c/Users/apps1/Documents/viajes-premium/viajes-premium/src/landings/premium/configs/peru-premium.ts\")",
+      "Bash(Get-ChildItem \"C:\\\\Users\\\\apps1\\\\Documents\\\\viajes-premium\\\\viajes-premium\\\\public\\\\images\\\\japon\" -Recurse -File)",
+      "Bash(Select-Object -ExpandProperty Name)"
     ]
   }
 }

@@ -3,7 +3,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import * as THREE from "three";
-import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
 import styles from "./heroOverlay.module.css";
 
 // ====================================================================
@@ -353,7 +352,6 @@ export default function HeroOverlay({
   baseImage = DEFAULT_BASE_IMAGE,
   samuraiImage = DEFAULT_SAMURAI_IMAGE,
   baseAlt = DEFAULT_BASE_ALT,
-  disableParallax = false,
 }: HeroOverlayProps) {
   const rootRef = useRef<HTMLDivElement | null>(null);
   const canvasContainerRef = useRef<HTMLDivElement | null>(null);
@@ -403,14 +401,6 @@ export default function HeroOverlay({
 
   const [shouldBootWebGL, setShouldBootWebGL] = useState(false);
 
-  // ── Geisha cursor-parallax (desktop only) ──────────────────────────
-  const rawParallaxX = useMotionValue(0);
-  const rawParallaxY = useMotionValue(0);
-  const geishaSpringX = useSpring(rawParallaxX, { stiffness: 65, damping: 18, mass: 0.7 });
-  const geishaSpringY = useSpring(rawParallaxY, { stiffness: 65, damping: 18, mass: 0.7 });
-  const geishaX = useTransform(geishaSpringX, (v) => v * 30);
-  const geishaY = useTransform(geishaSpringY, (v) => v * 20);
-
   const handlePointerMove = useCallback(
     (event: React.PointerEvent<HTMLDivElement>) => {
       if (!configRef.current.POINTER_ENABLED) return;
@@ -422,13 +412,8 @@ export default function HeroOverlay({
       targetMouseRef.current.set(clamp01(rawX), clamp01(rawY));
       targetHoverStateRef.current = 1;
       lastInteractionTimeRef.current = Date.now();
-      if (!disableParallax) {
-        // Update parallax (CSS coords: +x = right, +y = down)
-        rawParallaxX.set(rawX - 0.5);
-        rawParallaxY.set((event.clientY - rect.top) / rect.height - 0.5);
-      }
     },
-    [disableParallax, rawParallaxX, rawParallaxY],
+    [],
   );
 
   const handlePointerEnter = useCallback(
@@ -441,15 +426,7 @@ export default function HeroOverlay({
   const handlePointerLeave = useCallback(() => {
     if (!configRef.current.POINTER_ENABLED) return;
     targetHoverStateRef.current = 0;
-    rawParallaxX.set(0);
-    rawParallaxY.set(0);
-  }, [rawParallaxX, rawParallaxY]);
-
-  useEffect(() => {
-    if (!disableParallax) return;
-    rawParallaxX.set(0);
-    rawParallaxY.set(0);
-  }, [disableParallax, rawParallaxX, rawParallaxY]);
+  }, []);
 
   useEffect(() => {
     if (!ghostPathRef.current) return;
@@ -822,11 +799,8 @@ export default function HeroOverlay({
         <path ref={ghostPathRef} d={GHOST_SVG_PATH} fill="none" stroke="none" />
       </svg>
 
-      <motion.div
+      <div
         className={styles.geishaParallaxLayer}
-        style={
-          disableParallax ? { x: 0, y: 0 } : { x: geishaX, y: geishaY }
-        }
         aria-hidden="true"
       >
         <Image
@@ -839,7 +813,7 @@ export default function HeroOverlay({
           quality={90}
           className={styles.geishaHero}
         />
-      </motion.div>
+      </div>
 
       <div
         ref={canvasContainerRef}

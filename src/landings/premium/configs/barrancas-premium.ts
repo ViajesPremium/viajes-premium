@@ -101,12 +101,10 @@ export const barrancasPremiumLandingConfig: PremiumLandingConfig = {
       },
       descriptionLines: [
         {
-          highlight: "Eleva tu Vida",
           text: "conociendo Barrancas del cobre con profundidad, comodidad y acompañamiento real desde el primer contacto hasta su regreso.",
         },
         {
-          highlight: "Atención personalizada",
-          text: "planeación detallada, Soporte antes, durante y después del viaje.",
+          text: "Atención personalizada · planeación detallada, Soporte antes, durante y después del viaje.",
         },
       ],
       ctaPrimary: {
@@ -119,26 +117,26 @@ export const barrancasPremiumLandingConfig: PremiumLandingConfig = {
       },
       backgroundImage: "/images/japon/hero/japanHero.jpg",
     },
-    snapshot: {
+    aboutUs: {
       srHeading: "Snapshot de Barrancas Premium",
       badgeText: "Nosotros",
-      titleText: "Más de 21 años diseñando experiencias PREMIUM",
+      titleText: "Más de 21 años diseñando experiencias PREMIUM.",
       titleHighlightWords: ["21 años", "PREMIUM"],
       cards: [
         {
-          image: "/images/peru/1-machu-pichu.webp",
+          image: "/images/barrancas/nosotros/5-dias-chepe-express-miradores-naturaleza.webp",
           text: "El de Mayor Ranking",
           experiences: "5 días · Chepe Express · Miradores · Naturaleza",
           wide: false,
         },
         {
-          image: "/images/peru/1-gastronomia-autentica.webp",
+          image: "/images/barrancas/nosotros/7-dias-historia-paisajes-cultura-norteña.webp",
           text: "Leyendas del Fuerte",
           experiences: "7 días · Historia · Paisajes · Cultura norteña",
           wide: false,
         },
         {
-          image: "/images/japon/1-alojamiento-de-lujo.webp",
+          image: "/images/barrancas/nosotros/8-dias-gastronomia-cultura-menonita-chepe.webp",
           text: "Sabores del Norte",
           experiences: "8 días · Gastronomía · Cultura menonita · Chepe",
           wide: false,
@@ -168,7 +166,7 @@ export const barrancasPremiumLandingConfig: PremiumLandingConfig = {
         contactPhoneLink: "+525597733754",
       },
     },
-    highlights: {
+    choose: {
       srHeading: "Highlights de Barrancas Premium",
       badgeText: "¿Por qué Barrancas PREMIUM?",
       kickerTop: "Trabajamos con marcas",
@@ -177,7 +175,7 @@ export const barrancasPremiumLandingConfig: PremiumLandingConfig = {
         lead: "Viaja por",
         bracket: {
           label: "CHIHUAHUA",
-          imageSrc: "/images/japon/1-kyoto-nara.webp",
+          imageSrc: "/images/barrancas/porque/hover/chihuahua-premium.webp",
           imageAlt: "Recorrido escenico en Chepe Express",
           textTone: "ot",
         },
@@ -188,7 +186,7 @@ export const barrancasPremiumLandingConfig: PremiumLandingConfig = {
         highlightWord: "BARRANCAS",
         bracket: {
           label: "BARRANCAS",
-          imageSrc: "/images/japon/1-kyoto-nara.webp",
+          imageSrc: "/images/barrancas/porque/hover/barrancas-del-cobre-premium.webp",
           imageAlt: "Paisaje de la Sierra Tarahumara",
           textTone: "epochal",
         },
@@ -198,7 +196,7 @@ export const barrancasPremiumLandingConfig: PremiumLandingConfig = {
         lead: "Esencia y el",
         bracket: {
           label: "CHEPE",
-          imageSrc: "/images/japon/1-kyoto-nara.webp",
+          imageSrc: "/images/barrancas/porque/hover/chepe-express-premium.webp",
           imageAlt: "Norte de Mexico",
           textTone: "ot",
         },
@@ -214,7 +212,7 @@ export const barrancasPremiumLandingConfig: PremiumLandingConfig = {
           title: "Respaldo 24/7",
           description: "Soporte continuo para viajar con tranquilidad de principio a fin.",
           meta: "Respaldo",
-          imageSrc: "/images/japon/2-recorridos-diseñados-con-mas-criterio.webp",
+          imageSrc: "/images/barrancas/porque/valor/respaldo-24-7.webp",
           href: "#form",
         },
         {
@@ -222,7 +220,7 @@ export const barrancasPremiumLandingConfig: PremiumLandingConfig = {
           title: "Estancias a la altura del viaje",
           description: "Seleccionadas por su carácter, ubicación y nivel de servicio.",
           meta: "Estancias",
-          imageSrc: "/images/japon/2-acompañamiento-personalizado.webp",
+          imageSrc: "/images/barrancas/porque/valor/estancias-a-la-altura.webp",
           href: "#form",
         },
         {
@@ -230,7 +228,7 @@ export const barrancasPremiumLandingConfig: PremiumLandingConfig = {
           title: "Expertos que hablan del destino",
           description: "Guías expertos que conocen el destino con profundidad.",
           meta: "Expertos",
-          imageSrc: "/images/japon/2-respaldo-24-7.webp",
+          imageSrc: "/images/barrancas/porque/valor/expertos-que-hablan.webp",
           href: "#form",
         },
         {
@@ -238,7 +236,7 @@ export const barrancasPremiumLandingConfig: PremiumLandingConfig = {
           title: "Tranquilidad de principio a fin",
           description: "Cada detalle se cuida para que usted viaje con más confianza y respaldo.",
           meta: "Tranquilidad",
-          imageSrc: "/images/japon/2-estancia-a-la-altura-del-viaje.webp",
+          imageSrc: "/images/barrancas/porque/valor/tranquilidad-de-inicio-a-fin.webp",
           href: "#form",
         },
         {
@@ -246,7 +244,7 @@ export const barrancasPremiumLandingConfig: PremiumLandingConfig = {
           title: "Recorridos diseñados con más criterio",
           description: "Cada itinerario se estructura para dar más sentido, ritmo y calidad al viaje.",
           meta: "Diseño",
-          imageSrc: "/images/japon/2-expertos-que-hablan-su-idioma.webp",
+          imageSrc: "/images/barrancas/porque/valor/recorridos-diseñados.webp",
           href: "#form",
         },
         {
@@ -254,7 +252,7 @@ export const barrancasPremiumLandingConfig: PremiumLandingConfig = {
           title: "Acompañamiento personalizado",
           description: "Atención cercana antes, durante y después de su experiencia.",
           meta: "Servicio",
-          imageSrc: "/images/japon/2-tranquilidad-de-principio-a-fin.webp",
+          imageSrc: "/images/barrancas/porque/valor/acompañamiento-premium.webp",
           href: "#form",
         },
       ],
@@ -279,8 +277,8 @@ export const barrancasPremiumLandingConfig: PremiumLandingConfig = {
             "Un recorrido ideal para vivir Barrancas del Cobre por primera vez: miradores, naturaleza imponente y el Chepe Express en Clase PREMIUM.",
           ideal:
             "Ideal para parejas, familias y viajeros que buscan descubrir lo más icónico de Barrancas del Cobre en pocos días.",
-          image1: "/images/japon/3-alma-de-japon-izq.webp",
-          image2: "/images/japon/3-alma-de-japon-der.webp",
+          image1: "/images/barrancas/itinerarios/izquierda/mayor-ranking.webp",
+          image2: "/images/barrancas/itinerarios/derecha/mayor-ranking.webp",
           price: "Desde $____ MXN base doble",
         },
         {
@@ -291,8 +289,8 @@ export const barrancasPremiumLandingConfig: PremiumLandingConfig = {
             "Un relato por el norte de México: Barrancas del Cobre, El Fuerte, y experiencias culturales que conectan la historia, la naturaleza y la Sierra Tarahumara.",
           ideal:
             "Ideal para viajeros que buscan una experiencia con historia, cultura y escenarios memorables en Clase PREMIUM.",
-          image1: "/images/japon/4-japon-pop-izq.webp",
-          image2: "/images/japon/4-japon-pop-der.webp",
+          image1: "/images/barrancas/itinerarios/izquierda/leyendas-del-fuerte.webp",
+          image2: "/images/barrancas/itinerarios/derecha/leyendas-del-fuerte.webp",
           price: "Desde $____ MXN base doble",
         },
         {
@@ -303,8 +301,8 @@ export const barrancasPremiumLandingConfig: PremiumLandingConfig = {
             "Una experiencia más profunda por Barrancas del Cobre, donde el paisaje también se vive a través de la cocina regional y los sabores del norte.",
           ideal:
             "Ideal para viajeros que disfrutan conocer tradiciones locales y vivir un destino desde su cultura y sus sabores.",
-          image1: "/images/japon/5-el-camino-del-shogun-izq.webp",
-          image2: "/images/japon/5-el-camino-del-shogun-der.webp",
+          image1: "/images/barrancas/itinerarios/izquierda/sabores-del-norte.webp",
+          image2: "/images/barrancas/itinerarios/derecha/sabores-del-norte.webp",
           price: "Desde $____ MXN base doble",
         },
       ],
@@ -333,7 +331,7 @@ export const barrancasPremiumLandingConfig: PremiumLandingConfig = {
           title: "Alojamiento seleccionado con criterio",
           description:
             "Hoteles y estancias elegidas por ubicación y comodidad, para descansar bien después de cada experiencia en la Sierra Tarahumara.",
-          image: "/images/japon/6-estancias-con-caracter.webp",
+          image: "/images/barrancas/incluye/alojamiento-seleccionado.webp",
         },
         {
           id: "transport",
@@ -341,7 +339,7 @@ export const barrancasPremiumLandingConfig: PremiumLandingConfig = {
           title: "Traslados y conexiones bien resueltos",
           description:
             "Organizamos traslados y desplazamientos clave para que el viaje fluya entre Chihuahua, El Fuerte, Creel, Divisadero y Barrancas del Cobre.",
-          image: "/images/japon/6-traslados-mejor-coordinados.webp",
+          image: "/images/barrancas/incluye/traslados-y-conexiones.webp",
         },
         {
           id: "culture",
@@ -349,7 +347,7 @@ export const barrancasPremiumLandingConfig: PremiumLandingConfig = {
           title: "Experiencias privadas o seleccionadas",
           description:
             "Actividades elegidas con intención: miradores, recorridos escénicos, naturaleza y momentos diseñados para conectar con el destino.",
-          image: "/images/japon/6-experiencias-culturales-curadas.webp",
+          image: "/images/barrancas/incluye/experiencias-privadas.webp",
         },
         {
           id: "gastronomy",
@@ -357,7 +355,7 @@ export const barrancasPremiumLandingConfig: PremiumLandingConfig = {
           title: "Gastronomía del norte",
           description:
             "Experiencias culinarias y sabores regionales que forman parte central del viaje: cocina local, productos menonitas y propuestas gastronómicas seleccionadas.",
-          image: "/images/japon/6-escenas-gastronomicas-seleccionadas.webp",
+          image: "/images/barrancas/incluye/gastronomia-del-norte.webp",
         },
         {
           id: "support",
@@ -365,7 +363,7 @@ export const barrancasPremiumLandingConfig: PremiumLandingConfig = {
           title: "Acompañamiento en cada etapa",
           description:
             "Desde la planeación inicial hasta tu regreso, cuentas con seguimiento real, atención personalizada y soporte para vivir Barrancas del Cobre con tranquilidad.",
-          image: "/images/japon/6-acompañamiento-en-cada-etapa.webp",
+          image: "/images/barrancas/incluye/acompañamiento-durante-todo-el-recorrido.webp",
         },
       ],
     },
@@ -379,7 +377,7 @@ export const barrancasPremiumLandingConfig: PremiumLandingConfig = {
             "El paquete estuvo súper padre. Queremos reconocer el trabajo de todos los guías; en verdad, todos 10 de 10.",
           name: "Anabel González y Juan Hernández",
           location: "Ciudad de México",
-          avatar: "/images/stock/avatar-1.svg",
+          avatar: "/images/barrancas/testimonios/anabel-gonzalez.webp",
         },
         {
           id: 2,
@@ -387,7 +385,7 @@ export const barrancasPremiumLandingConfig: PremiumLandingConfig = {
             "Excelente servicio. El tour completo fue divino; nos sentimos cómodos y seguros en todo momento.",
           name: "Patricia Vega",
           location: "Yucatán",
-          avatar: "/images/stock/avatar-2.svg",
+          avatar: "/images/barrancas/testimonios/patricia-vega.webp",
         },
         {
           id: 3,
@@ -395,7 +393,7 @@ export const barrancasPremiumLandingConfig: PremiumLandingConfig = {
             "Servicio personalizado y de gran calidad. Guías atentos, excelente logística y experiencias increíbles en Chepe y destinos.",
           name: "Javier y Tere González",
           location: "Guadalajara",
-          avatar: "/images/stock/avatar-3.svg",
+          avatar: "/images/barrancas/testimonios/tere-gonzalez.webp",
         },
         {
           id: 4,
@@ -403,7 +401,7 @@ export const barrancasPremiumLandingConfig: PremiumLandingConfig = {
             "Gracias por las atenciones; el viaje fue inolvidable. Paisajes increíbles, actividades divertidas y mucho aprendizaje.",
           name: "Ing. Hernán García",
           location: "Monterrey",
-          avatar: "/images/stock/avatar-4.svg",
+          avatar: "/images/barrancas/testimonios/hernan-garcia.webp",
         },
         {
           id: 5,
@@ -411,7 +409,7 @@ export const barrancasPremiumLandingConfig: PremiumLandingConfig = {
             "Atención personalizada desde el inicio, guías muy amables y un viaje hermoso. Totalmente recomendable.",
           name: "Félix Romo",
           location: "Ciudad de México",
-          avatar: "/images/stock/avatar-5.svg",
+          avatar: "/images/barrancas/testimonios/felix-romo.webp",
         },
       ],
       cta: {

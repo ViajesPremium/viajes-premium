@@ -14,7 +14,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function Snapshot() {
   const {
-    sections: { snapshot },
+    sections: { aboutUs: snapshot },
   } = usePremiumLandingConfig();
 
   const sectionRef = useRef<HTMLElement>(null);

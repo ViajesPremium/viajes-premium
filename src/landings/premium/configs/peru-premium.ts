@@ -1,4 +1,4 @@
-﻿import type { PremiumLandingConfig } from "@/landings/premium/types";
+import type { PremiumLandingConfig } from "@/landings/premium/types";
 
 const PERU_MENU_ITEMS = [
   { label: "Inicio", ariaLabel: "Ir al inicio", link: "#inicio" },
@@ -101,24 +101,22 @@ export const peruPremiumLandingConfig: PremiumLandingConfig = {
       seoHeading: "Viaje a Perú desde México",
       title: {
         line1Lead: "Viaja a",
-        line1Focus: "Peru",
+        line1Focus: "Perú",
         line2Lead: "desde",
-        line2Focus: "Mexico",
+        line2Focus: "México",
       },
       mobileTitle: {
         line1Lead: "Viaja a",
-        line1Focus: "Peru",
+        line1Focus: "Perú",
         line2Lead: "Desde",
-        line2Focus: "Mexico",
+        line2Focus: "México",
       },
       descriptionLines: [
         {
-          highlight: "Eleva tu vida",
           text: "conociendo Perú con profundidad: desde Machu Picchu hasta la Amazonía, con comodidad y acompañamiento real desde el primer contacto hasta tu regreso.",
         },
         {
-          highlight: "Atención personalizada",
-          text: "planeación detallada, soporte antes, durante y después del viaje.",
+          text: "Atención personalizada · planeación detallada, soporte antes, durante y después del viaje.",
         },
       ],
       ctaPrimary: {
@@ -131,33 +129,30 @@ export const peruPremiumLandingConfig: PremiumLandingConfig = {
       },
       backgroundImage: "/images/japon/hero/japanHero.jpg",
     },
-    snapshot: {
+    aboutUs: {
       srHeading: "Nosotros Perú Premium",
       badgeText: "Nosotros",
-      titleText: "Más de 21 años diseñando experiencias PREMIUM",
-      titleHighlightWords: ["21", "años", "premium"],
+      titleText: "Más de 21 años diseñando experiencias PREMIUM.",
+      titleHighlightWords: ["21 años", "PREMIUM"],
       cards: [
         {
-          image: "/images/peru/1-machu-pichu.webp",
+          image: "/images/peru/nosotros/itinerario-montaña-de-colores.webp",
           text: "Montaña de Colores",
           experiences:
             "8 días · Cultura andina · Machu Picchu · Paisajes sagrados",
-
           wide: false,
         },
         {
-          image: "/images/peru/1-gastronomia-autentica.webp",
+          image: "/images/peru/nosotros/itinerario-dunas-dakar.webp",
           text: "Dunas Dakar",
           experiences:
             "9 días · Desierto peruano · Misterios ancestrales · Aventura",
-
           wide: false,
         },
         {
-          image: "/images/japon/1-alojamiento-de-lujo.webp",
+          image: "/images/peru/nosotros/itinerario-skyfall.webp",
           text: "Sky Fall",
           experiences: "11 días · Andes · Titicaca · Paisajes extremos · Uyuni",
-
           wide: false,
         },
       ],
@@ -176,7 +171,7 @@ export const peruPremiumLandingConfig: PremiumLandingConfig = {
         alt: "Viaje a Perú Premium",
       },
       formConfig: {
-        eyebrow: "Asesoria Privada",
+        eyebrow: "Asesoría Privada",
         title: "",
         subtitle: "",
         submitLabel: "Solicita tu propuesta",
@@ -185,45 +180,45 @@ export const peruPremiumLandingConfig: PremiumLandingConfig = {
         contactPhoneLink: "+525512345678",
       },
     },
-    highlights: {
+    choose: {
       srHeading: "Highlights de Perú Premium",
       badgeText: "¿Por qué Perú PREMIUM®?",
       kickerTop: "Trabajamos con marcas",
       kickerBottom: "Cuidadosamente seleccionadas.",
       line1: {
-        lead: "VIAJA POR CUSCO",
+        lead: "Viaja por",
         bracket: {
-          label: "OSAKA",
-          imageSrc: "/images/japon/1-kyoto-nara.webp",
-          imageAlt: "Vista urbana de Osaka",
+          label: "CUSCO",
+          imageSrc: "/images/peru/porque/hover/cusco-premium.webp",
+          imageAlt: "Vista de Cusco, Perú",
           textTone: "ot",
         },
-        tail: "CON CALMA",
+        tail: "con Calma",
       },
       line2: {
-        text: "MIENTRAS LOS ANDES REVELAN SU",
+        text: "Mientras",
         highlightWord: "ANDES",
         bracket: {
-          label: "KIOTO",
-          imageSrc: "/images/japon/1-kyoto-nara.webp",
-          imageAlt: "Escena tradicional de Kioto",
+          label: "ANDES",
+          imageSrc: "/images/peru/porque/hover/andes-premium.webp",
+          imageAlt: "Paisaje de los Andes peruanos",
           textTone: "epochal",
         },
-        tail: "",
+        tail: "revelan su",
       },
       line3: {
-        lead: "ESENCIA Y PERÚ REDEFINE TU",
+        lead: "Esencia y el",
         bracket: {
-          label: "TOKIO",
-          imageSrc: "/images/japon/1-kyoto-nara.webp",
-          imageAlt: "Paisaje iconico de Tokio",
+          label: "PERÚ",
+          imageSrc: "/images/peru/porque/hover/peru-premium.webp",
+          imageAlt: "Machu Picchu, Perú",
           textTone: "ot",
         },
-        tail: "",
+        tail: "redefine tu",
       },
       line4: {
-        text: "FORMA DE VIAJAR",
-        highlightWord: "VIAJAR",
+        text: "Forma de viajar",
+        highlightWord: "viajar",
       },
       focusRailItems: [
         {
@@ -232,7 +227,7 @@ export const peruPremiumLandingConfig: PremiumLandingConfig = {
           description:
             "Soporte continuo para viajar con tranquilidad de principio a fin.",
           meta: "Cultura",
-          imageSrc: "/images/japon/2-recorridos-diseñados-con-mas-criterio.webp",
+          imageSrc: "/images/peru/porque/valor/respaldo-peru-premium.webp",
           href: "#form",
         },
         {
@@ -241,7 +236,7 @@ export const peruPremiumLandingConfig: PremiumLandingConfig = {
           description:
             "Seleccionadas por su carácter, ubicación y nivel de servicio.",
           meta: "Urbano",
-          imageSrc: "/images/japon/2-acompañamiento-personalizado.webp",
+          imageSrc: "/images/peru/porque/valor/estancias-peru-premium.webp",
           href: "#form",
         },
         {
@@ -249,8 +244,8 @@ export const peruPremiumLandingConfig: PremiumLandingConfig = {
           title: "Expertos que hablan del destino",
           description:
             "Guías expertos que conocen el destino con profundidad.",
-          meta: "Gastronomia",
-          imageSrc: "/images/japon/2-respaldo-24-7.webp",
+          meta: "Gastronomía",
+          imageSrc: "/images/peru/porque/valor/expertos-peru-premium.webp",
           href: "#form",
         },
         {
@@ -259,7 +254,7 @@ export const peruPremiumLandingConfig: PremiumLandingConfig = {
           description:
             "Cada detalle se cuida para que usted viaje con más confianza y respaldo.",
           meta: "Bienestar",
-          imageSrc: "/images/japon/2-estancia-a-la-altura-del-viaje.webp",
+          imageSrc: "/images/peru/porque/valor/tranquilidad-peru-premium.webp",
           href: "#form",
         },
         {
@@ -268,7 +263,7 @@ export const peruPremiumLandingConfig: PremiumLandingConfig = {
           description:
             "Cada itinerario se estructura para dar más sentido, ritmo y calidad al viaje.",
           meta: "Naturaleza",
-          imageSrc: "/images/japon/2-expertos-que-hablan-su-idioma.webp",
+          imageSrc: "/images/peru/porque/valor/recorridos-peru-premium.webp",
           href: "#form",
         },
         {
@@ -276,8 +271,8 @@ export const peruPremiumLandingConfig: PremiumLandingConfig = {
           title: "Acompañamiento personalizado",
           description:
             "Atención cercana antes, durante y después de su experiencia en Perú.",
-          meta: "Tradicion",
-          imageSrc: "/images/japon/2-tranquilidad-de-principio-a-fin.webp",
+          meta: "Tradición",
+          imageSrc: "/images/peru/porque/valor/acompañamiento-peru-premium.webp",
           href: "#form",
         },
       ],
@@ -313,14 +308,14 @@ export const peruPremiumLandingConfig: PremiumLandingConfig = {
           description:
             "Una experiencia que combina desiertos, culturas ancestrales, recorridos escénicos y algunos de los paisajes más sorprendentes de Perú.",
           ideal:
-            "Ideal para Viajeros que buscan aventura, naturaleza y experiencias diferentes en Perú.",
+            "Ideal para viajeros que buscan aventura, naturaleza y experiencias diferentes en Perú.",
           image1: "/images/japon/4-japon-pop-izq.webp",
           image2: "/images/japon/4-japon-pop-der.webp",
           price: "",
         },
         {
           id: 3,
-          day: "11 días  · Andes · Titicaca · Paisajes extremos ·  Uyuni",
+          day: "11 días · Andes · Titicaca · Paisajes extremos · Uyuni",
           title: "Sky Fall",
           description:
             "Un recorrido por Perú y Bolivia que conecta cultura andina, paisajes extraordinarios y experiencias únicas como el Salar de Uyuni y Lago Titicaca.",
@@ -355,8 +350,8 @@ export const peruPremiumLandingConfig: PremiumLandingConfig = {
           label: "I",
           title: "Alojamiento seleccionado con criterio",
           description:
-            "Hoteles y estancias elegidas por ubicación y comodidad, para descansar bien después de cada experiencia en los Andes y la Amazonía peruana.",
-          image: "/images/japon/6-estancias-con-caracter.webp",
+            "Hoteles elegidos por ubicación y comodidad, para tu descanso después de cada experiencia en los Andes y la Amazonía peruana.",
+          image: "/images/peru/incluye/experiencia-alojamiento.webp",
         },
         {
           id: "transport",
@@ -364,15 +359,15 @@ export const peruPremiumLandingConfig: PremiumLandingConfig = {
           title: "Traslados y conexiones bien resueltos",
           description:
             "Logística planeada para optimizar tiempos y conectar cada experiencia con fluidez y comodidad.",
-          image: "/images/japon/6-traslados-mejor-coordinados.webp",
+          image: "/images/peru/incluye/experiencia-traslado.webp",
         },
         {
           id: "culture",
           label: "III",
           title: "Experiencias privadas o seleccionadas",
           description:
-            "Actividades elegidas con intención: Camino Inca, Valle Sagrado, comunidades quechuas, Lago Titicaca y momentos diseñados para conectar con la esencia del Perú profundo.",
-          image: "/images/japon/6-experiencias-culturales-curadas.webp",
+            "Actividades con intención: Camino Inca, Valle Sagrado, Lago Titicaca y momentos para conectar con la esencia del Perú profundo.",
+          image: "/images/peru/incluye/experiencia-privada.webp",
         },
         {
           id: "gastronomy",
@@ -380,7 +375,7 @@ export const peruPremiumLandingConfig: PremiumLandingConfig = {
           title: "Gastronomía peruana",
           description:
             "Experiencias culinarias que forman parte central del viaje: cocina andina, restaurantes seleccionados en Lima y sabores regionales que definen la identidad gastronómica del Perú.",
-          image: "/images/japon/6-escenas-gastronomicas-seleccionadas.webp",
+          image: "/images/peru/incluye/experiencia-gastronomia.webp",
         },
         {
           id: "support",
@@ -388,7 +383,7 @@ export const peruPremiumLandingConfig: PremiumLandingConfig = {
           title: "Acompañamiento en cada etapa",
           description:
             "Atención cercana antes, durante y después del viaje para acompañarte con claridad en cada decisión.",
-          image: "/images/japon/6-acompañamiento-en-cada-etapa.webp",
+          image: "/images/peru/incluye/experiencia-acompañamiento.webp",
         },
       ],
     },
@@ -400,22 +395,22 @@ export const peruPremiumLandingConfig: PremiumLandingConfig = {
           id: 1,
           quote:
             "Perú nos parecía un viaje complejo, pero aquí todo se sintió claro, cuidado y bien acompañado desde el principio.",
-          name: "Mariana Gutierrez",
-          location: "Ciudad de Mexico",
+          name: "Mariana Gutiérrez",
+          location: "Ciudad de México",
           avatar: "/images/stock/avatar-1.svg",
         },
         {
           id: 2,
           quote:
-            "Se nota cuando un viaje esta disenado con criterio. Hubo orden, atencion y experiencias que si valieron la inversion.",
-          name: "Rodrigo Trevino",
+            "Se nota cuando un viaje está diseñado con criterio. Hubo orden, atención y experiencias que sí valieron la inversión.",
+          name: "Rodrigo Treviño",
           location: "Guadalajara",
           avatar: "/images/stock/avatar-2.svg",
         },
         {
           id: 3,
           quote:
-            "Viajamos en familia y lo que mas agradecimos fue la enorme tranquilidad de sentir que todo estaba bien resuelto.",
+            "Viajamos en familia y lo que más agradecimos fue la enorme tranquilidad de sentir que todo estaba bien resuelto.",
           name: "Paola Mendoza",
           location: "Monterrey",
           avatar: "/images/stock/avatar-3.svg",
@@ -423,15 +418,15 @@ export const peruPremiumLandingConfig: PremiumLandingConfig = {
         {
           id: 4,
           quote:
-            "No fue solo un gran viaje, fue una experiencia mejor pensada, mejor cuidada y a la altura de lo que estabamos buscando.",
-          name: "Ernesto Ramirez",
-          location: "Ciudad de Mexico",
+            "No fue solo un gran viaje, fue una experiencia mejor pensada, mejor cuidada y a la altura de lo que estábamos buscando.",
+          name: "Ernesto Ramírez",
+          location: "Ciudad de México",
           avatar: "/images/stock/avatar-4.svg",
         },
         {
           id: 5,
           quote:
-            "La diferencia estuvo en los detalles: tiempos bien organizados, atencion cercana y una experiencia realmente fluida.",
+            "La diferencia estuvo en los detalles: tiempos bien organizados, atención cercana y una experiencia realmente fluida.",
           name: "Fernanda Lozano",
           location: "Puebla",
           avatar: "/images/stock/avatar-5.svg",
@@ -445,16 +440,16 @@ export const peruPremiumLandingConfig: PremiumLandingConfig = {
     interlude: {
       srHeading: "Mensaje del equipo Perú Premium",
       rows: [
-        "japon premium experience",
-        "curaduria atencion precision",
-        "momentos que si importan",
+        "Perú premium experience",
+        "curaduría atención precisión",
+        "momentos que sí importan",
       ],
       role: "Directora Comercial",
-      name: "Karina Sanchez",
+      name: "Karina Sánchez",
       quote:
-        "Nuestra mision es disenar experiencias personalizadas para que conectes emocionalmente con tu viaje. Creemos que viajar va mas alla de acumular destinos; se trata de crear vinculos reales con cada lugar.",
+        "Nuestra misión es diseñar experiencias personalizadas para que conectes emocionalmente con tu viaje. Creemos que viajar va más allá de acumular destinos; se trata de crear vínculos reales con cada lugar.",
       quoteHighlight:
-        "viajar va mas alla de acumular destinos; se trata de crear vinculos reales con cada lugar.",
+        "viajar va más allá de acumular destinos; se trata de crear vínculos reales con cada lugar.",
       image: {
         src: "/images/japon/karinaSanchezJapon.webp",
         alt: "Asesora de viaje Perú Premium",
@@ -472,7 +467,7 @@ export const peruPremiumLandingConfig: PremiumLandingConfig = {
       items: [...PERU_FAQS],
     },
     ctaForm: {
-      srHeading: "Formulario de contacto Peru Premium",
+      srHeading: "Formulario de contacto Perú Premium",
       backgroundImage: "/images/peru/7-formulario.webp",
       shojiBaseImage: "/images/peru/basePuertas2.webp",
       shojiLeftImage: "/images/japon/puertaIzquierda.webp",
@@ -537,7 +532,7 @@ export const peruPremiumLandingConfig: PremiumLandingConfig = {
       samuraiImage: "/images/japon/hero/samuraiHero.webp",
       brandLogo: "/logos/peru/peru-grande-logo.png",
       address:
-        "Cda. de Omega 306, Romero de Terreros, Coyoacan, 04310 Ciudad de Mexico, CDMX",
+        "Cda. de Omega 306, Romero de Terreros, Coyoacán, 04310 Ciudad de México, CDMX",
       mapEmbedTitle: "Ubicación Perú Premium",
       contactEmail: "reservaciones@viajespremium.com.mx",
       contactPhoneDisplay: "+52 55 1234 5678",
@@ -561,10 +556,8 @@ export const peruPremiumLandingConfig: PremiumLandingConfig = {
       backToTopLabel: "Volver al inicio",
       legalLinks: [
         { label: "PRIVACIDAD", href: "#" },
-        { label: "TERMINOS", href: "#" },
+        { label: "TÉRMINOS", href: "#" },
       ],
     },
   },
 };
-
-

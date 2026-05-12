@@ -8,13 +8,7 @@
   ); /* Small viewport height for mobile stability */
   overflow: hidden;
   isolation: isolate;
-  background-color: rgb(247, 203, 203);
-  background-image:
-    linear-gradient(rgb(243, 243, 240), rgba(243, 243, 240, 0.862)),
-    var(--hero-bg-image, url("/images/japon/hero/japanHero.jpg"));
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  background-color: var(--bg);
 }
 
 /* Añade esto a hero.module.css */
@@ -95,7 +89,7 @@
   gap: 1rem;
   top: 70%;
   left: clamp(5%, 10vw, 10%);
-  width: clamp(250px, 22vw, 350px);
+  width: clamp(250px, 23vw, 450px);
   color: var(--black);
   font-size: 1.1rem;
   font-weight: 300;
@@ -255,7 +249,7 @@
 
   .mobileBig {
     font-family: var(--font-nohemi);
-    font-size: clamp(4.8rem, 14vw, 5.8rem);
+    font-size: clamp(4rem, 14vw, 5.8rem);
     font-weight: 500;
   }
 

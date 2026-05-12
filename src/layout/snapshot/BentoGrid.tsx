@@ -6,12 +6,12 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Button } from "@/components/ui/button/button";
 import { scrollToSection } from "@/lib/scroll-to-section";
 import styles from "./snapshot.module.css";
-import type { SnapshotCardConfig } from "@/landings/premium/types";
+import type { AboutUsCardConfig } from "@/landings/premium/types";
 
 gsap.registerPlugin(ScrollTrigger);
 
 type BentoGridProps = {
-  cards: SnapshotCardConfig[];
+  cards: AboutUsCardConfig[];
   buttonLabel: string;
   buttonTarget: string;
 };

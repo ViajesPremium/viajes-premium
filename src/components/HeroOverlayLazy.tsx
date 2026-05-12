@@ -44,42 +44,13 @@ function resolveOverlayImages(
   };
 }
 
-function HeroOverlayStatic({ images }: { images: HeroOverlayImages }) {
-  return (
-    <div className={styles.heroOverlay} aria-hidden="true">
-      <Image
-        src={images.baseImage}
-        alt={images.baseAlt}
-        width={745}
-        height={745}
-        sizes={HERO_BASE_IMAGE_SIZES}
-        loading="eager"
-        quality={90}
-        fetchPriority="high"
-        decoding="async"
-        className={styles.geishaHero}
-      />
-      <div className={styles.samuraiHeroPlaceholder} />
-    </div>
-  );
+function HeroOverlayStatic() {
+  return null;
 }
 
 function HeroOverlayMobileLite({ images }: { images: HeroOverlayImages }) {
   return (
     <div className={styles.heroOverlay} aria-hidden="true">
-      <Image
-        src={images.baseImage}
-        alt={images.baseAlt}
-        width={745}
-        height={745}
-        sizes={HERO_BASE_IMAGE_SIZES}
-        loading="eager"
-        quality={90}
-        fetchPriority="high"
-        decoding="async"
-        className={styles.geishaHero}
-      />
-
       <div className={styles.mobileLiteSamuraiMask}>
         <Image
           src={images.samuraiImage}
@@ -208,14 +179,14 @@ export default function HeroOverlayLazy({
 
   if (isMobileViewport) {
     return prefersReducedMotion ? (
-      <HeroOverlayStatic images={images} />
+      <HeroOverlayStatic />
     ) : (
       <HeroOverlayMobileLite images={images} />
     );
   }
 
   if (forceStatic) {
-    return <HeroOverlayStatic images={images} />;
+    return <HeroOverlayStatic />;
   }
 
   if (preferLiteAnimation) {
@@ -223,8 +194,8 @@ export default function HeroOverlayLazy({
   }
 
   if (enableEnhancedOverlay && EnhancedOverlay) {
-    return <EnhancedOverlay {...images} disableParallax={disableParallax} />;
+    return <EnhancedOverlay {...images} />;
   }
 
-  return <HeroOverlayStatic images={images} />;
+  return <HeroOverlayStatic />;
 }
