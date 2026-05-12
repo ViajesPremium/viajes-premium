@@ -471,6 +471,8 @@ export const japonPremiumLandingConfig: PremiumLandingConfig = {
       srHeading: "Preguntas frecuentes sobre Japón Premium",
       accordionAriaLabel: "Preguntas frecuentes",
       badgeText: "Preguntas frecuentes",
+      leftImage: "/images/japon/samuraiPerfil.webp",
+      rightImage: "/images/japon/geishaPerfil.webp",
       title: "Todo lo que necesitas saber",
       subtitle:
         "Resolvemos las dudas más comunes sobre nuestros viajes a Japón. Si no encuentras lo que buscas, escríbenos directamente.",

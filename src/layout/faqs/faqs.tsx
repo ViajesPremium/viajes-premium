@@ -1,6 +1,6 @@
 ﻿"use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { ChevronDownIcon } from "@radix-ui/react-icons";
 import styles from "./faqs.module.css";
@@ -19,6 +19,11 @@ export default function Faqs({ hideCharacters = false }: FaqsProps) {
   } = usePremiumLandingConfig();
 
   const faqItems = faqs.items;
+  const sectionStyle = {
+    "--faq-left-image": faqs.leftImage ? `url("${faqs.leftImage}")` : "none",
+    "--faq-right-image": faqs.rightImage ? `url("${faqs.rightImage}")` : "none",
+  } as CSSProperties;
+
   const sectionRef = useRef<HTMLElement | null>(null);
   const mobileFiguresRef = useRef<HTMLDivElement | null>(null);
   const [openFaqId, setOpenFaqId] = useState<string>(
@@ -158,7 +163,7 @@ export default function Faqs({ hideCharacters = false }: FaqsProps) {
   };
 
   return (
-    <section ref={sectionRef} className={styles.section}>
+    <section ref={sectionRef} className={styles.section} style={sectionStyle}>
       <h2 className="srOnly">{faqs.srHeading}</h2>
       {!hideCharacters ? (
         <>

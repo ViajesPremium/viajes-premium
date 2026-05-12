@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef } from "react";
+import Image from "next/image";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Button } from "@/components/ui/button/button";
@@ -70,8 +71,15 @@ export default function BentoGrid({
             cardRefs.current[index] = el;
           }}
           className={styles.bentoCard}
-          style={{ backgroundImage: `url(${card.image})` }}
         >
+          <Image
+            src={card.image}
+            alt=""
+            fill
+            loading="lazy"
+            sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 640px"
+            style={{ objectFit: "cover" }}
+          />
           <p className={styles.bentoCardText}>{card.text}</p>
           <div className={styles.bentoCardOverlay} />
 

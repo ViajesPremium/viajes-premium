@@ -239,6 +239,8 @@ export type FaqsSectionConfig = {
   contactLabel: string;
   contactEmail: string;
   items: FaqItemConfig[];
+  leftImage?: string;
+  rightImage?: string;
 };
 
 export type CtaFormSectionConfig = {
