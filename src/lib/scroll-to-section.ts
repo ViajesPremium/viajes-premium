@@ -22,9 +22,6 @@ const ITINERARIES_PASSTHROUGH_TARGETS = new Set(["#form", "#inicio"]);
 const REVEAL_SCROLL_OFFSETS: Record<string, ScrollOffsetConfig> = {
   "#itinerarios": { viewportHeightMultiplier: 1, desktopOnly: true },
   "#testimonials": { viewportHeightMultiplier: 1, desktopOnly: true },
-  // Form section starts with the CTA map/reveal layer above the interactive form.
-  // This offset lands users at the revealed form content directly.
-  "#form": { viewportHeightMultiplier: 1 },
 };
 
 const clamp = (value: number, min: number, max: number) =>

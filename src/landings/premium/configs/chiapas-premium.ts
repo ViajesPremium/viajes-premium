@@ -1,4 +1,4 @@
-﻿import type { PremiumLandingConfig } from "@/landings/premium/types";
+import type { PremiumLandingConfig } from "@/landings/premium/types";
 
 const CHIAPAS_MENU_ITEMS = [
   { label: "Inicio", ariaLabel: "Ir al inicio", link: "#inicio" },
@@ -162,7 +162,7 @@ export const chiapasPremiumLandingConfig: PremiumLandingConfig = {
         "Cuentanos como imaginas tu viaje a Japon, compartenos tus intereses y te ayudaremos a identificar cual de nuestros 3 itinerarios se adapta mejor a tu estilo de viaje.",
       backgroundImage: "/images/japon/geishaForm.webp",
       mobileImage: {
-        src: "/images/japon/geishaFormSola.webp",
+        src: "/images/japon/geishaFormSola2.webp",
         alt: "Geisha en Japon",
       },
       formConfig: {

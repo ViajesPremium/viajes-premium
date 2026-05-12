@@ -243,7 +243,7 @@
         rgba(10, 7, 6, 0.04) 46%,
         rgba(10, 7, 6, 0.28) 100%
       ),
-      var(--cta-form-mobile-bg-image, url("/images/japon/fullBlack.webp"));
+      var(--cta-form-mobile-bg-image, url("/images/japon/fullblack.webp"));
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

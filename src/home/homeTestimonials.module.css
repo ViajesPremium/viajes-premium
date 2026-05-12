@@ -208,7 +208,7 @@
   padding: 1rem;
   height: 100%;
   flex: 1;
-  background-image: var(--bg), url("/images/japon-bg.jpg");
+  background-image: var(--bg), url("/images/viajes-premium/destinos/japon/japon-premium-1.webp");
   background-size: cover;
   background-position: center;
 }

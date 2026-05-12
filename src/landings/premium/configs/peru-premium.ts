@@ -167,7 +167,7 @@ export const peruPremiumLandingConfig: PremiumLandingConfig = {
         "Cuéntanos cómo imaginas tu viaje a Perú y descubriremos cuál de nuestros 3 itinerarios es perfecto para ti.",
  backgroundImage: "/images/japon/geishaForm-2.webp",
       mobileImage: {
-        src: "/images/japon/geishaFormSola.webp",
+        src: "/images/japon/geishaFormSola2.webp",
         alt: "Viaje a Perú Premium",
       },
       formConfig: {

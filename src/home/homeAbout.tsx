@@ -5,14 +5,38 @@ import { BlurredStagger } from "@/components/ui/blurred-stagger-text/blurred-sta
 import styles from "./homeAbout.module.css";
 
 const ABOUT_GRID_IMAGES = [
-  { src: "/images/japon/hero/japanHero.jpg", alt: "Japon" },
-  { src: "/vision/assets/dest-europa.jpg", alt: "Europa" },
-  { src: "/vision/assets/dest-corea.jpg", alt: "Corea" },
-  { src: "/vision/assets/dest-canada.jpg", alt: "Canada" },
-  { src: "/vision/assets/dest-peru.jpg", alt: "Peru" },
-  { src: "/vision/assets/dest-yucatan.jpg", alt: "Mexico" },
-  { src: "/vision/assets/dest-barrancas.jpg", alt: "Barrancas" },
-  { src: "/vision/assets/dest-chiapas.jpg", alt: "Chiapas" },
+  {
+    src: "/images/viajes-premium/destinos/japon/japon-premium-1.webp",
+    alt: "Japon",
+  },
+  {
+    src: "/images/viajes-premium/destinos/europa/europa-premium-1.webp",
+    alt: "Europa",
+  },
+  {
+    src: "/images/viajes-premium/destinos/corea/corea-premium-1.webp",
+    alt: "Corea",
+  },
+  {
+    src: "/images/viajes-premium/destinos/canada/canada-premium-1.webp",
+    alt: "Canada",
+  },
+  {
+    src: "/images/viajes-premium/destinos/peru/peru-premium-1.webp",
+    alt: "Peru",
+  },
+  {
+    src: "/images/viajes-premium/destinos/yucatan/yucatan-premium-1.webp",
+    alt: "Mexico",
+  },
+  {
+    src: "/images/viajes-premium/destinos/barrancas/barrancas-premium-1.webp",
+    alt: "Barrancas",
+  },
+  {
+    src: "/images/viajes-premium/destinos/chiapas/chiapas-premium-1.webp",
+    alt: "Chiapas",
+  },
 ];
 
 export default function HomeAbout() {

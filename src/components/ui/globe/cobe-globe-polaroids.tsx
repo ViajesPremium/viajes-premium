@@ -55,7 +55,7 @@ const defaultMarkers: PolaroidMarker[] = [
   {
     id: "polaroid-europa",
     location: [48.86, 2.35],
-    image: "/vision/assets/dest-europa.jpg",
+    image: "/images/viajes-premium/destinos/europa/europa-premium-1.webp",
     caption: "Europa",
     rotate: 4,
     href: "/europa-premium",
@@ -63,7 +63,7 @@ const defaultMarkers: PolaroidMarker[] = [
   {
     id: "polaroid-corea",
     location: [37.57, 126.98],
-    image: "/vision/assets/dest-corea.jpg",
+    image: "/images/viajes-premium/destinos/corea/corea-premium-1.webp",
     caption: "Corea",
     rotate: -3,
     href: "/corea-premium",
@@ -71,7 +71,7 @@ const defaultMarkers: PolaroidMarker[] = [
   {
     id: "polaroid-canada",
     location: [45.42, -75.69],
-    image: "/vision/assets/dest-canada.jpg",
+    image: "/images/viajes-premium/destinos/canada/canada-premium-1.webp",
     caption: "Canada",
     rotate: 6,
     href: "/canada-premium",
@@ -79,7 +79,7 @@ const defaultMarkers: PolaroidMarker[] = [
   {
     id: "polaroid-peru",
     location: [-13.52, -71.97],
-    image: "/vision/assets/dest-peru.jpg",
+    image: "/images/viajes-premium/destinos/peru/peru-premium-1.webp",
     caption: "Peru",
     rotate: -4,
     href: "/peru-premium",
@@ -87,7 +87,7 @@ const defaultMarkers: PolaroidMarker[] = [
   {
     id: "polaroid-mexico",
     location: [19.43, -99.13],
-    image: "/vision/assets/dest-yucatan.jpg",
+    image: "/images/viajes-premium/destinos/yucatan/yucatan-premium-1.webp",
     caption: "Mexico",
     rotate: 3,
     href: "/yucatan-premium",
@@ -95,7 +95,7 @@ const defaultMarkers: PolaroidMarker[] = [
   {
     id: "polaroid-barrancas",
     location: [28.19, -108.23],
-    image: "/vision/assets/dest-barrancas.jpg",
+    image: "/images/viajes-premium/destinos/barrancas/barrancas-premium-1.webp",
     caption: "Barrancas",
     rotate: -2,
     href: "/barrancas-premium",
@@ -201,9 +201,7 @@ export function GlobePolaroids({
 
     let bumpTexture: THREE.Texture | null = null;
     if (!disableBumpMap) {
-      bumpTexture = textureLoader.load(
-        "https://unpkg.com/three-globe/example/img/earth-topology.png",
-      );
+      bumpTexture = textureLoader.load("/images/globe/earth-texture.png");
       bumpTexture.colorSpace = THREE.NoColorSpace;
       bumpTexture.minFilter = THREE.LinearMipmapLinearFilter;
       bumpTexture.magFilter = THREE.LinearFilter;

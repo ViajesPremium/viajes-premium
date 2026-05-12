@@ -1,4 +1,4 @@
-﻿import type { PremiumLandingConfig } from "@/landings/premium/types";
+import type { PremiumLandingConfig } from "@/landings/premium/types";
 
 const BARRANCAS_MENU_ITEMS = [
   { label: "Inicio", ariaLabel: "Ir al inicio", link: "#inicio" },
@@ -153,7 +153,7 @@ export const barrancasPremiumLandingConfig: PremiumLandingConfig = {
         "Cuéntanos cómo imaginas tu viaje a Barrancas del Cobre y descubriremos cuál de nuestros 3 itinerarios es perfecto para ti.",
  backgroundImage: "/images/japon/geishaForm-2.webp",
       mobileImage: {
-        src: "/images/japon/geishaFormSola.webp",
+        src: "/images/japon/geishaFormSola2.webp",
         alt: "Viajero en Barrancas del Cobre",
       },
       formConfig: {

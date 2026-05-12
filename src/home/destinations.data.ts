@@ -21,13 +21,13 @@ const DEFAULT_REVIEWS = [
     name: "Mariana Gutiérrez",
     quote:
       "Se nota cuando un viaje está pensado con criterio. Todo fluyó perfecto.",
-    avatar: "https://i.pravatar.cc/96?img=12",
+    avatar: "/images/japon/testimonios/carolina_grijalva.webp",
   },
   {
     name: "Rodrigo Treviño",
     quote:
       "Desde la planeación hasta el regreso, todo se sintió bien acompañado.",
-    avatar: "https://i.pravatar.cc/96?img=33",
+    avatar: "/images/japon/testimonios/francesco.webp",
   },
 ];
 
@@ -40,7 +40,7 @@ export const destinationCardsData: DestinationDataCard[] = [
     description:
       "Descubre el equilibrio perfecto entre la tradición milenaria y la vanguardia tecnológica en un viaje diseñado para elevar tus sentidos con total comodidad y el acompañamiento experto que mereces.",
     backgroundImage:
-      "https://images.pexels.com/photos/402028/pexels-photo-402028.jpeg?auto=compress&cs=tinysrgb&w=1600",
+      "/images/viajes-premium/destinos/japon/japon-premium-1.webp",
     galleryImages: [
       "/images/viajes-premium/destinos/japon/japon-premium-1.webp",
       "/images/viajes-premium/destinos/japon/japon-premium-2.webp",
@@ -64,7 +64,7 @@ export const destinationCardsData: DestinationDataCard[] = [
     description:
       "Una travesía exclusiva por los rincones más emblemáticos del viejo continente, diseñada con un ritmo pausado que permite disfrutar de la alta cultura, el descanso sofisticado y paisajes inolvidables.",
     backgroundImage:
-      "https://images.pexels.com/photos/532826/pexels-photo-532826.jpeg?auto=compress&cs=tinysrgb&w=1600",
+      "/images/viajes-premium/destinos/europa/europa-premium-1.webp",
     galleryImages: [
       "/images/viajes-premium/destinos/europa/europa-premium-1.webp",
       "/images/viajes-premium/destinos/europa/europa-premium-2.webp",
@@ -82,7 +82,7 @@ export const destinationCardsData: DestinationDataCard[] = [
     description:
       "Sumérgete en la elegancia de la cultura coreana a través de experiencias premium que fusionan el dinamismo urbano de Seúl con la serenidad de sus templos y una atención al detalle sin precedentes.",
     backgroundImage:
-      "https://images.pexels.com/photos/237211/pexels-photo-237211.jpeg?auto=compress&cs=tinysrgb&w=1600",
+      "/images/viajes-premium/destinos/corea/corea-premium-1.webp",
     galleryImages: [
       "/images/viajes-premium/destinos/corea/corea-premium-1.webp",
       "/images/viajes-premium/destinos/corea/corea-premium-2.webp",
@@ -100,7 +100,7 @@ export const destinationCardsData: DestinationDataCard[] = [
     description:
       "Déjate cautivar por la majestuosidad de las montañas rocosas y la pureza de la naturaleza canadiense en un itinerario curado minuciosamente para ofrecerte el máximo confort en cada aventura.",
     backgroundImage:
-      "https://images.pexels.com/photos/417074/pexels-photo-417074.jpeg?auto=compress&cs=tinysrgb&w=1600",
+      "/images/viajes-premium/destinos/canada/canada-premium-1.webp",
     galleryImages: [
       "/images/viajes-premium/destinos/canada/canada-premium-1.webp",
       "/images/viajes-premium/destinos/canada/canada-premium-2.webp",
@@ -118,7 +118,7 @@ export const destinationCardsData: DestinationDataCard[] = [
     description:
       "Un viaje sensorial al corazón del Imperio Inca, donde la mística de Machu Picchu se entrelaza con una propuesta gastronómica de clase mundial y paisajes que te dejarán sin aliento.",
     backgroundImage:
-      "https://images.pexels.com/photos/210243/pexels-photo-210243.jpeg?auto=compress&cs=tinysrgb&w=1600",
+      "/images/viajes-premium/destinos/peru/peru-premium-1.webp",
     galleryImages: [
       "/images/viajes-premium/destinos/peru/peru-premium-1.webp",
       "/images/viajes-premium/destinos/peru/peru-premium-2.webp",
@@ -135,7 +135,7 @@ export const destinationCardsData: DestinationDataCard[] = [
     secondaryColor: "#A32B8D",
     description: "Explora la selva profunda y los pueblos mágicos de Chiapas en una ruta tranquila y exclusiva, diseñada para conectar con la naturaleza y las raíces culturales de México con un toque de lujo.",
     backgroundImage:
-      "https://images.pexels.com/photos/325185/pexels-photo-325185.jpeg?auto=compress&cs=tinysrgb&w=1600",
+      "/images/viajes-premium/destinos/chiapas/chiapas-premium-1.webp",
     galleryImages: [
       "/images/viajes-premium/destinos/chiapas/chiapas-premium-1.webp",
       "/images/viajes-premium/destinos/chiapas/chiapas-premium-2.webp",
@@ -152,7 +152,7 @@ export const destinationCardsData: DestinationDataCard[] = [
     secondaryColor: "#D55C26",
     description: "Vive la grandeza de las Barrancas del Cobre a bordo del Chepe Express, disfrutando de vistas panorámicas inigualables y experiencias de aventura premium en uno de los cañones más profundos del mundo.",
     backgroundImage:
-      "https://images.pexels.com/photos/356807/pexels-photo-356807.jpeg?auto=compress&cs=tinysrgb&w=1600",
+      "/images/viajes-premium/destinos/barrancas/barrancas-premium-1.webp",
     galleryImages: [
       "/images/viajes-premium/destinos/barrancas/barrancas-premium-1.webp",
       "/images/viajes-premium/destinos/barrancas/barrancas-premium-2.webp",
@@ -169,7 +169,7 @@ export const destinationCardsData: DestinationDataCard[] = [
     secondaryColor: "#A42E56",
     description: "Disfruta del paraíso maya entre cenotes de aguas cristalinas, haciendas históricas y el lujo contemporáneo de la Riviera, en una experiencia diseñada para el descanso total y la exploración cultural.",
     backgroundImage:
-      "https://images.pexels.com/photos/1450353/pexels-photo-1450353.jpeg?auto=compress&cs=tinysrgb&w=1600",
+      "/images/viajes-premium/destinos/yucatan/yucatan-premium-1.webp",
     galleryImages: [
       "/images/viajes-premium/destinos/yucatan/yucatan-premium-1.webp",
       "/images/viajes-premium/destinos/yucatan/yucatan-premium-2.webp",

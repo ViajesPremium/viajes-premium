@@ -14,12 +14,12 @@ const editorialGridImages = [
     priority: true,
   },
   {
-    src: "/vision/assets/dest-europa.jpg",
+    src: "/images/viajes-premium/destinos/europa/europa-premium-1.webp",
     sizes: "(max-width: 768px) 50vw, 22vw",
     priority: false,
   },
   {
-    src: "/vision/assets/dest-canada.jpg",
+    src: "/images/viajes-premium/destinos/canada/canada-premium-1.webp",
     sizes: "(max-width: 768px) 0vw, 22vw",
     priority: false,
   },
