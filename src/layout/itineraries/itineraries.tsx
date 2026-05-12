@@ -158,7 +158,6 @@ export default function Itinerary() {
         //   EXITING     → user triggered exit, Lenis takes over scroll
         let isInteractive = false;
         let isExiting = false;
-        let lastCaptureDirection: 1 | -1 = 1;
 
         const MOBILE_STEP_DURATION = 0.52;
         const MOBILE_INFO_ACTIVE_DURATION = 0.4;
@@ -166,6 +165,7 @@ export default function Itinerary() {
         // Pin only needs to cover: (A) unlock scroll ≈1 vh + (B) exit scroll ≈0.3 vh.
         // We never reach the natural end — exit is always triggered programmatically.
         const MOBILE_PIN_VH = 1.65;
+        const EXIT_OFFSET_PX = Math.max(16, Math.round(window.innerHeight * 0.08));
 
         const getLenis = () =>
           (window as unknown as Record<string, LenisLike>).__lenis;
@@ -207,13 +207,8 @@ export default function Itinerary() {
           isInteractive = false;
         };
 
-        const captureAt = (
-          step: number,
-          scrollTarget: number,
-          direction: 1 | -1,
-        ) => {
+        const captureAt = (step: number, scrollTarget: number) => {
           const lenis = getLenis();
-          lastCaptureDirection = direction;
           activeTransition?.kill();
           activeTransition = null;
           isExiting = false;
@@ -230,15 +225,11 @@ export default function Itinerary() {
         };
 
         const captureFromTop = () => {
-          captureAt(0, pinTrigger.start + 2, 1);
+          captureAt(0, pinTrigger.start + 2);
         };
 
         const captureFromBottom = () => {
-          captureAt(
-            total - 1,
-            Math.max(pinTrigger.start + 2, pinTrigger.end - 2),
-            -1,
-          );
+          captureAt(total - 1, Math.max(pinTrigger.start + 2, pinTrigger.end - 2));
         };
 
         // ── Step animation ────────────────────────────────────────────────────
@@ -281,20 +272,26 @@ export default function Itinerary() {
         const doExit = (dir: 1 | -1) => {
           if (isExiting) return;
           isExiting = true;
-          exitInteractive(); // re-enable Lenis first
+          exitInteractive();
 
           const lenis = getLenis();
-          // Scroll just past the pin end (forward) or start (backward)
+          // Instant scroll releases the pin immediately so the
+          // user's remaining touch momentum carries them naturally
+          // into the next section. Animated scroll fights the pin
+          // on iOS and causes the "stuck" feeling.
           const target =
-            dir > 0 ? pinTrigger.end + 2 : Math.max(0, pinTrigger.start - 2);
+            dir > 0
+              ? pinTrigger.end + EXIT_OFFSET_PX
+              : Math.max(0, pinTrigger.start - EXIT_OFFSET_PX);
 
           if (lenis) {
             lenis.scrollTo(target, {
-              duration: 0.56,
-              easing: (t) => t * (2 - t),
+              duration: 0,
+              immediate: true,
+              force: true,
             });
           } else {
-            window.scrollTo({ top: target, behavior: "smooth" });
+            window.scrollTo({ top: target, left: 0, behavior: "auto" });
           }
         };
 
@@ -326,16 +323,12 @@ export default function Itinerary() {
             }
           },
           onLeave: () => {
-            // NUNCA mover el scroll aquí — hacerlo dispara onEnterBack/onEnter
-            // en cascada y causa el reset al primer card.
-            // Solo limpiar el estado en memoria; el siguiente onEnter reinicia
-            // la captura desde cero correctamente.
             exitInteractive();
             isExiting = false;
-            // Resetear estado visual para la próxima entrada
-            currentStepRef.current = 0;
-            setActiveStep(0);
-            setVisualState(0);
+            const lastStep = Math.max(0, total - 1);
+            currentStepRef.current = lastStep;
+            setActiveStep(lastStep);
+            setVisualState(lastStep);
           },
           onLeaveBack: () => {
             // Igual que onLeave: solo limpiar, sin tocar el scroll.
