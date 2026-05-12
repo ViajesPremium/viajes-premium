@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import createGlobe from "cobe";
+import createGlobe, { type Globe } from "cobe";
 
 // Mismas coordenadas que los polaroids del globe de desktop
 const DESTINATION_MARKERS = [
@@ -25,14 +25,14 @@ export default function CobeGlobeLite({ className = "" }: CobeGlobeLiteProps) {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    let globe: { destroy: () => void } | null = null;
+    // Cobe v2: Globe.update() en lugar de onRender callback
+    let globe: Globe | null = null;
     let phi = 1.2;
     let rafId = 0;
 
     const start = () => {
-      // offsetWidth ya tiene el valor correcto porque el canvas tiene aspect-ratio: 1/1
       const size = canvas.offsetWidth;
-if (size === 0) {
+      if (size === 0) {
         // Layout todavía no resuelto — reintentar en el siguiente frame
         rafId = requestAnimationFrame(start);
         return;
@@ -54,11 +54,15 @@ if (size === 0) {
         markerColor: [0.82, 0.65, 0.28],
         glowColor: [1, 1, 1],
         markers: DESTINATION_MARKERS,
-        onRender: (state) => {
-          state.phi = phi;
-          phi += 0.004;
-        },
       });
+
+      const animate = () => {
+        phi += 0.004;
+        globe!.update({ phi });
+        rafId = requestAnimationFrame(animate);
+      };
+
+      rafId = requestAnimationFrame(animate);
     };
 
     rafId = requestAnimationFrame(start);
@@ -70,10 +74,6 @@ if (size === 0) {
   }, []);
 
   return (
-    /*
-     * aspect-ratio: 1/1 en el propio canvas — no depende de ningún padre.
-     * offsetWidth da el ancho CSS real; height = width (siempre cuadrado).
-     */
     <canvas
       ref={canvasRef}
       className={className}
