@@ -47,8 +47,38 @@ export default function SmoothScrollProvider({
     });
 
     if (isMobile) {
+      // ── Mobile: Lenis ligero solo para mantener las barras del navegador ──
+      // Con syncTouch: true, Lenis intercepta el touch scroll y pone
+      // overflow: hidden en el documento. El browser no ve scroll nativo
+      // → nunca oculta su barra de dirección ni la barra inferior.
+      // lerp: 0 = sin suavizado, respuesta idéntica al scroll nativo.
       if (window.__lenis) delete window.__lenis;
+
+      const mobileLenis = new Lenis({
+        lerp: 0,
+        smoothWheel: false,
+        syncTouch: true,
+        touchMultiplier: 1,
+        gestureOrientation: "vertical",
+        autoRaf: false,
+      });
+
+      lenisRef.current = mobileLenis;
+      window.__lenis = mobileLenis;
       clearStaleLenisStoppedClass();
+
+      mobileLenis.on("scroll", ScrollTrigger.update);
+
+      tickerCb = (time: number) => {
+        mobileLenis.raf(time * 1000);
+      };
+      gsap.ticker.add(tickerCb);
+      gsap.ticker.lagSmoothing(0);
+
+      requestAnimationFrame(() => {
+        mobileLenis.resize();
+        ScrollTrigger.refresh();
+      });
     } else {
       // Inicialización síncrona, eliminamos el await problemático
       const lenis = new Lenis({
