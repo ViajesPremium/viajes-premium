@@ -88,8 +88,14 @@ export default function Itinerary() {
   const handleDownloadPdf = useCallback(() => {
     const files = itineraries.pdfDownloads ?? [];
     if (!files.length) return;
+    const activeFile = files[activeStep];
+    if (activeFile) {
+      downloadFiles([activeFile]);
+      return;
+    }
+    // Fallback para configuraciones con menos PDFs que cards.
     downloadFiles(files);
-  }, [itineraries.pdfDownloads]);
+  }, [activeStep, itineraries.pdfDownloads]);
   const handleGoToForm = useCallback(() => {
     const target = itineraries.primaryCta.target;
     if (target.startsWith("#")) {

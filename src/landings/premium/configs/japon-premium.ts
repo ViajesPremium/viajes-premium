@@ -337,8 +337,16 @@ export const japonPremiumLandingConfig: PremiumLandingConfig = {
       secondaryCtaLabel: "Descargar PDF",
       pdfDownloads: [
         {
-          href: "/images/japon/pdf/alma-de-japon.pdf",
-          fileName: "alma-de-japon.pdf",
+          href: "/images/japon/pdf/ALMA-DE-JAPON-ITINERARIO-JAPON-PREMIUM.pdf",
+          fileName: "ALMA-DE-JAPON-ITINERARIO-JAPON-PREMIUM.pdf",
+        },
+        {
+          href: "/images/japon/pdf/JAPON-POP-ITINERARIO-JAPON-PREMIUM.pdf",
+          fileName: "JAPON-POP-ITINERARIO-JAPON-PREMIUM.pdf",
+        },
+        {
+          href: "/images/japon/pdf/RUTA-DEL-SHOGUN-ITINERARIO-JAPON-PREMIUM.pdf",
+          fileName: "RUTA-DEL-SHOGUN-ITINERARIO-JAPON-PREMIUM.pdf",
         },
       ],
       primaryCta: {

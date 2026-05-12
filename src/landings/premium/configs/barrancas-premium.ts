@@ -277,8 +277,8 @@ export const barrancasPremiumLandingConfig: PremiumLandingConfig = {
             "Un recorrido ideal para vivir Barrancas del Cobre por primera vez: miradores, naturaleza imponente y el Chepe Express en Clase PREMIUM.",
           ideal:
             "Ideal para parejas, familias y viajeros que buscan descubrir lo más icónico de Barrancas del Cobre en pocos días.",
-          image1: "/images/barrancas/itinerarios/izquierda/mayor-ranking.webp",
-          image2: "/images/barrancas/itinerarios/derecha/mayor-ranking.webp",
+          image1: "/images/barrancas/itinerarios/izquierda/mayor-ranking1.1.webp",
+          image2: "/images/barrancas/itinerarios/derecha/mayor-ranking1.1.webp",
           price: "Desde $____ MXN base doble",
         },
         {
@@ -289,8 +289,8 @@ export const barrancasPremiumLandingConfig: PremiumLandingConfig = {
             "Un relato por el norte de México: Barrancas del Cobre, El Fuerte, y experiencias culturales que conectan la historia, la naturaleza y la Sierra Tarahumara.",
           ideal:
             "Ideal para viajeros que buscan una experiencia con historia, cultura y escenarios memorables en Clase PREMIUM.",
-          image1: "/images/barrancas/itinerarios/izquierda/leyendas-del-fuerte.webp",
-          image2: "/images/barrancas/itinerarios/derecha/leyendas-del-fuerte.webp",
+          image1: "/images/barrancas/itinerarios/izquierda/leyendas-del-fuerte1.1.webp",
+          image2: "/images/barrancas/itinerarios/derecha/leyendas-del-fuerte1.1.webp",
           price: "Desde $____ MXN base doble",
         },
         {
@@ -301,8 +301,8 @@ export const barrancasPremiumLandingConfig: PremiumLandingConfig = {
             "Una experiencia más profunda por Barrancas del Cobre, donde el paisaje también se vive a través de la cocina regional y los sabores del norte.",
           ideal:
             "Ideal para viajeros que disfrutan conocer tradiciones locales y vivir un destino desde su cultura y sus sabores.",
-          image1: "/images/barrancas/itinerarios/izquierda/sabores-del-norte.webp",
-          image2: "/images/barrancas/itinerarios/derecha/sabores-del-norte.webp",
+          image1: "/images/barrancas/itinerarios/izquierda/sabores-del-norte1.1.webp",
+          image2: "/images/barrancas/itinerarios/derecha/sabores-del-norte1.1.webp",
           price: "Desde $____ MXN base doble",
         },
       ],

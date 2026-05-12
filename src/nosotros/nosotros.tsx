@@ -29,17 +29,21 @@ export default function Nosotros() {
       const heroPin = heroPinRef.current;
       if (!section || !heroPin) return;
 
-      // Pin del hero mientras el contenido sube por encima
-      const heroCoverTrigger = ScrollTrigger.create({
-        trigger: section,
-        start: "top bottom",
-        end: "top top",
-        pin: heroPin,
-        pinSpacing: false,
-        anticipatePin: 1,
-        fastScrollEnd: true,
-        invalidateOnRefresh: true,
-      });
+      const isMobileViewport = window.matchMedia("(max-width: 959px)").matches;
+      // En mobile evitamos el pin del hero para prevenir offsets visuales
+      // en el primer viewport.
+      const heroCoverTrigger = isMobileViewport
+        ? null
+        : ScrollTrigger.create({
+            trigger: section,
+            start: "top bottom",
+            end: "top top",
+            pin: heroPin,
+            pinSpacing: false,
+            anticipatePin: 1,
+            fastScrollEnd: true,
+            invalidateOnRefresh: true,
+          });
 
       const cards = cardRefs.current.filter((c): c is HTMLElement => Boolean(c));
       const years = yearRefs.current.filter((y): y is HTMLHeadingElement => Boolean(y));
@@ -100,7 +104,7 @@ export default function Nosotros() {
       });
 
       return () => {
-        heroCoverTrigger.kill();
+        heroCoverTrigger?.kill();
         cardReveals.forEach((tl) => {
           tl.scrollTrigger?.kill();
           tl.kill();
