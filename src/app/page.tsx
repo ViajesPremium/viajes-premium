@@ -79,8 +79,8 @@ export default function Home() {
         };
       };
 
+      // Scroll horizontal solo en desktop — en mobile las secciones se apilan
       mm.add("(min-width: 901px)", () => createHorizontalTween(false));
-      mm.add("(max-width: 900px)", () => createHorizontalTween(true));
 
       return () => {
         mm.revert();

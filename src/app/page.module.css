@@ -74,15 +74,17 @@
 }
 
 @media (max-width: 900px) {
+  /* Sin pin horizontal: la escena fluye con el documento */
   .horizontalScene {
-    height: 100svh;
-    overflow: hidden;
+    height: auto;
+    overflow: visible;
   }
 
+  /* Track vertical: las 3 secciones se apilan */
   .track {
-    width: max-content;
-    height: 100%;
-    display: flex;
-    overflow-y: hidden;
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+    overflow-y: visible;
   }
 }

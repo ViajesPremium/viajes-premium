@@ -1,8 +1,10 @@
 /* ── Hero pane — contenedor raíz ─────────────────────────────────── */
 .heroPane {
   position: relative;
-  width: 100%;
-  min-height: 100svh;
+  /* Ocupa exactamente 1 panel en el carril horizontal (desktop) */
+  flex: 0 0 100vw;
+  width: 100vw;
+  height: 100%;
   display: flex;
   flex-direction: column;
   background-color: var(--black);
@@ -141,6 +143,14 @@
 
 /* ── Mobile ───────────────────────────────────────────────────────── */
 @media (max-width: 900px) {
+  /* En mobile: panel independiente de alto automático */
+  .heroPane {
+    flex: none;
+    width: 100%;
+    height: auto;
+    min-height: 100svh;
+  }
+
   .heroContent {
     flex-direction: column;
   }

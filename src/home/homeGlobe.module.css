@@ -67,8 +67,13 @@
 
 @media (max-width: 900px) {
   .planetPane {
-    --hero-unified-height: 100svh;
-    --bridge-globe-size: clamp(190px, 58vw, 330px);
+    /* Sale del carril horizontal: ocupa su propio bloque vertical */
+    flex: none;
+    width: 100%;
+    height: auto;
+    min-height: 100svh;
+
+    --bridge-globe-size: clamp(220px, 68vw, 380px);
     --planet-inline-pad: clamp(10px, 4vw, 18px);
     --planet-vertical-pad: clamp(10px, 2.4vh, 18px);
     padding-top: max(var(--planet-vertical-pad), env(safe-area-inset-top));

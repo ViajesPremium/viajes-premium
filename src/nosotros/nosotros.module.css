@@ -14,7 +14,6 @@
   z-index: 3;
   width: 100%;
   margin: 0 auto;
-  padding: 10rem 1rem;
   background: var(--bg);
 }
 
@@ -42,6 +41,7 @@
   line-height: 0.96;
   font-weight: 300;
   text-align: center;
+  padding-top: 10rem;
   letter-spacing: -0.02em;
   font-family: var(--font-nohemi), sans-serif;
 }
@@ -168,10 +168,14 @@
 
 @media (max-width: 959px) {
   .section {
-    padding: 3rem 1rem;
+    padding: 0rem 1rem;
   }
   .header {
     width: min(38rem, 100%);
+  }
+
+  .title {
+    padding-top: 3rem;
   }
 
   .list {

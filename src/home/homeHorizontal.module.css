@@ -11,7 +11,11 @@
 
 @media (max-width: 900px) {
   .container {
-    --hero-unified-height: 100svh;
+    /* Deja de ser el carril horizontal: se convierte en columna */
+    width: 100%;
+    min-height: unset;
+    height: auto;
+    flex-direction: column;
   }
 }
 

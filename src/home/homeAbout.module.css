@@ -118,6 +118,14 @@
 }
 
 @media (max-width: 900px) {
+  /* Sale del carril horizontal: ocupa su propio bloque vertical */
+  .aboutPane {
+    flex: none;
+    width: 100%;
+    height: auto;
+    min-height: 100svh;
+  }
+
   .aboutBackdropGrid {
     width: 100%;
     height: 100%;
