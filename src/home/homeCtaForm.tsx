@@ -9,7 +9,7 @@ import { BlurredStagger } from "@/components/ui/blurred-stagger-text/blurred-sta
 import styles from "./homeCtaForm.module.css";
 
 const CTA_FORM_MOBILE_BACKGROUND_IMAGE = "/images/japon/fullblack.webp";
-const CTA_FORM_MOBILE_FIGURE_IMAGE = "/images/japon/samuraiFormSola.webp";
+const CTA_FORM_MOBILE_FIGURE_IMAGE = "/images/japon/samuraiFormSola-2.webp";
 
 const HOME_CTA_FORM = {
   srHeading: "Formulario de contacto Japon Premium",
@@ -32,7 +32,10 @@ const HOME_CTA_FORM = {
         label: "Alma de Japon — Espiritual y de bienestar",
         value: "alma-de-japon",
       },
-      { label: "Japon Pop — Anime, tecnologia y cultura pop", value: "japon-pop" },
+      {
+        label: "Japon Pop — Anime, tecnologia y cultura pop",
+        value: "japon-pop",
+      },
       {
         label: "El Camino del Shogun — Autentico y cultural",
         value: "camino-del-shogun",
@@ -110,4 +113,3 @@ export default function HomeCtaForm() {
     </section>
   );
 }
-

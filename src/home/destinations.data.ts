@@ -50,7 +50,7 @@ export const destinationCardsData: DestinationDataCard[] = [
     reviewUrl: "https://www.google.com/search?q=Japón+Premium+reseñas",
     reviews: DEFAULT_REVIEWS,
     overlayImages: {
-      baseImage: "/images/japon/hero/geishaHero.webp",
+      baseImage: "/images/japon/hero/geishaHero2.webp",
       samuraiImage: "/images/japon/hero/samuraiHero.webp",
       baseAlt: "Hero Japón Premium",
       samuraiAlt: "Samurai Japón Premium",

@@ -8,7 +8,7 @@ import styles from "./ctaForm.module.css";
 import { usePremiumLandingConfig } from "@/landings/premium/context";
 
 const CTA_FORM_MOBILE_BACKGROUND_IMAGE = "/images/japon/fullblack.webp";
-const CTA_FORM_MOBILE_FIGURE_IMAGE = "/images/japon/samuraiFormSola.webp";
+const CTA_FORM_MOBILE_FIGURE_IMAGE = "/images/japon/samuraiFormSola-2.webp";
 
 export default function CTAForm() {
   const {

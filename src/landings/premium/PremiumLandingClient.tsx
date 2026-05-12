@@ -34,10 +34,6 @@ const CTAForm = dynamic(() => import("@/layout/form/ctaForm"), {
 const Faqs = dynamic(() => import("@/layout/faqs/faqs"), {
   loading: () => <PinPlaceholder height="100svh" bg="var(--bg)" />,
 });
-const CtaMapMobile = dynamic(
-  () => import("@/layout/cta-map-mobile/cta-map-mobile"),
-  { loading: () => <PinPlaceholder height="100svh" bg="var(--black)" /> },
-);
 const Highlights = dynamic(() => import("@/layout/highlights/highlights"));
 const Testimonials = dynamic(
   () => import("@/layout/testimonials/testimonials"),
@@ -163,18 +159,10 @@ export default function PremiumLandingClient({
         <section id="inicio">
           <Hero />
         </section>
-        <DeferredSection
-          id="nosotros"
-          minHeight="90svh"
-          bg="var(--black)"
-        >
+        <DeferredSection id="nosotros" minHeight="90svh" bg="var(--black)">
           <Snapshot />
         </DeferredSection>
-        <DeferredSection
-          id="first-form"
-          minHeight="90svh"
-          bg="var(--bg)"
-        >
+        <DeferredSection id="first-form" minHeight="90svh" bg="var(--bg)">
           <FirstForm />
         </DeferredSection>
 
@@ -225,15 +213,6 @@ export default function PremiumLandingClient({
           bg="var(--bg)"
         >
           <Faqs />
-        </DeferredSection>
-
-        <DeferredSection
-          id="cta-map-mobile"
-          className={styles.ctaMapMobileLayer}
-          minHeight="80svh"
-          bg="var(--black)"
-        >
-          <CtaMapMobile />
         </DeferredSection>
 
         <DeferredSection

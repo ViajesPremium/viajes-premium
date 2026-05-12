@@ -95,7 +95,7 @@ const MOBILE_CONFIG: EffectConfig = {
 const GHOST_SVG_PATH =
   "M 50 5 C 22 10, 22 16, 50 21 C 78 26, 78 32, 50 37 C 22 42, 22 48, 50 53 C 78 58, 78 64, 50 69 C 22 74, 22 80, 50 85 C 78 90, 78 95, 50 99";
 
-const DEFAULT_BASE_IMAGE = "/images/japon/hero/geishaHero.webp";
+const DEFAULT_BASE_IMAGE = "/images/japon/hero/geishaHero2.webp";
 const DEFAULT_SAMURAI_IMAGE = "/images/japon/hero/samuraiHero.webp";
 const DEFAULT_BASE_ALT = "Hero Base";
 
@@ -799,10 +799,7 @@ export default function HeroOverlay({
         <path ref={ghostPathRef} d={GHOST_SVG_PATH} fill="none" stroke="none" />
       </svg>
 
-      <div
-        className={styles.geishaParallaxLayer}
-        aria-hidden="true"
-      >
+      <div className={styles.geishaParallaxLayer} aria-hidden="true">
         <Image
           src={baseImage}
           alt={baseAlt}

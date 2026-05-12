@@ -446,7 +446,7 @@ export const canadaPremiumLandingConfig: PremiumLandingConfig = {
       quoteHighlight:
         "viajar va mas alla de acumular destinos; se trata de crear vinculos reales con cada lugar.",
       image: {
-        src: "/images/japon/karinaSanchezJapon.webp",
+        src: "/images/japon/karina.webp",
         alt: "Asesora de viaje Japon Premium",
       },
     },

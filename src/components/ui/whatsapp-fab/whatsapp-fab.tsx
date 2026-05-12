@@ -1,7 +1,14 @@
 ﻿"use client";
 
-import { AnimatePresence, motion } from "framer-motion";
-import { FormEvent, type CSSProperties, useEffect, useMemo, useRef, useState } from "react";
+import { AnimatePresence, motion } from "motion/react";
+import {
+  FormEvent,
+  type CSSProperties,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { usePathname } from "next/navigation";
 import { isValidPhoneNumber } from "react-phone-number-input";
 import { FaWhatsapp } from "react-icons/fa6";
@@ -58,11 +65,15 @@ const INTEREST_OPTIONS_BY_LANDING: Record<string, [string, string, string]> = {
   ],
 };
 
-function resolvePremiumConfig(pathname: string | null): PremiumLandingConfig | null {
+function resolvePremiumConfig(
+  pathname: string | null,
+): PremiumLandingConfig | null {
   if (!pathname) return null;
   return (
     Object.values(premiumLandingConfigs).find(
-      (config) => pathname === config.routePath || pathname.startsWith(`${config.routePath}/`),
+      (config) =>
+        pathname === config.routePath ||
+        pathname.startsWith(`${config.routePath}/`),
     ) ?? null
   );
 }
@@ -73,7 +84,11 @@ function parseDateToDate(value: string): Date | null {
   const year = Number(yearString);
   const month = Number(monthString);
   const day = Number(dayString);
-  if (!Number.isInteger(year) || !Number.isInteger(month) || !Number.isInteger(day)) {
+  if (
+    !Number.isInteger(year) ||
+    !Number.isInteger(month) ||
+    !Number.isInteger(day)
+  ) {
     return null;
   }
   if (month < 1 || month > 12 || day < 1 || day > 31) return null;
@@ -116,7 +131,10 @@ export default function WhatsAppFab() {
   const [dateTouched, setDateTouched] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const premiumConfig = useMemo(() => resolvePremiumConfig(pathname), [pathname]);
+  const premiumConfig = useMemo(
+    () => resolvePremiumConfig(pathname),
+    [pathname],
+  );
 
   const trimmedName = name.trim();
   const trimmedPhone = phone.trim();
@@ -138,7 +156,10 @@ export default function WhatsAppFab() {
   const phoneError = validatePhone(trimmedPhone);
   const dateError = validateTravelDate(trimmedTravelDate);
   const canSubmit =
-    trimmedName.length > 1 && trimmedInterest.length > 1 && !phoneError && !dateError;
+    trimmedName.length > 1 &&
+    trimmedInterest.length > 1 &&
+    !phoneError &&
+    !dateError;
 
   const accentColor = "#1cbd57";
   const submitBg = accentColor;
@@ -295,17 +316,25 @@ export default function WhatsAppFab() {
           >
             <p className={styles.title}>Escribenos por WhatsApp</p>
 
-            <label className={styles.label} htmlFor="wa-name">Nombre</label>
+            <label className={styles.label} htmlFor="wa-name">
+              Nombre
+            </label>
             <input
               id="wa-name"
               className={styles.input}
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder={premiumConfig ? `Tu nombre para ${premiumConfig.metadata.title}` : "Tu nombre"}
+              placeholder={
+                premiumConfig
+                  ? `Tu nombre para ${premiumConfig.metadata.title}`
+                  : "Tu nombre"
+              }
               autoComplete="name"
             />
 
-            <label className={styles.label} htmlFor="wa-phone">Numero</label>
+            <label className={styles.label} htmlFor="wa-phone">
+              Numero
+            </label>
             <PhoneInput
               id="wa-phone"
               defaultCountry="MX"
@@ -318,9 +347,13 @@ export default function WhatsAppFab() {
               invalid={(touched || phoneTouched) && Boolean(phoneError)}
               aria-invalid={(touched || phoneTouched) && Boolean(phoneError)}
             />
-            {(touched || phoneTouched) && phoneError ? <p className={styles.error}>{phoneError}</p> : null}
+            {(touched || phoneTouched) && phoneError ? (
+              <p className={styles.error}>{phoneError}</p>
+            ) : null}
 
-            <label className={styles.label} htmlFor="wa-interest">Tema de interes</label>
+            <label className={styles.label} htmlFor="wa-interest">
+              Tema de interes
+            </label>
             <select
               id="wa-interest"
               className={styles.select}
@@ -335,7 +368,9 @@ export default function WhatsAppFab() {
               ))}
             </select>
 
-            <label className={styles.label} htmlFor="wa-date">Fecha tentativa</label>
+            <label className={styles.label} htmlFor="wa-date">
+              Fecha tentativa
+            </label>
             <input
               id="wa-date"
               type="date"
@@ -345,10 +380,14 @@ export default function WhatsAppFab() {
               onBlur={() => setDateTouched(true)}
               aria-invalid={(touched || dateTouched) && Boolean(dateError)}
             />
-            {(touched || dateTouched) && dateError ? <p className={styles.error}>{dateError}</p> : null}
+            {(touched || dateTouched) && dateError ? (
+              <p className={styles.error}>{dateError}</p>
+            ) : null}
 
             {touched && !canSubmit ? (
-              <p className={styles.error}>Completa los 4 campos correctamente.</p>
+              <p className={styles.error}>
+                Completa los 4 campos correctamente.
+              </p>
             ) : null}
 
             <div className={styles.actions}>
@@ -366,8 +405,17 @@ export default function WhatsAppFab() {
         className={styles.fab}
         onClick={() => setIsOpen((prev) => !prev)}
         animate={{ scale: [1, 1.05, 1], y: [0, -6, 0] }}
-        transition={{ duration: 3, ease: "easeInOut", repeat: Infinity, repeatType: "loop" }}
-        whileHover={{ scale: 1.1, backgroundColor: "#1ebea5", transition: { type: "spring", stiffness: 300 } }}
+        transition={{
+          duration: 3,
+          ease: "easeInOut",
+          repeat: Infinity,
+          repeatType: "loop",
+        }}
+        whileHover={{
+          scale: 1.1,
+          backgroundColor: "#1ebea5",
+          transition: { type: "spring", stiffness: 300 },
+        }}
         whileTap={{ scale: 0.95 }}
       >
         <FaWhatsapp className={styles.icon} aria-hidden="true" />

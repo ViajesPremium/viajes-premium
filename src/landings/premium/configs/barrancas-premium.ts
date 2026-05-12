@@ -101,10 +101,10 @@ export const barrancasPremiumLandingConfig: PremiumLandingConfig = {
       },
       descriptionLines: [
         {
-          text: "conociendo Barrancas del cobre con profundidad, comodidad y acompañamiento real desde el primer contacto hasta su regreso.",
+          text: "Eleva tu vida conociendo Barrancas del cobre con profundidad, comodidad y acompañamiento real desde el primer contacto hasta su regreso.",
         },
         {
-          text: "Atención personalizada · planeación detallada, Soporte antes, durante y después del viaje.",
+          text: "Atención personalizada, planeación detallada, soporte antes, durante y después del viaje.",
         },
       ],
       ctaPrimary: {
@@ -151,7 +151,7 @@ export const barrancasPremiumLandingConfig: PremiumLandingConfig = {
       sectionTitleHighlightWord: "personalizada",
       sectionSubtitle:
         "Cuéntanos cómo imaginas tu viaje a Barrancas del Cobre y descubriremos cuál de nuestros 3 itinerarios es perfecto para ti.",
-      backgroundImage: "/images/japon/geishaForm.webp",
+ backgroundImage: "/images/japon/geishaForm-2.webp",
       mobileImage: {
         src: "/images/japon/geishaFormSola.webp",
         alt: "Viajero en Barrancas del Cobre",
@@ -431,7 +431,7 @@ export const barrancasPremiumLandingConfig: PremiumLandingConfig = {
       quoteHighlight:
         "Cuidamos cada detalle para que viajes con confianza, comodidad y sentido.",
       image: {
-        src: "/images/japon/karinaSanchezJapon.webp",
+        src: "/images/japon/karina.webp",
         alt: "Asesora de viaje Barrancas Premium",
       },
     },

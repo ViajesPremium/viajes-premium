@@ -113,10 +113,10 @@ export const peruPremiumLandingConfig: PremiumLandingConfig = {
       },
       descriptionLines: [
         {
-          text: "conociendo Perú con profundidad: desde Machu Picchu hasta la Amazonía, con comodidad y acompañamiento real desde el primer contacto hasta tu regreso.",
+          text: "Eleva tu vida conociendo Perú con profundidad: desde Machu Picchu hasta la Amazonía, con comodidad y acompañamiento real desde el primer contacto hasta tu regreso.",
         },
         {
-          text: "Atención personalizada · planeación detallada, soporte antes, durante y después del viaje.",
+          text: "Atención personalizada, planeación detallada, soporte antes, durante y después del viaje.",
         },
       ],
       ctaPrimary: {
@@ -165,7 +165,7 @@ export const peruPremiumLandingConfig: PremiumLandingConfig = {
       sectionTitleHighlightWord: "personalizada",
       sectionSubtitle:
         "Cuéntanos cómo imaginas tu viaje a Perú y descubriremos cuál de nuestros 3 itinerarios es perfecto para ti.",
-      backgroundImage: "/images/japon/geishaForm.webp",
+ backgroundImage: "/images/japon/geishaForm-2.webp",
       mobileImage: {
         src: "/images/japon/geishaFormSola.webp",
         alt: "Viaje a Perú Premium",
@@ -297,8 +297,8 @@ export const peruPremiumLandingConfig: PremiumLandingConfig = {
             "Un recorrido diseñado para descubrir Perú entre ciudades históricas, cultura andina y paisajes icónicos como Machu Picchu y la Montaña de Colores.",
           ideal:
             "Ideal para viajeros que buscan conocer la esencia de Perú por primera vez.",
-          image1: "/images/japon/3-alma-de-japon-izq.webp",
-          image2: "/images/japon/3-alma-de-japon-der.webp",
+          image1: "/images/peru/itinerarios/izquierda/montaña-peru-premium.webp",
+          image2: "/images/peru/itinerarios/derecha/montaña-peru-premium.webp",
           price: "",
         },
         {
@@ -309,8 +309,8 @@ export const peruPremiumLandingConfig: PremiumLandingConfig = {
             "Una experiencia que combina desiertos, culturas ancestrales, recorridos escénicos y algunos de los paisajes más sorprendentes de Perú.",
           ideal:
             "Ideal para viajeros que buscan aventura, naturaleza y experiencias diferentes en Perú.",
-          image1: "/images/japon/4-japon-pop-izq.webp",
-          image2: "/images/japon/4-japon-pop-der.webp",
+          image1: "/images/peru/itinerarios/izquierda/dunas-peru-premium.webp",
+          image2: "/images/peru/itinerarios/derecha/dunas-peru-premium.webp",
           price: "",
         },
         {
@@ -321,8 +321,8 @@ export const peruPremiumLandingConfig: PremiumLandingConfig = {
             "Un recorrido por Perú y Bolivia que conecta cultura andina, paisajes extraordinarios y experiencias únicas como el Salar de Uyuni y Lago Titicaca.",
           ideal:
             "Ideal para viajeros que buscan una experiencia más profunda y visualmente inolvidable.",
-          image1: "/images/japon/5-el-camino-del-shogun-izq.webp",
-          image2: "/images/japon/5-el-camino-del-shogun-der.webp",
+          image1: "/images/peru/itinerarios/izquierda/skyfall-peru-premium.webp",
+          image2: "/images/peru/itinerarios/derecha/skyfall-peru-premium.webp",
           price: "",
         },
       ],
@@ -394,42 +394,42 @@ export const peruPremiumLandingConfig: PremiumLandingConfig = {
         {
           id: 1,
           quote:
-            "Perú nos parecía un viaje complejo, pero aquí todo se sintió claro, cuidado y bien acompañado desde el principio.",
-          name: "Mariana Gutiérrez",
+            "Un viaje increible, guias, transporte y hospedaje, atención del personal, todo perfecto.",
+          name: "Gabriela Jaime",
           location: "Ciudad de México",
-          avatar: "/images/stock/avatar-1.svg",
+          avatar: "/images/peru/testimonios/gabriela-jaime.webp",
         },
         {
           id: 2,
           quote:
-            "Se nota cuando un viaje está diseñado con criterio. Hubo orden, atención y experiencias que sí valieron la inversión.",
-          name: "Rodrigo Treviño",
-          location: "Guadalajara",
-          avatar: "/images/stock/avatar-2.svg",
+            "Perú dejó de sentirse complicado. Todo estuvo perfectamente organizado y disfrutamos cada experiencia con muchísima tranquilidad.",
+          name: "Guadalupe Villa",
+          location: "Mérida",
+          avatar: "/images/peru/testimonios/guadalupe-villa.webp",
         },
         {
           id: 3,
           quote:
-            "Viajamos en familia y lo que más agradecimos fue la enorme tranquilidad de sentir que todo estaba bien resuelto.",
-          name: "Paola Mendoza",
-          location: "Monterrey",
-          avatar: "/images/stock/avatar-3.svg",
+            "Machu Picchu, Cusco y cada recorrido superaron mis expectativas. Se nota el cuidado y atención en cada detalle del viaje. ",
+          name: "Blanca Romero",
+          location: "Ciudad de México",
+          avatar: "/images/peru/testimonios/blanca-romero.webp",
         },
         {
           id: 4,
           quote:
-            "No fue solo un gran viaje, fue una experiencia mejor pensada, mejor cuidada y a la altura de lo que estábamos buscando.",
-          name: "Ernesto Ramírez",
-          location: "Ciudad de México",
-          avatar: "/images/stock/avatar-4.svg",
+            "Viajar con Perú Premium con acompañamiento real hizo toda la diferencia. Disfruté cada momento sin preocuparme por la logística.",
+          name: "Elena A.",
+          location: "Michoacán",
+          avatar: "/images/peru/testimonios/elena.webp",
         },
         {
           id: 5,
           quote:
-            "La diferencia estuvo en los detalles: tiempos bien organizados, atención cercana y una experiencia realmente fluida.",
-          name: "Fernanda Lozano",
-          location: "Puebla",
-          avatar: "/images/stock/avatar-5.svg",
+            "El viaje estuvo increíblemente bien diseñado. Perú en clase premium nos sorprendió todos los días y pudimos disfrutarlo con tranquilidad",
+          name: "Griselda y Rafael",
+          location: "Ciudad de México",
+          avatar: "/images/peru/testimonios/griselda-y-rafael.webp",
         },
       ],
       cta: {
@@ -451,7 +451,7 @@ export const peruPremiumLandingConfig: PremiumLandingConfig = {
       quoteHighlight:
         "viajar va más allá de acumular destinos; se trata de crear vínculos reales con cada lugar.",
       image: {
-        src: "/images/japon/karinaSanchezJapon.webp",
+        src: "/images/japon/karina.webp",
         alt: "Asesora de viaje Perú Premium",
       },
     },

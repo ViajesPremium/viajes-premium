@@ -87,7 +87,7 @@
   justify-content: center;
   position: absolute;
   gap: 1rem;
-  top: 70%;
+  top: 65%;
   left: clamp(5%, 10vw, 10%);
   width: clamp(250px, 23vw, 450px);
   color: var(--black);

@@ -160,7 +160,7 @@ export const yucatanPremiumLandingConfig: PremiumLandingConfig = {
       sectionTitleHighlightWord: "personalizada",
       sectionSubtitle:
         "Cuentanos como imaginas tu viaje a Japon, compartenos tus intereses y te ayudaremos a identificar cual de nuestros 3 itinerarios se adapta mejor a tu estilo de viaje.",
-      backgroundImage: "/images/japon/geishaForm.webp",
+      backgroundImage: "/images/japon/geishaForm-2.webp",
       mobileImage: {
         src: "/images/japon/geishaFormSola.webp",
         alt: "Geisha en Japon",
@@ -446,7 +446,7 @@ export const yucatanPremiumLandingConfig: PremiumLandingConfig = {
       quoteHighlight:
         "viajar va mas alla de acumular destinos; se trata de crear vinculos reales con cada lugar.",
       image: {
-        src: "/images/japon/karinaSanchezJapon.webp",
+        src: "/images/japon/karina.webp",
         alt: "Asesora de viaje Japon Premium",
       },
     },

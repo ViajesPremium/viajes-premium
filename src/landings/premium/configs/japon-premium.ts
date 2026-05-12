@@ -107,10 +107,10 @@ export const japonPremiumLandingConfig: PremiumLandingConfig = {
       },
       descriptionLines: [
         {
-          text: "conociendo Japón con profundidad, comodidad y acompañamiento real desde el primer contacto hasta su regreso.",
+          text: "Eleva tu vida conociendo Japón con profundidad, comodidad y acompañamiento real desde el primer contacto hasta su regreso.",
         },
         {
-          text: "Atención en español · Planeación personalizada · Soporte antes, durante y después del viaje",
+          text: "Atención en español, planeación personalizada, soporte antes, durante y después del viaje.",
         },
       ],
       ctaPrimary: {
@@ -123,7 +123,7 @@ export const japonPremiumLandingConfig: PremiumLandingConfig = {
       },
       backgroundImage: "/images/japon/hero/japanHero.jpg",
       heroOverlay: {
-        baseImage: "/images/japon/hero/geishaHero.webp",
+        baseImage: "/images/japon/hero/geishaHero2.webp",
         samuraiImage: "/images/japon/hero/samuraiHero.webp",
         baseAlt: "Hero Japón Premium",
         samuraiAlt: "Samurai Japón Premium",
@@ -133,22 +133,22 @@ export const japonPremiumLandingConfig: PremiumLandingConfig = {
       srHeading: "Snapshot de Japón Premium",
       badgeText: "Nosotros",
       titleText: "Más de 21 años diseñando experiencias PREMIUM.",
-      titleHighlightWords: ["21 años", "PREMIUM"],
+      titleHighlightWords: ["21", "PREMIUM", "años"],
       cards: [
         {
-          image: "/images/japon/1-alma-de-japon.webp",
+          image: "/images/japon/1.1-alma-de-japon.webp",
           text: "Alma de Japón",
           experiences: "14 Días · Espiritualidad · Tradición · Bienestar · Cultura",
           wide: false,
         },
         {
-          image: "/images/japon/1-japon-pop.webp",
+          image: "/images/japon/1.1-japon-pop.webp",
           text: "Japón Pop",
           experiences: "14 Días · Anime · Parques Temáticos · Tecnología · Cultura Pop",
           wide: false,
         },
         {
-          image: "/images/japon/1-camino-del-shogun.webp",
+          image: "/images/japon/1.1-camino-del-shogun.webp",
           text: "El Camino del Shogun",
           experiences: "15 Días · Samuráis · Geishas · Sumo · Alpes Japoneses",
           wide: false,
@@ -162,7 +162,7 @@ export const japonPremiumLandingConfig: PremiumLandingConfig = {
       sectionTitle: "Propuesta personalizada",
       sectionTitleHighlightWord: "personalizada",
       sectionSubtitle:
-"Cuéntanos cómo imaginas tu viaje a Japón y descubriremos cuál de nuestros 3 itinerarios es perfecto para ti.",     backgroundImage: "/images/japon/geishaForm.webp",
+"Cuéntanos cómo imaginas tu viaje a Japón y descubriremos cuál de nuestros 3 itinerarios es perfecto para ti.",     backgroundImage: "/images/japon/geishaForm-2.webp",
       mobileImage: {
         src: "/images/japon/geishaFormSola.webp",
         alt: "Geisha en Japón",
@@ -305,8 +305,8 @@ export const japonPremiumLandingConfig: PremiumLandingConfig = {
             "Un recorrido por el Japón más espiritual y profundo: templos milenarios, rutas sagradas, ryokans, onsen y experiencias que transforman el viaje.",
           ideal:
             "Ideal para parejas, familias, lunas de miel y viajeros que buscan desconexión profunda.",
-          image1: "/images/japon/3.1-alma-de-japon-izq.webp",
-          image2: "/images/japon/3.2-alma-de-japon-der.webp",
+          image1: "/images/japon/3.2-alma-de-japon-izq.webp",
+          image2: "/images/japon/3.3-alma-de-japon-der.webp",
           price: "Desde $5,703 USD base doble",
         },
         {
@@ -317,7 +317,7 @@ export const japonPremiumLandingConfig: PremiumLandingConfig = {
             "Un recorrido por el Japón más vibrante y fantástico: anime, parques temáticos, tecnología, neón, tradición y experiencias que transforman el viaje.",
           ideal:
             "Ideal para familias, amigos, parejas jóvenes, fans del anime, manga y la tecnología.",
-          image1: "/images/japon/4.2-japon-pop-izq.webp",
+          image1: "/images/japon/4.3-japon-pop-izq.webp",
           image2: "/images/japon/4.3-japon-pop-der.webp",
           price: "Desde $6,478 USD base doble",
         },
