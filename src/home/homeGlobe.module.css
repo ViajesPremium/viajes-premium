@@ -76,12 +76,16 @@
   /* Texto de fondo visible en mobile */
   .textContainer {
     display: flex;
+    height: 100%;
   }
 
   .text {
-    font-size: clamp(1.6rem, 13vw, 3.5rem);
-    letter-spacing: 0.2rem;
-    opacity: 0.2;
+    font-size: clamp(3.5rem, 15vw, 5rem);
+    letter-spacing: 0.1rem;
+    line-height: 3;
+    font-style: italic;
+    font-weight: 300;
+    background-color: aqua;
   }
 
   .bridgeGlobe {

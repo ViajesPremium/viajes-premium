@@ -143,13 +143,6 @@
     max-width: min(78vw, 620px);
   }
 
-  .aboutTitleFirst,
-  .aboutTitleSecond,
-  .aboutTitleThird {
-    font-size: clamp(1.9rem, 9.2vw, 3.3rem);
-    text-align: center;
-  }
-
   .aboutTitleSecond {
     margin-right: 0;
   }
