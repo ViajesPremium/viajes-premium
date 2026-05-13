@@ -6,6 +6,7 @@ import Lenis from "lenis";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
+  ANIMATION_BUDGET_EVENT,
   areAnimationsEnabledForDevice,
   isLowEndMobileDevice,
 } from "@/lib/animation-budget";
@@ -17,10 +18,24 @@ const MOBILE_FPS_PROBE_DURATION_MS = 3200;
 const MOBILE_FPS_MIN_SAMPLES = 45;
 const MOBILE_FPS_DISABLE_AVG = 40;
 const MOBILE_FPS_DISABLE_P10 = 30;
+const MOBILE_FPS_LOW_STREAK_TO_DISABLE = 2;
 
 function clearStaleLenisStoppedClass() {
   document.documentElement.classList.remove("lenis-stopped");
   document.body.classList.remove("lenis-stopped");
+}
+
+function setAnimationBudgetState(
+  enabled: boolean,
+  source: "static" | "fps",
+) {
+  window.__animationsEnabled = enabled;
+  document.documentElement.dataset.animations = enabled ? "on" : "off";
+  window.dispatchEvent(
+    new CustomEvent(ANIMATION_BUDGET_EVENT, {
+      detail: { enabled, source },
+    }),
+  );
 }
 
 export default function SmoothScrollProvider({
@@ -40,11 +55,8 @@ export default function SmoothScrollProvider({
     const animationsEnabled = areAnimationsEnabledForDevice();
     const lowEndMobile = isLowEndMobileDevice();
 
-    window.__animationsEnabled = animationsEnabled;
+    setAnimationBudgetState(animationsEnabled, "static");
     window.__lowEndMobile = lowEndMobile;
-    document.documentElement.dataset.animations = animationsEnabled
-      ? "on"
-      : "off";
 
     history.scrollRestoration = "manual";
 
@@ -115,6 +127,7 @@ export default function SmoothScrollProvider({
       const fpsSamples: number[] = [];
       let probeStartTs = 0;
       let probeLastTs = 0;
+      let lowFpsStreak = 0;
 
       const runFpsProbe = (now: number) => {
         if (!activeMobileLenis) {
@@ -153,9 +166,25 @@ export default function SmoothScrollProvider({
         );
         const p10Fps = sorted[p10Index] ?? avgFps;
 
-        if (avgFps < MOBILE_FPS_DISABLE_AVG || p10Fps < MOBILE_FPS_DISABLE_P10) {
+        const isLowFps =
+          avgFps < MOBILE_FPS_DISABLE_AVG || p10Fps < MOBILE_FPS_DISABLE_P10;
+
+        if (isLowFps) {
+          lowFpsStreak += 1;
+          if (lowFpsStreak < MOBILE_FPS_LOW_STREAK_TO_DISABLE) {
+            fpsSamples.length = 0;
+            probeStartTs = 0;
+            probeLastTs = 0;
+            fpsProbeRaf = window.requestAnimationFrame(runFpsProbe);
+            return;
+          }
+          setAnimationBudgetState(false, "fps");
           disableLenisForLowFps();
+          return;
         }
+
+        lowFpsStreak = 0;
+        setAnimationBudgetState(true, "fps");
       };
 
       fpsProbeRaf = window.requestAnimationFrame(runFpsProbe);
