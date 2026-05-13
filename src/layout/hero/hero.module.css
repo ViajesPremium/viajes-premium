@@ -88,14 +88,14 @@
   position: absolute;
   gap: 1rem;
   top: 65%;
-  left: clamp(5%, 10vw, 10%);
-  width: clamp(250px, 23vw, 450px);
+  left: clamp(5%, 8vw, 7%);
+  width: clamp(250px, 23vw, 400px);
   color: var(--black);
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 300;
   letter-spacing: 2px;
   font-family: var(--font-nohemi);
-  line-height: 1.7;
+  line-height: 1.5;
 }
 
 .description p {
@@ -107,7 +107,7 @@
   flex-direction: column;
   gap: 0.5rem;
   position: absolute;
-  top: 70%;
+  top: 65%;
   right: clamp(5%, 10vw, 10%);
   width: clamp(250px, 20vw, 300px);
   color: var(--black);

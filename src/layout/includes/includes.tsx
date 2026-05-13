@@ -175,7 +175,9 @@ export default function Includes() {
         const st = ScrollTrigger.create({
           animation: tl,
           trigger: section,
-          start: "top top",
+          // Pin starts when the section bottom reaches viewport bottom,
+          // so short-height screens can see full cards before pinning.
+          start: "bottom bottom",
           end: () => `+=${getEndDistance()}`,
           pin: section,
           pinSpacing: true,

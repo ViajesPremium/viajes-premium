@@ -31,10 +31,10 @@ export default function Snapshot() {
       if (!section) return;
 
       const mm = gsap.matchMedia();
-      const createPinnedSnapshot = (start: string) => {
+      const createPinnedSnapshot = (delayPx: number) => {
         ScrollTrigger.create({
           trigger: section,
-          start,
+          start: `bottom+=${delayPx} bottom`,
           end: "bottom top",
           pin: true,
           pinSpacing: false,
@@ -45,11 +45,17 @@ export default function Snapshot() {
       };
 
       mm.add("(min-width: 769px)", () => {
-        createPinnedSnapshot("bottom bottom");
+        const delayPx = Math.round(
+          Math.min(Math.max(window.innerHeight * 0.12, 72), 140),
+        );
+        createPinnedSnapshot(delayPx);
       });
 
       mm.add("(max-width: 768px)", () => {
-        createPinnedSnapshot("bottom bottom");
+        const delayPx = Math.round(
+          Math.min(Math.max(window.innerHeight * 0.08, 44), 88),
+        );
+        createPinnedSnapshot(delayPx);
       });
 
       return () => mm.revert();

@@ -156,11 +156,15 @@
 
 .description {
   margin: 1.8rem 0 0;
-  color: rgba(255, 255, 255, 0.9);
-  max-width: 50ch;
+  color: var(--white);
+  padding: 1rem;
+  padding-inline: 2rem;
+  max-width: 40ch;
   font-size: clamp(1.15rem, 1.8vw, 1.4rem);
-  line-height: 1.5;
+  line-height: 1.7;
   font-weight: 300;
+  letter-spacing: 0.02em;
+  background-color: color-mix(in srgb, var(--card-primary) 80%, transparent);
 }
 
 .mobileFeatureImage {

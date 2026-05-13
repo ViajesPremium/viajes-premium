@@ -101,10 +101,7 @@ export const barrancasPremiumLandingConfig: PremiumLandingConfig = {
       },
       descriptionLines: [
         {
-          text: "Eleva tu vida conociendo Barrancas del cobre con profundidad, comodidad y acompañamiento real desde el primer contacto hasta su regreso.",
-        },
-        {
-          text: "Atención personalizada, planeación detallada, soporte antes, durante y después del viaje.",
+          text: "Eleva tu vida conociendo Barrancas del Cobre con profundidad y acompañamiento desde el primer contacto hasta su regreso. Atención personalizada, planeación detallada y soporte de inicio a fin.",
         },
       ],
       ctaPrimary: {

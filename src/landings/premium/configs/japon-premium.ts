@@ -107,10 +107,7 @@ export const japonPremiumLandingConfig: PremiumLandingConfig = {
       },
       descriptionLines: [
         {
-          text: "Eleva tu vida conociendo Japón con profundidad, comodidad y acompañamiento real desde el primer contacto hasta su regreso.",
-        },
-        {
-          text: "Atención en español, planeación personalizada, soporte antes, durante y después del viaje.",
+          text: "Eleva tu vida conociendo Japón con profundidad y acompañamiento desde el primer contacto hasta su regreso. Atención en español, planeación personalizada y soporte de inicio a fin.",
         },
       ],
       ctaPrimary: {

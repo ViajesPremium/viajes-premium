@@ -54,12 +54,14 @@
   gap: 1rem;
   width: 100%;
   box-sizing: border-box;
+  align-items: center;
+  text-align: center;
 }
 
 .titleGradient {
   max-width: 100% !important;
   width: 100% !important;
-  justify-content: flex-start !important;
+  justify-content: center !important;
   backdrop-filter: none !important;
   cursor: default !important;
   /* CAMBIO CLAVE: Obliga al componente de gradiente a respetar el salto de línea */
@@ -77,6 +79,7 @@
   color: var(--secondary);
   word-wrap: break-word;
   margin-top: 2rem;
+  text-align: center;
 }
 
 .subtitle {
@@ -87,6 +90,12 @@
   color: rgba(0, 0, 0, 0.45);
   margin: 0;
   width: 100%;
+  text-align: center;
+}
+
+.subtitle > div {
+  width: 100%;
+  justify-content: center;
 }
 
 .contactHint {
@@ -94,6 +103,8 @@
   flex-direction: column;
   gap: 0.3rem;
   margin-top: 0.25rem;
+  align-items: center;
+  text-align: center;
 }
 
 .contactLabel {
@@ -119,6 +130,8 @@
   max-width: 100%;
   /* CAMBIO CLAVE: Permite que el correo salte de línea en pantallas minúsculas si es necesario */
   word-break: break-all;
+  margin-inline: auto;
+  text-align: center;
 }
 
 .contactLink:hover {
@@ -129,6 +142,7 @@
 .accordionWrap {
   width: 100%;
   box-sizing: border-box;
+  text-align: center;
 }
 
 .mobileFigures {
@@ -343,21 +357,21 @@
   }
 
   .header {
-    align-items: flex-start;
-    text-align: left;
+    align-items: center;
+    text-align: center;
   }
 
   .titleGradient {
-    text-align: left !important;
+    text-align: center !important;
   }
 
   .title,
   .subtitle {
-    text-align: left;
+    text-align: center;
   }
 
   .contactHint {
-    align-items: flex-start;
+    align-items: center;
   }
 
   .mobileFigures {

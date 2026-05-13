@@ -51,6 +51,7 @@ body {
   z-index: 50;
   box-sizing: border-box;
   mix-blend-mode: difference;
+  isolation: isolate;
 
   transition:
     background-color 0.3s ease,
@@ -77,6 +78,9 @@ body {
   max-width: 100%;
   object-fit: contain;
   filter: brightness(0) invert(1);
+  mix-blend-mode: difference;
+  transform: translateZ(0);
+  will-change: filter;
 }
 
 .sm-toggle {
@@ -94,14 +98,6 @@ body {
   padding: 10px;
   font-family: var(--font-nohemi);
   color: #fff;
-}
-
-.staggered-menu-wrapper[data-open] .sm-logo-img {
-  filter: none;
-}
-
-.staggered-menu-wrapper[data-open] .staggered-menu-header {
-  mix-blend-mode: normal;
 }
 
 .sm-toggle:focus-visible {
@@ -390,9 +386,6 @@ body {
     display: none !important;
   }
 
-  .staggered-menu-wrapper[data-open] .sm-logo-img {
-    filter: none;
-  }
 }
 
 @media (max-width: 640px) {

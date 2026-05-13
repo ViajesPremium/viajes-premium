@@ -113,10 +113,7 @@ export const peruPremiumLandingConfig: PremiumLandingConfig = {
       },
       descriptionLines: [
         {
-          text: "Eleva tu vida conociendo Perú con profundidad: desde Machu Picchu hasta la Amazonía, con comodidad y acompañamiento real desde el primer contacto hasta tu regreso.",
-        },
-        {
-          text: "Atención personalizada, planeación detallada, soporte antes, durante y después del viaje.",
+          text: "Eleva tu vida conociendo Perú con profundidad y acompañamiento desde el primer contacto hasta su regreso. Atención personalizada, planeación detallada y soporte de inicio a fin.",
         },
       ],
       ctaPrimary: {

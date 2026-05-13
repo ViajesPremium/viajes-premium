@@ -19,15 +19,15 @@ import { useAnimationsEnabled } from "@/lib/animation-budget";
 import { premiumLandingConfigs } from "@/landings/premium/configs";
 import type { PremiumLandingConfig } from "@/landings/premium/types";
 
-const WHATSAPP_NUMBER = "5215573728880";
+const WHATSAPP_NUMBER = "5215514648435";
 const LEAD_API_ENDPOINT = "/api/leads";
 const WHATSAPP_LEAD_DOMAIN = "viajespremium.com.mx";
 
 const INTEREST_OPTIONS_BY_LANDING: Record<string, [string, string, string]> = {
   "japon-premium": [
-    "Quiero viajar a Japon",
-    "Me interesa una experiencia gastronomica",
-    "Quiero un itinerario cultural y tradicional",
+    "Busco una experiencia espiritual en Japon",
+    "Me interesa la tecnología japonesa",
+    "Quiero un recorrido cultural y tradicional",
   ],
   "corea-premium": [
     "Quiero viajar a Corea",
@@ -35,9 +35,9 @@ const INTEREST_OPTIONS_BY_LANDING: Record<string, [string, string, string]> = {
     "Quiero combinar ciudad y naturaleza",
   ],
   "europa-premium": [
-    "Quiero viajar a Europa",
-    "Me interesa una ruta por varias ciudades",
-    "Quiero un viaje romantico y cultural",
+    "Quiero recorrer las ciudades mas iconicas",
+    "Me interesa el arte y la gastronomía",
+    "Quiero conocer monumentos históricos",
   ],
   "canada-premium": [
     "Quiero viajar a Canada",
@@ -45,9 +45,9 @@ const INTEREST_OPTIONS_BY_LANDING: Record<string, [string, string, string]> = {
     "Quiero un viaje familiar",
   ],
   "peru-premium": [
-    "Quiero viajar a Peru",
-    "Me interesa Machu Picchu y Cusco",
-    "Quiero una experiencia gastronomica",
+    "Quiero vivir Machu Picchu y los Andes",
+    "Me interesa la gastronomía peruana",
+    "Quiero explorar paisajes extraordinarios",
   ],
   "chiapas-premium": [
     "Quiero conocer Chiapas",
@@ -55,9 +55,9 @@ const INTEREST_OPTIONS_BY_LANDING: Record<string, [string, string, string]> = {
     "Quiero una ruta cultural",
   ],
   "barrancas-premium": [
-    "Quiero viajar a Barrancas del Cobre",
-    "Me interesa el recorrido en tren",
-    "Quiero aventura y paisaje",
+    "Busco conocer la cultura del norte de México",
+    "Me interesa el recorrido en Chepe Express",
+    "Quiero paisajes y gastronomía típica",
   ],
   "yucatan-premium": [
     "Quiero viajar a Yucatan",
@@ -311,10 +311,18 @@ export default function WhatsAppFab() {
               } as CSSProperties
             }
             onSubmit={handleSubmit}
-            initial={animationsEnabled ? { opacity: 0, y: 16, scale: 0.96 } : false}
-            animate={animationsEnabled ? { opacity: 1, y: 0, scale: 1 } : undefined}
-            exit={animationsEnabled ? { opacity: 0, y: 10, scale: 0.97 } : undefined}
-            transition={animationsEnabled ? { duration: 0.2, ease: "easeOut" } : undefined}
+            initial={
+              animationsEnabled ? { opacity: 0, y: 16, scale: 0.96 } : false
+            }
+            animate={
+              animationsEnabled ? { opacity: 1, y: 0, scale: 1 } : undefined
+            }
+            exit={
+              animationsEnabled ? { opacity: 0, y: 10, scale: 0.97 } : undefined
+            }
+            transition={
+              animationsEnabled ? { duration: 0.2, ease: "easeOut" } : undefined
+            }
           >
             <p className={styles.title}>Escribenos por WhatsApp</p>
 

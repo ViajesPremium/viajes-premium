@@ -159,7 +159,16 @@
 
 @media (min-width: 901px) and (max-width: 1440px) and (max-height: 900px) {
   .aboutBackdropGrid {
-    height: clamp(190px, 42%, 340px);
+    top: 50%;
+    bottom: auto;
+    height: 70svh;
+    min-height: 70svh;
+    transform: translateY(-50%);
+  }
+
+  .gridTileTall,
+  .gridTileShort {
+    height: 70svh;
   }
 
   .aboutTitleFirst,
