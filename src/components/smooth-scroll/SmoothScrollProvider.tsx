@@ -5,6 +5,10 @@ import { usePathname } from "next/navigation"; // <- IMPORTANTE
 import Lenis from "lenis";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import {
+  areAnimationsEnabledForDevice,
+  isLowEndMobileDevice,
+} from "@/lib/animation-budget";
 
 const DESKTOP_LERP = 0.05;
 const DESKTOP_WHEEL_MULTIPLIER = 0.8;
@@ -33,10 +37,22 @@ export default function SmoothScrollProvider({
     const prefersReducedMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
     ).matches;
+    const animationsEnabled = areAnimationsEnabledForDevice();
+    const lowEndMobile = isLowEndMobileDevice();
+
+    window.__animationsEnabled = animationsEnabled;
+    window.__lowEndMobile = lowEndMobile;
+    document.documentElement.dataset.animations = animationsEnabled
+      ? "on"
+      : "off";
 
     history.scrollRestoration = "manual";
 
-    if (prefersReducedMotion) return;
+    if (prefersReducedMotion || !animationsEnabled) {
+      clearStaleLenisStoppedClass();
+      if (window.__lenis) delete window.__lenis;
+      return;
+    }
 
     let tickerCb: ((time: number) => void) | null = null;
     let resizeObserver: ResizeObserver | null = null;

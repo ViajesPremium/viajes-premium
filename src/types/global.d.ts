@@ -23,6 +23,8 @@ declare global {
 
   interface Window {
     __lenis?: LenisLike;
+    __animationsEnabled?: boolean;
+    __lowEndMobile?: boolean;
     dataLayer?: Array<Record<string, unknown>>;
   }
 }

@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState, type ComponentType } from "react";
 import Image from "next/image";
+import { useAnimationsEnabled } from "@/lib/animation-budget";
 import styles from "./heroOverlay.module.css";
 
 type HeroOverlayImages = {
@@ -81,12 +82,43 @@ function HeroOverlayMobileLite({ images }: { images: HeroOverlayImages }) {
   );
 }
 
+function HeroOverlayMobileStatic({ images }: { images: HeroOverlayImages }) {
+  return (
+    <div className={styles.heroOverlay} aria-hidden="true">
+      <div className={styles.geishaParallaxLayer}>
+        <Image
+          src={images.baseImage}
+          alt={images.baseAlt}
+          width={745}
+          height={745}
+          sizes={HERO_BASE_IMAGE_SIZES}
+          loading="eager"
+          quality={85}
+          className={styles.geishaHero}
+        />
+      </div>
+
+      <div className={styles.mobileLiteSamuraiMask}>
+        <Image
+          src={images.samuraiImage}
+          alt={images.samuraiAlt}
+          fill
+          sizes={HERO_SAMURAI_IMAGE_SIZES}
+          quality={75}
+          className={styles.mobileLiteSamuraiImage}
+        />
+      </div>
+    </div>
+  );
+}
+
 export default function HeroOverlayLazy({
   overlayImages,
   disableParallax = false,
   forceStatic = false,
   preferLiteAnimation = false,
 }: HeroOverlayLazyProps) {
+  const animationsEnabled = useAnimationsEnabled();
   const images = useMemo(
     () => resolveOverlayImages(overlayImages),
     [overlayImages],
@@ -192,11 +224,15 @@ export default function HeroOverlayLazy({
   }, [enableEnhancedOverlay, EnhancedOverlay]);
 
   if (isMobileViewport) {
-    return prefersReducedMotion ? (
-      <HeroOverlayStatic />
+    return prefersReducedMotion || !animationsEnabled ? (
+      <HeroOverlayMobileStatic images={images} />
     ) : (
       <HeroOverlayMobileLite images={images} />
     );
+  }
+
+  if (!animationsEnabled) {
+    return <HeroOverlayStatic />;
   }
 
   if (forceStatic) {

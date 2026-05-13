@@ -15,6 +15,7 @@ import { BlurredStagger } from "@/components/ui/blurred-stagger-text/blurred-sta
 import type { GoogleRatingData } from "@/lib/google-reviews";
 import { GOOGLE_RATING_FALLBACK } from "@/lib/google-reviews";
 import { scrollToSection } from "@/lib/scroll-to-section";
+import { useAnimationsEnabled } from "@/lib/animation-budget";
 import Badge from "@/components/ui/badge/badge";
 import styles from "./homeTestimonials.module.css";
 import { Button } from "@/components/ui/button/button";
@@ -129,7 +130,7 @@ const AUTOPLAY_DELAY = 8000;
 const GOOGLE_TESTIMONIALS_URL =
   "https://www.google.com/search?sca_esv=666bf1fb673a79dd&hl=es-MX&sxsrf=ANbL-n6xIi-oRtR634srTJog6CRJ4CS8mQ:1777421433052&si=AL3DRZEsmMGCryMMFSHJ3StBhOdZ2-6yYkXd_doETEE1OR-qOf3EryPe9dAxRg2-zY1TQ1LGSjSYFIZeJicn2JgDc90NlZgK3iWieQ4ctRY-fSm7RNJVklJAErLgvmjZ05G0ZHeQcQhC3jL3o2DGMIoA66lUG5xgt1ZhQdRPugo1zfEsRhslNhA%3D&q=Viajes+PREMIUM%C2%AE+Turismo+Santa+Fe+Opiniones&sa=X&ved=2ahUKEwjMh4jp4pGUAxUXnSYFHb0eG7gQ0bkNegQIIRAI&biw=1912&bih=948&dpr=1";
 export default function HomeTestimonials() {
-  const disableSakura = false;
+  const animationsEnabled = useAnimationsEnabled();
   const id = japonPremiumLandingConfig.id;
   const testimonials = japonPremiumLandingConfig.sections.testimonials;
 
@@ -260,7 +261,8 @@ export default function HomeTestimonials() {
     if (testimonialCount === 0) return;
     setCurrent((c) => (c + 1) % testimonialCount);
   };
-  const shouldAnimateCarousel = !isMobileViewport && !prefersReducedMotion;
+  const shouldAnimateCarousel =
+    animationsEnabled && !isMobileViewport && !prefersReducedMotion;
   const pad = (n: number) => String(n).padStart(2, "0");
   const ratingData = testimonials.googleRating ?? GOOGLE_RATING_FALLBACK;
 

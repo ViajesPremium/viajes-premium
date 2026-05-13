@@ -2,9 +2,11 @@
 
 import { type CSSProperties, useMemo, type ReactNode } from "react";
 import { usePathname } from "next/navigation";
+import { MotionConfig } from "motion/react";
 import CursorEffect from "@/components/ui/cursor/cursorEffect";
 import SmoothScrollProvider from "@/components/smooth-scroll/SmoothScrollProvider";
 import { TransitionProvider } from "@/components/page-transition/TransitionProvider";
+import { useAnimationsEnabled } from "@/lib/animation-budget";
 import Navbar from "@/layout/navbar/navbar";
 import { premiumLandingConfigs } from "@/landings/premium/configs";
 import type { PremiumLandingConfig, PremiumLandingTheme } from "@/landings/premium/types";
@@ -41,6 +43,7 @@ type SiteShellProps = {
 
 export default function SiteShell({ children }: SiteShellProps) {
   const pathname = usePathname();
+  const animationsEnabled = useAnimationsEnabled();
   const premiumConfig = useMemo(
     () => resolvePremiumConfig(pathname),
     [pathname],
@@ -69,19 +72,21 @@ export default function SiteShell({ children }: SiteShellProps) {
 
   return (
     <div style={getThemeStyle(activeTheme)}>
-      <TransitionProvider>
-        <SmoothScrollProvider>
-          <CursorEffect>
-            <Navbar key={navbarKey} displaySocials {...navbarProps} />
+      <MotionConfig reducedMotion={animationsEnabled ? "user" : "always"}>
+        <TransitionProvider>
+          <SmoothScrollProvider>
+            <CursorEffect>
+              <Navbar key={navbarKey} displaySocials {...navbarProps} />
 
-            {/* Al cambiar el pathname, React destruye y recrea esto.
+              {/* Al cambiar el pathname, React destruye y recrea esto.
                 GSAP obtiene un DOM limpio y sin bugs */}
-            <div key={pathname} className="w-full">
-              {children}
-            </div>
-          </CursorEffect>
-        </SmoothScrollProvider>
-      </TransitionProvider>
+              <div key={pathname} className="w-full">
+                {children}
+              </div>
+            </CursorEffect>
+          </SmoothScrollProvider>
+        </TransitionProvider>
+      </MotionConfig>
     </div>
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -11,6 +11,7 @@ import { BlurredStagger } from "@/components/ui/blurred-stagger-text/blurred-sta
 import { Button } from "@/components/ui/button/button";
 import { scrollToSection } from "@/lib/scroll-to-section";
 import { downloadFiles } from "@/lib/download-files";
+import { useAnimationsEnabled } from "@/lib/animation-budget";
 import { usePremiumLandingConfig } from "@/landings/premium/context";
 
 const toRoman = (value: number) => {
@@ -73,6 +74,7 @@ type LenisLike = {
 };
 
 export default function Itinerary() {
+  const animationsEnabled = useAnimationsEnabled();
   const {
     sections: { itineraries },
   } = usePremiumLandingConfig();
@@ -84,7 +86,49 @@ export default function Itinerary() {
   const infoRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   const [activeStep, setActiveStep] = useState(0);
+  const [isMobileViewport, setIsMobileViewport] = useState(false);
   const currentStepRef = useRef(0);
+  const disableAnimationsForDevice = isMobileViewport && !animationsEnabled;
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 768px)");
+    const sync = () => setIsMobileViewport(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
+
+  const applyStaticVisualState = useCallback(
+    (step: number) => {
+      const clamped = Math.max(0, Math.min(items.length - 1, step));
+      for (let i = 0; i < items.length; i++) {
+        const isVisibleLayer = i <= clamped;
+        const infoY = i === clamped ? 0 : i < clamped ? -20 : 20;
+        const infoOpacity = i === clamped ? 1 : 0;
+        gsap.set(c1Refs.current[i], {
+          yPercent: isVisibleLayer ? 0 : 100,
+          zIndex: i + 1,
+          force3D: false,
+        });
+        gsap.set(c2Refs.current[i], {
+          yPercent: isVisibleLayer ? 0 : -100,
+          zIndex: i + 1,
+          force3D: false,
+        });
+        gsap.set(infoRefs.current[i], {
+          yPercent: infoY,
+          opacity: infoOpacity,
+          force3D: false,
+        });
+      }
+    },
+    [items.length],
+  );
+
+  useEffect(() => {
+    if (!disableAnimationsForDevice) return;
+    applyStaticVisualState(activeStep);
+  }, [activeStep, applyStaticVisualState, disableAnimationsForDevice]);
   const handleDownloadPdf = useCallback(() => {
     const files = itineraries.pdfDownloads ?? [];
     if (!files.length) return;
@@ -107,6 +151,12 @@ export default function Itinerary() {
 
   useGSAP(
     () => {
+      if (disableAnimationsForDevice) {
+        currentStepRef.current = activeStep;
+        applyStaticVisualState(activeStep);
+        return;
+      }
+
       gsap.registerPlugin(ScrollTrigger);
 
       const total = items.length;
@@ -566,7 +616,10 @@ export default function Itinerary() {
         masterTl.kill();
       };
     },
-    { scope: containerRef },
+    {
+      scope: containerRef,
+      dependencies: [applyStaticVisualState, disableAnimationsForDevice],
+    },
   );
 
   return (
@@ -688,6 +741,30 @@ export default function Itinerary() {
                   {toRoman(activeStep + 1)}
                 </span>
               </div>
+              {disableAnimationsForDevice ? (
+                <div className={styles.navGroup}>
+                  <button
+                    type="button"
+                    className={styles.navArrow}
+                    onClick={() => setActiveStep((prev) => Math.max(0, prev - 1))}
+                    disabled={activeStep <= 0}
+                    aria-label="Itinerario anterior"
+                  >
+                    ^
+                  </button>
+                  <button
+                    type="button"
+                    className={styles.navArrow}
+                    onClick={() =>
+                      setActiveStep((prev) => Math.min(items.length - 1, prev + 1))
+                    }
+                    disabled={activeStep >= items.length - 1}
+                    aria-label="Siguiente itinerario"
+                  >
+                    v
+                  </button>
+                </div>
+              ) : null}
             </div>
           </div>
         </div>

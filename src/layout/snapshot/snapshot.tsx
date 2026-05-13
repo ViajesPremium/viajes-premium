@@ -8,11 +8,13 @@ import styles from "./snapshot.module.css";
 import { BlurredStagger } from "@/components/ui/blurred-stagger-text/blurred-stagger-text";
 import BentoGrid from "./BentoGrid";
 import Badge from "@/components/ui/badge/badge";
+import { useAnimationsEnabled } from "@/lib/animation-budget";
 import { usePremiumLandingConfig } from "@/landings/premium/context";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Snapshot() {
+  const animationsEnabled = useAnimationsEnabled();
   const {
     sections: { aboutUs: snapshot },
   } = usePremiumLandingConfig();
@@ -21,6 +23,10 @@ export default function Snapshot() {
 
   useGSAP(
     () => {
+      const disableForDevice =
+        !animationsEnabled && window.matchMedia("(max-width: 1024px)").matches;
+      if (disableForDevice) return;
+
       const section = sectionRef.current;
       if (!section) return;
 
@@ -48,7 +54,7 @@ export default function Snapshot() {
 
       return () => mm.revert();
     },
-    { scope: sectionRef }
+    { scope: sectionRef, dependencies: [animationsEnabled] }
   );
 
   const titleHighlights = snapshot.titleHighlightWords.map((word) => ({

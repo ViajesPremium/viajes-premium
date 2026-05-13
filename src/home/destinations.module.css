@@ -182,6 +182,24 @@
   color: #000 !important;
 }
 
+.containerStatic {
+  height: auto;
+  min-height: 100svh;
+  overflow: visible;
+}
+
+.containerStatic .stack {
+  height: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.containerStatic .card {
+  position: relative;
+  inset: auto;
+  min-height: min(100svh, 56rem);
+}
+
 @media (max-width: 1024px) {
   .editorialFrame1 {
     left: 6%;

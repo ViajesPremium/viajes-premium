@@ -8,6 +8,7 @@ import Image from "next/image";
 import Badge from "@/components/ui/badge/badge";
 import { Button } from "@/components/ui/button/button";
 import { scrollToSection } from "@/lib/scroll-to-section";
+import { useAnimationsEnabled } from "@/lib/animation-budget";
 import styles from "./includes.module.css";
 import { BlurredStagger } from "@/components/ui/blurred-stagger-text/blurred-stagger-text";
 import { usePremiumLandingConfig } from "@/landings/premium/context";
@@ -21,6 +22,7 @@ const INCLUDES_SCROLL_TUNING = {
 } as const;
 
 export default function Includes() {
+  const animationsEnabled = useAnimationsEnabled();
   const {
     sections: { includes },
   } = usePremiumLandingConfig();
@@ -135,6 +137,10 @@ export default function Includes() {
 
   useGSAP(
     () => {
+      const disableForDevice =
+        !animationsEnabled && window.matchMedia("(max-width: 1024px)").matches;
+      if (disableForDevice) return;
+
       gsap.registerPlugin(ScrollTrigger);
 
       const section = sectionRef.current;
@@ -191,7 +197,7 @@ export default function Includes() {
         mm.revert();
       };
     },
-    { scope: sectionRef },
+    { scope: sectionRef, dependencies: [animationsEnabled] },
   );
 
   // Bloqueo de overscroll en los extremos del carrusel (mobile).

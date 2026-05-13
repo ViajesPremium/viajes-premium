@@ -7,6 +7,7 @@ import styles from "./faqs.module.css";
 import accordionStyles from "@/components/ui/accordion/accordion.module.css";
 import Badge from "@/components/ui/badge/badge";
 import { BlurredStagger } from "@/components/ui/blurred-stagger-text/blurred-stagger-text";
+import { useAnimationsEnabled } from "@/lib/animation-budget";
 import { usePremiumLandingConfig } from "@/landings/premium/context";
 
 type FaqsProps = {
@@ -14,6 +15,7 @@ type FaqsProps = {
 };
 
 export default function Faqs({ hideCharacters = false }: FaqsProps) {
+  const animationsEnabled = useAnimationsEnabled();
   const {
     sections: { faqs },
   } = usePremiumLandingConfig();
@@ -35,6 +37,7 @@ export default function Faqs({ hideCharacters = false }: FaqsProps) {
 
   // -- Scroll animation: progreso de los laterales --------------------------
   useEffect(() => {
+    if (!animationsEnabled) return;
     const section = sectionRef.current;
     if (!section) return;
 
@@ -155,7 +158,7 @@ export default function Faqs({ hideCharacters = false }: FaqsProps) {
         window.cancelAnimationFrame(rafId);
       }
     };
-  }, []);
+  }, [animationsEnabled]);
 
   const handleFaqOpen = (faqId: string) => {
     if (faqId === openFaqId) return;
@@ -218,45 +221,64 @@ export default function Faqs({ hideCharacters = false }: FaqsProps) {
                       onClick={() => handleFaqOpen(faq.id)}
                     >
                       {faq.question}
-                      <motion.span
-                        className={accordionStyles.chevron}
-                        animate={{
-                          rotate: isOpen ? 180 : 0,
-                          opacity: isOpen ? 0.9 : 0.5,
-                        }}
-                        transition={{
-                          duration: 0.28,
-                          ease: [0.22, 1, 0.36, 1],
-                        }}
-                        aria-hidden="true"
-                      >
-                        <ChevronDownIcon width={16} height={16} />
-                      </motion.span>
+                      {animationsEnabled ? (
+                        <motion.span
+                          className={accordionStyles.chevron}
+                          animate={{
+                            rotate: isOpen ? 180 : 0,
+                            opacity: isOpen ? 0.9 : 0.5,
+                          }}
+                          transition={{
+                            duration: 0.28,
+                            ease: [0.22, 1, 0.36, 1],
+                          }}
+                          aria-hidden="true"
+                        >
+                          <ChevronDownIcon width={16} height={16} />
+                        </motion.span>
+                      ) : (
+                        <span className={accordionStyles.chevron} aria-hidden="true">
+                          <ChevronDownIcon width={16} height={16} />
+                        </span>
+                      )}
                     </button>
                   </h3>
 
-                  <AnimatePresence initial={false}>
-                    {isOpen && (
-                      <motion.div
-                        id={contentId}
-                        role="region"
-                        aria-labelledby={triggerId}
-                        className={accordionStyles.content}
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{
-                          height: { duration: 0.34, ease: [0.22, 1, 0.36, 1] },
-                          opacity: { duration: 0.22, ease: "easeOut" },
-                        }}
-                        style={{ overflow: "hidden" }}
-                      >
-                        <div className={accordionStyles.contentInner}>
-                          {faq.answer}
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
+                  {animationsEnabled ? (
+                    <AnimatePresence initial={false}>
+                      {isOpen && (
+                        <motion.div
+                          id={contentId}
+                          role="region"
+                          aria-labelledby={triggerId}
+                          className={accordionStyles.content}
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{
+                            height: { duration: 0.34, ease: [0.22, 1, 0.36, 1] },
+                            opacity: { duration: 0.22, ease: "easeOut" },
+                          }}
+                          style={{ overflow: "hidden" }}
+                        >
+                          <div className={accordionStyles.contentInner}>
+                            {faq.answer}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  ) : isOpen ? (
+                    <div
+                      id={contentId}
+                      role="region"
+                      aria-labelledby={triggerId}
+                      className={accordionStyles.content}
+                    >
+                      <div className={accordionStyles.contentInner}>
+                        {faq.answer}
+                      </div>
+                    </div>
+                  ) : null}
                 </div>
               );
             })}

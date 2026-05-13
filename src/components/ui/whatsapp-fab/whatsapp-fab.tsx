@@ -15,6 +15,7 @@ import { FaWhatsapp } from "react-icons/fa6";
 import styles from "./whatsapp-fab.module.css";
 import PhoneInput from "@/components/ui/phone-input/phone-input";
 import { pushGenerateLeadEvent } from "@/lib/gtm";
+import { useAnimationsEnabled } from "@/lib/animation-budget";
 import { premiumLandingConfigs } from "@/landings/premium/configs";
 import type { PremiumLandingConfig } from "@/landings/premium/types";
 
@@ -119,6 +120,7 @@ function validateTravelDate(value: string): string | undefined {
 }
 
 export default function WhatsAppFab() {
+  const animationsEnabled = useAnimationsEnabled();
   const pathname = usePathname();
   const wrapRef = useRef<HTMLDivElement | null>(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -309,10 +311,10 @@ export default function WhatsAppFab() {
               } as CSSProperties
             }
             onSubmit={handleSubmit}
-            initial={{ opacity: 0, y: 16, scale: 0.96 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 10, scale: 0.97 }}
-            transition={{ duration: 0.2, ease: "easeOut" }}
+            initial={animationsEnabled ? { opacity: 0, y: 16, scale: 0.96 } : false}
+            animate={animationsEnabled ? { opacity: 1, y: 0, scale: 1 } : undefined}
+            exit={animationsEnabled ? { opacity: 0, y: 10, scale: 0.97 } : undefined}
+            transition={animationsEnabled ? { duration: 0.2, ease: "easeOut" } : undefined}
           >
             <p className={styles.title}>Escribenos por WhatsApp</p>
 
@@ -404,19 +406,29 @@ export default function WhatsAppFab() {
         aria-label="Abrir formulario de WhatsApp"
         className={styles.fab}
         onClick={() => setIsOpen((prev) => !prev)}
-        animate={{ scale: [1, 1.05, 1], y: [0, -6, 0] }}
-        transition={{
-          duration: 3,
-          ease: "easeInOut",
-          repeat: Infinity,
-          repeatType: "loop",
-        }}
-        whileHover={{
-          scale: 1.1,
-          backgroundColor: "#1ebea5",
-          transition: { type: "spring", stiffness: 300 },
-        }}
-        whileTap={{ scale: 0.95 }}
+        animate={
+          animationsEnabled ? { scale: [1, 1.05, 1], y: [0, -6, 0] } : undefined
+        }
+        transition={
+          animationsEnabled
+            ? {
+                duration: 3,
+                ease: "easeInOut",
+                repeat: Infinity,
+                repeatType: "loop",
+              }
+            : undefined
+        }
+        whileHover={
+          animationsEnabled
+            ? {
+                scale: 1.1,
+                backgroundColor: "#1ebea5",
+                transition: { type: "spring", stiffness: 300 },
+              }
+            : undefined
+        }
+        whileTap={animationsEnabled ? { scale: 0.95 } : undefined}
       >
         <FaWhatsapp className={styles.icon} aria-hidden="true" />
       </motion.button>

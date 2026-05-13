@@ -15,6 +15,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import type { IconType } from "react-icons";
 import { FaFacebookF, FaInstagram, FaTiktok, FaYoutube } from "react-icons/fa6";
 import { scrollToSection } from "@/lib/scroll-to-section";
+import { useAnimationsEnabled } from "@/lib/animation-budget";
 import type { FooterSectionConfig } from "@/landings/premium/types";
 import styles from "./footer.module.css";
 
@@ -44,6 +45,7 @@ type FooterProps = {
 };
 
 export default function Footer({ config }: FooterProps) {
+  const animationsEnabled = useAnimationsEnabled();
   const footerRef = useRef<HTMLElement>(null);
   const logoBandRef = useRef<HTMLDivElement>(null);
   const pressureWordRef = useRef<HTMLDivElement>(null);
@@ -67,6 +69,10 @@ export default function Footer({ config }: FooterProps) {
 
   useGSAP(
     () => {
+      const disableForDevice =
+        !animationsEnabled && window.matchMedia("(max-width: 1024px)").matches;
+      if (disableForDevice) return;
+
       const footerEl = footerRef.current;
       const logoBand = logoBandRef.current;
       const pressureWord = pressureWordRef.current;
@@ -130,7 +136,7 @@ export default function Footer({ config }: FooterProps) {
         onLeaveBack: resetState,
       });
     },
-    { scope: footerRef },
+    { scope: footerRef, dependencies: [animationsEnabled] },
   );
 
   const mapQuery = useMemo(
@@ -331,7 +337,7 @@ export default function Footer({ config }: FooterProps) {
             weightTo={400}
             scaleFrom={1}
             scaleTo={1}
-            animate={!isMobileViewport}
+            animate={animationsEnabled && !isMobileViewport}
             textColor={logoColor}
           />
         </div>

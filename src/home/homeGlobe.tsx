@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 import styles from "./homeGlobe.module.css";
+import { useAnimationsEnabled } from "@/lib/animation-budget";
 
 const GlobePolaroids = dynamic(
   () =>
@@ -19,6 +20,7 @@ const GlobePolaroids = dynamic(
 
 export default function HomeGlobe() {
   const [isMobile, setIsMobile] = useState<boolean | null>(null);
+  const animationsEnabled = useAnimationsEnabled();
 
   useEffect(() => {
     const mq = window.matchMedia("(max-width: 900px)");
@@ -28,10 +30,14 @@ export default function HomeGlobe() {
     return () => mq.removeEventListener("change", handler);
   }, []);
 
+  const disableAnimationsForDevice = isMobile === true && !animationsEnabled;
+
   return (
     <section className={styles.planetPane} aria-label="Planeta central">
       <div className={styles.bridgeGlobe}>
         {isMobile === null ? (
+          <div className={styles.bridgeGlobePlaceholder} aria-hidden="true" />
+        ) : disableAnimationsForDevice ? (
           <div className={styles.bridgeGlobePlaceholder} aria-hidden="true" />
         ) : (
           <GlobePolaroids

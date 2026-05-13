@@ -13,6 +13,7 @@ import {
 } from "./destinations.data";
 import styles from "./destinations.module.css";
 import { usePageTransition } from "@/components/page-transition/TransitionProvider";
+import { useAnimationsEnabled } from "@/lib/animation-budget";
 
 const DESTINATION_TRANSITION_VISUALS: Record<
   string,
@@ -54,6 +55,7 @@ function shouldRenderCardMedia(
 
 export default function Destinations({ embedded = false }: { embedded?: boolean }) {
   const { triggerTransition } = usePageTransition();
+  const animationsEnabled = useAnimationsEnabled();
   const pinRef = useRef<HTMLElement | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(() => {
@@ -77,8 +79,11 @@ export default function Destinations({ embedded = false }: { embedded?: boolean 
     };
   }, []);
 
+  const disableAnimationsForDevice = isMobile && !animationsEnabled;
+
   useGSAP(
     () => {
+      if (disableAnimationsForDevice) return;
       gsap.registerPlugin(ScrollTrigger);
 
       const pin = pinRef.current;
@@ -233,18 +238,27 @@ export default function Destinations({ embedded = false }: { embedded?: boolean 
         timeline.kill();
       };
     },
-    { scope: pinRef, dependencies: [embedded, isMobile] },
+    {
+      scope: pinRef,
+      dependencies: [embedded, isMobile, disableAnimationsForDevice],
+    },
   );
 
   return (
     <section
       ref={pinRef}
-      className={styles.container}
+      className={
+        disableAnimationsForDevice
+          ? `${styles.container} ${styles.containerStatic}`
+          : styles.container
+      }
       aria-label="Destinations Story"
     >
       <div className={styles.stack}>
         {destinationCardsData.map((card: DestinationDataCard, index) => {
-          const renderHeavyMedia = shouldRenderCardMedia(
+          const renderHeavyMedia =
+            !disableAnimationsForDevice &&
+            shouldRenderCardMedia(
             index,
             activeIndex,
             destinationCardsData.length,

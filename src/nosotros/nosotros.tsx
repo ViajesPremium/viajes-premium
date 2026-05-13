@@ -13,9 +13,11 @@ import { TimelineCard } from "./TimelineCard";
 import Hero from "@/components/nosotros-hero/nosotros-hero";
 import Founders from "@/components/fouders/founders";
 import Footer from "@/layout/footer/footer";
+import { useAnimationsEnabled } from "@/lib/animation-budget";
 import { DEFAULT_SITE_CONFIG } from "@/config/default-site-config";
 
 export default function Nosotros() {
+  const animationsEnabled = useAnimationsEnabled();
   const heroPinRef = useRef<HTMLDivElement | null>(null);
   const sectionRef = useRef<HTMLElement | null>(null);
   const cardRefs = useRef<Array<HTMLElement | null>>([]);
@@ -23,6 +25,10 @@ export default function Nosotros() {
 
   useGSAP(
     () => {
+      const disableForDevice =
+        !animationsEnabled && window.matchMedia("(max-width: 1024px)").matches;
+      if (disableForDevice) return;
+
       gsap.registerPlugin(ScrollTrigger);
 
       const section = sectionRef.current;
@@ -111,7 +117,7 @@ export default function Nosotros() {
         });
       };
     },
-    { scope: sectionRef },
+    { scope: sectionRef, dependencies: [animationsEnabled] },
   );
 
   return (

@@ -8,6 +8,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import type { IconType } from "react-icons";
 import { FaFacebookF, FaInstagram, FaTiktok, FaYoutube } from "react-icons/fa6";
 import { scrollToSection } from "@/lib/scroll-to-section";
+import { useAnimationsEnabled } from "@/lib/animation-budget";
 import styles from "./homeFooter.module.css";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -75,6 +76,7 @@ function getSocialBrandIcon(label: string): IconType | null {
 }
 
 export default function HomeFooter() {
+  const animationsEnabled = useAnimationsEnabled();
   const footerRef = useRef<HTMLElement>(null);
   const logoBandRef = useRef<HTMLDivElement>(null);
   const pressureWordRef = useRef<HTMLDivElement>(null);
@@ -90,6 +92,10 @@ export default function HomeFooter() {
 
   useGSAP(
     () => {
+      const disableForDevice =
+        !animationsEnabled && window.matchMedia("(max-width: 1024px)").matches;
+      if (disableForDevice) return;
+
       const footerEl = footerRef.current;
       const logoBand = logoBandRef.current;
       const pressureWord = pressureWordRef.current;
@@ -152,7 +158,7 @@ export default function HomeFooter() {
         onLeaveBack: resetState,
       });
     },
-    { scope: footerRef },
+    { scope: footerRef, dependencies: [animationsEnabled] },
   );
 
   const mapQuery = useMemo(() => encodeURIComponent(HOME_FOOTER.address), []);
@@ -320,7 +326,7 @@ export default function HomeFooter() {
             weightTo={400}
             scaleFrom={1}
             scaleTo={1}
-            animate={!isMobileViewport}
+            animate={animationsEnabled && !isMobileViewport}
             textColor="#ffffff"
           />
         </div>

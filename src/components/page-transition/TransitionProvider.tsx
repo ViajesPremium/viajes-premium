@@ -11,6 +11,7 @@ import {
 import { usePathname, useRouter } from "next/navigation";
 import gsap from "gsap";
 import { premiumLandingConfigs } from "@/landings/premium/configs";
+import { areAnimationsEnabledForDevice } from "@/lib/animation-budget";
 import styles from "./TransitionProvider.module.css";
 
 /** Devuelve el logo que debe mostrarse al navegar hacia `targetPath`. */
@@ -137,6 +138,7 @@ export function TransitionProvider({ children }: { children: ReactNode }) {
   const logoImageRef = useRef<HTMLImageElement>(null);
   const customVisualRef = useRef<TransitionVisualOptions | null>(null);
   const transitionInFlightRef = useRef(false);
+  const animationsEnabledRef = useRef(true);
   /** true = logo principal animado por paths, false = logo via <img> */
   const isPrincipalLogoRef = useRef(true);
 
@@ -145,6 +147,7 @@ export function TransitionProvider({ children }: { children: ReactNode }) {
   const isFirstMount = useRef(true);
   const pendingTransition = useRef(false);
   useEffect(() => {
+    animationsEnabledRef.current = areAnimationsEnabledForDevice();
     gsap.set([layer1Ref.current, layer2Ref.current], { yPercent: 100 });
     if (logoRef.current) {
       gsap.set(getLogoPaths(logoRef.current), { opacity: 0 });
@@ -156,6 +159,10 @@ export function TransitionProvider({ children }: { children: ReactNode }) {
 
     if (isFirstMount.current) {
       isFirstMount.current = false;
+      return;
+    }
+    if (!animationsEnabledRef.current) {
+      transitionInFlightRef.current = false;
       return;
     }
     if (!pendingTransition.current) return;
@@ -232,6 +239,10 @@ export function TransitionProvider({ children }: { children: ReactNode }) {
 
   const triggerTransition = useCallback(
     async (href: string, visual?: TransitionVisualOptions) => {
+      if (!animationsEnabledRef.current || !areAnimationsEnabledForDevice()) {
+        router.push(href);
+        return;
+      }
       if (transitionInFlightRef.current) return;
       if (!layer1Ref.current || !layer2Ref.current) {
         router.push(href);

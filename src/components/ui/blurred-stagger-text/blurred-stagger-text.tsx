@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "motion/react";
 import GradientText from "@/components/ui/gradient-text/gradient-text";
+import { useAnimationsEnabled } from "@/lib/animation-budget";
 import styles from "./blurred-stagger-text.module.css";
 
 type HighlightWord = {
@@ -30,6 +31,7 @@ export const BlurredStagger = ({
   staticOnMobile?: boolean;
 }) => {
   const [isMobile, setIsMobile] = useState(false);
+  const animationsEnabled = useAnimationsEnabled();
 
   useEffect(() => {
     if (!staticOnMobile) return;
@@ -41,7 +43,7 @@ export const BlurredStagger = ({
   }, [staticOnMobile]);
 
   // Texto plano cuando la sección lo pide y estamos en mobile
-  if (staticOnMobile && isMobile) {
+  if ((staticOnMobile && isMobile) || !animationsEnabled) {
     return (
       <div className={className} style={style}>
         {text}
