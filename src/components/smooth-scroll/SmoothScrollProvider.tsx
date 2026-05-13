@@ -8,6 +8,11 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const DESKTOP_LERP = 0.05;
 const DESKTOP_WHEEL_MULTIPLIER = 0.8;
+const MOBILE_FPS_PROBE_WARMUP_MS = 350;
+const MOBILE_FPS_PROBE_DURATION_MS = 3200;
+const MOBILE_FPS_MIN_SAMPLES = 45;
+const MOBILE_FPS_DISABLE_AVG = 40;
+const MOBILE_FPS_DISABLE_P10 = 30;
 
 function clearStaleLenisStoppedClass() {
   document.documentElement.classList.remove("lenis-stopped");
@@ -36,6 +41,7 @@ export default function SmoothScrollProvider({
     let tickerCb: ((time: number) => void) | null = null;
     let resizeObserver: ResizeObserver | null = null;
     let resizeDebounce: ReturnType<typeof setTimeout> | null = null;
+    let fpsProbeRaf: number | null = null;
     let lastDocWidth = window.innerWidth;
     let lastDocHeight = window.innerHeight;
 
@@ -62,6 +68,7 @@ export default function SmoothScrollProvider({
         gestureOrientation: "vertical",
         autoRaf: false,
       });
+      let activeMobileLenis: Lenis | null = mobileLenis;
 
       lenisRef.current = mobileLenis;
       window.__lenis = mobileLenis;
@@ -70,13 +77,75 @@ export default function SmoothScrollProvider({
       mobileLenis.on("scroll", ScrollTrigger.update);
 
       tickerCb = (time: number) => {
-        mobileLenis.raf(time * 1000);
+        activeMobileLenis?.raf(time * 1000);
       };
       gsap.ticker.add(tickerCb);
       gsap.ticker.lagSmoothing(0);
 
+      const disableLenisForLowFps = () => {
+        if (!activeMobileLenis) return;
+        activeMobileLenis.destroy();
+        activeMobileLenis = null;
+        if (lenisRef.current === mobileLenis) {
+          lenisRef.current = null;
+        }
+        if (window.__lenis === mobileLenis) {
+          delete window.__lenis;
+        }
+        clearStaleLenisStoppedClass();
+        ScrollTrigger.refresh();
+      };
+
+      const fpsSamples: number[] = [];
+      let probeStartTs = 0;
+      let probeLastTs = 0;
+
+      const runFpsProbe = (now: number) => {
+        if (!activeMobileLenis) {
+          fpsProbeRaf = null;
+          return;
+        }
+
+        if (!probeStartTs) {
+          probeStartTs = now;
+        }
+
+        if (probeLastTs) {
+          const deltaMs = now - probeLastTs;
+          const elapsedMs = now - probeStartTs;
+          if (deltaMs > 0 && elapsedMs >= MOBILE_FPS_PROBE_WARMUP_MS) {
+            fpsSamples.push(Math.min(120, 1000 / deltaMs));
+          }
+        }
+        probeLastTs = now;
+
+        const elapsedMs = now - probeStartTs;
+        if (elapsedMs < MOBILE_FPS_PROBE_DURATION_MS) {
+          fpsProbeRaf = window.requestAnimationFrame(runFpsProbe);
+          return;
+        }
+
+        fpsProbeRaf = null;
+        if (fpsSamples.length < MOBILE_FPS_MIN_SAMPLES) return;
+
+        const avgFps =
+          fpsSamples.reduce((sum, fps) => sum + fps, 0) / fpsSamples.length;
+        const sorted = [...fpsSamples].sort((a, b) => a - b);
+        const p10Index = Math.max(
+          0,
+          Math.min(sorted.length - 1, Math.floor(sorted.length * 0.1)),
+        );
+        const p10Fps = sorted[p10Index] ?? avgFps;
+
+        if (avgFps < MOBILE_FPS_DISABLE_AVG || p10Fps < MOBILE_FPS_DISABLE_P10) {
+          disableLenisForLowFps();
+        }
+      };
+
+      fpsProbeRaf = window.requestAnimationFrame(runFpsProbe);
+
       requestAnimationFrame(() => {
-        mobileLenis.resize();
+        activeMobileLenis?.resize();
         ScrollTrigger.refresh();
       });
     } else {
@@ -134,6 +203,7 @@ export default function SmoothScrollProvider({
     return () => {
       resizeObserver?.disconnect();
       if (resizeDebounce) clearTimeout(resizeDebounce);
+      if (fpsProbeRaf) cancelAnimationFrame(fpsProbeRaf);
 
       if (tickerCb) {
         gsap.ticker.remove(tickerCb);
