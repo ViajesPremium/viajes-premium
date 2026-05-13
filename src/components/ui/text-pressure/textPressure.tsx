@@ -253,8 +253,10 @@ export default function TextPressure({
       <style>{`
         @font-face {
           font-family: '${fontFamily}';
-          src: url('${fontUrl}');
+          src: url('${fontUrl}') format('woff2');
           font-style: normal;
+          font-weight: 100 900;
+          font-display: swap;
         }
 
         .text-pressure-flex {

@@ -7,7 +7,7 @@ import { BlurredStagger } from "@/components/ui/blurred-stagger-text/blurred-sta
 import styles from "./ctaForm.module.css";
 import { usePremiumLandingConfig } from "@/landings/premium/context";
 
-const CTA_FORM_MOBILE_BACKGROUND_IMAGE = "/images/japon/fullblack.webp";
+const CTA_FORM_MOBILE_BACKGROUND_IMAGE = "/images/japon/samuraiForm.webp";
 const CTA_FORM_MOBILE_FIGURE_IMAGE = "/images/japon/samuraiFormSola2.webp";
 
 export default function CTAForm() {

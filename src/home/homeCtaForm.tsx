@@ -8,7 +8,7 @@ import ImageSectionForm, {
 import { BlurredStagger } from "@/components/ui/blurred-stagger-text/blurred-stagger-text";
 import styles from "./homeCtaForm.module.css";
 
-const CTA_FORM_MOBILE_BACKGROUND_IMAGE = "/images/japon/fullblack.webp";
+const CTA_FORM_MOBILE_BACKGROUND_IMAGE = "/images/japon/samuraiForm.webp";
 const CTA_FORM_MOBILE_FIGURE_IMAGE = "/images/japon/samuraiFormSola2.webp";
 
 const HOME_CTA_FORM = {

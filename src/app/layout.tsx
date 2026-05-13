@@ -23,6 +23,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es-mx" className="antialiased">
+      <head>
+        <link
+          rel="preload"
+          href="/fonts/nohemi-font-family/Nohemi-VF.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
+      </head>
       <body className="flex min-h-screen flex-col">
         <GTMTracking />
         <SiteShell>{children}</SiteShell>

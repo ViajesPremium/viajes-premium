@@ -2,19 +2,11 @@
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import dynamic from "next/dynamic";
-// 1. IMPORTACIÓN ESTÁTICA OBLIGATORIA
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import styles from "./premium-landing-client.module.css";
 import type { PremiumLandingConfig } from "@/landings/premium/types";
 import { PremiumLandingProvider } from "@/landings/premium/context";
 import Hero from "@/layout/hero/hero";
-
-// 2. REGISTRAR GSAP GLOBALMENTE PARA ESTE CLIENTE
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
 
 const Snapshot = dynamic(() => import("@/layout/snapshot/snapshot"), {
   loading: () => <PinPlaceholder height="90svh" bg="var(--black)" />,
@@ -108,10 +100,6 @@ function DeferredSection({
     return () => observer.disconnect();
   }, [mounted, rootMargin]);
 
-  // ELIMINADO: Ya no necesitamos el useEffect con setTimeout aquí.
-  // El ResizeObserver global en el Client se encargará de refrescar GSAP
-  // automáticamente cuando el componente termine de compilarse en Localhost.
-
   return (
     <section id={id} className={className} ref={ref}>
       {mounted ? (
@@ -131,21 +119,19 @@ export default function PremiumLandingClient({
   config,
 }: PremiumLandingClientProps) {
   useEffect(() => {
-    // Inicialización
+    // Inicializacion
     window.scrollTo(0, 0);
     window.__lenis?.scrollTo(0, { immediate: true });
     window.__lenis?.start();
     document.documentElement.classList.remove("lenis-stopped");
     document.body.classList.remove("lenis-stopped");
 
-    // 3. EL GUARDIÁN INTELIGENTE (Debounced ResizeObserver)
-    // Cuando Next.js en local compila un componente dinámico, inyecta múltiples
-    // nodos rápidamente. Usamos un "debounce" para esperar a que termine de inyectar
-    // antes de recalcular GSAP.
-    // Refresco de respaldo después de un tiempo prudencial por si la hidratación fue lenta
+    // Refresco de respaldo despues de hidratacion y carga diferida
     const fallbackTimeout = setTimeout(() => {
       window.__lenis?.resize();
-      ScrollTrigger.refresh();
+      void import("gsap/ScrollTrigger").then(({ ScrollTrigger }) => {
+        ScrollTrigger.refresh();
+      });
     }, 1000);
 
     return () => {

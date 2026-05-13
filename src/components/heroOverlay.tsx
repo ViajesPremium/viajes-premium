@@ -805,8 +805,8 @@ export default function HeroOverlay({
           alt={baseAlt}
           width={745}
           height={745}
-          sizes="(max-width: 768px) 745px, 690px"
-          loading="eager"
+          sizes="(max-width: 768px) 92vw, (max-width: 1280px) 52vw, 690px"
+          priority
           quality={90}
           className={styles.geishaHero}
         />
