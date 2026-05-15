@@ -2,7 +2,10 @@
 .container {
   width: 100%;
   height: 100vh;
-  height: var(--app-vh, 100svh); /* Small viewport height for mobile stability */
+  height: var(
+    --app-vh,
+    100svh
+  ); /* Small viewport height for mobile stability */
   display: flex;
   flex-direction: row;
   position: relative;
@@ -109,7 +112,7 @@
 .premiumCard {
   position: relative;
   width: 100%;
-  height: 490px;
+  height: 510px;
   background-color: var(--black);
   border-radius: var(--radius);
   overflow: hidden;
@@ -499,4 +502,3 @@
     font-style: normal !important;
   }
 }
-

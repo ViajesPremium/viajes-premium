@@ -130,7 +130,7 @@ export const peruPremiumLandingConfig: PremiumLandingConfig = {
       srHeading: "Nosotros Perú Premium",
       badgeText: "Nosotros",
       titleText: "Más de 21 años diseñando experiencias PREMIUM.",
-      titleHighlightWords: ["21 años", "PREMIUM"],
+      titleHighlightWords: ["21", "PREMIUM", "años"],
       cards: [
         {
           image: "/images/peru/nosotros/itinerario-montaña-de-colores.webp",
@@ -295,7 +295,7 @@ export const peruPremiumLandingConfig: PremiumLandingConfig = {
           ideal:
             "Ideal para viajeros que buscan conocer la esencia de Perú por primera vez.",
           image1: "/images/peru/itinerarios/izquierda/montaña-peru-premium.webp",
-          image2: "/images/peru/itinerarios/derecha/montaña-peru-premium.webp",
+          image2: "/images/peru/itinerarios/derecha/montaña-peru-premium2.webp",
           price: "",
         },
         {
@@ -307,7 +307,7 @@ export const peruPremiumLandingConfig: PremiumLandingConfig = {
           ideal:
             "Ideal para viajeros que buscan aventura, naturaleza y experiencias diferentes en Perú.",
           image1: "/images/peru/itinerarios/izquierda/dunas-peru-premium.webp",
-          image2: "/images/peru/itinerarios/derecha/dunas-peru-premium.webp",
+          image2: "/images/peru/itinerarios/derecha/dunas-peru-premium2.webp",
           price: "",
         },
         {
@@ -319,7 +319,7 @@ export const peruPremiumLandingConfig: PremiumLandingConfig = {
           ideal:
             "Ideal para viajeros que buscan una experiencia más profunda y visualmente inolvidable.",
           image1: "/images/peru/itinerarios/izquierda/skyfall-peru-premium.webp",
-          image2: "/images/peru/itinerarios/derecha/skyfall-peru-premium.webp",
+          image2: "/images/peru/itinerarios/derecha/skyfall-peru-premium2.webp",
           price: "",
         },
       ],

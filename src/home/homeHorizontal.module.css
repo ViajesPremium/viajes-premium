@@ -5,7 +5,7 @@
   min-height: var(--hero-unified-height);
   height: var(--hero-unified-height);
   display: flex;
-  background: var(--black);
+  background: var(--bg);
   overflow: hidden;
 }
 

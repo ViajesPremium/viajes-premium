@@ -13,52 +13,51 @@ const EUROPA_MENU_ITEMS = [
 const EUROPA_FAQS = [
   {
     id: "1",
-    question: "¿Peru es un destino complicado para viajar?",
+    question: "¿Cual es la mejor epoca para viajar a Europa?",
     answer:
-      "No, Peru no es un destino complicado si esta bien planificado. Aunque el idioma y la logistica pueden parecer desafiantes al inicio, el pais es seguro, ordenado y facil de recorrer. Cuando el viaje esta bien estructurado, todo fluye con mayor claridad. En Peru Premium cuidamos ese proceso para que la experiencia se viva sin friccion.",
+      "La mejor epoca para viajar a Europa depende del tipo de experiencia que buscas y de las ciudades que quieras recorrer. Primavera y otono suelen ofrecer un equilibrio ideal entre clima, paisajes y ritmo de viaje.",
   },
   {
     id: "2",
-    question: "¿Se puede viajar a Peru sin hablar espanol?",
+    question: "¿Cuantos dias se recomiendan para recorrer Europa?",
     answer:
-      "Si, es posible viajar a Peru sin hablar espanol. En ciudades como Lima o Cusco hay senalizacion clara y servicios pensados para viajeros internacionales. Aun asi, saber como moverse y que decisiones tomar marca la diferencia en la experiencia por eso nuestros guias hablan espanol para que no te preocupes por el idioma.",
+      "Se recomienda viajar entre 10 y 20 dias para conocer varias ciudades europeas con mayor tranquilidad. La duracion ideal depende del ritmo del viaje y de los paises que se quieran visitar.",
   },
   {
     id: "3",
-    question: "¿Cuantos dias se recomiendan para viajar a Japon?",
+    question: "¿Es complicado organizar un viaje por Europa?",
     answer:
-      "Se recomienda viajar entre 10 y 15 dias para conocer Japon con mayor profundidad. Este tiempo permite recorrer varias ciudades y equilibrar cultura, gastronomia y experiencias. La duracion ideal depende del ritmo del viajero y del tipo de experiencia que quiera construir.",
+      "No, recorrer Europa puede ser muy comodo cuando el viaje esta bien planificado. La coordinacion entre ciudades, trenes, vuelos y recorridos hace una gran diferencia en la experiencia.",
   },
   {
     id: "4",
-    question: "¿Cual es la mejor temporada para viajar a Japon?",
+    question: "¿Que ciudades son imprescindibles en un primer viaje a Europa?",
     answer:
-      "No hay una unica mejor temporada, depende del tipo de experiencia que buscas. Primavera (Sakuras) y otono (Momiji) son muy populares por sus paisajes, pero tambien hay epocas con menos afluencia que permiten disfrutar Japon con mayor tranquilidad.",
+      "Ciudades como Paris, Roma, Londres, Amsterdam y Venecia suelen formar parte de los recorridos mas buscados por quienes visitan Europa por primera vez. Cada una ofrece historia, arquitectura y experiencias que representan la esencia del continente.",
   },
   {
     id: "5",
-    question: "¿Es seguro viajar a Japon?",
+    question: "¿Es seguro viajar a Europa?",
     answer:
-      "Si, Japon es uno de los paises mas seguros del mundo. Se puede viajar con tranquilidad tanto en grandes ciudades como en zonas mas tradicionales. Esa seguridad se aprovecha mucho mas cuando el viaje esta bien organizado y cada detalle esta pensado.",
+      "Si, Europa es uno de los destinos mas recorridos del mundo y cuenta con infraestructura muy desarrollada para viajeros internacionales. Una buena organizacion permite disfrutar cada ciudad con mayor tranquilidad y claridad.",
   },
   {
     id: "6",
-    question: "¿Que tipo de experiencias se pueden vivir en Japon?",
+    question: "¿Es mejor recorrer Europa en tren o en avion?",
     answer:
-      "Japon ofrece una combinacion unica de cultura, gastronomia, tradicion, tecnologia y naturaleza. Se pueden recorrer ciudades modernas, templos historicos y paisajes muy distintos en un mismo viaje. En Japon Premium disenamos cada proyecto para integrar estos contrastes de forma coherente.",
+      "Depende de las ciudades y distancias del recorrido. Europa cuenta con conexiones eficientes tanto en tren como en avion, lo que permite optimizar tiempos y mejorar la experiencia del viaje.",
   },
   {
     id: "7",
-    question: "¿Es facil moverse dentro de Japon?",
+    question: "¿Que tipo de experiencias gastronomicas ofrece Europa?",
     answer:
-      "Si, moverse dentro de Japon es facil gracias a su sistema de transporte eficiente y puntual. Los trenes y conexiones permiten recorrer el pais de forma organizada y comoda.",
+      "Europa ofrece una enorme diversidad gastronomica entre cocina italiana, francesa, espanola y especialidades regionales de cada pais. La gastronomia suele convertirse en una parte esencial del recorrido.",
   },
   {
     id: "8",
-    question:
-      "¿Japon es un destino recomendable para viajar en pareja o en familia?",
+    question: "¿Que incluye normalmente un viaje por Europa?",
     answer:
-      "Si, Japon es un destino ideal tanto para viajar en pareja como en familia ya que hay diversos parques de diversiones y experiencias que se disfrutan en compania. La clave esta en disenar el recorrido segun el tipo de experiencia que se quiere vivir.",
+      "Un viaje por Europa suele incluir alojamiento, traslados entre ciudades y experiencias disenadas para aprovechar mejor cada destino. La organizacion del recorrido es clave para disfrutar el continente con mayor comodidad y claridad.",
   },
 ] as const;
 
@@ -77,13 +76,13 @@ export const europaPremiumLandingConfig: PremiumLandingConfig = {
     primary: "#511E62",
     secondary: "#882BAC",
     complementary: "#2A1A6E",
-    yellow: "#f2cd5e",
+    yellow: "#ffa8cbff",
     background: "#f3f3f0",
     black: "#16181b",
     white: "#f3f3f0",
   },
   navbar: {
-    logoUrl: "/logos/jp-negro.svg",
+    logoUrl: "/logos/europa/logo-europa.svg",
     menuItems: [...EUROPA_MENU_ITEMS],
     colors: ["var(--primary-europa)", "var(--secondary-europa)"],
     accentColor: "var(--primary-europa)",
@@ -92,25 +91,22 @@ export const europaPremiumLandingConfig: PremiumLandingConfig = {
   },
   sections: {
     hero: {
-      seoHeading: "Viaja a Japon desde Mexico",
+      seoHeading: "Viaja a Europa desde México",
       title: {
         line1Lead: "Viaja a",
         line1Focus: "Europa",
         line2Lead: "desde",
-        line2Focus: "Mexico",
+        line2Focus: "México",
       },
       mobileTitle: {
         line1Lead: "Viaja a",
-        line1Focus: "Japon",
+        line1Focus: "Europa",
         line2Lead: "Desde",
-        line2Focus: "Mexico",
+        line2Focus: "México",
       },
       descriptionLines: [
         {
-          text: "con una forma mas cuidada de vivir Japon.",
-        },
-        {
-          text: "para quienes valoran atencion personal, criterio y una forma mas cuidada de vivir Japon.",
+          text: "Eleva tu vida conociendo Europa con profundidad y acompañamiento desde el primer contacto hasta su regreso. Atención personalizada, planeación detallada y soporte de inicio a fin.",
         },
       ],
       ctaPrimary: {
@@ -124,30 +120,27 @@ export const europaPremiumLandingConfig: PremiumLandingConfig = {
       backgroundImage: "/images/japon/hero/japanHero.jpg",
     },
     aboutUs: {
-      srHeading: "Snapshot de Japon Premium",
-      badgeText: "Snapshot",
-      titleText: "Más de 21 años diseñando experiencias PREMIUM.",
+      srHeading: "Nosotros Europa Premium",
+      badgeText: "Nosotros",
+      titleText: "Más de 21 años diseñando experiencias PREMIUM",
       titleHighlightWords: ["21 años", "PREMIUM"],
       cards: [
         {
-          image: "/images/peru/1-machu-pichu.webp",
-          text: "Machu Picchu",
-                    experiences: "14 DIAS · ANIME · PARQUES TEMATICOS · TECNOLOGIA · CULTURA POP",
-
+          image: "/images/europa/nosotros/itinerario-gala.avif",
+          text: "Europa de Gala",
+          experiences: "12 días · Francia · Alemania · Austria · Italia",
           wide: false,
         },
         {
-          image: "/images/peru/1-gastronomia-autentica.webp",
-          text: "Gastronomia autentica",
-                    experiences: "14 DIAS · ANIME · PARQUES TEMATICOS · TECNOLOGIA · CULTURA POP",
-
+          image: "/images/europa/nosotros/itinerario-maravillas.avif",
+          text: "Maravillas de Europa",
+          experiences: "12 días · España · Francia · Bélgica · Países Bajos",
           wide: false,
         },
         {
-          image: "/images/japon/1-alojamiento-de-lujo.webp",
-          text: "Hospedaje de lujo",
-                    experiences: "14 DIAS · ANIME · PARQUES TEMATICOS · TECNOLOGIA · CULTURA POP",
-
+          image: "/images/europa/nosotros/itinerario-reserva.avif",
+          text: "Gran Reserva",
+          experiences: "16 días · Francia · Inglaterra · Países Bajos · Italia",
           wide: false,
         },
       ],
@@ -155,12 +148,12 @@ export const europaPremiumLandingConfig: PremiumLandingConfig = {
       cardButtonTarget: "#itinerarios",
     },
     firstForm: {
-      srHeading: "Cuentanos como imaginas tu viaje a Japon",
+      srHeading: "Cuentanos como imaginas tu viaje a Europa",
       sectionTitle: "Propuesta personalizada",
       sectionTitleHighlightWord: "personalizada",
       sectionSubtitle:
-        "Cuentanos como imaginas tu viaje a Japon, compartenos tus intereses y te ayudaremos a identificar cual de nuestros 3 itinerarios se adapta mejor a tu estilo de viaje.",
-      backgroundImage: "/images/japon/geishaForm.webp",
+        "Cuentanos como imaginas tu viaje a Europa, compartenos tus intereses y te ayudaremos a identificar cual de nuestros 3 itinerarios se adapta mejor a tu estilo de viaje.",
+      backgroundImage: "/images/europa/geishaForm.webp",
       mobileImage: {
         src: "/images/japon/geishaFormSola2.webp",
         alt: "Geisha en Japon",
@@ -176,44 +169,44 @@ export const europaPremiumLandingConfig: PremiumLandingConfig = {
       },
     },
     choose: {
-      srHeading: "Highlights de Japon Premium",
-      badgeText: "¿Por que Japon Premium?",
+    srHeading: "Highlights de Barrancas Premium",
+      badgeText: "¿Por qué Barrancas PREMIUM?",
       kickerTop: "Trabajamos con marcas",
-      kickerBottom: "Cuidadosamente seleccionadas.",
+      kickerBottom: "cuidadosamente seleccionadas.",
       line1: {
-        lead: "TE LLEVAMOS",
+        lead: "Viaja por",
         bracket: {
-          label: "OSAKA",
-          imageSrc: "/images/japon/1-kyoto-nara.webp",
-          imageAlt: "Vista urbana de Osaka",
+          label: "Londres",
+          imageSrc: "/images/europa/porque/hover/hover-londres.webp",
+          imageAlt: "Recorrido escenico en Chepe Express",
           textTone: "ot",
         },
-        tail: "A",
+        tail: "con Calma",
       },
       line2: {
-        text: "VIVIR JAPON",
-        highlightWord: "JAPON",
+        text: "Mientras",
+        highlightWord: "Italia",
         bracket: {
-          label: "KIOTO",
-          imageSrc: "/images/japon/1-kyoto-nara.webp",
-          imageAlt: "Escena tradicional de Kioto",
+          label: "ITALIA",
+          imageSrc: "/images/europa/porque/hover/hover-italia.webp",
+          imageAlt: "Paisaje de la Sierra Tarahumara",
           textTone: "epochal",
         },
-        tail: "CON",
+        tail: "revelan su",
       },
       line3: {
-        lead: "EL RESPALDO",
+        lead: "Esencia y el",
         bracket: {
-          label: "TOKIO",
-          imageSrc: "/images/japon/1-kyoto-nara.webp",
-          imageAlt: "Paisaje iconico de Tokio",
+          label: "Paris",
+          imageSrc: "/images/europa/porque/hover/hover-paris.webp",
+          imageAlt: "Norte de Mexico",
           textTone: "ot",
         },
-        tail: "Y LA",
+        tail: "redefine tu",
       },
       line4: {
-        text: "ATENCION QUE MERECES",
-        highlightWord: "MERECES",
+        text: "Forma de viajar",
+        highlightWord: "viajar",
       },
       focusRailItems: [
         {
@@ -222,16 +215,16 @@ export const europaPremiumLandingConfig: PremiumLandingConfig = {
           description:
             "Cada itinerario se estructura para dar mas sentido, ritmo y calidad al viaje.",
           meta: "Cultura",
-          imageSrc: "/images/japon/2-recorridos-diseñados-con-mas-criterio.webp",
+          imageSrc: "/images/europa/porque/valor/carrusel-recorridos.webp",
           href: "#form",
         },
         {
           id: "tokyo-nocturno",
           title: "Acompanamiento personalizado",
           description:
-            "Atencion cercana antes, durante y despues de su experiencia en Japon.",
+            "Atencion cercana antes, durante y despues de su experiencia en Europa.",
           meta: "Urbano",
-          imageSrc: "/images/japon/2-acompañamiento-personalizado.webp",
+          imageSrc: "/images/europa/porque/valor/carrusel-acompanamiento.webp",
           href: "#form",
         },
         {
@@ -240,7 +233,7 @@ export const europaPremiumLandingConfig: PremiumLandingConfig = {
           description:
             "Soporte continuo para viajar con tranquilidad de principio a fin.",
           meta: "Gastronomia",
-          imageSrc: "/images/japon/2-respaldo-24-7.webp",
+          imageSrc: "/images/europa/porque/valor/carrusel-respaldo.webp",
           href: "#form",
         },
         {
@@ -249,16 +242,16 @@ export const europaPremiumLandingConfig: PremiumLandingConfig = {
           description:
             "Seleccionadas por su caracter, ubicacion y nivel de servicio.",
           meta: "Bienestar",
-          imageSrc: "/images/japon/2-estancia-a-la-altura-del-viaje.webp",
+          imageSrc: "/images/europa/porque/valor/carrusel-estancias.webp",
           href: "#form",
         },
         {
           id: "paisajes-iconicos",
           title: "Expertos que hablan su idioma",
           description:
-            "Guias en espanol para vivir Japon con mas claridad y profundidad.",
+            "Guias en espanol para vivir Europa con mas claridad y profundidad.",
           meta: "Naturaleza",
-          imageSrc: "/images/japon/2-expertos-que-hablan-su-idioma.webp",
+          imageSrc: "/images/europa/porque/valor/carrusel-expertos.webp",
           href: "#form",
         },
         {
@@ -267,7 +260,7 @@ export const europaPremiumLandingConfig: PremiumLandingConfig = {
           description:
             "Cada detalle se cuida para que usted viaje con mas confianza y respaldo.",
           meta: "Tradicion",
-          imageSrc: "/images/japon/2-tranquilidad-de-principio-a-fin.webp",
+          imageSrc: "/images/europa/porque/valor/carrusel-tranquilidad.webp",
           href: "#form",
         },
       ],
@@ -286,38 +279,38 @@ export const europaPremiumLandingConfig: PremiumLandingConfig = {
       items: [
         {
           id: 1,
-          day: "14 DIAS · ESPIRITUALIDAD · TRADICION · BIENESTAR · CULTURA",
-          title: "Alma de Japon",
+          day: "12 dias · Francia · Alemania · Austria · Italia",
+          title: "Europa de Gala",
           description:
-            "Un recorrido por el Japon mas espiritual y profundo: templos milenarios, rutas sagradas, ryokans, onsen y experiencias que transforman el viaje.",
+            "Un recorrido por la Europa mas iconica entre ciudades historicas, paisajes escenicos y las experiencias mas representativas del continente.",
           ideal:
-            "Ideal para parejas, familias, lunas de miel y viajeros que buscan desconexion profunda.",
-          image1: "/images/japon/3-alma-de-japon-izq.webp",
-          image2: "/images/japon/3-alma-de-japon-der.webp",
+            "Ideal para quienes buscan descubrir Europa por primera vez en una experiencia clasica y cuidadosamente disenada.",
+          image1: "/images/europa/itinerarios/izquierda/scroll-gala-izquierda.avif",
+          image2: "/images/europa/itinerarios/derecha/scroll-gala-derecha.avif",
           price: "Desde $4,990 USD base doble",
         },
         {
           id: 2,
-          day: "14 DIAS · ANIME · PARQUES TEMATICOS · TECNOLOGIA · CULTURA POP",
-          title: "Japon Pop",
+          day: "12 dias · Espana · Francia · Belgica · Paises Bajos",
+          title: "Maravillas de Europa",
           description:
-            "Un recorrido por el Japon mas vibrante y fantastico: anime, parques tematicos, tecnologia, neon, tradicion y experiencias que transforman el viaje.",
+            "Un recorrido por ciudades historicas, arquitectura emblematica y algunos de los paisajes urbanos mas representativos de Europa occidental.",
           ideal:
-            "Ideal para familias, amigos, parejas jovenes, fans del anime, manga y la tecnologia.",
-          image1: "/images/japon/4-japon-pop-izq.webp",
-          image2: "/images/japon/4-japon-pop-der.webp",
+            "Viajeros que buscan descubrir Europa entre cultura, historia y ciudades llenas de identidad y tradicion.",
+          image1: "/images/europa/itinerarios/izquierda/scroll-maravillas-izquierda.avif",
+          image2: "/images/europa/itinerarios/derecha/scroll-maravillas-derecha.avif",
           price: "Desde $4,590 USD base doble",
         },
         {
           id: 3,
-          day: "15 DIAS · SAMURAIS · GEISHAS · SUMO · ALPES JAPONESES",
-          title: "El Camino del Shogun",
+          day: "16 dias · Francia · Inglaterra · Paises Bajos · Italia",
+          title: "Gran Reserva",
           description:
-            "Un recorrido por el Japon mas autentico y menos transitado: alpes japoneses, templos zen, ryokans y santuarios sagrados que transforman el viaje.",
+            "Un recorrido por la Europa mas emblematica entre capitales historicas, pueblos escenicos y experiencias que representan la grandeza del continente.",
           ideal:
-            "Ideal para parejas aventureras, viajeros con mirada cultural y quienes prefieren el Japon que pocos conocen.",
-          image1: "/images/japon/5-el-camino-del-shogun-izq.webp",
-          image2: "/images/japon/5-el-camino-del-shogun-der.webp",
+            "Viajeros que buscan conocer las ciudades mas iconicas de Europa en una experiencia amplia y cuidadosamente disenada.",
+          image1: "/images/europa/itinerarios/izquierda/scroll-reserva-izquierda.avif",
+          image2: "/images/europa/itinerarios/derecha/scroll-reserva-derecha.avif",
           price: "Desde $5,290 USD base doble",
         },
       ],
@@ -343,42 +336,42 @@ export const europaPremiumLandingConfig: PremiumLandingConfig = {
         {
           id: "stays",
           label: "I",
-          title: "Estancias con caracter",
+          title: "Alojamiento seleccionado con criterio",
           description:
-            "Espacios cuidadosamente seleccionados por ubicacion, servicio y la experiencia que aportan al viaje.",
-          image: "/images/japon/6-estancias-con-caracter.webp",
+            "Hoteles y estancias elegidas por ubicación y comodidad, para descansar bien después de cada experiencia en ciudades y recorridos por Europa.",
+          image: "/images/europa/incluye/experiencia-alojamiento.webp",
         },
         {
           id: "transport",
           label: "II",
-          title: "Traslados mejor coordinados",
+          title: "Traslados y conexiones bien resueltos",
           description:
-            "Shinkansen, traslados privados y tiempos pensados para que el viaje fluya con mas orden y comodidad.",
-          image: "/images/japon/6-traslados-mejor-coordinados.webp",
+            "Diseñamos recorridos con lógica. Organización clara de desplazamientos para aprovechar mejor el tiempo en destino.",
+          image: "/images/europa/incluye/experiencia-traslado.webp",
         },
         {
           id: "culture",
           label: "III",
-          title: "Experiencias culturales curadas",
+          title: "Experiencias privadas o seleccionadas",
           description:
-            "Templos, barrios historicos y actividades elegidas para conectar con el Japon mas autentico.",
-          image: "/images/japon/6-experiencias-culturales-curadas.webp",
+            "Actividades elegidas con intención: recorridos históricos, experiencias culturales y momentos diseñados para conectar con la esencia de Europa",
+          image: "/images/europa/incluye/experiencia-privacidad.webp",
         },
         {
           id: "gastronomy",
           label: "IV",
-          title: "Escenas gastronomicas seleccionadas",
+          title: "Gastronomía europea",
           description:
-            "Reservas y momentos en la mesa pensados para descubrir Japon con mas detalle y autenticidad.",
-          image: "/images/japon/6-escenas-gastronomicas-seleccionadas.webp",
+            "Experiencias culinarias que forman parte central del viaje: cocina tradicional, restaurantes seleccionados y sabores que definen la identidad europea.",
+          image: "/images/europa/incluye/experiencia-gastronomia.webp",
         },
         {
           id: "support",
           label: "V",
           title: "Acompanamiento en cada etapa",
           description:
-            "Atencion en espanol antes y durante el viaje para acompanarle con claridad y resolver cada detalle.",
-          image: "/images/japon/6-acompañamiento-en-cada-etapa.webp",
+            "Atencion en español antes y durante el viaje para acompanarle con claridad y resolver cada detalle.",
+          image: "/images/europa/incluye/experiencia-acompanamiento.webp",
         },
       ],
     },
@@ -389,42 +382,42 @@ export const europaPremiumLandingConfig: PremiumLandingConfig = {
         {
           id: 1,
           quote:
-            "Japon nos parecia un viaje complejo, pero aqui todo se sintio claro, cuidado y bien acompanado desde el principio.",
-          name: "Mariana Gutierrez",
+            "Un viaje planeado por mucho tiempo que supero mis expectativas: hospedaje de gran calidad, guias bien capacitados durante todo el recorrido.",
+          name: "Virginia Cardenas",
           location: "Ciudad de Mexico",
-          avatar: "/images/stock/avatar-1.svg",
+          avatar: "/images/europa/testimonios/virginia-cardenas.jpeg",
         },
         {
           id: 2,
           quote:
-            "Se nota cuando un viaje esta disenado con criterio. Hubo orden, atencion y experiencias que si valieron la inversion.",
-          name: "Rodrigo Trevino",
-          location: "Guadalajara",
-          avatar: "/images/stock/avatar-2.svg",
+            "Todo el viaje fue excelente, hoteles, servicios, tours, guias y horarios.",
+          name: "Dr. Abel Pena",
+          location: "Ciudad de Mexico",
+          avatar: "/images/europa/testimonios/dr-abiel-pena.jpeg",
         },
         {
           id: 3,
           quote:
-            "Viajamos en familia y lo que mas agradecimos fue la enorme tranquilidad de sentir que todo estaba bien resuelto.",
-          name: "Paola Mendoza",
-          location: "Monterrey",
-          avatar: "/images/stock/avatar-3.svg",
+            "Me encanto la atencion brindada, siempre resolviendo mis dudas. Mi viaje fue la mejor experiencia siendo la primera vez en europa.",
+          name: "Tania Perez",
+          location: "Ciudad de Mexico",
+          avatar: "/images/europa/testimonios/tania-perez.webp",
         },
         {
           id: 4,
           quote:
-            "No fue solo un gran viaje, fue una experiencia mejor pensada, mejor cuidada y a la altura de lo que estabamos buscando.",
-          name: "Ernesto Ramirez",
-          location: "Ciudad de Mexico",
-          avatar: "/images/stock/avatar-4.svg",
+            "Europa se vivio diferente gracias a la organizacion y claridad del viaje. Disfrutamos cada ciudad sin preocuparnos por nada.",
+          name: "Ignacio y Maria",
+          location: "Monterrey",
+          avatar: "/images/europa/testimonios/ignacio-y-maria.jpg",
         },
         {
           id: 5,
           quote:
-            "La diferencia estuvo en los detalles: tiempos bien organizados, atencion cercana y una experiencia realmente fluida.",
-          name: "Fernanda Lozano",
-          location: "Puebla",
-          avatar: "/images/stock/avatar-5.svg",
+            "El recorrido por Europa estuvo perfectamente planeado. Cada ciudad, traslado y experiencia se sintieron cuidados desde el primer dia.",
+          name: "Diego Sevilla",
+          location: "Ciudad de Mexico",
+          avatar: "/images/europa/testimonios/diego-sevilla.jpg",
         },
       ],
       cta: {
@@ -456,7 +449,7 @@ export const europaPremiumLandingConfig: PremiumLandingConfig = {
       badgeText: "Preguntas frecuentes",
       title: "Todo lo que necesitas saber",
       subtitle:
-        "Resolvemos las dudas mas comunes sobre nuestros viajes a Peru. Si no encuentras lo que buscas, escribenos directamente.",
+        "Resolvemos las dudas más comunes sobre nuestros viajes a Europa. Si no encuentras lo que buscas, escríbenos directamente.",
       contactLabel: "¿Otra pregunta?",
       contactEmail: "hola@perupremium.com",
       items: [...EUROPA_FAQS],
@@ -555,5 +548,8 @@ export const europaPremiumLandingConfig: PremiumLandingConfig = {
     },
   },
 };
+
+
+
 
 

@@ -86,7 +86,7 @@ export const BlurredStagger = ({
         animate={controlled ? (isActive ? "show" : "hidden") : undefined}
         whileInView={controlled ? undefined : "show"}
         viewport={controlled ? undefined : { once: false, amount: 0.4 }}
-        style={{ display: "flex", flexWrap: "wrap", columnGap: "0.3em" }}
+        style={{ display: "flex", flexWrap: "wrap", columnGap: "0.3em", justifyContent: "center" }}
         aria-hidden="true"
       >
         {text.split(" ").map((word, wordIndex) => {

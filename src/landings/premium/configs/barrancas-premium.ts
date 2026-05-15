@@ -118,7 +118,7 @@ export const barrancasPremiumLandingConfig: PremiumLandingConfig = {
       srHeading: "Snapshot de Barrancas Premium",
       badgeText: "Nosotros",
       titleText: "Más de 21 años diseñando experiencias PREMIUM.",
-      titleHighlightWords: ["21 años", "PREMIUM"],
+      titleHighlightWords: ["21", "PREMIUM", "años"],
       cards: [
         {
           image: "/images/barrancas/nosotros/5-dias-chepe-express-miradores-naturaleza.webp",

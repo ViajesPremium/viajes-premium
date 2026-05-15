@@ -59,36 +59,124 @@ export default function Home() {
         gsap.registerPlugin(ScrollTrigger);
         const mm = gsap.matchMedia();
 
-        const createHorizontalTween = (isMobileViewport: boolean) => {
+        const createHorizontalTween = () => {
+          const getRevealDistance = () => Math.max(window.innerHeight * 2.4, 1200);
+
+          const aboutPanel =
+            track.querySelector<HTMLElement>("[data-home-about-panel]");
+          const aboutPreview =
+            aboutPanel?.querySelector<HTMLElement>("[data-home-about-preview]") ?? null;
+          const fadeLeft    = aboutPanel?.querySelector<HTMLElement>('[data-home-about-fade="left"]') ?? null;
+          const fadeRight   = aboutPanel?.querySelector<HTMLElement>('[data-home-about-fade="right"]') ?? null;
+          const fadeTop     = aboutPanel?.querySelector<HTMLElement>('[data-home-about-fade="top"]') ?? null;
+          const fadeContent = aboutPanel?.querySelector<HTMLElement>('[data-home-about-fade="content"]') ?? null;
+
+          // offsetLeft ignores CSS transforms, giving the true layout position of
+          // HomeAbout, which is exactly how far the track must scroll.
           const getMaxHorizontalScroll = () =>
-            Math.max(0, track.scrollWidth - window.innerWidth);
+            Math.max(0, aboutPanel ? aboutPanel.offsetLeft : track.offsetWidth - window.innerWidth);
 
           if (getMaxHorizontalScroll() <= 0) return;
 
-          const tween = gsap.to(track, {
-            x: () => -getMaxHorizontalScroll(),
-            ease: "none",
+          let coverScale = 1;
+          let startYOffset = 0;
+          const recalcRevealMetrics = () => {
+            if (!aboutPreview) return;
+            const baseWidth = Math.max(1, aboutPreview.offsetWidth);
+            const baseHeight = Math.max(1, aboutPreview.offsetHeight);
+            const sx = window.innerWidth / baseWidth;
+            const sy = window.innerHeight / baseHeight;
+            coverScale = Math.max(sx, sy) * 1.02;
+            startYOffset = Math.round(baseHeight * 0.78);
+          };
+
+          const renderAboutReveal = (progress: number) => {
+            if (!aboutPreview) return;
+            const p = gsap.utils.clamp(0, 1, progress);
+            const eased = gsap.parseEase("power2.inOut")(p);
+
+            gsap.set(aboutPreview, {
+              y: gsap.utils.interpolate(startYOffset, 0, eased),
+              scale: gsap.utils.interpolate(1, coverScale, eased),
+              borderTopLeftRadius: Math.round(14 - 14 * eased),
+              borderTopRightRadius: Math.round(14 - 14 * eased),
+              force3D: true,
+            });
+
+            // Push elements off screen — no opacity, pure motion
+            const pushX = window.innerWidth * 0.95 * eased;
+            const pushY = window.innerHeight * eased;
+
+            if (fadeLeft)    gsap.set(fadeLeft,    { x: -pushX, force3D: true });
+            if (fadeRight)   gsap.set(fadeRight,   { x:  pushX, force3D: true });
+            if (fadeTop)     gsap.set(fadeTop,     { y: -pushY * 0.7, force3D: true });
+            if (fadeContent) gsap.set(fadeContent, { y: -pushY, force3D: true });
+          };
+
+          recalcRevealMetrics();
+          renderAboutReveal(0);
+
+          const revealState = { value: 0 };
+
+          const timeline = gsap.timeline({
             scrollTrigger: {
               trigger: page,
               start: "top top",
-              end: () => `+=${getMaxHorizontalScroll()}`,
-              scrub: isMobileViewport ? 1 : 1.25,
+              end: () => `+=${getMaxHorizontalScroll() + getRevealDistance()}`,
+              scrub: 1.15,
               pin: true,
-              anticipatePin: isMobileViewport ? 0.25 : 0.4,
-              fastScrollEnd: true,
+              anticipatePin: 0.45,
+              fastScrollEnd: false,
               refreshPriority: 2,
               invalidateOnRefresh: true,
+              onRefreshInit: () => {
+                if (aboutPreview) {
+                  gsap.set(aboutPreview, {
+                    y: startYOffset,
+                    scale: 1,
+                    transformOrigin: "50% 100%",
+                    borderTopLeftRadius: 14,
+                    borderTopRightRadius: 14,
+                  });
+                }
+                if (fadeLeft)    gsap.set(fadeLeft,    { x: 0, opacity: 1, visibility: "visible" });
+                if (fadeRight)   gsap.set(fadeRight,   { x: 0, opacity: 1, visibility: "visible" });
+                if (fadeTop)     gsap.set(fadeTop,     { y: 0, opacity: 1, visibility: "visible" });
+                if (fadeContent) gsap.set(fadeContent, { y: 0, opacity: 1, visibility: "visible" });
+                recalcRevealMetrics();
+                renderAboutReveal(0);
+              },
+              onRefresh: () => {
+                recalcRevealMetrics();
+                renderAboutReveal(revealState.value);
+              },
             },
           });
 
+          timeline
+            .to(track, {
+              x: () => -getMaxHorizontalScroll(),
+              duration: () => getMaxHorizontalScroll(),
+              ease: "none",
+            })
+            .to(
+              revealState,
+              {
+                value: 1,
+                duration: () => getRevealDistance(),
+                ease: "none",
+                onUpdate: () => renderAboutReveal(revealState.value),
+              },
+            );
+
           return () => {
-            tween.scrollTrigger?.kill();
-            tween.kill();
+            timeline.scrollTrigger?.kill();
+            timeline.kill();
           };
         };
 
         // Scroll horizontal solo en desktop; en mobile las secciones se apilan.
-        mm.add("(min-width: 901px)", () => createHorizontalTween(false));
+        mm.add("(min-width: 901px)", () => createHorizontalTween());
 
         cleanup = () => {
           mm.revert();
@@ -118,7 +206,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className={styles.destinationsScene}>
+      <section id="destinations" className={styles.destinationsScene}>
         <Destinations embedded />
       </section>
 
