@@ -131,22 +131,22 @@ export const canadaPremiumLandingConfig: PremiumLandingConfig = {
       cards: [
         {
           image: "/images/peru/1-machu-pichu.webp",
-          text: "Machu Picchu",
-                    experiences: "14 DIAS · ANIME · PARQUES TEMATICOS · TECNOLOGIA · CULTURA POP",
+          text: "Canadá Original",
+          experiences: "8 días - Toronto - Niagara - Quebec - Montreal",
 
           wide: false,
         },
         {
           image: "/images/peru/1-gastronomia-autentica.webp",
-          text: "Gastronomia autentica",
-                    experiences: "14 DIAS · ANIME · PARQUES TEMATICOS · TECNOLOGIA · CULTURA POP",
+          text: "Rocosas y Vancouver",
+          experiences: "8 días - Calgary - Banff - Lake Louise - Vancouver",
 
           wide: false,
         },
         {
           image: "/images/japon/1-alojamiento-de-lujo.webp",
-          text: "Hospedaje de lujo",
-                    experiences: "14 DIAS · ANIME · PARQUES TEMATICOS · TECNOLOGIA · CULTURA POP",
+          text: "Sueños de invierno",
+          experiences: "7 días - Norte de Canadá - Paisajes nevados - Auroras boreales",
 
           wide: false,
         },
@@ -218,18 +218,18 @@ export const canadaPremiumLandingConfig: PremiumLandingConfig = {
       focusRailItems: [
         {
           id: "kyoto-privado",
-          title: "Recorridos disenados con mas criterio",
+          title: "Recorridos diseñados con más criterio",
           description:
-            "Cada itinerario se estructura para dar mas sentido, ritmo y calidad al viaje.",
+            "Cada itinerario se estructura para dar más sentido, ritmo y calidad al viaje.",
           meta: "Cultura",
           imageSrc: "/images/japon/2-recorridos-diseñados-con-mas-criterio.webp",
           href: "#form",
         },
         {
           id: "tokyo-nocturno",
-          title: "Acompanamiento personalizado",
+          title: "Acompañamiento personalizado",
           description:
-            "Atencion cercana antes, durante y despues de su experiencia en Japon.",
+            "Atención cercana antes, durante y después de su experiencia en Europa.",
           meta: "Urbano",
           imageSrc: "/images/japon/2-acompañamiento-personalizado.webp",
           href: "#form",
@@ -247,7 +247,7 @@ export const canadaPremiumLandingConfig: PremiumLandingConfig = {
           id: "onsen-premium",
           title: "Estancias a la altura del viaje",
           description:
-            "Seleccionadas por su caracter, ubicacion y nivel de servicio.",
+            "Seleccionadas por su carácter, ubicación y nivel de servicio.",
           meta: "Bienestar",
           imageSrc: "/images/japon/2-estancia-a-la-altura-del-viaje.webp",
           href: "#form",
@@ -256,7 +256,7 @@ export const canadaPremiumLandingConfig: PremiumLandingConfig = {
           id: "paisajes-iconicos",
           title: "Expertos que hablan su idioma",
           description:
-            "Guias en espanol para vivir Japon con mas claridad y profundidad.",
+            "Guías en español para vivir Canadá con más claridad y profundidad.",
           meta: "Naturaleza",
           imageSrc: "/images/japon/2-expertos-que-hablan-su-idioma.webp",
           href: "#form",
@@ -265,7 +265,7 @@ export const canadaPremiumLandingConfig: PremiumLandingConfig = {
           id: "experiencia-ryokan",
           title: "Tranquilidad de principio a fin",
           description:
-            "Cada detalle se cuida para que usted viaje con mas confianza y respaldo.",
+            "Cada detalle se cuida para que usted viaje con más confianza y respaldo.",
           meta: "Tradicion",
           imageSrc: "/images/japon/2-tranquilidad-de-principio-a-fin.webp",
           href: "#form",
@@ -286,36 +286,36 @@ export const canadaPremiumLandingConfig: PremiumLandingConfig = {
       items: [
         {
           id: 1,
-          day: "14 DIAS · ESPIRITUALIDAD · TRADICION · BIENESTAR · CULTURA",
-          title: "Alma de Japon",
+          day: "8 días - Toronto - Niagara - Quebec - Montreal",
+          title: "Canadá Original",
           description:
-            "Un recorrido por el Japon mas espiritual y profundo: templos milenarios, rutas sagradas, ryokans, onsen y experiencias que transforman el viaje.",
+            "Un recorrido por el este de Canadá entre ciudades históricas, paisajes icónicos y algunas de las experiencias más representativas del país.",
           ideal:
-            "Ideal para parejas, familias, lunas de miel y viajeros que buscan desconexion profunda.",
+            "Viajeros que desean descubrir Canadá por primera vez en una experiencia equilibrada y cuidadosamente diseñada.",
           image1: "/images/japon/3-alma-de-japon-izq.webp",
           image2: "/images/japon/3-alma-de-japon-der.webp",
           price: "Desde $4,990 USD base doble",
         },
         {
           id: 2,
-          day: "14 DIAS · ANIME · PARQUES TEMATICOS · TECNOLOGIA · CULTURA POP",
-          title: "Japon Pop",
+          day: "8 días - Calgary - Banff - Lake Louise - Vancouver",
+          title: "Rocosas y Vancouver",
           description:
-            "Un recorrido por el Japon mas vibrante y fantastico: anime, parques tematicos, tecnologia, neon, tradicion y experiencias que transforman el viaje.",
+            "Un recorrido por el oeste de Canadá, visitando las Rocosas Canadienses entre lagos turquesa, montañas imponentes y lo más impresionante de Canadá.",
           ideal:
-            "Ideal para familias, amigos, parejas jovenes, fans del anime, manga y la tecnologia.",
+            "Viajeros que buscan paisajes naturales, rutas panorámicas y experiencias profundamente conectadas con la naturaleza canadiense.",
           image1: "/images/japon/4-japon-pop-izq.webp",
           image2: "/images/japon/4-japon-pop-der.webp",
           price: "Desde $4,590 USD base doble",
         },
         {
           id: 3,
-          day: "15 DIAS · SAMURAIS · GEISHAS · SUMO · ALPES JAPONESES",
-          title: "El Camino del Shogun",
+          day: "7 días - Norte de Canadá - Paisajes nevados - Auroras boreales",
+          title: "Sueños de invierno",
           description:
-            "Un recorrido por el Japon mas autentico y menos transitado: alpes japoneses, templos zen, ryokans y santuarios sagrados que transforman el viaje.",
+            "Una experiencia diseñada para descubrir el invierno canadiense entre paisajes nevados y la posibilidad de observar auroras boreales en el norte de Canadá.",
           ideal:
-            "Ideal para parejas aventureras, viajeros con mirada cultural y quienes prefieren el Japon que pocos conocen.",
+            "Viajeros que buscan vivir una experiencia invernal única y contemplar uno de los fenómenos naturales más impresionantes del mundo.",
           image1: "/images/japon/5-el-camino-del-shogun-izq.webp",
           image2: "/images/japon/5-el-camino-del-shogun-der.webp",
           price: "Desde $5,290 USD base doble",
@@ -343,41 +343,41 @@ export const canadaPremiumLandingConfig: PremiumLandingConfig = {
         {
           id: "stays",
           label: "I",
-          title: "Estancias con caracter",
+          title: "Alojamiento seleccionado con criterio",
           description:
-            "Espacios cuidadosamente seleccionados por ubicacion, servicio y la experiencia que aportan al viaje.",
+            "Hoteles y estancias elegidas por ubicación y comodidad, para descansar bien después de cada experiencia en ciudades y paisajes de Canadá.",
           image: "/images/japon/6-estancias-con-caracter.webp",
         },
         {
           id: "transport",
           label: "II",
-          title: "Traslados mejor coordinados",
+          title: "Traslados y conexiones bien resueltos",
           description:
-            "Shinkansen, traslados privados y tiempos pensados para que el viaje fluya con mas orden y comodidad.",
+            "Diseñamos recorridos con lógica. Organización clara de desplazamientos para aprovechar mejor el tiempo en destino.",
           image: "/images/japon/6-traslados-mejor-coordinados.webp",
         },
         {
           id: "culture",
           label: "III",
-          title: "Experiencias culturales curadas",
+          title: "Experiencias privadas o seleccionadas",
           description:
-            "Templos, barrios historicos y actividades elegidas para conectar con el Japon mas autentico.",
+            "Actividades elegidas con intención: naturaleza, ciudades icónicas y momentos diseñados para conectar con la esencia de Canadá.",
           image: "/images/japon/6-experiencias-culturales-curadas.webp",
         },
         {
           id: "gastronomy",
           label: "IV",
-          title: "Escenas gastronomicas seleccionadas",
+          title: "Gastronomía canadiense",
           description:
-            "Reservas y momentos en la mesa pensados para descubrir Japon con mas detalle y autenticidad.",
+            "Experiencias culinarias que forman parte central del viaje: sabores locales, restaurantes seleccionados y propuestas que reflejan la identidad canadiense.",
           image: "/images/japon/6-escenas-gastronomicas-seleccionadas.webp",
         },
         {
           id: "support",
           label: "V",
-          title: "Acompanamiento en cada etapa",
+          title: "Acompañamiento en cada etapa",
           description:
-            "Atencion en espanol antes y durante el viaje para acompanarle con claridad y resolver cada detalle.",
+            "Desde la planeación inicial hasta tu regreso, cuentas con seguimiento real y atención en español.",
           image: "/images/japon/6-acompañamiento-en-cada-etapa.webp",
         },
       ],

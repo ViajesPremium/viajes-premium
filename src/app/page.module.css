@@ -4,6 +4,21 @@
   overflow-x: clip;
 }
 
+.globeScene {
+  position: relative;
+  width: 100%;
+}
+
+.introScene {
+  position: relative;
+  width: 100%;
+}
+
+.aboutScene {
+  position: relative;
+  width: 100%;
+}
+
 .horizontalScene {
   position: relative;
   height: 100%;
@@ -87,4 +102,7 @@
     height: auto;
     overflow-y: visible;
   }
+}
+
+@media (min-width: 901px) and (max-width: 1440px) and (max-height: 900px) {
 }

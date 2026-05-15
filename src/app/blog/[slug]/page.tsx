@@ -17,11 +17,22 @@ type BlogPageProps = {
 type ImageColumn = "left" | "right";
 
 type BlogVisualConfig = {
+  hero?: { src: string };
+  byline?: { author: string; date: string };
   primary: { src: string; column: ImageColumn; afterInColumn: number };
   secondary: { src: string; column: ImageColumn; afterInColumn: number };
+  lowerLeft?: { src: string };
+  lowerRight?: { src: string };
 };
 
 const DEFAULT_VISUALS: BlogVisualConfig = {
+  hero: {
+    src: "/images/japon/samuraiBlog.png",
+  },
+  byline: {
+    author: "Ismael Contreras",
+    date: "Julio 2026",
+  },
   primary: {
     src: "/images/japon/samuraiBlog.png",
     column: "left",
@@ -32,10 +43,19 @@ const DEFAULT_VISUALS: BlogVisualConfig = {
     column: "right",
     afterInColumn: 2,
   },
+  lowerLeft: {
+    src: "/images/japon/6.1-estancias-con-caracter.webp",
+  },
+  lowerRight: {
+    src: "/images/japon/6.1-escenas-gastronomicas-seleccionadas.webp",
+  },
 };
 
 const BLOG_VISUALS: Record<string, BlogVisualConfig> = {
   "blog-01-japon-premium": {
+    hero: {
+      src: "/images/japon/1-alma-de-japon.webp",
+    },
     primary: {
       src: "/images/japon/1-alma-de-japon.webp",
       column: "left",
@@ -46,8 +66,17 @@ const BLOG_VISUALS: Record<string, BlogVisualConfig> = {
       column: "right",
       afterInColumn: 2,
     },
+    lowerLeft: {
+      src: "/images/japon/6.1-experiencias-culturales-curadas.webp",
+    },
+    lowerRight: {
+      src: "/images/japon/6.1-escenas-gastronomicas-seleccionadas.webp",
+    },
   },
   "blog-02-viajes-familia-premium": {
+    hero: {
+      src: "/images/japon/1-japon-pop.webp",
+    },
     primary: {
       src: "/images/japon/1-japon-pop.webp",
       column: "right",
@@ -58,8 +87,17 @@ const BLOG_VISUALS: Record<string, BlogVisualConfig> = {
       column: "left",
       afterInColumn: 2,
     },
+    lowerLeft: {
+      src: "/images/japon/6.1-acompañamiento-en-cada-etapa.webp",
+    },
+    lowerRight: {
+      src: "/images/japon/6.1-traslados-mejor-coordinados.webp",
+    },
   },
   "blog-03-viajero-consciente": {
+    hero: {
+      src: "/images/japon/1-camino-del-shogun.webp",
+    },
     primary: {
       src: "/images/japon/1-camino-del-shogun.webp",
       column: "left",
@@ -70,8 +108,17 @@ const BLOG_VISUALS: Record<string, BlogVisualConfig> = {
       column: "right",
       afterInColumn: 2,
     },
+    lowerLeft: {
+      src: "/images/japon/6.1-estancias-con-caracter.webp",
+    },
+    lowerRight: {
+      src: "/images/japon/6.1-experiencias-culturales-curadas.webp",
+    },
   },
   "blog-04-arte-itinerarios-premium": {
+    hero: {
+      src: "/images/japon/2-recorridos-diseñados-con-mas-criterio.webp",
+    },
     primary: {
       src: "/images/japon/2-recorridos-diseñados-con-mas-criterio.webp",
       column: "left",
@@ -82,8 +129,17 @@ const BLOG_VISUALS: Record<string, BlogVisualConfig> = {
       column: "right",
       afterInColumn: 2,
     },
+    lowerLeft: {
+      src: "/images/japon/6.1-acompañamiento-en-cada-etapa.webp",
+    },
+    lowerRight: {
+      src: "/images/japon/6.1-escenas-gastronomicas-seleccionadas.webp",
+    },
   },
   "blog-05-hospedaje-con-identidad": {
+    hero: {
+      src: "/images/japon/2-estancia-a-la-altura-del-viaje.webp",
+    },
     primary: {
       src: "/images/japon/2-estancia-a-la-altura-del-viaje.webp",
       column: "right",
@@ -94,8 +150,17 @@ const BLOG_VISUALS: Record<string, BlogVisualConfig> = {
       column: "left",
       afterInColumn: 2,
     },
+    lowerLeft: {
+      src: "/images/japon/6.1-acompañamiento-en-cada-etapa.webp",
+    },
+    lowerRight: {
+      src: "/images/japon/6.1-experiencias-culturales-curadas.webp",
+    },
   },
   "blog-06-experiencias-culturales-curadas": {
+    hero: {
+      src: "/images/japon/6.1-experiencias-culturales-curadas.webp",
+    },
     primary: {
       src: "/images/japon/6.1-experiencias-culturales-curadas.webp",
       column: "left",
@@ -105,6 +170,12 @@ const BLOG_VISUALS: Record<string, BlogVisualConfig> = {
       src: "/images/japon/6.1-escenas-gastronomicas-seleccionadas.webp",
       column: "right",
       afterInColumn: 2,
+    },
+    lowerLeft: {
+      src: "/images/japon/2-estancia-a-la-altura-del-viaje.webp",
+    },
+    lowerRight: {
+      src: "/images/japon/2-acompañamiento-personalizado.webp",
     },
   },
 };
@@ -169,6 +240,14 @@ export default async function BlogDetailPage({ params }: BlogPageProps) {
             Math.max(columnParagraphs.length, 1),
           )
         : -1;
+    const lowerImageSrc =
+      columnName === "left"
+        ? (visuals.lowerLeft?.src ?? visuals.secondary.src)
+        : (visuals.lowerRight?.src ?? visuals.primary.src);
+    const lowerAfter =
+      columnParagraphs.length > 2
+        ? columnParagraphs.length - 1
+        : columnParagraphs.length;
 
     return columnParagraphs.map((paragraph, index) => {
       const inColumnNumber = index + 1;
@@ -210,6 +289,18 @@ export default async function BlogDetailPage({ params }: BlogPageProps) {
               />
             </figure>
           ) : null}
+
+          {inColumnNumber === lowerAfter ? (
+            <figure className={styles.imageFigure} aria-hidden="true">
+              <Image
+                src={lowerImageSrc}
+                alt=""
+                width={980}
+                height={640}
+                className={styles.inlineImage}
+              />
+            </figure>
+          ) : null}
         </div>
       );
     });
@@ -223,6 +314,20 @@ export default async function BlogDetailPage({ params }: BlogPageProps) {
             <BackButton />
           </div>
           <h1 className={styles.title}>{getReadableBlogTitle(slug)}</h1>
+          <p className={styles.byline}>
+            {visuals.byline?.author ?? "Ismael Contreras"} ·{" "}
+            {visuals.byline?.date ?? "Julio 2026"}
+          </p>
+          <figure className={styles.heroFigure} aria-hidden="true">
+            <Image
+              src={visuals.hero?.src ?? visuals.primary.src}
+              alt=""
+              width={1600}
+              height={760}
+              className={styles.heroImage}
+              priority
+            />
+          </figure>
           <section className={styles.newspaperBody}>
             <div className={styles.column}>
               {renderColumn("left", leftParagraphs, 0)}

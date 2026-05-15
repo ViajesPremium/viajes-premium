@@ -209,7 +209,7 @@ export default function Destinations({ embedded = false }: { embedded?: boolean 
         pin: true,
         anticipatePin: 0.35,
         fastScrollEnd: true,
-        refreshPriority: 1,
+        refreshPriority: -1,
         invalidateOnRefresh: true,
         onRefreshInit: () => {
           gsap.set(dimLayers, { opacity: 0 });

@@ -23,7 +23,7 @@ export default function HomeGlobe() {
       <div className={styles.imgContainer}>
         <div className={styles.img1}>
           <Image
-            src="/images/europa/itinerarios/derecha/scroll-gala-derecha.avif"
+            src="/images/europa/itinerarios/derecha/scroll-gala-derecha.webp"
             alt="Alojamiento de lujo"
             fill
             className={styles.imgMedia}
@@ -32,7 +32,7 @@ export default function HomeGlobe() {
         </div>
         <div className={styles.img2}>
           <Image
-            src="/images/europa/itinerarios/izquierda/scroll-gala-izquierda.avif"
+            src="/images/europa/itinerarios/izquierda/scroll-gala-izquierda.webp"
             alt="Naturaleza escondida"
             fill
             className={styles.imgMedia}
