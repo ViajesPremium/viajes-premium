@@ -118,6 +118,12 @@ export const europaPremiumLandingConfig: PremiumLandingConfig = {
         target: "#itinerarios",
       },
       backgroundImage: "/images/japon/hero/japanHero.jpg",
+      heroOverlay: {
+        baseImage: "/images/europa/hero/mujer2.avif",
+        samuraiImage: "/images/europa/hero/hombre3.avif",
+        baseAlt: "Hero Europa Premium",
+        samuraiAlt: "Figura Europa Premium",
+      },
     },
     aboutUs: {
       srHeading: "Nosotros Europa Premium",

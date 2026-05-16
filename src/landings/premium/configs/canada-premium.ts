@@ -1,4 +1,4 @@
-import type { PremiumLandingConfig } from "@/landings/premium/types";
+﻿import type { PremiumLandingConfig } from "@/landings/premium/types";
 
 const CANADA_MENU_ITEMS = [
   { label: "Inicio", ariaLabel: "Ir al inicio", link: "#inicio" },
@@ -92,25 +92,25 @@ export const canadaPremiumLandingConfig: PremiumLandingConfig = {
   },
   sections: {
     hero: {
-      seoHeading: "Viaja a Japon desde Mexico",
+      seoHeading: "Viaja a Canadá desde México",
       title: {
         line1Lead: "Viaja a",
-        line1Focus: "Japon",
+        line1Focus: "Canadá",
         line2Lead: "desde",
-        line2Focus: "Mexico",
+        line2Focus: "México",
       },
       mobileTitle: {
         line1Lead: "Viaja a",
-        line1Focus: "Japon",
+        line1Focus: "Canadá",
         line2Lead: "Desde",
-        line2Focus: "Mexico",
+        line2Focus: "México",
       },
       descriptionLines: [
         {
-          text: "con una forma mas cuidada de vivir Japon.",
+          text: "Eleva tu vida con una forma mas cuidada de vivir Canadá.",
         },
         {
-          text: "para quienes valoran atencion personal, criterio y una forma mas cuidada de vivir Japon.",
+          text: "para quienes valoran atención personal, criterio y una forma mas cuidada de vivir Canadá.",
         },
       ],
       ctaPrimary: {
@@ -124,27 +124,27 @@ export const canadaPremiumLandingConfig: PremiumLandingConfig = {
       backgroundImage: "/images/japon/hero/japanHero.jpg",
     },
     aboutUs: {
-      srHeading: "Snapshot de Japon Premium",
-      badgeText: "Snapshot",
+      srHeading: "Snapshot de Canada Premium",
+      badgeText: "Nosotros",
       titleText: "Más de 21 años diseñando experiencias PREMIUM.",
-      titleHighlightWords: ["21 años", "PREMIUM"],
+      titleHighlightWords: ["21", "PREMIUM", "años"],
       cards: [
         {
-          image: "/images/peru/1-machu-pichu.webp",
+          image: "/images/canada/nosotros/itinerario-original.webp",
           text: "Canadá Original",
           experiences: "8 días - Toronto - Niagara - Quebec - Montreal",
 
           wide: false,
         },
         {
-          image: "/images/peru/1-gastronomia-autentica.webp",
+          image: "/images/canada/nosotros/itinerario-rocosa.webp",
           text: "Rocosas y Vancouver",
           experiences: "8 días - Calgary - Banff - Lake Louise - Vancouver",
 
           wide: false,
         },
         {
-          image: "/images/japon/1-alojamiento-de-lujo.webp",
+          image: "/images/canada/nosotros/itinerario-invierno.webp",
           text: "Sueños de invierno",
           experiences: "7 días - Norte de Canadá - Paisajes nevados - Auroras boreales",
 
@@ -184,7 +184,7 @@ export const canadaPremiumLandingConfig: PremiumLandingConfig = {
         lead: "TE LLEVAMOS",
         bracket: {
           label: "OSAKA",
-          imageSrc: "/images/japon/1-kyoto-nara.webp",
+          imageSrc: "/images/canada/porque/hover/toronto.webp",
           imageAlt: "Vista urbana de Osaka",
           textTone: "ot",
         },
@@ -195,7 +195,7 @@ export const canadaPremiumLandingConfig: PremiumLandingConfig = {
         highlightWord: "JAPON",
         bracket: {
           label: "KIOTO",
-          imageSrc: "/images/japon/1-kyoto-nara.webp",
+          imageSrc: "/images/canada/porque/hover/quebec.webp",
           imageAlt: "Escena tradicional de Kioto",
           textTone: "epochal",
         },
@@ -204,9 +204,9 @@ export const canadaPremiumLandingConfig: PremiumLandingConfig = {
       line3: {
         lead: "EL RESPALDO",
         bracket: {
-          label: "TOKIO",
-          imageSrc: "/images/japon/1-kyoto-nara.webp",
-          imageAlt: "Paisaje iconico de Tokio",
+          label: "VANCOUVER",
+          imageSrc: "/images/canada/porque/hover/ottawa.webp",
+          imageAlt: "Paisaje iconico de Vancouver",
           textTone: "ot",
         },
         tail: "Y LA",
@@ -217,21 +217,21 @@ export const canadaPremiumLandingConfig: PremiumLandingConfig = {
       },
       focusRailItems: [
         {
-          id: "kyoto-privado",
+          id: "recorridos",
           title: "Recorridos diseñados con más criterio",
           description:
             "Cada itinerario se estructura para dar más sentido, ritmo y calidad al viaje.",
           meta: "Cultura",
-          imageSrc: "/images/japon/2-recorridos-diseñados-con-mas-criterio.webp",
+          imageSrc: "/images/canada/porque/valor/carrusel-recorridos.webp",
           href: "#form",
         },
         {
-          id: "tokyo-nocturno",
+          id: "acompanamiento",
           title: "Acompañamiento personalizado",
           description:
             "Atención cercana antes, durante y después de su experiencia en Europa.",
           meta: "Urbano",
-          imageSrc: "/images/japon/2-acompañamiento-personalizado.webp",
+          imageSrc: "/images/canada/porque/valor/carrusel-acompañamiento.webp",
           href: "#form",
         },
         {
@@ -240,7 +240,7 @@ export const canadaPremiumLandingConfig: PremiumLandingConfig = {
           description:
             "Soporte continuo para viajar con tranquilidad de principio a fin.",
           meta: "Gastronomia",
-          imageSrc: "/images/japon/2-respaldo-24-7.webp",
+          imageSrc: "/images/canada/porque/valor/carrusel-respaldo.webp",
           href: "#form",
         },
         {
@@ -249,25 +249,25 @@ export const canadaPremiumLandingConfig: PremiumLandingConfig = {
           description:
             "Seleccionadas por su carácter, ubicación y nivel de servicio.",
           meta: "Bienestar",
-          imageSrc: "/images/japon/2-estancia-a-la-altura-del-viaje.webp",
+          imageSrc: "/images/canada/porque/valor/carrusel-estancia.webp",
           href: "#form",
         },
         {
           id: "paisajes-iconicos",
           title: "Expertos que hablan su idioma",
           description:
-            "Guías en español para vivir Canadá con más claridad y profundidad.",
+            "Guías en español para vivir Canada con más claridad y profundidad.",
           meta: "Naturaleza",
-          imageSrc: "/images/japon/2-expertos-que-hablan-su-idioma.webp",
+          imageSrc: "/images/canada/porque/valor/carrusel-expertos.webp",
           href: "#form",
         },
         {
           id: "experiencia-ryokan",
           title: "Tranquilidad de principio a fin",
           description:
-            "Cada detalle se cuida para que usted viaje con más confianza y respaldo.",
+            "Cada detalle se cuida para que usted viaje con mas confianza y respaldo.",
           meta: "Tradicion",
-          imageSrc: "/images/japon/2-tranquilidad-de-principio-a-fin.webp",
+          imageSrc: "/images/canada/porque/valor/carrusel-tranquilidad.webp",
           href: "#form",
         },
       ],
@@ -292,8 +292,8 @@ export const canadaPremiumLandingConfig: PremiumLandingConfig = {
             "Un recorrido por el este de Canadá entre ciudades históricas, paisajes icónicos y algunas de las experiencias más representativas del país.",
           ideal:
             "Viajeros que desean descubrir Canadá por primera vez en una experiencia equilibrada y cuidadosamente diseñada.",
-          image1: "/images/japon/3-alma-de-japon-izq.webp",
-          image2: "/images/japon/3-alma-de-japon-der.webp",
+          image1: "/images/canada/itinerarios/izquierda/scroll-original-izquierda.avif",
+          image2: "/images/canada/itinerarios/derecha/scroll-original-derecha.avif",
           price: "Desde $4,990 USD base doble",
         },
         {
@@ -303,9 +303,9 @@ export const canadaPremiumLandingConfig: PremiumLandingConfig = {
           description:
             "Un recorrido por el oeste de Canadá, visitando las Rocosas Canadienses entre lagos turquesa, montañas imponentes y lo más impresionante de Canadá.",
           ideal:
-            "Viajeros que buscan paisajes naturales, rutas panorámicas y experiencias profundamente conectadas con la naturaleza canadiense.",
-          image1: "/images/japon/4-japon-pop-izq.webp",
-          image2: "/images/japon/4-japon-pop-der.webp",
+            "Viajeros que buscan paisajes naturales, rutas panor?micas y experiencias profundamente conectadas con la naturaleza canadiense.",
+          image1: "/images/canada/itinerarios/izquierda/scroll-rocosas-izquierda.avif",
+          image2: "/images/canada/itinerarios/derecha/scroll-rocosas-derecha.avif",
           price: "Desde $4,590 USD base doble",
         },
         {
@@ -316,8 +316,8 @@ export const canadaPremiumLandingConfig: PremiumLandingConfig = {
             "Una experiencia diseñada para descubrir el invierno canadiense entre paisajes nevados y la posibilidad de observar auroras boreales en el norte de Canadá.",
           ideal:
             "Viajeros que buscan vivir una experiencia invernal única y contemplar uno de los fenómenos naturales más impresionantes del mundo.",
-          image1: "/images/japon/5-el-camino-del-shogun-izq.webp",
-          image2: "/images/japon/5-el-camino-del-shogun-der.webp",
+          image1: "/images/canada/itinerarios/izquierda/scroll-invierno-izquierda.avif",
+          image2: "/images/canada/itinerarios/derecha/scroll-invierno-derecha.avif",
           price: "Desde $5,290 USD base doble",
         },
       ],
@@ -346,23 +346,23 @@ export const canadaPremiumLandingConfig: PremiumLandingConfig = {
           title: "Alojamiento seleccionado con criterio",
           description:
             "Hoteles y estancias elegidas por ubicación y comodidad, para descansar bien después de cada experiencia en ciudades y paisajes de Canadá.",
-          image: "/images/japon/6-estancias-con-caracter.webp",
+          image: "/images/canada/incluye/experiencia-alojamiento.webp",
         },
         {
           id: "transport",
           label: "II",
           title: "Traslados y conexiones bien resueltos",
           description:
-            "Diseñamos recorridos con lógica. Organización clara de desplazamientos para aprovechar mejor el tiempo en destino.",
-          image: "/images/japon/6-traslados-mejor-coordinados.webp",
+            "Dise?amos recorridos con lógica. Organización clara de desplazamientos para aprovechar mejor el tiempo en destino.",
+          image: "/images/canada/incluye/experiencia-traslado.webp",
         },
         {
           id: "culture",
           label: "III",
           title: "Experiencias privadas o seleccionadas",
           description:
-            "Actividades elegidas con intención: naturaleza, ciudades icónicas y momentos diseñados para conectar con la esencia de Canadá.",
-          image: "/images/japon/6-experiencias-culturales-curadas.webp",
+            "Actividades elegidas con intención: naturaleza, ciudades icúnicas y momentos diseñados para conectar con la esencia de Canadá.",
+          image: "/images/canada/incluye/experiencia-privacidad.webp",
         },
         {
           id: "gastronomy",
@@ -370,7 +370,7 @@ export const canadaPremiumLandingConfig: PremiumLandingConfig = {
           title: "Gastronomía canadiense",
           description:
             "Experiencias culinarias que forman parte central del viaje: sabores locales, restaurantes seleccionados y propuestas que reflejan la identidad canadiense.",
-          image: "/images/japon/6-escenas-gastronomicas-seleccionadas.webp",
+          image: "/images/canada/incluye/experiencia-gastronomía.webp",
         },
         {
           id: "support",
@@ -378,7 +378,7 @@ export const canadaPremiumLandingConfig: PremiumLandingConfig = {
           title: "Acompañamiento en cada etapa",
           description:
             "Desde la planeación inicial hasta tu regreso, cuentas con seguimiento real y atención en español.",
-          image: "/images/japon/6-acompañamiento-en-cada-etapa.webp",
+          image: "/images/canada/incluye/experiencia-acompañamiento.webp",
         },
       ],
     },
@@ -389,42 +389,42 @@ export const canadaPremiumLandingConfig: PremiumLandingConfig = {
         {
           id: 1,
           quote:
-            "Japon nos parecia un viaje complejo, pero aqui todo se sintio claro, cuidado y bien acompanado desde el principio.",
-          name: "Mariana Gutierrez",
-          location: "Ciudad de Mexico",
-          avatar: "/images/stock/avatar-1.svg",
+            "No cabe en mi corazón tanta felicidad. Buen servicio Canada Premium.",
+          name: "Ana Gladys",
+          location: "Monterrey",
+          avatar: "/images/canada/testimonios/ana-gladys.webp",
         },
         {
           id: 2,
           quote:
-            "Se nota cuando un viaje esta disenado con criterio. Hubo orden, atencion y experiencias que si valieron la inversion.",
-          name: "Rodrigo Trevino",
-          location: "Guadalajara",
-          avatar: "/images/stock/avatar-2.svg",
+            "Padrísimo viaje en compañía de mi familia, gracias por todo y felicidades Canada Premium.",
+          name: "Fernanda Tapia",
+          location: "Ciudad de México",
+          avatar: "/images/canada/testimonios/fernanda-tapia.webp",
         },
         {
           id: 3,
           quote:
-            "Viajamos en familia y lo que mas agradecimos fue la enorme tranquilidad de sentir que todo estaba bien resuelto.",
-          name: "Paola Mendoza",
-          location: "Monterrey",
-          avatar: "/images/stock/avatar-3.svg",
+            "Canadá superó completamente nuestras expectativas. Todo estuvo perfectamente organizado por Canadá Premium.",
+          name: "Irma Bedolla",
+          location: "Ciudad de México",
+          avatar: "/images/canada/testimonios/irma-bedolla.webp",
         },
         {
           id: 4,
           quote:
-            "No fue solo un gran viaje, fue una experiencia mejor pensada, mejor cuidada y a la altura de lo que estabamos buscando.",
-          name: "Ernesto Ramirez",
-          location: "Ciudad de Mexico",
-          avatar: "/images/stock/avatar-4.svg",
+            "Las auroras boreales superaron cualquier expectativa, todo estuvo perfectamente organizado. Sin duda, un viaje de nivel premium.",
+          name: "Sofía Aguirre",
+          location: "Guadalajara",
+          avatar: "/images/canada/testimonios/sofia-aguirre.webp",
         },
         {
           id: 5,
           quote:
-            "La diferencia estuvo en los detalles: tiempos bien organizados, atencion cercana y una experiencia realmente fluida.",
-          name: "Fernanda Lozano",
-          location: "Puebla",
-          avatar: "/images/stock/avatar-5.svg",
+            "Fue una experiencia increíble. Vivir la nieve, conocer Canadá y viajar con mi familia hizo que mis XV años fueran inolvidables.",
+          name: "Valeria Robles",
+          location: "Ciudad de México",
+          avatar: "/images/canada/testimonios/valeria-robles.webp",
         },
       ],
       cta: {
@@ -436,7 +436,7 @@ export const canadaPremiumLandingConfig: PremiumLandingConfig = {
       srHeading: "Mensaje del equipo Japon Premium",
       rows: [
         "japon premium experience",
-        "curaduria atencion precision",
+        "curaduria atención precision",
         "momentos que si importan",
       ],
       role: "Directora Comercial",
@@ -446,7 +446,7 @@ export const canadaPremiumLandingConfig: PremiumLandingConfig = {
       quoteHighlight:
         "viajar va mas alla de acumular destinos; se trata de crear vinculos reales con cada lugar.",
       image: {
-        src: "/images/japon/karina.webp",
+        src: "/images/canada/itinerarios/izquierda/scroll-rocosas-izquierda.webp",
         alt: "Asesora de viaje Japon Premium",
       },
     },
@@ -463,10 +463,10 @@ export const canadaPremiumLandingConfig: PremiumLandingConfig = {
     },
     ctaForm: {
       srHeading: "Formulario de contacto Peru Premium",
-      backgroundImage: "/images/peru/7-formulario.webp",
-      shojiBaseImage: "/images/peru/basePuertas2.webp",
-      shojiLeftImage: "/images/japon/puertaIzquierda.webp",
-      shojiRightImage: "/images/japon/puertaDerecha.webp",
+      backgroundImage: "/images/canada/itinerarios/izquierda/scroll-original-izquierda.webp",
+      shojiBaseImage: "/images/canada/itinerarios/derecha/scroll-original-derecha.webp",
+      shojiLeftImage: "/images/canada/itinerarios/izquierda/scroll-invierno-izquierda.webp",
+      shojiRightImage: "/images/canada/itinerarios/derecha/scroll-rocosas-derecha.webp",
       formTheme: "light",
       formConfig: {
         eyebrow: "",
@@ -522,8 +522,8 @@ export const canadaPremiumLandingConfig: PremiumLandingConfig = {
     },
     footer: {
       srHeading: "Footer Canadá Premium",
-      logoWord: "CANADÁ",
-      samuraiImage: "/images/japon/hero/samuraiHero.webp",
+      logoWord: "CANAD?",
+      samuraiImage: "/images/canada/itinerarios/derecha/scroll-invierno-derecha.webp",
       brandLogo: "/logos/canada/canada-grande-logo.png",
       address:
         "Cda. de Omega 306, Romero de Terreros, Coyoacan, 04310 Ciudad de Mexico, CDMX",
@@ -546,7 +546,7 @@ export const canadaPremiumLandingConfig: PremiumLandingConfig = {
         { label: "YOUTUBE", href: "#" },
       ],
       copyrightText:
-        "© 2026 Viaja a Japon Premium. Todos los derechos reservados.",
+        "¿ 2026 Viaja a Japon Premium. Todos los derechos reservados.",
       backToTopLabel: "Volver al inicio",
       legalLinks: [
         { label: "PRIVACIDAD", href: "#" },
@@ -555,5 +555,11 @@ export const canadaPremiumLandingConfig: PremiumLandingConfig = {
     },
   },
 };
+
+
+
+
+
+
 
 

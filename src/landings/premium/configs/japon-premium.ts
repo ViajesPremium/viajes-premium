@@ -120,8 +120,8 @@ export const japonPremiumLandingConfig: PremiumLandingConfig = {
       },
       backgroundImage: "/images/japon/hero/japanHero.jpg",
       heroOverlay: {
-        baseImage: "/images/japon/hero/geishaHero2.webp",
-        samuraiImage: "/images/japon/hero/samuraiHero.webp",
+        baseImage: "/images/japon/hero/geishaHero3.avif",
+        samuraiImage: "/images/japon/hero/samuraiHero2.avif",
         baseAlt: "Hero Japón Premium",
         samuraiAlt: "Samurai Japón Premium",
       },
