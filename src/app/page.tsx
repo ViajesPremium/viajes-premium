@@ -2,8 +2,8 @@
 
 import "@/vision/vision.css";
 import styles from "./page.module.css";
-import HomeGlobe from "@/home/homeGlobe";
-import HomeIntro from "@/home/homeIntro";
+import HomeHero from "@/home/homeHero";
+import HomeExperienceBanner from "@/home/homeExperienceBanner";
 import HomeAbout from "@/home/homeAbout";
 import dynamic from "next/dynamic";
 import { DEFAULT_SITE_CONFIG } from "@/config/default-site-config";
@@ -39,11 +39,11 @@ export default function Home() {
   return (
     <main className={styles.page}>
       <section className={styles.globeScene} aria-label="Hero principal">
-        <HomeGlobe />
+        <HomeHero />
       </section>
 
-      <section className={styles.introScene} aria-label="Nuestra historia">
-        <HomeIntro />
+      <section className={styles.experienceScene} aria-label="Experiencia premium">
+        <HomeExperienceBanner />
       </section>
 
       <section className={styles.aboutScene} aria-label="Sobre nosotros">

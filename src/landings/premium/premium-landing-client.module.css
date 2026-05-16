@@ -53,6 +53,13 @@
   margin-top: 0;
 }
 
+.videoLayer {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  background: var(--black);
+}
+
 .ctaMapMobileLayer {
   display: block;
   position: relative;

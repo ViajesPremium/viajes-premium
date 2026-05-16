@@ -23,6 +23,9 @@ const Includes = dynamic(() => import("@/layout/includes/includes"), {
 const CTAForm = dynamic(() => import("@/layout/form/ctaForm"), {
   loading: () => <PinPlaceholder height="100svh" bg="var(--bg)" />,
 });
+const VideoPlayer = dynamic(() => import("@/layout/video/video-player"), {
+  loading: () => <PinPlaceholder height="100svh" bg="var(--black)" />,
+});
 const Faqs = dynamic(() => import("@/layout/faqs/faqs"), {
   loading: () => <PinPlaceholder height="100svh" bg="var(--bg)" />,
 });
@@ -199,6 +202,18 @@ export default function PremiumLandingClient({
           bg="var(--bg)"
         >
           <Faqs />
+        </DeferredSection>
+
+        <DeferredSection
+          id="japon-video"
+          className={styles.videoLayer}
+          minHeight="100svh"
+          bg="var(--black)"
+        >
+          <VideoPlayer
+            desktopSrc="/videos/japon/JP-Horizontal.webm"
+            mobileSrc="/videos/japon/JP-Vertical.webm"
+          />
         </DeferredSection>
 
         <DeferredSection
